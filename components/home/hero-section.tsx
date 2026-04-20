@@ -18,11 +18,13 @@ export function HeroSection() {
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
   const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0.4])
+  const badgeY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%'])
+  const cardRotate = useTransform(scrollYProgress, [0, 1], ['-3deg', '2deg'])
 
   return (
     <AtmosphereSection
       atmosphere="ivory"
-      className="min-h-screen pt-28 lg:pt-32 pb-16"
+      className="min-h-screen pt-28 lg:pt-32 pb-24"
     >
       <motion.div style={{ y }} className="absolute inset-0">
         <div className="absolute top-[10%] -left-16 h-80 w-80 rounded-full bg-rose-mauve/25 blur-3xl" />
@@ -94,6 +96,12 @@ export function HeroSection() {
             transition={{ duration: 1, delay: 0.25 }}
             className="relative lg:pl-8"
           >
+            <motion.div
+              style={{ y: badgeY }}
+              className="absolute -top-4 right-4 z-20 rounded-full border border-rose-mauve/35 bg-white/85 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-plum shadow-editorial backdrop-blur-sm"
+            >
+              Editor&apos;s Selection
+            </motion.div>
             <div className="relative grid grid-cols-2 gap-4 lg:gap-5">
               <EditorialMedia
                 src="/products/luminous-glow-serum-1.jpg"
@@ -107,16 +115,29 @@ export function HeroSection() {
                 hint="New Formula"
                 className="aspect-[4/5] rounded-[2rem] shadow-editorial mt-10"
               />
-              <div className="col-span-2 rounded-[2rem] p-6 lg:p-8 surface-velvet shadow-editorial relative overflow-hidden grain-soft">
+              <motion.div
+                style={{ rotate: cardRotate }}
+                className="col-span-2 rounded-[2rem] p-6 lg:p-8 surface-velvet shadow-editorial relative overflow-hidden grain-soft origin-top-left"
+              >
                 <p className="text-kicker text-rose-mauve">Campaign 01</p>
                 <h3 className="mt-3 text-2xl lg:text-3xl font-serif text-charcoal">The Glass-Skin Atelier</h3>
                 <p className="mt-3 text-charcoal/70 max-w-md">
                   Precision fermented actives, velvet textures, and reflective finishes crafted for modern ritualists.
                 </p>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+        className="absolute left-1/2 -translate-x-1/2 bottom-8 hidden md:flex items-center gap-3 rounded-full border border-rose-mauve/25 bg-white/70 px-5 py-2.5 backdrop-blur-sm"
+      >
+        <span className="h-2 w-2 rounded-full bg-champagne-gold animate-pulse-soft" />
+        <span className="text-xs uppercase tracking-[0.18em] text-charcoal/70">Scroll the story</span>
       </motion.div>
     </AtmosphereSection>
   )

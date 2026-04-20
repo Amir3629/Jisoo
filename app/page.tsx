@@ -17,6 +17,8 @@ export default function HomePage() {
   return (
     <main className="min-h-screen relative">
       <HomeAtmosphereCanvas />
+      <div className="pointer-events-none fixed inset-y-0 left-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-rose-mauve/25 to-transparent -z-[5]" />
+      <div className="pointer-events-none fixed inset-y-0 right-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-champagne-gold/25 to-transparent -z-[5]" />
       <Header />
       <HeroSection />
       <div className="transition-veil" />
