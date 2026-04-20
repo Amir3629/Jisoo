@@ -6,12 +6,13 @@ import { ArrowRight } from 'lucide-react'
 import { products } from '@/lib/data'
 import { ProductCard } from '@/components/product/product-card'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function FeaturedProducts() {
   const featuredProducts = products.filter(p => p.isBestSeller || p.isNew).slice(0, 8)
 
   return (
-    <section className="py-24 lg:py-32 relative chapter-shell mesh-ivory">
+    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32">
       <div className="absolute inset-x-0 top-0 divider-luxury" />
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end mb-12 lg:mb-16">
@@ -42,7 +43,6 @@ export function FeaturedProducts() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }
-

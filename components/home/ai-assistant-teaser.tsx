@@ -34,7 +34,7 @@ const sampleQuestions = [
 
 export function AiAssistantTeaser() {
   return (
-    <AtmosphereSection atmosphere="plum" className="py-24 lg:py-32 text-warm-ivory">
+    <AtmosphereSection atmosphere="champagne" className="py-24 lg:py-32 text-charcoal">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <motion.div
@@ -70,7 +70,7 @@ export function AiAssistantTeaser() {
               title="The Concierge Beauty Advisor"
               description="A refined conversational layer trained on JISOO routines, formulas, and ingredient logic—designed for personal luxury consultation."
               ghostLabel="CONCIERGE"
-              className="max-w-xl [&_h2]:text-warm-ivory [&_p]:text-blush-pink/80 [&_.text-kicker]:text-blush-pink"
+              className="max-w-xl [&_h2]:text-charcoal [&_p]:text-charcoal/75 [&_.text-kicker]:text-rose-mauve"
             />
 
             <div className="mt-2" />
@@ -86,12 +86,12 @@ export function AiAssistantTeaser() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   className="flex items-start gap-4"
                 >
-                  <div className="p-3 rounded-xl bg-white/10 backdrop-blur-sm">
+                  <div className="p-3 rounded-xl bg-white/70 backdrop-blur-sm border border-rose-mauve/20">
                     <feature.icon className="w-5 h-5 text-champagne-gold" />
                   </div>
                   <div>
-                    <h3 className="font-medium text-warm-ivory">{feature.title}</h3>
-                    <p className="text-sm text-blush-pink/70 mt-1">{feature.description}</p>
+                    <h3 className="font-medium text-charcoal">{feature.title}</h3>
+                    <p className="text-sm text-charcoal/65 mt-1">{feature.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -128,15 +128,15 @@ export function AiAssistantTeaser() {
             className="relative"
           >
             {/* Chat Window Preview */}
-            <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 shadow-editorial">
+            <div className="relative bg-white/75 backdrop-blur-xl rounded-3xl p-6 border border-rose-mauve/20 shadow-editorial">
               {/* Header */}
               <div className="flex items-center gap-3 pb-4 border-b border-white/10">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-champagne-gold to-rose-mauve flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-warm-ivory">JISOO AI</h4>
-                  <p className="text-xs text-blush-pink/60">Online</p>
+                  <h4 className="font-medium text-charcoal">JISOO AI</h4>
+                  <p className="text-xs text-rose-mauve/70">Online</p>
                 </div>
               </div>
 
@@ -149,8 +149,8 @@ export function AiAssistantTeaser() {
                   transition={{ delay: 0.4 }}
                   className="flex justify-end"
                 >
-                  <div className="bg-rose-mauve/30 px-4 py-3 rounded-2xl rounded-br-md max-w-[80%]">
-                    <p className="text-sm text-warm-ivory">What serum is best for dull skin?</p>
+                  <div className="bg-rose-mauve/20 px-4 py-3 rounded-2xl rounded-br-md max-w-[80%]">
+                    <p className="text-sm text-charcoal">What serum is best for dull skin?</p>
                   </div>
                 </motion.div>
 
@@ -161,8 +161,8 @@ export function AiAssistantTeaser() {
                   transition={{ delay: 0.6 }}
                   className="flex justify-start"
                 >
-                  <div className="bg-white/10 px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%]">
-                    <p className="text-sm text-warm-ivory">
+                  <div className="bg-white/80 border border-rose-mauve/15 px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%]">
+                    <p className="text-sm text-charcoal">
                       For dull skin, I recommend our <strong>Luminous Glow Serum</strong>. 
                       It contains 15% Vitamin C and fermented rice water for instant radiance!
                     </p>
@@ -172,7 +172,7 @@ export function AiAssistantTeaser() {
 
               {/* Sample Questions */}
               <div className="pt-4 border-t border-white/10">
-                <p className="text-xs text-blush-pink/60 mb-3">Try asking:</p>
+                <p className="text-xs text-rose-mauve/70 mb-3">Try asking:</p>
                 <div className="flex flex-wrap gap-2">
                   {sampleQuestions.slice(0, 2).map((q, i) => (
                     <motion.button
@@ -181,7 +181,7 @@ export function AiAssistantTeaser() {
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.8 + i * 0.1 }}
-                      className="px-3 py-1.5 rounded-full bg-white/5 text-xs text-blush-pink hover:bg-white/10 transition-colors truncate max-w-full"
+                      className="px-3 py-1.5 rounded-full bg-white text-xs text-rose-mauve border border-rose-mauve/20 hover:bg-rose-mauve/10 transition-colors truncate max-w-full"
                     >
                       {q}
                     </motion.button>

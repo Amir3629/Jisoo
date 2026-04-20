@@ -11,10 +11,12 @@ import { AiAssistantTeaser } from '@/components/home/ai-assistant-teaser'
 import { ConcernsSection } from '@/components/home/concerns-section'
 import { TestimonialsSection } from '@/components/home/testimonials-section'
 import { SocialSection } from '@/components/home/social-section'
+import { HomeAtmosphereCanvas } from '@/components/layout/home-atmosphere-canvas'
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-warm-ivory">
+    <main className="min-h-screen relative">
+      <HomeAtmosphereCanvas />
       <Header />
       <HeroSection />
       <div className="transition-veil" />
