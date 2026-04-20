@@ -10,9 +10,9 @@ import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function HeroSection() {
-  
+  const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
-    
+    target: containerRef,
     offset: ['start start', 'end start'],
   })
 
