@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { Search, User, Heart, ShoppingBag, Menu, X, ChevronDown, Globe } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/components/providers/cart-provider'
@@ -27,6 +27,8 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const { itemCount, setIsCartOpen } = useCart()
   const { config } = useRegion()
+  const { scrollYProgress } = useScroll()
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +40,10 @@ export function Header() {
 
   return (
     <>
+      <motion.div
+        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-rose-mauve via-champagne-gold to-rose-mauve"
+        style={{ scaleX: progress }}
+      />
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
