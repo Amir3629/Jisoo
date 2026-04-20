@@ -5,6 +5,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { EditorialMedia } from '@/components/ui/editorial-media'
 
 const ritualSteps = [
   {
@@ -12,30 +13,35 @@ const ritualSteps = [
     title: 'Cleanse',
     description: 'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
     color: 'from-blush-pink/30',
+    image: '/products/gentle-foam-cleanser-1.jpg',
   },
   {
     number: '02',
     title: 'Tone & Prep',
     description: 'Our Glass Skin Essence preps your skin for optimal absorption. Fermented botanicals plump and hydrate.',
     color: 'from-rose-mauve/20',
+    image: '/products/glass-skin-essence-1.jpg',
   },
   {
     number: '03',
     title: 'Treat',
     description: 'Apply targeted treatments. Our serums address specific concerns from brightening to soothing.',
     color: 'from-champagne-gold/20',
+    image: '/products/luminous-glow-serum-1.jpg',
   },
   {
     number: '04',
     title: 'Moisturize',
     description: 'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
     color: 'from-plum/10',
+    image: '/products/hydra-cloud-cream-1.jpg',
   },
   {
     number: '05',
     title: 'Protect',
     description: 'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
     color: 'from-nude-beige/40',
+    image: '/products/tone-up-sun-cream-1.jpg',
   },
 ]
 
@@ -130,20 +136,15 @@ export function RitualSection() {
                       'relative aspect-square max-w-sm mx-auto rounded-3xl overflow-hidden',
                       'bg-gradient-to-br',
                       step.color,
-                      'to-white'
+                      'to-white shadow-editorial'
                     )}
                   >
-                    {/* Placeholder for product imagery */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-20 h-20 rounded-full bg-white/50 backdrop-blur-sm mx-auto mb-4 flex items-center justify-center">
-                          <span className="text-2xl font-serif font-bold text-plum">
-                            {step.number}
-                          </span>
-                        </div>
-                        <p className="text-plum font-medium">{step.title}</p>
-                      </div>
-                    </div>
+                    <EditorialMedia
+                      src={step.image}
+                      alt={step.title}
+                      className="absolute inset-0"
+                      hint={`Step ${step.number}`}
+                    />
 
                     {/* Decorative Elements */}
                     <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-white/30" />
