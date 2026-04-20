@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 const ritualSteps = [
   {
@@ -55,7 +57,7 @@ export function RitualSection() {
   const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
 
   return (
-    <section ref={containerRef} className="py-24 lg:py-32 bg-warm-ivory relative overflow-hidden">
+    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32" withVeilTop>
       {/* Animated Background */}
       <motion.div
         style={{ y: backgroundY }}
@@ -67,24 +69,14 @@ export function RitualSection() {
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16 lg:mb-24"
-        >
-          <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
-            The K-Beauty Way
-          </span>
-          <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
-            The Ritual of Korean Beauty
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
-            Discover the art of layering products for maximum efficacy. 
-            Each step builds upon the last for transformative results.
-          </p>
-        </motion.div>
+        <ChapterHeading
+          kicker="The K-Beauty Way"
+          title="The Ritual of Korean Beauty"
+          description="Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results."
+          align="center"
+          ghostLabel="RITUAL"
+          className="mb-16 lg:mb-24 max-w-4xl mx-auto"
+        />
 
         {/* Ritual Steps */}
         <div className="relative">
@@ -181,6 +173,6 @@ export function RitualSection() {
           </Link>
         </motion.div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }

@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Sparkles, MessageCircle, Search, Heart, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 const features = [
   {
@@ -32,7 +34,7 @@ const sampleQuestions = [
 
 export function AiAssistantTeaser() {
   return (
-    <section className="py-20 lg:py-28 bg-gradient-to-b from-[#261622] via-plum to-charcoal text-warm-ivory relative overflow-hidden">
+    <AtmosphereSection atmosphere="plum" className="py-24 lg:py-32 text-warm-ivory">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <motion.div
@@ -63,20 +65,15 @@ export function AiAssistantTeaser() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-blush-pink text-sm font-medium mb-6 border border-white/15">
-              <Sparkles className="w-4 h-4" />
-              <span>AI-Powered Beauty Guidance</span>
-            </div>
+            <ChapterHeading
+              kicker="AI-Powered Beauty Guidance"
+              title="The Concierge Beauty Advisor"
+              description="A refined conversational layer trained on JISOO routines, formulas, and ingredient logic—designed for personal luxury consultation."
+              ghostLabel="CONCIERGE"
+              className="max-w-xl [&_h2]:text-warm-ivory [&_p]:text-blush-pink/80 [&_.text-kicker]:text-blush-pink"
+            />
 
-            <h2 className="text-4xl lg:text-5xl xl:text-6xl font-serif font-bold leading-tight">
-              The Concierge
-              <span className="block text-champagne-gold">Beauty Advisor</span>
-            </h2>
-
-            <p className="mt-6 text-lg text-blush-pink/80 max-w-lg">
-              Our AI assistant understands K-beauty inside and out. Get instant answers 
-              about products, ingredients, and routines tailored to your unique skin.
-            </p>
+            <div className="mt-2" />
 
             {/* Features */}
             <div className="mt-10 space-y-6">
@@ -204,6 +201,6 @@ export function AiAssistantTeaser() {
           </motion.div>
         </div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }

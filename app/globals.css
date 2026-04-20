@@ -196,6 +196,53 @@
       linear-gradient(160deg, rgba(255, 248, 244, 0.96), rgba(243, 231, 224, 0.94));
   }
 
+  .mesh-ivory {
+    background:
+      radial-gradient(120% 90% at 8% 12%, rgba(233, 199, 209, 0.35), transparent 42%),
+      radial-gradient(80% 70% at 88% 18%, rgba(201, 164, 106, 0.22), transparent 45%),
+      linear-gradient(165deg, rgba(255, 248, 244, 0.96), rgba(247, 236, 228, 0.92) 55%, rgba(255, 248, 244, 0.98));
+  }
+
+  .mesh-plum {
+    background:
+      radial-gradient(70% 70% at 18% 22%, rgba(183, 110, 138, 0.28), transparent 50%),
+      radial-gradient(85% 80% at 82% 76%, rgba(201, 164, 106, 0.18), transparent 48%),
+      linear-gradient(170deg, #281724 0%, #3b1f39 48%, #1e1a1d 100%);
+  }
+
+  .mesh-blush {
+    background:
+      radial-gradient(80% 90% at 16% 18%, rgba(233, 199, 209, 0.28), transparent 44%),
+      radial-gradient(60% 60% at 88% 72%, rgba(183, 110, 138, 0.16), transparent 48%),
+      linear-gradient(172deg, #fff9f7 0%, #f6e9e3 58%, #f9efea 100%);
+  }
+
+  .chapter-shell {
+    @apply relative overflow-hidden;
+  }
+
+  .chapter-shell::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(30, 26, 29, 0.04) 100%);
+    opacity: 0.45;
+  }
+
+  .transition-veil {
+    height: clamp(72px, 10vw, 140px);
+    background:
+      radial-gradient(60% 120% at 50% 0%, rgba(183, 110, 138, 0.2), transparent 70%),
+      linear-gradient(180deg, rgba(255, 248, 244, 0.12), rgba(255, 248, 244, 0));
+  }
+
+  .editorial-display {
+    letter-spacing: -0.03em;
+    line-height: 0.93;
+    text-wrap: balance;
+  }
+
   .text-kicker {
     @apply uppercase tracking-[0.24em] text-[11px] font-medium;
     letter-spacing: 0.24em;
