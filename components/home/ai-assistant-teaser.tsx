@@ -32,7 +32,7 @@ const sampleQuestions = [
 
 export function AiAssistantTeaser() {
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-b from-plum to-charcoal text-warm-ivory relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-gradient-to-b from-[#261622] via-plum to-charcoal text-warm-ivory relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         <motion.div
@@ -53,6 +53,7 @@ export function AiAssistantTeaser() {
         />
       </div>
 
+      <div className="absolute inset-x-0 top-0 divider-luxury opacity-40" />
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Content */}
@@ -62,13 +63,13 @@ export function AiAssistantTeaser() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-blush-pink text-sm font-medium mb-6">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 text-blush-pink text-sm font-medium mb-6 border border-white/15">
               <Sparkles className="w-4 h-4" />
               <span>AI-Powered Beauty Guidance</span>
             </div>
 
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-serif font-bold leading-tight">
-              Meet Your Personal
+            <h2 className="text-4xl lg:text-5xl xl:text-6xl font-serif font-bold leading-tight">
+              The Concierge
               <span className="block text-champagne-gold">Beauty Advisor</span>
             </h2>
 
@@ -107,7 +108,7 @@ export function AiAssistantTeaser() {
               className="mt-10"
             >
               <Link
-                href="/assistant"
+                href="/ai-consultant"
                 className={cn(
                   'inline-flex items-center gap-2 px-8 py-4 rounded-full',
                   'bg-champagne-gold text-charcoal font-medium',
@@ -130,7 +131,7 @@ export function AiAssistantTeaser() {
             className="relative"
           >
             {/* Chat Window Preview */}
-            <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/10">
+            <div className="relative bg-white/10 backdrop-blur-xl rounded-3xl p-6 border border-white/20 shadow-editorial">
               {/* Header */}
               <div className="flex items-center gap-3 pb-4 border-b border-white/10">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-champagne-gold to-rose-mauve flex items-center justify-center">

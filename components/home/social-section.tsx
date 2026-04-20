@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Instagram, Play, Heart, MessageCircle, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { EditorialMedia } from '@/components/ui/editorial-media'
 
 const socialPosts = [
   {
@@ -88,12 +89,11 @@ export function SocialSection() {
               transition={{ duration: 0.5, delay: index * 0.05 }}
               className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
             >
-              {/* Placeholder Background */}
-              <div
-                className={cn(
-                  'absolute inset-0',
-                  'bg-gradient-to-br from-blush-pink via-rose-mauve/30 to-nude-beige'
-                )}
+              <EditorialMedia
+                src={post.image}
+                alt={post.caption}
+                className="absolute inset-0"
+                overlayClassName="bg-gradient-to-t from-charcoal/60 to-charcoal/10"
               />
 
               {/* Overlay */}

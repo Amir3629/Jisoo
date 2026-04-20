@@ -45,12 +45,12 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           isScrolled
-            ? 'bg-warm-ivory/95 backdrop-blur-xl shadow-luxury'
+            ? 'bg-warm-ivory/90 backdrop-blur-2xl shadow-editorial border-b border-rose-mauve/20'
             : 'bg-transparent'
         )}
       >
         {/* Top Bar */}
-        <div className="hidden lg:block bg-plum text-warm-ivory">
+        <div className="hidden lg:block bg-gradient-to-r from-plum to-[#5d2b57] text-warm-ivory">
           <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
             <p className="font-light tracking-wide">
               Free shipping on orders over {config.currencySymbol}100
@@ -84,7 +84,7 @@ export function Header() {
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
+            <Link href="/" className="flex-shrink-0 flex flex-col items-start">
               <motion.h1
                 className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-plum"
                 whileHover={{ scale: 1.02 }}
@@ -92,6 +92,9 @@ export function Header() {
               >
                 JISOO
               </motion.h1>
+              <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-plum/70 mt-0.5">
+                Seoul Edition
+              </span>
             </Link>
 
             {/* Desktop Navigation */}
@@ -106,7 +109,7 @@ export function Header() {
                   <Link
                     href={link.href}
                     className={cn(
-                      'text-sm font-medium tracking-wide transition-colors relative py-2',
+                      'text-sm font-medium tracking-[0.09em] transition-colors relative py-2',
                       'text-charcoal hover:text-plum',
                       'after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5',
                       'after:bg-rose-mauve after:scale-x-0 after:origin-center',
@@ -132,7 +135,7 @@ export function Header() {
                         transition={{ duration: 0.2 }}
                         className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                       >
-                        <div className="bg-white rounded-2xl shadow-elevated p-6 w-[500px] grid grid-cols-2 gap-6">
+                        <div className="surface-velvet rounded-2xl shadow-editorial p-6 w-[560px] grid grid-cols-2 gap-6">
                           {categories.slice(0, 4).map(category => (
                             <div key={category.id}>
                               <Link
@@ -211,6 +214,8 @@ export function Header() {
           </div>
         </div>
       </motion.header>
+
+      <div className="divider-luxury" />
 
       {/* Mobile Menu */}
       <AnimatePresence>

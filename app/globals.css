@@ -116,6 +116,10 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image:
+      radial-gradient(circle at 12% 20%, rgba(233, 199, 209, 0.14), transparent 35%),
+      radial-gradient(circle at 88% 78%, rgba(201, 164, 106, 0.1), transparent 30%);
+    background-attachment: fixed;
   }
   
   /* RTL Support */
@@ -169,6 +173,52 @@
   
   .shadow-elevated {
     box-shadow: 0 12px 40px rgba(75, 34, 71, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+
+  .shadow-editorial {
+    box-shadow:
+      0 20px 50px rgba(24, 14, 22, 0.18),
+      0 2px 0 rgba(255, 255, 255, 0.35) inset,
+      0 -1px 0 rgba(75, 34, 71, 0.18) inset;
+  }
+
+  .surface-velvet {
+    background:
+      linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 244, 0.84) 40%, rgba(243, 231, 224, 0.76) 100%);
+    border: 1px solid rgba(183, 110, 138, 0.22);
+  }
+
+  .mesh-luxury {
+    background:
+      radial-gradient(circle at 15% 18%, rgba(233, 199, 209, 0.42), transparent 28%),
+      radial-gradient(circle at 84% 20%, rgba(201, 164, 106, 0.26), transparent 24%),
+      radial-gradient(circle at 72% 82%, rgba(183, 110, 138, 0.25), transparent 28%),
+      linear-gradient(160deg, rgba(255, 248, 244, 0.96), rgba(243, 231, 224, 0.94));
+  }
+
+  .text-kicker {
+    @apply uppercase tracking-[0.24em] text-[11px] font-medium;
+    letter-spacing: 0.24em;
+  }
+
+  .divider-luxury {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(183, 110, 138, 0.4), transparent);
+  }
+
+  .grain-soft {
+    position: relative;
+  }
+
+  .grain-soft::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(30, 26, 29, 0.04) 0.5px, transparent 0.5px);
+    background-size: 2px 2px;
+    opacity: 0.35;
+    pointer-events: none;
+    mix-blend-mode: multiply;
   }
   
   /* Hover animations */

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { Heart, ShoppingBag, Eye, Star } from 'lucide-react'
@@ -10,6 +9,7 @@ import { formatPrice } from '@/lib/data'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
 import { cn } from '@/lib/utils'
+import { EditorialMedia } from '@/components/ui/editorial-media'
 
 interface ProductCardProps {
   product: Product
@@ -52,22 +52,19 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
     >
       <Link href={`/product/${product.slug}`} className="block">
         {/* Image Container */}
-        <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-nude-beige mb-4">
+        <div className="relative aspect-[3/4] rounded-[1.6rem] overflow-hidden mb-4 shadow-editorial">
           {/* Product Image */}
-          <Image
-            src={product.images[0]?.src || '/placeholder-product.jpg'}
+          <EditorialMedia
+            src={product.images[0]?.src}
             alt={product.name}
-            fill
-            className={cn(
-              'object-cover transition-transform duration-700',
-              isHovered && 'scale-110'
-            )}
+            className="absolute inset-0"
+            hint={product.isBestSeller ? 'Best Seller' : product.isNew ? 'New Drop' : 'Curated'}
           />
 
           {/* Overlay */}
           <div
             className={cn(
-              'absolute inset-0 bg-gradient-to-t from-charcoal/40 via-transparent to-transparent',
+              'absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent',
               'opacity-0 transition-opacity duration-300',
               isHovered && 'opacity-100'
             )}
@@ -102,10 +99,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             onClick={handleWishlist}
             className={cn(
               'absolute top-3 right-3 p-2.5 rounded-full transition-all duration-300',
-              'bg-white/90 backdrop-blur-sm shadow-sm',
-              isWishlisted ? 'text-rose-mauve' : 'text-charcoal/70',
-              'hover:scale-110'
-            )}
+                  'bg-white/85 backdrop-blur-xl shadow-sm',
+                  isWishlisted ? 'text-rose-mauve' : 'text-charcoal/70',
+                  'hover:scale-110'
+                )}
           >
             <Heart
               className={cn('w-5 h-5', isWishlisted && 'fill-current')}
@@ -146,10 +143,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Product Info */}
         <div>
-          <p className="text-xs text-rose-mauve font-medium uppercase tracking-wider mb-1">
+          <p className="text-xs text-rose-mauve font-medium uppercase tracking-[0.18em] mb-1">
             {product.category}
           </p>
-          <h3 className="font-medium text-charcoal group-hover:text-plum transition-colors line-clamp-1">
+          <h3 className="font-serif text-lg text-charcoal group-hover:text-plum transition-colors line-clamp-1">
             {product.name}
           </h3>
           {product.subtitle && (
@@ -179,8 +176,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           </div>
 
           {/* Price */}
-          <div className="flex items-center gap-2 mt-2">
-            <span className="font-semibold text-plum">
+          <div className="flex items-center gap-2 mt-3">
+            <span className="font-semibold text-plum text-lg">
               {formatPrice(product.price)}
             </span>
             {product.compareAtPrice && (

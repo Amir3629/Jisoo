@@ -10,7 +10,8 @@ export function FeaturedProducts() {
   const featuredProducts = products.filter(p => p.isBestSeller || p.isNew).slice(0, 8)
 
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-20 lg:py-28 bg-gradient-to-b from-warm-ivory via-white to-warm-ivory/70 relative">
+      <div className="absolute inset-x-0 top-0 divider-luxury" />
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         {/* Header */}
         <motion.div
@@ -21,14 +22,14 @@ export function FeaturedProducts() {
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12 lg:mb-16"
         >
           <div>
-            <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
+            <span className="text-kicker text-rose-mauve">
               Customer Favorites
             </span>
-            <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
-              Best Sellers & New Arrivals
+            <h2 className="mt-4 text-4xl lg:text-5xl xl:text-6xl font-serif text-charcoal">
+              Collectible Formulas
             </h2>
             <p className="mt-4 text-muted-foreground max-w-xl">
-              Discover what the JISOO community loves most. From iconic essentials to our latest innovations.
+              Best-sellers and fresh Seoul launches presented as an editorial beauty rack.
             </p>
           </div>
           <Link

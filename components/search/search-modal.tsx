@@ -7,6 +7,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { products } from '@/lib/data'
 import { cn } from '@/lib/utils'
+import { EditorialMedia } from '@/components/ui/editorial-media'
 
 interface SearchModalProps {
   isOpen: boolean
@@ -152,9 +153,11 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                               onClick={onClose}
                               className="flex items-center gap-3 p-2 -mx-2 rounded-xl hover:bg-blush-pink/20 transition-colors"
                             >
-                              <div className="w-12 h-12 rounded-lg bg-nude-beige overflow-hidden">
-                                <div className="w-full h-full bg-gradient-to-br from-rose-mauve/20 to-blush-pink/30" />
-                              </div>
+                              <EditorialMedia
+                                src={cat.image}
+                                alt={cat.name}
+                                className="w-12 h-12 rounded-lg"
+                              />
                               <span className="font-medium text-charcoal">{cat.name}</span>
                               <ArrowRight className="w-4 h-4 text-muted-foreground ml-auto" />
                             </Link>
