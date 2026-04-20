@@ -1,0 +1,238 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* JISOO K-Beauty Brand Palette */
+  --plum: #4B2247;
+  --rose-mauve: #B76E8A;
+  --blush-pink: #E9C7D1;
+  --warm-ivory: #FFF8F4;
+  --nude-beige: #F3E7E0;
+  --champagne-gold: #C9A46A;
+  --charcoal: #1E1A1D;
+  
+  /* Semantic tokens mapped to brand */
+  --background: #FFF8F4;
+  --foreground: #1E1A1D;
+  --card: #FFFFFF;
+  --card-foreground: #1E1A1D;
+  --popover: #FFFFFF;
+  --popover-foreground: #1E1A1D;
+  --primary: #4B2247;
+  --primary-foreground: #FFF8F4;
+  --secondary: #F3E7E0;
+  --secondary-foreground: #4B2247;
+  --muted: #F3E7E0;
+  --muted-foreground: #6B5B63;
+  --accent: #B76E8A;
+  --accent-foreground: #FFF8F4;
+  --destructive: #D64545;
+  --destructive-foreground: #FFFFFF;
+  --border: #E9C7D1;
+  --input: #E9C7D1;
+  --ring: #B76E8A;
+  --radius: 0.75rem;
+  
+  /* Chart colors */
+  --chart-1: #4B2247;
+  --chart-2: #B76E8A;
+  --chart-3: #E9C7D1;
+  --chart-4: #C9A46A;
+  --chart-5: #F3E7E0;
+}
+
+.dark {
+  --background: #1E1A1D;
+  --foreground: #FFF8F4;
+  --card: #2A2328;
+  --card-foreground: #FFF8F4;
+  --popover: #2A2328;
+  --popover-foreground: #FFF8F4;
+  --primary: #E9C7D1;
+  --primary-foreground: #1E1A1D;
+  --secondary: #3D3339;
+  --secondary-foreground: #F3E7E0;
+  --muted: #3D3339;
+  --muted-foreground: #A89A9F;
+  --accent: #B76E8A;
+  --accent-foreground: #FFF8F4;
+  --destructive: #D64545;
+  --destructive-foreground: #FFFFFF;
+  --border: #3D3339;
+  --input: #3D3339;
+  --ring: #B76E8A;
+}
+
+@theme inline {
+  --font-sans: 'Playfair Display', 'Inter', 'Geist', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-mono: 'Geist Mono', monospace;
+  
+  /* Brand colors */
+  --color-plum: var(--plum);
+  --color-rose-mauve: var(--rose-mauve);
+  --color-blush-pink: var(--blush-pink);
+  --color-warm-ivory: var(--warm-ivory);
+  --color-nude-beige: var(--nude-beige);
+  --color-champagne-gold: var(--champagne-gold);
+  --color-charcoal: var(--charcoal);
+  
+  /* Semantic colors */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  /* RTL Support */
+  [dir="rtl"] {
+    direction: rtl;
+  }
+}
+
+@layer utilities {
+  /* Premium glassmorphism */
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20;
+  }
+  
+  .glass-dark {
+    @apply bg-charcoal/70 backdrop-blur-xl border border-white/10;
+  }
+  
+  /* Luxury gradients */
+  .gradient-premium {
+    background: linear-gradient(135deg, var(--plum) 0%, var(--rose-mauve) 50%, var(--blush-pink) 100%);
+  }
+  
+  .gradient-soft {
+    background: linear-gradient(180deg, var(--warm-ivory) 0%, var(--nude-beige) 100%);
+  }
+  
+  .gradient-gold {
+    background: linear-gradient(135deg, var(--champagne-gold) 0%, #E8D5A8 50%, var(--champagne-gold) 100%);
+  }
+  
+  /* Text gradients */
+  .text-gradient-premium {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--plum) 0%, var(--rose-mauve) 100%);
+  }
+  
+  /* Glow effects */
+  .glow-pink {
+    box-shadow: 0 0 40px rgba(233, 199, 209, 0.4);
+  }
+  
+  .glow-gold {
+    box-shadow: 0 0 40px rgba(201, 164, 106, 0.3);
+  }
+  
+  /* Premium shadows */
+  .shadow-luxury {
+    box-shadow: 0 4px 20px rgba(75, 34, 71, 0.08), 0 8px 40px rgba(183, 110, 138, 0.06);
+  }
+  
+  .shadow-elevated {
+    box-shadow: 0 12px 40px rgba(75, 34, 71, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Hover animations */
+  .hover-lift {
+    @apply transition-all duration-500 ease-out;
+  }
+  
+  .hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(75, 34, 71, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+  
+  /* Smooth scrolling */
+  .scroll-smooth {
+    scroll-behavior: smooth;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background-size: 200% 100%;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 3s ease-in-out infinite;
+}
+
+.animate-gradient {
+  animation: gradient-shift 8s ease infinite;
+  background-size: 200% 200%;
+}

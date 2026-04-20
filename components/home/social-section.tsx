@@ -1,0 +1,188 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { Instagram, Play, Heart, MessageCircle, ExternalLink } from 'lucide-react'
+import { cn } from '@/lib/utils'
+
+const socialPosts = [
+  {
+    id: 1,
+    type: 'instagram',
+    image: '/social/post-1.jpg',
+    likes: '12.4K',
+    comments: '234',
+    caption: 'Glass skin goals achieved with our new essence',
+  },
+  {
+    id: 2,
+    type: 'tiktok',
+    image: '/social/post-2.jpg',
+    views: '2.1M',
+    caption: 'My 10-step K-beauty routine',
+  },
+  {
+    id: 3,
+    type: 'instagram',
+    image: '/social/post-3.jpg',
+    likes: '8.9K',
+    comments: '156',
+    caption: 'Before & after using Luminous Glow Serum',
+  },
+  {
+    id: 4,
+    type: 'instagram',
+    image: '/social/post-4.jpg',
+    likes: '15.2K',
+    comments: '342',
+    caption: 'Unboxing the new summer collection',
+  },
+  {
+    id: 5,
+    type: 'tiktok',
+    image: '/social/post-5.jpg',
+    views: '890K',
+    caption: 'POV: Your skin after K-beauty',
+  },
+  {
+    id: 6,
+    type: 'instagram',
+    image: '/social/post-6.jpg',
+    likes: '11.1K',
+    comments: '198',
+    caption: 'Cica Repair Ampoule saved my skin',
+  },
+]
+
+export function SocialSection() {
+  return (
+    <section className="py-24 lg:py-32 bg-warm-ivory">
+      <div className="max-w-7xl mx-auto px-4 lg:px-6">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12 lg:mb-16"
+        >
+          <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
+            @JISOOBeauty
+          </span>
+          <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
+            Join the Beauty Community
+          </h2>
+          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
+            Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community.
+          </p>
+        </motion.div>
+
+        {/* Social Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
+          {socialPosts.map((post, index) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
+              className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
+            >
+              {/* Placeholder Background */}
+              <div
+                className={cn(
+                  'absolute inset-0',
+                  'bg-gradient-to-br from-blush-pink via-rose-mauve/30 to-nude-beige'
+                )}
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/60 transition-colors duration-300 flex items-center justify-center">
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center text-white p-4">
+                  {post.type === 'instagram' ? (
+                    <div className="flex items-center justify-center gap-4">
+                      <div className="flex items-center gap-1">
+                        <Heart className="w-5 h-5" />
+                        <span className="text-sm">{post.likes}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MessageCircle className="w-5 h-5" />
+                        <span className="text-sm">{post.comments}</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <Play className="w-5 h-5" />
+                      <span className="text-sm">{post.views} views</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Type Badge */}
+              <div className="absolute top-2 right-2">
+                {post.type === 'tiktok' && (
+                  <div className="w-8 h-8 rounded-full bg-charcoal flex items-center justify-center">
+                    <Play className="w-4 h-4 text-white fill-white" />
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Social Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="mt-12 flex flex-wrap items-center justify-center gap-4"
+        >
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              'flex items-center gap-2 px-6 py-3 rounded-full',
+              'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-medium',
+              'hover:opacity-90 transition-opacity'
+            )}
+          >
+            <Instagram className="w-5 h-5" />
+            <span>Follow on Instagram</span>
+            <ExternalLink className="w-4 h-4" />
+          </a>
+          <a
+            href="https://tiktok.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cn(
+              'flex items-center gap-2 px-6 py-3 rounded-full',
+              'bg-charcoal text-white font-medium',
+              'hover:bg-charcoal/90 transition-colors'
+            )}
+          >
+            <Play className="w-5 h-5" />
+            <span>Follow on TikTok</span>
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        </motion.div>
+
+        {/* UGC CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16 text-center"
+        >
+          <p className="text-muted-foreground">
+            Tag <strong className="text-plum">@JISOOBeauty</strong> and use{' '}
+            <strong className="text-plum">#JISOOGlow</strong> to be featured!
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
