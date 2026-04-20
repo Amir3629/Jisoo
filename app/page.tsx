@@ -17,9 +17,11 @@ export default function HomePage() {
     <main className="min-h-screen bg-warm-ivory">
       <Header />
       <HeroSection />
+      <div className="transition-veil" />
       <PartnersSection />
       <CategoriesSection />
       <FeaturedProducts />
+      <div className="transition-veil" />
       <RitualSection />
       <AiAssistantTeaser />
       <ConcernsSection />

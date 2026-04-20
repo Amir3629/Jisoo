@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Droplets, Heart, Sparkles, Circle, Sun, Shield, Clock, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 const concerns = [
   { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blue-200 to-cyan-100', count: 42 },
@@ -18,27 +20,15 @@ const concerns = [
 
 export function ConcernsSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 lg:mb-16"
-        >
-          <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
-            Targeted Solutions
-          </span>
-          <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
-            Shop by Concern
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
-            Find products formulated to address your specific skin concerns. 
-            Korean beauty expertise meets your unique needs.
-          </p>
-        </motion.div>
+        <ChapterHeading
+          kicker="Targeted Solutions"
+          title="Shop by Concern"
+          description="Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs."
+          align="center"
+          className="mb-12 lg:mb-16 max-w-4xl mx-auto"
+        />
 
         {/* Concerns Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
@@ -117,6 +107,6 @@ export function ConcernsSection() {
           </div>
         </motion.div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }

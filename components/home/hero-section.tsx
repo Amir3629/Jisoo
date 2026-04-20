@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -18,31 +20,25 @@ export function HeroSection() {
   const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0.4])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen overflow-hidden pt-28 lg:pt-32 pb-14">
-      <motion.div style={{ y }} className="absolute inset-0 mesh-luxury" />
-      <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(255,248,244,0.66),rgba(255,248,244,0.82)_42%,rgba(255,248,244,1))]" />
+    <AtmosphereSection
+      atmosphere="ivory"
+      className="min-h-screen pt-28 lg:pt-32 pb-16"
+    >
+      <motion.div style={{ y }} className="absolute inset-0">
+        <div className="absolute top-[10%] -left-16 h-80 w-80 rounded-full bg-rose-mauve/25 blur-3xl" />
+        <div className="absolute bottom-[8%] right-[6%] h-[26rem] w-[26rem] rounded-full bg-champagne-gold/20 blur-3xl" />
+      </motion.div>
 
       <motion.div style={{ opacity }} className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
           <div className="pt-10 lg:pt-16">
-            <motion.p
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-kicker text-rose-mauve"
-            >
-              Seoul Ritual House · Since 2024
-            </motion.p>
-
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="mt-5 font-serif text-5xl sm:text-6xl lg:text-7xl xl:text-[5.3rem] leading-[0.95] text-charcoal"
-            >
-              A New Language
-              <span className="block text-plum">of Korean Beauty</span>
-            </motion.h1>
+            <ChapterHeading
+              kicker="Seoul Ritual House · Since 2024"
+              title="A New Language of Korean Beauty"
+              ghostLabel="JISOO"
+              as="h1"
+              className="max-w-2xl"
+            />
 
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -122,7 +118,6 @@ export function HeroSection() {
           </motion.div>
         </div>
       </motion.div>
-    </section>
+    </AtmosphereSection>
   )
 }
-

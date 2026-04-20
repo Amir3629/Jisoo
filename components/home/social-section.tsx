@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { Instagram, Play, Heart, MessageCircle, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 const socialPosts = [
   {
@@ -57,26 +59,15 @@ const socialPosts = [
 
 export function SocialSection() {
   return (
-    <section className="py-24 lg:py-32 bg-warm-ivory">
+    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 lg:mb-16"
-        >
-          <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
-            @JISOOBeauty
-          </span>
-          <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
-            Join the Beauty Community
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
-            Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community.
-          </p>
-        </motion.div>
+        <ChapterHeading
+          kicker="@JISOOBeauty"
+          title="Join the Beauty Community"
+          description="Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community."
+          align="center"
+          className="mb-12 lg:mb-16 max-w-4xl mx-auto"
+        />
 
         {/* Social Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
@@ -183,6 +174,6 @@ export function SocialSection() {
           </p>
         </motion.div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }

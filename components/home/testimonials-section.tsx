@@ -1,38 +1,26 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { Star, Quote } from 'lucide-react'
 import { testimonials } from '@/lib/data'
 import { cn } from '@/lib/utils'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function TestimonialsSection() {
   const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollXProgress } = useScroll({
-    container: containerRef,
-  })
 
   return (
-    <section className="py-24 lg:py-32 bg-nude-beige/30">
+    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12 lg:mb-16"
-        >
-          <span className="text-sm font-medium text-rose-mauve uppercase tracking-widest">
-            Customer Stories
-          </span>
-          <h2 className="mt-4 text-3xl lg:text-4xl xl:text-5xl font-serif font-bold text-charcoal">
-            Loved by Beauty Enthusiasts
-          </h2>
-          <p className="mt-4 text-muted-foreground max-w-2xl mx-auto text-lg">
-            Join thousands of satisfied customers who have discovered the transformative power of K-beauty.
-          </p>
-        </motion.div>
+        <ChapterHeading
+          kicker="Customer Stories"
+          title="Loved by Beauty Enthusiasts"
+          description="Join thousands of satisfied customers who have discovered the transformative power of K-beauty."
+          align="center"
+          className="mb-12 lg:mb-16 max-w-4xl mx-auto"
+        />
 
         {/* Testimonials Carousel */}
         <div
@@ -144,6 +132,6 @@ export function TestimonialsSection() {
           ))}
         </motion.div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }

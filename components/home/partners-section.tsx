@@ -3,28 +3,23 @@
 import { motion } from 'framer-motion'
 import { partners } from '@/lib/data'
 import { cn } from '@/lib/utils'
+import { ChapterHeading } from '@/components/ui/chapter-heading'
+import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function PartnersSection() {
   return (
-    <section className="py-20 lg:py-28 bg-[#f8efea] relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(183,110,138,0.15),transparent_32%),radial-gradient(circle_at_85%_75%,rgba(201,164,106,0.18),transparent_30%)]" />
+    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="absolute inset-x-0 top-0 divider-luxury" />
 
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto"
-        >
-          <p className="text-kicker text-rose-mauve">Korean Excellence Network</p>
-          <h2 className="mt-4 text-4xl lg:text-5xl font-serif text-charcoal">
-            Three Houses. One Signature Standard.
-          </h2>
-          <p className="mt-4 text-charcoal/75">
-            Each partner brings a distinct discipline—from fermented heritage to clinical precision—forming JISOO&apos;s formula identity.
-          </p>
-        </motion.div>
+        <ChapterHeading
+          kicker="Korean Excellence Network"
+          title="Three Houses. One Signature Standard."
+          description="Each partner brings a distinct discipline—from fermented heritage to clinical precision—forming JISOO&apos;s formula identity."
+          align="center"
+          ghostLabel="LABS"
+          className="max-w-4xl mx-auto"
+        />
 
         <div className="mt-14 space-y-5">
           {partners.map((partner, index) => (
@@ -64,7 +59,6 @@ export function PartnersSection() {
           ))}
         </div>
       </div>
-    </section>
+    </AtmosphereSection>
   )
 }
-
