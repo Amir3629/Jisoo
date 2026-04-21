@@ -6,6 +6,8 @@ import { Droplets, Heart, Sparkles, Circle, Sun, Shield, Clock, XCircle } from '
 import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 const concerns = [
   { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blue-200 to-cyan-100', count: 42 },
@@ -19,12 +21,14 @@ const concerns = [
 ]
 
 export function ConcernsSection() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   return (
     <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="Targeted Solutions"
-          title="Shop by Concern"
+          title="{t.shopByConcern}"
           description="Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
@@ -102,7 +106,7 @@ export function ConcernsSection() {
                 'hover:bg-plum/90 transition-colors'
               )}
             >
-              View Shipping Info
+              {t.viewShippingInfo}
             </Link>
           </div>
         </motion.div>

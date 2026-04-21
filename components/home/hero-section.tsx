@@ -7,8 +7,12 @@ import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 export function HeroSection() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   const { scrollYProgress } = useScroll()
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
@@ -60,7 +64,7 @@ export function HeroSection() {
                   'bg-plum text-warm-ivory font-medium shadow-editorial'
                 )}
               >
-                Discover Collection
+                {t.discoverCollection}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
@@ -68,7 +72,7 @@ export function HeroSection() {
                 href="/about"
                 className="inline-flex items-center rounded-full border border-plum/3px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
               >
-                Our Story
+                {t.ourStory}
               </Link>
             </motion.div>
 

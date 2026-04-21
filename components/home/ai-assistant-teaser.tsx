@@ -6,6 +6,8 @@ import { Sparkles, MessageCircle, Search, Heart, ArrowRight } from 'lucide-react
 import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 const features = [
   {
@@ -33,6 +35,8 @@ const sampleQuestions = [
 ]
 
 export function AiAssistantTeaser() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   return (
     <AtmosphereSection atmosphere="champagne" className="py-24 lg:py-32 text-charcoal">
       {/* Animated Background Elements */}
@@ -113,7 +117,7 @@ export function AiAssistantTeaser() {
                   'shadow-lg shadow-champagne-gold/20'
                 )}
               >
-                Try AI Assistant
+                {t.tryAiAssistant}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>

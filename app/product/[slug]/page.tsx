@@ -10,6 +10,8 @@ import { ProductCard } from '@/components/product/product-card'
 import { getProductBySlug, getRelatedProducts, getProductReviews, formatPrice } from '@/lib/data'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 import {
   Heart, Share2, Star, Minus, Plus, Check, ChevronDown,
   Droplets, Shield, Sparkles, Clock, Leaf, Info, MessageCircle
@@ -48,6 +50,8 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   const { addToCart } = useCart()
   const { region } = useRegion()
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
 
   if (!product) {
     return (
@@ -309,7 +313,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       : 'bg-muted text-muted-foreground cursor-not-allowed'
                   )}
                 >
-                  {isBuyable ? 'Add to Cart' : 'Not Available'}
+                  {isBuyable ? t.addToCart : t.notAvailable}
                 </button>
 
                 {/* Wishlist */}

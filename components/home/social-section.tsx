@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 const socialPosts = [
   {
@@ -58,12 +60,14 @@ const socialPosts = [
 ]
 
 export function SocialSection() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   return (
     <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"
-          title="Join the Beauty Community"
+          title="{t.joinCommunity}"
           description="Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
@@ -141,7 +145,7 @@ export function SocialSection() {
             )}
           >
             <Instagram className="w-5 h-5" />
-            <span>Follow on Instagram</span>
+            <span>{t.followInstagram}</span>
             <ExternalLink className="w-4 h-4" />
           </a>
           <a
@@ -155,7 +159,7 @@ export function SocialSection() {
             )}
           >
             <Play className="w-5 h-5" />
-            <span>Follow on TikTok</span>
+            <span>{t.followTiktok}</span>
             <ExternalLink className="w-4 h-4" />
           </a>
         </motion.div>
