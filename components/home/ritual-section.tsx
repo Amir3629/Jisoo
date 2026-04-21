@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 const ritualSteps = [
   {
@@ -52,6 +54,8 @@ const ritualSteps = [
 ]
 
 export function RitualSection() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   return (
     <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32" withVeilTop>
       <div className="relative">
@@ -155,7 +159,7 @@ export function RitualSection() {
                 'shadow-lg shadow-plum/20'
               )}
             >
-              Shop the Ritual
+              {t.shopTheRitual}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>

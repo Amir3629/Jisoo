@@ -7,8 +7,12 @@ import { categories } from '@/lib/data'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizedUi } from '@/lib/localized-ui'
 
 export function CategoriesSection() {
+  const { locale } = useLocale()
+  const t = localizedUi[locale]
   const displayCategories = categories.slice(0, 4)
 
   return (
@@ -27,7 +31,7 @@ export function CategoriesSection() {
               href="/shop"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-plum/30 px-6 py-3 text-plum font-medium hover:bg-plum/5 transition-colors"
             >
-              Browse All Categories
+              {t.browseAllCategories}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -56,7 +60,7 @@ export function CategoriesSection() {
                       <h3 className="mt-2 text-3xl lg:text-4xl font-serif text-white">{category.name}</h3>
                       <p className="mt-2 text-white/80 max-w-lg">{category.description}</p>
                       <span className="mt-6 inline-flex items-center gap-2 text-white font-medium">
-                        Explore Chapter
+                        {t.exploreChapter}
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                       </span>
                     </div>

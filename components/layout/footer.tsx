@@ -7,6 +7,7 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { localizedUi } from '@/lib/localized-ui'
 
 const footerLinks = {
   shop: [
@@ -24,7 +25,7 @@ const footerLinks = {
     { label: 'Track Order', href: '/account/orders' },
   ],
   company: [
-    { label: 'Our Story', href: '/about' },
+    { label: '{t.ourStory}', href: '/about' },
     { label: 'Korean Partners', href: '/about#partners' },
     { label: 'Sustainability', href: '/about/sustainability' },
     { label: 'Careers', href: '/careers' },
@@ -48,6 +49,7 @@ export function Footer() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
   const { locale, dictionary } = useLocale()
+  const t = localizedUi[locale]
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -169,7 +171,7 @@ export function Footer() {
 
           <div>
             <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
-              Help
+              {t.help}
             </h4>
             <ul className="space-y-3">
               {footerLinks.help.map(link => (
@@ -187,7 +189,7 @@ export function Footer() {
 
           <div>
             <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
-              Company
+              {t.company}
             </h4>
             <ul className="space-y-3">
               {footerLinks.company.map(link => (
@@ -205,7 +207,7 @@ export function Footer() {
 
           <div>
             <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
-              Legal
+              {t.legal}
             </h4>
             <ul className="space-y-3">
               {footerLinks.legal.map(link => (
