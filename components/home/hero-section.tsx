@@ -1,8 +1,7 @@
 'use client'
 
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
 import Link from 'next/link'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
@@ -10,11 +9,7 @@ import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 
 export function HeroSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  })
+  const { scrollYProgress } = useScroll()
 
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%'])
   const opacity = useTransform(scrollYProgress, [0, 0.65], [1, 0.4])
@@ -26,7 +21,7 @@ export function HeroSection() {
       atmosphere="ivory"
       className="min-h-screen pt-28 lg:pt-32 pb-24"
     >
-      <motion.div style={{ y }} className="absolute inset-0">
+      <motion.div style={{ y }} className="absolute inset-0 pointer-events-none">
         <div className="absolute top-[10%] -left-16 h-80 w-80 rounded-full bg-rose-mauve/25 blur-3xl" />
         <div className="absolute bottom-[8%] right-[6%] h-[26rem] w-[26rem] rounded-full bg-champagne-gold/20 blur-3xl" />
       </motion.div>
@@ -48,7 +43,7 @@ export function HeroSection() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="mt-8 max-w-xl text-base lg:text-lg text-charcoal/75 leading-relaxed"
             >
-              Editorially curated skincare and complexion icons from Korea&apos;s most progressive laboratories—
+             Editorially curated skincare and complexion icons from Korea&apos;s most progressive laboratories—
               designed to feel like a private beauty gallery, not a generic shop.
             </motion.p>
 
@@ -68,9 +63,10 @@ export function HeroSection() {
                 Discover Collection
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
+
               <Link
                 href="/about"
-                className="inline-flex items-center rounded-full border border-plum/35 px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
+                className="inline-flex items-center rounded-full border border-plum/3px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
               >
                 Our Story
               </Link>
@@ -102,6 +98,7 @@ export function HeroSection() {
             >
               Editor&apos;s Selection
             </motion.div>
+
             <div className="relative grid grid-cols-2 gap-4 lg:gap-5">
               <EditorialMedia
                 src="/products/luminous-glow-serum-1.jpg"
