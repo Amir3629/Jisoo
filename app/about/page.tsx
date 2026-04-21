@@ -3,7 +3,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 import {
   Heart,
   Leaf,
@@ -80,11 +79,7 @@ const milestones = [
 ];
 
 export default function AboutPage() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: heroRef,
-    offset: ["start start", "end start"],
-  });
+  const { scrollYProgress } = useScroll();
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
@@ -92,7 +87,7 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section ref={heroRef} className="relative h-[80vh] overflow-hidden">
+      <section className="relative h-[80vh] overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-0">
           <Image
             src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1920"

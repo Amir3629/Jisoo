@@ -17,6 +17,7 @@ const languageNames: Record<Language, string> = {
   ar: 'العربية',
   fr: 'Français',
   de: 'Deutsch',
+  ko: '한국어',
 }
 
 export function RegionSelector({ isOpen, onClose }: RegionSelectorProps) {
