@@ -11,7 +11,6 @@ import { useRegion } from '@/components/providers/region-provider'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
-import { localizedUi } from '@/lib/localized-ui'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 
 interface ProductCardProps {
@@ -130,7 +129,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 )}
               >
                 <ShoppingBag className="w-4 h-4" />
-                <span>{localizedUi[locale].addToCart}</span>
+                <span>{dictionary.product.addToCart}</span>
               </button>
             )}
             <button

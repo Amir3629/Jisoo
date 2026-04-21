@@ -10,12 +10,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea'
 import { products } from '@/lib/data'
 import { useLocale } from '@/components/providers/locale-provider'
-import { i18nContent } from '@/lib/i18n-content'
 import { generateProductDescription, generateTranslationDraft, improveMarketingCopy, suggestTagsAndCategory } from '@/lib/ai/admin-ai'
 
 export default function AICopilotPage() {
-  const { locale } = useLocale()
-  const copy = i18nContent[locale].adminAi
+  const { locale, dictionary } = useLocale()
+  const copy = dictionary.admin.aiCopilot
 
   const [productSlug, setProductSlug] = useState(products[0]?.slug ?? '')
   const [sourceText, setSourceText] = useState('')
@@ -49,13 +48,13 @@ export default function AICopilotPage() {
         <Card>
           <CardHeader><CardTitle>{copy.translator}</CardTitle></CardHeader>
           <CardContent className="space-y-3">
-            <Textarea value={sourceText} onChange={(e) => setSourceText(e.target.value)} placeholder="Source text" />
+            <Textarea value={sourceText} onChange={(e) => setSourceText(e.target.value)} placeholder={dictionary.admin.translationCenter.source} />
             <Select value={targetLocale} onValueChange={(v: 'ar' | 'fr' | 'de') => setTargetLocale(v)}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
-                <SelectItem value="ar">Arabic</SelectItem>
-                <SelectItem value="fr">French</SelectItem>
-                <SelectItem value="de">German</SelectItem>
+                <SelectItem value="ar">AR</SelectItem>
+                <SelectItem value="fr">FR</SelectItem>
+                <SelectItem value="de">DE</SelectItem>
               </SelectContent>
             </Select>
             <Button onClick={() => { setOutput(generateTranslationDraft(sourceText, targetLocale)); setStatus('draft') }}>{copy.translator}</Button>
@@ -65,7 +64,7 @@ export default function AICopilotPage() {
         <Card>
           <CardHeader><CardTitle>{copy.marketer}</CardTitle></CardHeader>
           <CardContent className="space-y-3">
-            <Input value={sourceText} onChange={(e) => setSourceText(e.target.value)} placeholder="Marketing line" />
+            <Input value={sourceText} onChange={(e) => setSourceText(e.target.value)} placeholder={dictionary.admin.translationCenter.improve} />
             <Button onClick={() => { setOutput(improveMarketingCopy(sourceText)); setStatus('final') }}><Sparkles className="h-4 w-4 mr-2" />{copy.marketer}</Button>
           </CardContent>
         </Card>
@@ -73,18 +72,18 @@ export default function AICopilotPage() {
         <Card>
           <CardHeader><CardTitle>{copy.tagging}</CardTitle></CardHeader>
           <CardContent className="space-y-2 text-sm">
-            <p><strong>Category:</strong> {tags.category}</p>
-            <p><strong>Tags:</strong> {tags.tags.join(', ')}</p>
+            <p><strong>{dictionary.admin.translationCenter.target}:</strong> {tags.category}</p>
+            <p><strong>{dictionary.common.shop}:</strong> {tags.tags.join(', ')}</p>
           </CardContent>
         </Card>
       </div>
 
       <Card>
-        <CardHeader><CardTitle>Output ({status})</CardTitle></CardHeader>
+        <CardHeader><CardTitle>{dictionary.admin.translationCenter.preview} ({status})</CardTitle></CardHeader>
         <CardContent className="space-y-3">
           <Textarea value={output} onChange={(e) => setOutput(e.target.value)} rows={6} />
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => navigator.clipboard.writeText(output)}><Copy className="h-4 w-4 mr-2" />Copy</Button>
+            <Button variant="outline" onClick={() => navigator.clipboard.writeText(output)}><Copy className="h-4 w-4 mr-2" />{dictionary.common.copy}</Button>
             <Button>{copy.apply}</Button>
           </div>
         </CardContent>

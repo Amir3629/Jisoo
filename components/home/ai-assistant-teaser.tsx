@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
-import { localizedUi } from '@/lib/localized-ui'
 
 const features = [
   {
@@ -35,8 +34,8 @@ const sampleQuestions = [
 ]
 
 export function AiAssistantTeaser() {
-  const { locale } = useLocale()
-  const t = localizedUi[locale]
+  const { locale, dictionary } = useLocale()
+  const t = dictionary.home
   return (
     <AtmosphereSection atmosphere="champagne" className="py-24 lg:py-32 text-charcoal">
       {/* Animated Background Elements */}

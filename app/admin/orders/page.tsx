@@ -295,7 +295,6 @@ export default function OrdersPage() {
       <PageHeader
         title="Order Management"
         description="Track and manage customer orders across all regions"
-        icon={<Package className="h-6 w-6" />}
         actions={
           <div className="flex items-center gap-3">
             <Button variant="outline">
