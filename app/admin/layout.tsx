@@ -23,10 +23,11 @@ import {
   Bell,
   Search,
   Menu,
-  X,
   LogOut,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
@@ -40,21 +41,23 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { Sheet, SheetContent } from '@/components/ui/sheet'
 
-const navigation = [
-  { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-  { name: 'Suppliers', href: '/admin/suppliers', icon: Truck, badge: 16 },
-  { name: 'Products', href: '/admin/products', icon: Package },
-  { name: 'Regions', href: '/admin/regions', icon: Globe2, badge: 4 },
-  { name: 'Compliance', href: '/admin/compliance', icon: Shield },
-  { name: 'Translations', href: '/admin/translations', icon: Languages, badge: 8 },
-  { name: 'Media', href: '/admin/media', icon: Image },
-  { name: 'Social', href: '/admin/social', icon: Share2, badge: 3 },
-  { name: 'AI Copilot', href: '/admin/ai-copilot', icon: Sparkles },
-  { name: 'Analytics', href: '/admin/analytics', icon: BarChart3 },
-  { name: 'Orders', href: '/admin/orders', icon: ShoppingBag },
-  { name: 'Customers', href: '/admin/customers', icon: Users },
+type AdminNavKey = 'dashboard' | 'suppliers' | 'products' | 'regions' | 'compliance' | 'translations' | 'media' | 'social' | 'ai' | 'analytics' | 'orders' | 'customers'
+
+const navigation: Array<{ key: AdminNavKey; href: string; icon: any; badge?: number }> = [
+  { key: 'dashboard', href: '/admin', icon: LayoutDashboard },
+  { key: 'suppliers', href: '/admin/suppliers', icon: Truck, badge: 16 },
+  { key: 'products', href: '/admin/products', icon: Package },
+  { key: 'regions', href: '/admin/regions', icon: Globe2, badge: 4 },
+  { key: 'compliance', href: '/admin/compliance', icon: Shield },
+  { key: 'translations', href: '/admin/translations', icon: Languages, badge: 8 },
+  { key: 'media', href: '/admin/media', icon: Image },
+  { key: 'social', href: '/admin/social', icon: Share2, badge: 3 },
+  { key: 'ai', href: '/admin/ai-copilot', icon: Sparkles },
+  { key: 'analytics', href: '/admin/analytics', icon: BarChart3 },
+  { key: 'orders', href: '/admin/orders', icon: ShoppingBag },
+  { key: 'customers', href: '/admin/customers', icon: Users },
 ]
 
 const notifications = [
@@ -65,12 +68,13 @@ const notifications = [
 
 function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (v: boolean) => void }) {
   const pathname = usePathname()
+  const { locale, dictionary } = useLocale()
 
   return (
     <div className="flex h-full flex-col">
       {/* Logo */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-border/50">
-        <Link href="/admin" className="flex items-center gap-3">
+        <Link href={localizeHref('/admin', locale)} className="flex items-center gap-3">
           <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-plum to-rose-mauve">
             <span className="font-serif text-lg font-bold text-white">J</span>
           </div>
@@ -102,11 +106,11 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       <ScrollArea className="flex-1 py-4">
         <nav className="space-y-1 px-3">
           {navigation.map((item) => {
-            const isActive = pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))
+            const isActive = pathname === localizeHref(item.href, locale) || (item.href !== '/admin' && pathname.startsWith(localizeHref(item.href, locale)))
             return (
               <Link
-                key={item.name}
-                href={item.href}
+                key={item.key}
+                href={localizeHref(item.href, locale)}
                 className={cn(
                   'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                   isActive
@@ -123,7 +127,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
                       exit={{ opacity: 0, width: 0 }}
                       className="flex-1 overflow-hidden whitespace-nowrap"
                     >
-                      {item.name}
+                      {dictionary.admin.nav[item.key]}
                     </motion.span>
                   )}
                 </AnimatePresence>
@@ -167,6 +171,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { locale, dictionary } = useLocale()
 
   return (
     <div className="flex h-screen bg-background">
@@ -203,14 +208,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div className="hidden sm:flex relative w-64 lg:w-80">
               <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
               <Input
-                placeholder="Search products, orders, customers..."
+                placeholder={dictionary.admin.searchPlaceholder}
                 className="pl-9 bg-secondary/50 border-transparent focus:border-border"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            {/* Notifications */}
+            {/* {dictionary.admin.notifications.title} */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative">
@@ -222,9 +227,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-80">
                 <DropdownMenuLabel className="flex items-center justify-between">
-                  Notifications
+                  {dictionary.admin.notifications.title}
                   <Button variant="ghost" size="sm" className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground">
-                    Mark all read
+                    {dictionary.admin.notifications.markRead}
                   </Button>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -243,14 +248,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             {/* Settings */}
             <Button variant="ghost" size="icon" asChild>
-              <Link href="/admin/settings">
+              <Link href={localizeHref('/admin/settings', locale)}>
                 <Settings className="h-5 w-5" />
               </Link>
             </Button>
 
             {/* Back to Store */}
             <Button variant="outline" size="sm" asChild className="hidden sm:flex">
-              <Link href="/">
+              <Link href={localizeHref('/', locale)}>
                 <LogOut className="h-4 w-4 mr-2" />
                 Store
               </Link>

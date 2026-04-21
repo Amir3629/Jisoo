@@ -9,6 +9,8 @@ import { formatPrice } from '@/lib/data'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
 import { cn } from '@/lib/utils'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 
 interface ProductCardProps {
@@ -21,6 +23,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false)
   const { addToCart } = useCart()
   const { region } = useRegion()
+  const { locale, dictionary } = useLocale()
 
   const availability = product.regionAvailability[region]
   const isBuyable = availability === 'visible_and_buyable'
@@ -50,7 +53,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       onMouseLeave={() => setIsHovered(false)}
       className="group"
     >
-      <Link href={`/product/${product.slug}`} className="block">
+      <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
         {/* Image Container */}
         <div className="relative aspect-[3/4] rounded-[1.6rem] overflow-hidden mb-4 shadow-editorial">
           {/* Product Image */}
@@ -190,7 +193,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* Region Notice */}
           {isVisibleOnly && (
             <p className="text-xs text-rose-mauve mt-2">
-              Not available for purchase in your region
+              {dictionary.regionMessages.visible_but_not_buyable}
             </p>
           )}
         </div>

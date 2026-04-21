@@ -18,9 +18,9 @@ interface RegionContextType {
 
 const RegionContext = createContext<RegionContextType | undefined>(undefined)
 
-export function RegionProvider({ children }: { children: ReactNode }) {
+export function RegionProvider({ children, initialLanguage = 'en' }: { children: ReactNode; initialLanguage?: Language }) {
   const [region, setRegionState] = useState<Region>('EU')
-  const [language, setLanguageState] = useState<Language>('en')
+  const [language, setLanguageState] = useState<Language>(initialLanguage)
 
   const config = regionConfigs[region]
 

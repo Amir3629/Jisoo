@@ -7,16 +7,19 @@ import { Search, User, Heart, ShoppingBag, Menu, X, ChevronDown, Globe } from 'l
 import { cn } from '@/lib/utils'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
+import { LocaleSwitcher } from '@/components/i18n/locale-switcher'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 import { SearchModal } from '@/components/search/search-modal'
 import { RegionSelector } from '@/components/layout/region-selector'
 import { categories } from '@/lib/data'
 
-const navLinks = [
-  { href: '/shop', label: 'Shop', hasDropdown: true },
-  { href: '/shop/new-arrivals', label: 'New' },
-  { href: '/shop/best-sellers', label: 'Best Sellers' },
-  { href: '/about', label: 'Our Story' },
+const navLinks: Array<{ href: string; key: 'shop' | 'new' | 'bestSellers' | 'story'; hasDropdown?: boolean }> = [
+  { href: '/shop', key: 'shop', hasDropdown: true },
+  { href: '/shop/new-arrivals', key: 'new' },
+  { href: '/shop/best-sellers', key: 'bestSellers' },
+  { href: '/about', key: 'story' },
 ]
 
 export function Header() {
@@ -27,6 +30,7 @@ export function Header() {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const { itemCount, setIsCartOpen } = useCart()
   const { config } = useRegion()
+  const { locale, dictionary } = useLocale()
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
@@ -59,9 +63,10 @@ export function Header() {
         <div className="hidden lg:block bg-gradient-to-r from-plum to-[#5d2b57] text-warm-ivory">
           <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
             <p className="font-light tracking-wide">
-              Free shipping on orders over {config.currencySymbol}100
+              {dictionary.header.freeShipping.replace('{{amount}}', `${config.currencySymbol}100`)}
             </p>
             <div className="flex items-center gap-6">
+              <LocaleSwitcher />
               <button
                 onClick={() => setIsRegionOpen(true)}
                 className="flex items-center gap-1.5 hover:text-blush-pink transition-colors"
@@ -70,8 +75,8 @@ export function Header() {
                 <span>{config.name}</span>
                 <ChevronDown className="w-3 h-3" />
               </button>
-              <Link href="/help" className="hover:text-blush-pink transition-colors">
-                Help
+              <Link href={localizeHref('/help', locale)} className="hover:text-blush-pink transition-colors">
+                {dictionary.header.nav.help}
               </Link>
             </div>
           </div>
@@ -84,13 +89,13 @@ export function Header() {
             <button
               onClick={() => setIsMobileMenuOpen(true)}
               className="lg:hidden p-2 -ml-2 text-charcoal hover:text-plum transition-colors"
-              aria-label="Open menu"
+              aria-label={dictionary.header.actions.openMenu}
             >
               <Menu className="w-6 h-6" />
             </button>
 
             {/* Logo */}
-            <Link href="/" className="flex-shrink-0 flex flex-col items-start">
+            <Link href={localizeHref('/', locale)} className="flex-shrink-0 flex flex-col items-start">
               <motion.h1
                 className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-plum"
                 whileHover={{ scale: 1.02 }}
@@ -113,7 +118,7 @@ export function Header() {
                   className="relative"
                 >
                   <Link
-                    href={link.href}
+                    href={localizeHref(link.href, locale)}
                     className={cn(
                       'text-sm font-medium tracking-[0.09em] transition-colors relative py-2',
                       'text-charcoal hover:text-plum',
@@ -124,7 +129,7 @@ export function Header() {
                     )}
                   >
                     <span className="flex items-center gap-1">
-                      {link.label}
+                      {dictionary.header.nav[link.key]}
                       {link.hasDropdown && (
                         <ChevronDown className="w-3.5 h-3.5" />
                       )}
@@ -145,7 +150,7 @@ export function Header() {
                           {categories.slice(0, 4).map(category => (
                             <div key={category.id}>
                               <Link
-                                href={`/shop/${category.slug}`}
+                                href={localizeHref(`/shop/${category.slug}`, locale)}
                                 className="font-medium text-charcoal hover:text-plum transition-colors"
                               >
                                 {category.name}
@@ -155,7 +160,7 @@ export function Header() {
                                   {category.subcategories.slice(0, 4).map(sub => (
                                     <li key={sub.id}>
                                       <Link
-                                        href={`/shop/${sub.slug}`}
+                                        href={localizeHref(`/shop/${sub.slug}`, locale)}
                                         className="text-sm text-muted-foreground hover:text-plum transition-colors"
                                       >
                                         {sub.name}
@@ -179,23 +184,23 @@ export function Header() {
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 text-charcoal hover:text-plum transition-colors"
-                aria-label="Search"
+                aria-label={dictionary.header.actions.search}
               >
                 <Search className="w-5 h-5" />
               </button>
 
               <Link
-                href="/account"
+                href={localizeHref('/account', locale)}
                 className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
-                aria-label="Account"
+                aria-label={dictionary.header.actions.account}
               >
                 <User className="w-5 h-5" />
               </Link>
 
               <Link
-                href="/wishlist"
+                href={localizeHref('/account/wishlist', locale)}
                 className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
-                aria-label="Wishlist"
+                aria-label={dictionary.header.actions.wishlist}
               >
                 <Heart className="w-5 h-5" />
               </Link>
@@ -203,7 +208,7 @@ export function Header() {
               <button
                 onClick={() => setIsCartOpen(true)}
                 className="relative p-2 text-charcoal hover:text-plum transition-colors"
-                aria-label="Cart"
+                aria-label={dictionary.header.actions.cart}
               >
                 <ShoppingBag className="w-5 h-5" />
                 {itemCount > 0 && (
@@ -256,18 +261,18 @@ export function Header() {
                   {navLinks.map(link => (
                     <Link
                       key={link.href}
-                      href={link.href}
+                      href={localizeHref(link.href, locale)}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="block text-lg font-medium text-charcoal hover:text-plum transition-colors"
                     >
-                      {link.label}
+                      {dictionary.header.nav[link.key]}
                     </Link>
                   ))}
                 </nav>
 
                 <div className="mt-8 pt-8 border-t border-blush-pink">
                   <Link
-                    href="/account"
+                    href={localizeHref('/account', locale)}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
                   >
@@ -275,7 +280,7 @@ export function Header() {
                     <span>Account</span>
                   </Link>
                   <Link
-                    href="/wishlist"
+                    href={localizeHref('/account/wishlist', locale)}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
                   >
