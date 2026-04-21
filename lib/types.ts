@@ -1,6 +1,6 @@
 // Region and Locale Types
 export type Region = 'UAE' | 'EU' | 'CA'
-export type Language = 'en' | 'ar' | 'fr' | 'de'
+export type Language = 'en' | 'ar' | 'fr' | 'de' | 'ko'
 export type Currency = 'AED' | 'EUR' | 'CAD'
 
 export interface RegionConfig {

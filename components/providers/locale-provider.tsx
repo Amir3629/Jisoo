@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, type ReactNode } from 'react'
-import type { Dictionary, Locale } from '@/lib/i18n'
+import { defaultLocale, dictionaries, type Dictionary, type Locale } from '@/lib/i18n'
 
 interface LocaleContextValue {
   locale: Locale
@@ -21,8 +21,12 @@ export function LocaleProvider({
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
 }
 
+const fallbackValue: LocaleContextValue = {
+  locale: defaultLocale,
+  dictionary: dictionaries[defaultLocale],
+  dir: 'ltr',
+}
+
 export function useLocale() {
-  const value = useContext(LocaleContext)
-  if (!value) throw new Error('useLocale must be used within LocaleProvider')
-  return value
+  return useContext(LocaleContext) ?? fallbackValue
 }

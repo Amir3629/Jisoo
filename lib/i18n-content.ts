@@ -132,6 +132,40 @@ export const i18nContent: Record<Locale, {
       preview: 'Aperçu',
     },
   },
+
+  ko: {
+    aiCustomer: {
+      title: 'JISOO AI 컨설턴트',
+      subtitle: '카탈로그와 지역 데이터를 기반으로 한 추천',
+      inputPlaceholder: '고민, 지역별 구매 가능 여부, 제품 비교를 물어보세요…',
+      startOver: '다시 시작',
+      typing: 'JISOO AI가 답변을 준비 중입니다…',
+      suggested: '추천 질문',
+    },
+    adminAi: {
+      title: 'AI 운영 코파일럿',
+      description: '로컬 카탈로그 데이터를 기반으로 제품 설명, 번역, 마케팅 문구, 태그를 생성합니다.',
+      generator: '설명 생성기',
+      translator: '번역 생성기',
+      marketer: '럭셔리 톤 리라이트',
+      tagging: '태그/카테고리 추천',
+      draft: '초안',
+      final: '최종',
+      apply: '적용',
+    },
+    translationCenter: {
+      title: '번역 센터',
+      description: '원문, AI 초안, 편집, 승인, 미리보기를 통합 관리합니다.',
+      search: '필드 검색…',
+      source: '원문',
+      target: '대상',
+      generate: '번역 생성',
+      improve: '럭셔리 톤 개선',
+      approve: '승인',
+      saveDraft: '초안 저장',
+      preview: '미리보기',
+    },
+  },
   de: {
     aiCustomer: {
       title: 'JISOO KI-Berater',

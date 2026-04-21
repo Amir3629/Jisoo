@@ -7,7 +7,7 @@ export const regionConfigs: Record<string, RegionConfig> = {
     name: 'United Arab Emirates',
     currency: 'AED',
     currencySymbol: 'AED',
-    languages: ['en', 'ar'],
+    languages: ['en', 'ar', 'ko'],
     defaultLanguage: 'en',
     isRTL: false,
   },
@@ -16,7 +16,7 @@ export const regionConfigs: Record<string, RegionConfig> = {
     name: 'Europe',
     currency: 'EUR',
     currencySymbol: '€',
-    languages: ['en', 'fr', 'de'],
+    languages: ['en', 'fr', 'de', 'ko'],
     defaultLanguage: 'en',
   },
   CA: {
@@ -24,7 +24,7 @@ export const regionConfigs: Record<string, RegionConfig> = {
     name: 'Canada',
     currency: 'CAD',
     currencySymbol: 'CA$',
-    languages: ['en', 'fr'],
+    languages: ['en', 'fr', 'ko'],
     defaultLanguage: 'en',
   },
 }

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-export const locales = ['en', 'ar', 'fr', 'de'] as const
+export const locales = ['en', 'ar', 'fr', 'de', 'ko'] as const
 export type Locale = (typeof locales)[number]
 
 export const defaultLocale: Locale = 'en'
@@ -81,7 +81,7 @@ export type Dictionary = {
   }
 }
 
-const dictionaries: Record<Locale, Dictionary> = {
+export const dictionaries: Record<Locale, Dictionary> = {
   en: {
     common: { language: 'Language', region: 'Region', shop: 'Shop', help: 'Help', store: 'Storefront', admin: 'Admin' },
     header: {
@@ -160,6 +160,33 @@ const dictionaries: Record<Locale, Dictionary> = {
       searchPlaceholder: 'Rechercher produits, commandes, clients...',
     },
   },
+
+  ko: {
+    common: { language: '언어', region: '지역', shop: '쇼핑', help: '도움말', store: '스토어프론트', admin: '관리자' },
+    header: {
+      freeShipping: '{{amount}} 이상 주문 시 무료 배송',
+      nav: { shop: '쇼핑', new: '신상품', bestSellers: '베스트셀러', story: '브랜드 스토리', help: '도움말' },
+      actions: { search: '검색', account: '계정', wishlist: '위시리스트', cart: '장바구니', openMenu: '메뉴 열기' },
+    },
+    footer: {
+      newsletterTitle: 'JISOO 뷰티 서클에 참여하세요',
+      newsletterBody: '신상품, 단독 혜택, K-뷰티 인사이트를 가장 먼저 받아보세요.',
+      emailPlaceholder: '이메일을 입력하세요',
+      subscribe: '구독하기',
+      subscribed: '구독해 주셔서 감사합니다! 뷰티 서클에 오신 것을 환영합니다.',
+    },
+    regionMessages: {
+      visible_and_buyable: '선택한 지역에서 구매 가능합니다',
+      visible_but_not_buyable: '노출 중이며, 해당 지역 구매는 곧 지원됩니다',
+      hidden: '선택한 지역에서는 제공되지 않습니다',
+      pending_review: '해당 지역 컴플라이언스 검토 중입니다',
+    },
+    admin: {
+      nav: { dashboard: '대시보드', suppliers: '공급사', products: '제품', regions: '지역', compliance: '컴플라이언스', translations: '번역', media: '미디어', social: '소셜', ai: 'AI 코파일럿', analytics: '분석', orders: '주문', customers: '고객' },
+      notifications: { title: '알림', markRead: '모두 읽음 처리' },
+      searchPlaceholder: '제품, 주문, 고객 검색...',
+    },
+  },
   de: {
     common: { language: 'Sprache', region: 'Region', shop: 'Shop', help: 'Hilfe', store: 'Storefront', admin: 'Admin' },
     header: {
@@ -188,6 +215,6 @@ const dictionaries: Record<Locale, Dictionary> = {
   },
 }
 
-export async function getDictionary(locale: Locale): Promise<Dictionary> {
+export function getDictionary(locale: Locale): Dictionary {
   return dictionaries[locale]
 }
