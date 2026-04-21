@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useLocale } from "@/components/providers/locale-provider";
 
 interface Address {
   id: string;
@@ -57,6 +58,8 @@ const initialAddresses: Address[] = [
 ];
 
 export default function AddressesPage() {
+  const { dictionary } = useLocale();
+  const c = dictionary.common;
   const [addresses, setAddresses] = useState<Address[]>(initialAddresses);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -76,18 +79,18 @@ export default function AddressesPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl">Saved Addresses</h2>
+        <h2 className="font-serif text-2xl">{c.savedAddresses}</h2>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-none">
               <Plus className="w-4 h-4 mr-2" />
-              Add Address
+              {c.addAddress}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
               <DialogTitle className="font-serif text-xl">
-                Add New Address
+                {c.addAddress}
               </DialogTitle>
             </DialogHeader>
             <form className="space-y-4 mt-4">
@@ -144,10 +147,10 @@ export default function AddressesPage() {
                   className="rounded-none flex-1"
                   onClick={() => setIsDialogOpen(false)}
                 >
-                  Cancel
+                  {c.cancel}
                 </Button>
                 <Button type="submit" className="rounded-none flex-1">
-                  Save Address
+                  {c.saveAddress}
                 </Button>
               </div>
             </form>
@@ -171,7 +174,7 @@ export default function AddressesPage() {
             {address.isDefault && (
               <div className="absolute top-4 right-4 flex items-center gap-1 text-xs text-primary">
                 <Check className="w-3 h-3" />
-                Default
+                {c.defaultLabel}
               </div>
             )}
             <div className="flex items-center gap-2 mb-3">
@@ -191,7 +194,7 @@ export default function AddressesPage() {
             <div className="flex gap-2 mt-4 pt-4 border-t border-border">
               <Button variant="ghost" size="sm" className="rounded-none">
                 <Pencil className="w-4 h-4 mr-1" />
-                Edit
+                {c.edit}
               </Button>
               {!address.isDefault && (
                 <>
@@ -201,7 +204,7 @@ export default function AddressesPage() {
                     className="rounded-none"
                     onClick={() => setDefaultAddress(address.id)}
                   >
-                    Set as Default
+                    {c.setAsDefault}
                   </Button>
                   <Button
                     variant="ghost"

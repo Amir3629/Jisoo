@@ -8,6 +8,8 @@ import Image from 'next/image'
 import { products } from '@/lib/data'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 interface SearchModalProps {
   isOpen: boolean
@@ -29,6 +31,7 @@ const popularCategories = [
 ]
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
+  const { locale, dictionary } = useLocale()
   const [query, setQuery] = useState('')
   const [results, setResults] = useState(products.slice(0, 4))
   const inputRef = useRef<HTMLInputElement>(null)
@@ -95,7 +98,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                     type="text"
                     value={query}
                     onChange={e => setQuery(e.target.value)}
-                    placeholder="Search for products, ingredients, concerns..."
+                    placeholder={dictionary.search.placeholder}
                     className={cn(
                       'w-full pl-12 pr-12 py-4 rounded-full',
                       'bg-white border border-blush-pink',
@@ -120,7 +123,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <div>
                         <h3 className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-4">
                           <TrendingUp className="w-4 h-4" />
-                          Trending Searches
+                          {dictionary.search.trendingSearches}
                         </h3>
                         <div className="flex flex-wrap gap-2">
                           {trendingSearches.map(term => (
@@ -143,13 +146,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                       <div>
                         <h3 className="flex items-center gap-2 text-sm font-medium text-muted-foreground mb-4">
                           <Clock className="w-4 h-4" />
-                          Popular Categories
+                          {dictionary.search.popularCategories}
                         </h3>
                         <div className="space-y-3">
                           {popularCategories.map(cat => (
                             <Link
                               key={cat.name}
-                              href={cat.href}
+                              href={localizeHref(cat.href, locale)}
                               onClick={onClose}
                               className="flex items-center gap-3 p-2 -mx-2 rounded-xl hover:bg-blush-pink/20 transition-colors"
                             >
@@ -168,13 +171,13 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   ) : (
                     <div>
                       <h3 className="text-sm font-medium text-muted-foreground mb-4">
-                        {results.length} results for &ldquo;{query}&rdquo;
+                        {results.length} {dictionary.search.resultsFor} &ldquo;{query}&rdquo;
                       </h3>
                       <div className="grid gap-4">
                         {results.map(product => (
                           <Link
                             key={product.id}
-                            href={`/product/${product.slug}`}
+                            href={localizeHref(`/product/${product.slug}`, locale)}
                             onClick={onClose}
                             className="flex items-center gap-4 p-3 -mx-3 rounded-xl hover:bg-blush-pink/20 transition-colors"
                           >
@@ -205,7 +208,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
 
                       {results.length > 0 && (
                         <Link
-                          href={`/shop?search=${encodeURIComponent(query)}`}
+                          href={localizeHref(`/shop?search=${encodeURIComponent(query)}`, locale)}
                           onClick={onClose}
                           className={cn(
                             'flex items-center justify-center gap-2 mt-6 py-3 rounded-full',
@@ -213,7 +216,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                             'hover:bg-plum/90 transition-colors'
                           )}
                         >
-                          View all results
+                          {dictionary.search.viewAllResults}
                           <ArrowRight className="w-4 h-4" />
                         </Link>
                       )}

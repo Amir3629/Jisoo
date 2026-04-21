@@ -24,7 +24,7 @@ const footerLinks = {
     { label: 'Track Order', href: '/account/orders' },
   ],
   company: [
-    { label: '{t.ourStory}', href: '/about' },
+    { label: 'Our Story', href: '/about' },
     { label: 'Korean Partners', href: '/about#partners' },
     { label: 'Sustainability', href: '/about/sustainability' },
     { label: 'Careers', href: '/careers' },
@@ -152,7 +152,7 @@ export function Footer() {
           {/* Link Columns */}
           <div>
             <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
-              Shop
+              {dictionary.common.shop}
             </h4>
             <ul className="space-y-3">
               {footerLinks.shop.map(link => (
@@ -161,7 +161,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
-                    {link.label}
+                      {link.label}
                   </Link>
                 </li>
               ))}
@@ -197,7 +197,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
-                    {link.label}
+                    {link.label === 'Our Story' ? t.ourStory : link.label}
                   </Link>
                 </li>
               ))}

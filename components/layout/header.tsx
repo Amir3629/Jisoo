@@ -277,7 +277,7 @@ export function Header() {
                     className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
                   >
                     <User className="w-5 h-5" />
-                    <span>Account</span>
+                    <span>{dictionary.common.account}</span>
                   </Link>
                   <Link
                     href={localizeHref('/account/wishlist', locale)}
@@ -285,7 +285,7 @@ export function Header() {
                     className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
                   >
                     <Heart className="w-5 h-5" />
-                    <span>Wishlist</span>
+                    <span>{dictionary.common.wishlist}</span>
                   </Link>
                   <button
                     onClick={() => {

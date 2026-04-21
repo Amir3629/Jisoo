@@ -10,6 +10,7 @@ import { products } from "@/lib/data";
 import { useCart } from "@/components/providers/cart-provider";
 import { useRegion } from "@/components/providers/region-provider";
 import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 export default function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState(products.slice(0, 8));
@@ -36,7 +37,7 @@ export default function WishlistPage() {
           {c.wishlistEmptyBody}
         </p>
         <Button asChild className="rounded-none">
-          <Link href="/shop">
+          <Link href={localizeHref('/shop', locale)}>
             {c.discoverProducts}
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
@@ -66,7 +67,7 @@ export default function WishlistPage() {
               className="group bg-card border border-border"
             >
               <div className="relative aspect-square overflow-hidden">
-                <Link href={`/product/${product.slug}`}>
+                <Link href={localizeHref(`/product/${product.slug}`, locale)}>
                   <Image
                     src={product.images[0]?.src || "/placeholder-product.jpg"}
                     alt={product.name}
@@ -83,7 +84,7 @@ export default function WishlistPage() {
                 {(product.isNew || product.isBestSeller) && (
                   <div className="absolute top-3 left-3">
                     <span className="px-2 py-1 text-xs bg-primary text-primary-foreground">
-                      {product.isBestSeller ? "Best Seller" : "New"}
+                      {product.isBestSeller ? c.bestSeller : c.new}
                     </span>
                   </div>
                 )}
@@ -92,7 +93,7 @@ export default function WishlistPage() {
                 <p className="text-xs text-muted-foreground uppercase tracking-wider mb-1">
                   {product.brand}
                 </p>
-                <Link href={`/product/${product.slug}`}>
+                <Link href={localizeHref(`/product/${product.slug}`, locale)}>
                   <h3 className="font-medium text-sm mb-2 line-clamp-2 hover:text-primary transition-colors">
                     {product.name}
                   </h3>
