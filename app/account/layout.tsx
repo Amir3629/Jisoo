@@ -12,6 +12,8 @@ import {
   Settings,
   LogOut
 } from "lucide-react";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 const navItems = [
   { href: "/account", label: "Overview", icon: User },
@@ -28,6 +30,7 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { locale } = useLocale();
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">
@@ -50,11 +53,12 @@ export default function AccountLayout({
           >
             <nav className="space-y-1">
               {navItems.map((item) => {
-                const isActive = pathname === item.href;
+                const localized = localizeHref(item.href, locale);
+                const isActive = pathname === localized;
                 return (
                   <Link
                     key={item.href}
-                    href={item.href}
+                    href={localized}
                     className={`flex items-center gap-3 px-4 py-3 text-sm transition-colors ${
                       isActive
                         ? "bg-primary text-primary-foreground"

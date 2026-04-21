@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { Instagram, Facebook, Youtube, Send } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 const footerLinks = {
   shop: [
@@ -45,6 +47,7 @@ const socialLinks = [
 export function Footer() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const { locale, dictionary } = useLocale()
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -67,10 +70,10 @@ export function Footer() {
             className="max-w-2xl mx-auto text-center"
           >
             <h3 className="text-2xl lg:text-3xl font-serif mb-3">
-              Join the JISOO Beauty Circle
+              {dictionary.footer.newsletterTitle}
             </h3>
             <p className="text-blush-pink/80 mb-8">
-              Be the first to know about new arrivals, exclusive offers, and K-beauty secrets.
+              {dictionary.footer.newsletterBody}
             </p>
 
             {isSubscribed ? (
@@ -79,7 +82,7 @@ export function Footer() {
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-champagne-gold font-medium"
               >
-                Thank you for subscribing! Welcome to the beauty circle.
+                {dictionary.footer.subscribed}
               </motion.p>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -87,7 +90,7 @@ export function Footer() {
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
-                  placeholder="Enter your email"
+                  placeholder={dictionary.footer.emailPlaceholder}
                   className={cn(
                     'flex-1 px-5 py-3.5 rounded-full',
                     'bg-warm-ivory/10 border border-warm-ivory/20',
@@ -108,7 +111,7 @@ export function Footer() {
                     'flex items-center justify-center gap-2'
                   )}
                 >
-                  <span>Subscribe</span>
+                  <span>{dictionary.footer.subscribe}</span>
                   <Send className="w-4 h-4" />
                 </motion.button>
               </form>
@@ -122,7 +125,7 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
-            <Link href="/" className="inline-block">
+            <Link href={localizeHref('/', locale)} className="inline-block">
               <h2 className="text-3xl font-serif font-bold mb-4">JISOO</h2>
             </Link>
             <p className="text-blush-pink/70 text-sm leading-relaxed mb-6">
@@ -154,7 +157,7 @@ export function Footer() {
               {footerLinks.shop.map(link => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
                     {link.label}
@@ -172,7 +175,7 @@ export function Footer() {
               {footerLinks.help.map(link => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
                     {link.label}
@@ -190,7 +193,7 @@ export function Footer() {
               {footerLinks.company.map(link => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
                     {link.label}
@@ -208,7 +211,7 @@ export function Footer() {
               {footerLinks.legal.map(link => (
                 <li key={link.href}>
                   <Link
-                    href={link.href}
+                    href={localizeHref(link.href, locale)}
                     className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
                   >
                     {link.label}
