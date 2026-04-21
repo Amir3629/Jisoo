@@ -11,6 +11,7 @@ import { getProductBySlug, getRelatedProducts, getProductReviews, formatPrice } 
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 import {
   Heart, Share2, Star, Minus, Plus, Check, ChevronDown,
   Droplets, Shield, Sparkles, Clock, Leaf, Info, MessageCircle
@@ -58,7 +59,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         <Header />
         <div className="pt-32 pb-24 text-center">
           <h1 className="text-2xl font-serif text-charcoal">{dictionary.common.productNotFound}</h1>
-          <Link href="/shop" className="mt-4 inline-block text-plum hover:text-rose-mauve">
+          <Link href={localizeHref('/shop', locale)} className="mt-4 inline-block text-plum hover:text-rose-mauve">
             {dictionary.common.backToShop}
           </Link>
         </div>
@@ -85,15 +86,15 @@ export default function ProductPage({ params }: ProductPageProps) {
       <div className="pt-28 lg:pt-32 pb-4 bg-nude-beige/30">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <nav className="flex items-center gap-2 text-sm">
-            <Link href="/" className="text-muted-foreground hover:text-plum transition-colors">
-              Home
+            <Link href={localizeHref('/', locale)} className="text-muted-foreground hover:text-plum transition-colors">
+              {dictionary.product.breadcrumbHome}
             </Link>
             <span className="text-muted-foreground">/</span>
-            <Link href="/shop" className="text-muted-foreground hover:text-plum transition-colors">
-              Shop
+            <Link href={localizeHref('/shop', locale)} className="text-muted-foreground hover:text-plum transition-colors">
+              {dictionary.product.breadcrumbShop}
             </Link>
             <span className="text-muted-foreground">/</span>
-            <Link href={`/shop/${product.category}`} className="text-muted-foreground hover:text-plum transition-colors capitalize">
+            <Link href={localizeHref(`/shop/${product.category}`, locale)} className="text-muted-foreground hover:text-plum transition-colors capitalize">
               {product.category}
             </Link>
             <span className="text-muted-foreground">/</span>
@@ -227,9 +228,9 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <div className="flex items-start gap-3">
                     <Info className="w-5 h-5 text-rose-mauve flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-charcoal">Not available in your region</p>
+                      <p className="font-medium text-charcoal">{dictionary.product.notAvailableInRegionTitle}</p>
                       <p className="text-sm text-muted-foreground mt-1">
-                        This product is currently visible but not available for purchase in your region.
+                        {dictionary.product.notAvailableInRegionBody}
                       </p>
                     </div>
                   </div>
@@ -260,7 +261,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               {/* Variants */}
               {product.variants && product.variants.length > 0 && (
                 <div className="mt-8">
-                  <h3 className="text-sm font-medium text-charcoal mb-3">Select Shade</h3>
+                  <h3 className="text-sm font-medium text-charcoal mb-3">{dictionary.product.selectShade}</h3>
                   <div className="flex flex-wrap gap-2">
                     {product.variants.map(variant => (
                       <button
@@ -336,7 +337,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <span>Share</span>
                 </button>
                 <Link
-                  href="/assistant"
+                  href={localizeHref('/ai-consultant', locale)}
                   className="flex items-center gap-2 text-rose-mauve hover:text-plum transition-colors"
                 >
                   <MessageCircle className="w-4 h-4" />

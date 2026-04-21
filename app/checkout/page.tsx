@@ -19,12 +19,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 type CheckoutStep = "information" | "shipping" | "payment";
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
   const { formatPrice } = useRegion();
+  const { locale, dictionary } = useLocale();
+  const c = dictionary.common;
   const [step, setStep] = useState<CheckoutStep>("information");
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
@@ -71,10 +75,10 @@ export default function CheckoutPage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button asChild variant="outline" className="rounded-none">
-                <Link href="/account/orders">View Order</Link>
+                <Link href={localizeHref('/account/orders', locale)}>{c.viewOrder}</Link>
               </Button>
               <Button asChild className="rounded-none">
-                <Link href="/shop">Continue Shopping</Link>
+                <Link href={localizeHref('/shop', locale)}>{c.continueShopping}</Link>
               </Button>
             </div>
           </motion.div>
@@ -87,12 +91,12 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-background pt-32 pb-20">
         <div className="container max-w-2xl mx-auto px-4 text-center">
-          <h1 className="font-serif text-3xl mb-4">Your cart is empty</h1>
+          <h1 className="font-serif text-3xl mb-4">{dictionary.cart.emptyTitle}</h1>
           <p className="text-muted-foreground mb-8">
-            Add some products to your cart before checking out.
+            {dictionary.cart.emptyBody}
           </p>
           <Button asChild className="rounded-none">
-            <Link href="/shop">Shop Now</Link>
+            <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
           </Button>
         </div>
       </div>
@@ -104,8 +108,8 @@ export default function CheckoutPage() {
       <div className="container max-w-6xl mx-auto px-4">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm mb-8">
-          <Link href="/cart" className="text-muted-foreground hover:text-foreground transition-colors">
-            Cart
+          <Link href={localizeHref('/cart', locale)} className="text-muted-foreground hover:text-foreground transition-colors">
+            {dictionary.cart.title}
           </Link>
           {steps.map((s, i) => (
             <div key={s.key} className="flex items-center gap-2">

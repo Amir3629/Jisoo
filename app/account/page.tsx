@@ -6,6 +6,8 @@ import Image from "next/image";
 import { ShoppingBag, Heart, MapPin, ArrowRight, Gift, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { products } from "@/lib/data";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 const recentOrders = [
   {
@@ -25,6 +27,8 @@ const recentOrders = [
 ];
 
 export default function AccountPage() {
+  const { locale, dictionary } = useLocale();
+  const c = dictionary.common;
   const wishlistItems = products.slice(0, 3);
 
   return (
@@ -33,7 +37,7 @@ export default function AccountPage() {
       <div className="bg-card border border-border p-6">
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="font-serif text-2xl mb-2">Welcome back, Sarah</h2>
+          <h2 className="font-serif text-2xl mb-2">Welcome back, Sarah</h2>
             <p className="text-muted-foreground">
               Member since November 2024
             </p>
@@ -58,7 +62,7 @@ export default function AccountPage() {
         >
           <ShoppingBag className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">12</p>
-          <p className="text-sm text-muted-foreground">Total Orders</p>
+          <p className="text-sm text-muted-foreground">{c.totalOrders}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -68,7 +72,7 @@ export default function AccountPage() {
         >
           <Heart className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">8</p>
-          <p className="text-sm text-muted-foreground">Wishlist Items</p>
+          <p className="text-sm text-muted-foreground">{c.wishlistItems}</p>
         </motion.div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -78,19 +82,19 @@ export default function AccountPage() {
         >
           <Gift className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">450</p>
-          <p className="text-sm text-muted-foreground">Reward Points</p>
+          <p className="text-sm text-muted-foreground">{c.rewardPoints}</p>
         </motion.div>
       </div>
 
       {/* Recent Orders */}
       <div className="bg-card border border-border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-xl">Recent Orders</h3>
+          <h3 className="font-serif text-xl">{c.recentOrders}</h3>
           <Link
-            href="/account/orders"
+            href={localizeHref('/account/orders', locale)}
             className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
           >
-            View All
+            {c.viewAll}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -120,12 +124,12 @@ export default function AccountPage() {
       {/* Wishlist Preview */}
       <div className="bg-card border border-border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-xl">Wishlist</h3>
+          <h3 className="font-serif text-xl">{c.wishlist}</h3>
           <Link
-            href="/account/wishlist"
+            href={localizeHref('/account/wishlist', locale)}
             className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
           >
-            View All
+            {c.viewAll}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -133,7 +137,7 @@ export default function AccountPage() {
           {wishlistItems.map((product) => (
             <Link
               key={product.id}
-              href={`/product/${product.slug}`}
+              href={localizeHref(`/product/${product.slug}`, locale)}
               className="group"
             >
               <div className="relative aspect-square bg-muted mb-3 overflow-hidden">
@@ -161,9 +165,9 @@ export default function AccountPage() {
       {/* Saved Addresses */}
       <div className="bg-card border border-border p-6">
         <div className="flex items-center justify-between mb-6">
-          <h3 className="font-serif text-xl">Saved Addresses</h3>
+          <h3 className="font-serif text-xl">{c.savedAddresses}</h3>
           <Link
-            href="/account/addresses"
+            href={localizeHref('/account/addresses', locale)}
             className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
           >
             Manage
@@ -206,7 +210,7 @@ export default function AccountPage() {
           As a Gold member, you&apos;re earning 2x points on all purchases through December 31st.
         </p>
         <Button asChild className="rounded-none">
-          <Link href="/shop">Shop Now</Link>
+          <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
         </Button>
       </div>
     </div>

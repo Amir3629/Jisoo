@@ -7,9 +7,12 @@ import Image from 'next/image'
 import { useCart } from '@/components/providers/cart-provider'
 import { formatPrice } from '@/lib/data'
 import { cn } from '@/lib/utils'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 export function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity } = useCart()
+  const { locale, dictionary } = useLocale()
 
   return (
     <AnimatePresence>
@@ -37,7 +40,7 @@ export function CartDrawer() {
               <div className="flex items-center gap-3">
                 <ShoppingBag className="w-5 h-5 text-plum" />
                 <h2 className="text-lg font-serif font-semibold text-charcoal">
-                  Your Cart ({cart.items.length})
+                  {dictionary.cart.title} ({cart.items.length})
                 </h2>
               </div>
               <button
@@ -55,12 +58,12 @@ export function CartDrawer() {
                   <div className="w-20 h-20 rounded-full bg-blush-pink/30 flex items-center justify-center mb-4">
                     <ShoppingBag className="w-8 h-8 text-rose-mauve" />
                   </div>
-                  <h3 className="text-lg font-medium text-charcoal mb-2">Your cart is empty</h3>
+                  <h3 className="text-lg font-medium text-charcoal mb-2">{dictionary.cart.emptyTitle}</h3>
                   <p className="text-muted-foreground mb-6">
-                    Discover our curated K-beauty collection
+                    {dictionary.cart.emptyBody}
                   </p>
                   <Link
-                    href="/shop"
+                    href={localizeHref('/shop', locale)}
                     onClick={() => setIsCartOpen(false)}
                     className={cn(
                       'px-6 py-3 rounded-full',
@@ -68,7 +71,7 @@ export function CartDrawer() {
                       'hover:bg-plum/90 transition-colors'
                     )}
                   >
-                    Start Shopping
+                    {dictionary.common.shopNow}
                   </Link>
                 </div>
               ) : (
@@ -95,7 +98,7 @@ export function CartDrawer() {
                       {/* Product Info */}
                       <div className="flex-1 min-w-0">
                         <Link
-                          href={`/product/${item.product.slug}`}
+                          href={localizeHref(`/product/${item.product.slug}`, locale)}
                           onClick={() => setIsCartOpen(false)}
                           className="font-medium text-charcoal hover:text-plum transition-colors line-clamp-1"
                         >
@@ -185,7 +188,7 @@ export function CartDrawer() {
                 {/* Actions */}
                 <div className="space-y-3 pt-2">
                   <Link
-                    href="/checkout"
+                    href={localizeHref('/checkout', locale)}
                     onClick={() => setIsCartOpen(false)}
                     className={cn(
                       'block w-full py-4 rounded-full text-center font-medium',
@@ -193,10 +196,10 @@ export function CartDrawer() {
                       'hover:bg-plum/90 transition-colors'
                     )}
                   >
-                    Checkout
+                    {dictionary.cart.proceedToCheckout}
                   </Link>
                   <Link
-                    href="/cart"
+                    href={localizeHref('/cart', locale)}
                     onClick={() => setIsCartOpen(false)}
                     className={cn(
                       'block w-full py-4 rounded-full text-center font-medium',
@@ -204,7 +207,7 @@ export function CartDrawer() {
                       'hover:bg-plum/5 transition-colors'
                     )}
                   >
-                    View Cart
+                    {dictionary.cart.title}
                   </Link>
                 </div>
 

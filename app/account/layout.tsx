@@ -30,7 +30,7 @@ export default function AccountLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { locale } = useLocale();
+  const { locale, dictionary } = useLocale();
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-20">
@@ -40,7 +40,7 @@ export default function AccountLayout({
           animate={{ opacity: 1, y: 0 }}
           className="font-serif text-4xl md:text-5xl text-center mb-12"
         >
-          My Account
+          {dictionary.common.account}
         </motion.h1>
 
         <div className="grid lg:grid-cols-4 gap-8">
@@ -72,7 +72,7 @@ export default function AccountLayout({
               })}
               <button className="flex items-center gap-3 px-4 py-3 text-sm text-muted-foreground hover:bg-muted hover:text-foreground w-full transition-colors">
                 <LogOut className="w-4 h-4" />
-                Sign Out
+                {dictionary.common.signOut}
               </button>
             </nav>
           </motion.aside>

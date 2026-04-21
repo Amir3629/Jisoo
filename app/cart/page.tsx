@@ -8,10 +8,15 @@ import { useCart } from "@/components/providers/cart-provider";
 import { useRegion } from "@/components/providers/region-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal, itemCount } = useCart();
-  const { currency, formatPrice } = useRegion();
+  const { formatPrice } = useRegion();
+  const { locale, dictionary } = useLocale();
+  const c = dictionary.common;
+  const t = dictionary.cart;
 
   const shipping = subtotal > 50 ? 0 : 5.99;
   const total = subtotal + shipping;
@@ -28,13 +33,13 @@ export default function CartPage() {
             <div className="w-24 h-24 mx-auto mb-8 rounded-full bg-muted flex items-center justify-center">
               <ShoppingBag className="w-12 h-12 text-muted-foreground" />
             </div>
-            <h1 className="font-serif text-3xl mb-4">Your Cart is Empty</h1>
+            <h1 className="font-serif text-3xl mb-4">{t.emptyTitle}</h1>
             <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-              Discover our curated collection of premium Korean beauty products and start your skincare journey.
+              {t.emptyBody}
             </p>
             <Button asChild size="lg" className="rounded-none">
-              <Link href="/shop">
-                Continue Shopping
+              <Link href={localizeHref('/shop', locale)}>
+                {c.continueShopping}
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
             </Button>
@@ -52,7 +57,7 @@ export default function CartPage() {
           animate={{ opacity: 1, y: 0 }}
           className="font-serif text-4xl md:text-5xl text-center mb-4"
         >
-          Shopping Cart
+          {t.title}
         </motion.h1>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
@@ -60,7 +65,7 @@ export default function CartPage() {
           transition={{ delay: 0.1 }}
           className="text-muted-foreground text-center mb-12"
         >
-          {itemCount} {itemCount === 1 ? "item" : "items"} in your cart
+          {itemCount} {c.items}
         </motion.p>
 
         <div className="grid lg:grid-cols-3 gap-12">
@@ -151,31 +156,31 @@ export default function CartPage() {
             className="lg:sticky lg:top-32 h-fit"
           >
             <div className="bg-card border border-border p-6 rounded-sm">
-              <h2 className="font-serif text-xl mb-6">Order Summary</h2>
+              <h2 className="font-serif text-xl mb-6">{t.orderSummary}</h2>
               
               {/* Promo Code */}
               <div className="mb-6">
                 <label className="text-sm text-muted-foreground mb-2 block">
-                  Promo Code
+                  {t.promoCode}
                 </label>
                 <div className="flex gap-2">
                   <Input
-                    placeholder="Enter code"
+                    placeholder={t.enterCode}
                     className="rounded-none flex-1"
                   />
                   <Button variant="outline" className="rounded-none">
-                    Apply
+                    {t.apply}
                   </Button>
                 </div>
               </div>
 
               <div className="space-y-3 py-4 border-t border-border">
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="text-muted-foreground">{t.subtotal}</span>
                   <span>{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="text-muted-foreground">{t.shipping}</span>
                   <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
                 </div>
                 {shipping > 0 && (
@@ -186,13 +191,13 @@ export default function CartPage() {
               </div>
 
               <div className="flex justify-between py-4 border-t border-border font-medium">
-                <span>Total</span>
+                <span>{t.total}</span>
                 <span>{formatPrice(total)}</span>
               </div>
 
               <Button asChild className="w-full rounded-none mt-4" size="lg">
-                <Link href="/checkout">
-                  Proceed to Checkout
+                <Link href={localizeHref('/checkout', locale)}>
+                  {t.proceedToCheckout}
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
               </Button>

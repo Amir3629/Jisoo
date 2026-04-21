@@ -13,6 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useLocale } from "@/components/providers/locale-provider";
 
 interface PaymentMethod {
   id: string;
@@ -40,6 +41,8 @@ const initialPaymentMethods: PaymentMethod[] = [
 ];
 
 export default function PaymentPage() {
+  const { dictionary } = useLocale();
+  const c = dictionary.common;
   const [paymentMethods, setPaymentMethods] = useState<PaymentMethod[]>(
     initialPaymentMethods
   );
@@ -87,18 +90,18 @@ export default function PaymentPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl">Payment Methods</h2>
+        <h2 className="font-serif text-2xl">{c.paymentMethods}</h2>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button className="rounded-none">
               <Plus className="w-4 h-4 mr-2" />
-              Add Card
+              {c.addCard}
             </Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
               <DialogTitle className="font-serif text-xl">
-                Add Payment Method
+                {c.addCard}
               </DialogTitle>
             </DialogHeader>
             <form className="space-y-4 mt-4">
@@ -143,10 +146,10 @@ export default function PaymentPage() {
                   className="rounded-none flex-1"
                   onClick={() => setIsDialogOpen(false)}
                 >
-                  Cancel
+                  {c.cancel}
                 </Button>
                 <Button type="submit" className="rounded-none flex-1">
-                  Add Card
+                  {c.addCard}
                 </Button>
               </div>
             </form>
@@ -170,7 +173,7 @@ export default function PaymentPage() {
             {method.isDefault && (
               <div className="absolute top-4 right-4 flex items-center gap-1 text-xs text-primary">
                 <Check className="w-3 h-3" />
-                Default
+                {c.defaultLabel}
               </div>
             )}
             <div className="flex items-center gap-4">
@@ -193,7 +196,7 @@ export default function PaymentPage() {
                     className="rounded-none"
                     onClick={() => setDefaultPayment(method.id)}
                   >
-                    Set as Default
+                    {c.setAsDefault}
                   </Button>
                   <Button
                     variant="ghost"
@@ -213,16 +216,16 @@ export default function PaymentPage() {
       {paymentMethods.length === 0 && (
         <div className="text-center py-12 bg-card border border-border">
           <CreditCard className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="font-serif text-xl mb-2">No payment methods</h3>
+          <h3 className="font-serif text-xl mb-2">{c.noPaymentMethods}</h3>
           <p className="text-muted-foreground mb-4">
-            Add a card to make checkout faster
+            {c.addCardToCheckout}
           </p>
           <Button
             onClick={() => setIsDialogOpen(true)}
             className="rounded-none"
           >
             <Plus className="w-4 h-4 mr-2" />
-            Add Card
+            {c.addCard}
           </Button>
         </div>
       )}

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronDown, Package, Truck, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 const orders = [
   {
@@ -89,6 +91,8 @@ const statusSteps = [
 ];
 
 export default function OrdersPage() {
+  const { locale, dictionary } = useLocale();
+  const c = dictionary.common;
   const [expandedOrder, setExpandedOrder] = useState<string | null>(null);
 
   const getStatusIndex = (status: string) => {
@@ -98,7 +102,7 @@ export default function OrdersPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl">Order History</h2>
+        <h2 className="font-serif text-2xl">{c.orderHistory}</h2>
         <p className="text-sm text-muted-foreground">{orders.length} orders</p>
       </div>
 
@@ -167,7 +171,7 @@ export default function OrdersPage() {
                   <div className="px-6 pb-6 border-t border-border pt-6">
                     {/* Status Timeline */}
                     <div className="mb-8">
-                      <h4 className="text-sm font-medium mb-4">Order Status</h4>
+                      <h4 className="text-sm font-medium mb-4">{c.orderStatus}</h4>
                       <div className="flex items-center justify-between">
                         {statusSteps.map((step, i) => {
                           const isCompleted = i <= getStatusIndex(order.status);
@@ -241,7 +245,7 @@ export default function OrdersPage() {
                     <div className="grid sm:grid-cols-2 gap-6 pt-6 border-t border-border">
                       <div>
                         <h4 className="text-sm font-medium mb-2">
-                          Shipping Address
+                          {c.shippingAddress}
                         </h4>
                         <p className="text-sm text-muted-foreground">
                           {order.shippingAddress}
@@ -249,7 +253,7 @@ export default function OrdersPage() {
                       </div>
                       <div>
                         <h4 className="text-sm font-medium mb-2">
-                          Tracking Number
+                          {c.trackingNumber}
                         </h4>
                         <p className="text-sm text-muted-foreground font-mono">
                           {order.trackingNumber}
@@ -260,10 +264,10 @@ export default function OrdersPage() {
                     {/* Actions */}
                     <div className="flex gap-4 mt-6 pt-6 border-t border-border">
                       <Button variant="outline" className="rounded-none">
-                        Track Package
+                        {c.trackPackage}
                       </Button>
                       <Button variant="outline" className="rounded-none">
-                        Buy Again
+                        {c.buyAgain}
                       </Button>
                     </div>
                   </div>
@@ -278,13 +282,13 @@ export default function OrdersPage() {
       {orders.length === 0 && (
         <div className="text-center py-16">
           <Package className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-          <h3 className="font-serif text-xl mb-2">No orders yet</h3>
+          <h3 className="font-serif text-xl mb-2">{c.noOrdersYet}</h3>
           <p className="text-muted-foreground mb-6">
-            Start shopping to see your orders here.
+            {c.startShoppingToSeeOrders}
           </p>
           <Button asChild className="rounded-none">
-            <Link href="/shop">
-              Shop Now
+            <Link href={localizeHref('/shop', locale)}>
+              {c.shopNow}
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
           </Button>
