@@ -17,6 +17,7 @@ export default function WishlistPage() {
   const { formatPrice } = useRegion();
   const { locale, dictionary } = useLocale();
   const t = dictionary.home;
+  const c = dictionary.common;
 
   const removeFromWishlist = (productId: string) => {
     setWishlistItems((items) => items.filter((item) => item.id !== productId));
@@ -30,13 +31,13 @@ export default function WishlistPage() {
     return (
       <div className="text-center py-16">
         <Heart className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-        <h3 className="font-serif text-xl mb-2">Your wishlist is empty</h3>
+        <h3 className="font-serif text-xl mb-2">{c.wishlistEmptyTitle}</h3>
         <p className="text-muted-foreground mb-6">
-          Save your favorite products to your wishlist for easy access later.
+          {c.wishlistEmptyBody}
         </p>
         <Button asChild className="rounded-none">
           <Link href="/shop">
-            Discover Products
+            {c.discoverProducts}
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
         </Button>
@@ -47,9 +48,9 @@ export default function WishlistPage() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="font-serif text-2xl">My Wishlist</h2>
+        <h2 className="font-serif text-2xl">{c.myWishlist}</h2>
         <p className="text-sm text-muted-foreground">
-          {wishlistItems.length} items
+          {wishlistItems.length} {c.items}
         </p>
       </div>
 
@@ -79,10 +80,10 @@ export default function WishlistPage() {
                 >
                   <X className="w-4 h-4" />
                 </button>
-                {product.badges && product.badges.length > 0 && (
+                {(product.isNew || product.isBestSeller) && (
                   <div className="absolute top-3 left-3">
                     <span className="px-2 py-1 text-xs bg-primary text-primary-foreground">
-                      {product.badges[0]}
+                      {product.isBestSeller ? "Best Seller" : "New"}
                     </span>
                   </div>
                 )}

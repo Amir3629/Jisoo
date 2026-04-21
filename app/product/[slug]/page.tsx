@@ -57,9 +57,9 @@ export default function ProductPage({ params }: ProductPageProps) {
       <main className="min-h-screen bg-warm-ivory">
         <Header />
         <div className="pt-32 pb-24 text-center">
-          <h1 className="text-2xl font-serif text-charcoal">Product not found</h1>
+          <h1 className="text-2xl font-serif text-charcoal">{dictionary.common.productNotFound}</h1>
           <Link href="/shop" className="mt-4 inline-block text-plum hover:text-rose-mauve">
-            Back to Shop
+            {dictionary.common.backToShop}
           </Link>
         </div>
         <Footer />

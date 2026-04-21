@@ -83,7 +83,7 @@ export default function AICopilotPage() {
         <CardContent className="space-y-3">
           <Textarea value={output} onChange={(e) => setOutput(e.target.value)} rows={6} />
           <div className="flex gap-2">
-            <Button variant="outline" onClick={() => navigator.clipboard.writeText(output)}><Copy className="h-4 w-4 mr-2" />{dictionary.common.language}</Button>
+            <Button variant="outline" onClick={() => navigator.clipboard.writeText(output)}><Copy className="h-4 w-4 mr-2" />{dictionary.common.copy}</Button>
             <Button>{copy.apply}</Button>
           </div>
         </CardContent>

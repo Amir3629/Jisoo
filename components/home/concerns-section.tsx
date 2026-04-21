@@ -26,8 +26,8 @@ export function ConcernsSection() {
     <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
-          kicker="Targeted Solutions"
-          title="{t.shopByConcern}"
+          kicker={t.targetedSolutions}
+          title={t.shopByConcern}
           description="Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
@@ -91,10 +91,10 @@ export function ConcernsSection() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
               <h3 className="font-serif font-semibold text-charcoal text-lg">
-                Shopping from a different region?
+                {t.shoppingDifferentRegion}
               </h3>
               <p className="text-muted-foreground mt-1">
-                Some products may vary by market. Check availability for UAE, Europe, or Canada.
+                {t.marketMayVary}
               </p>
             </div>
             <Link

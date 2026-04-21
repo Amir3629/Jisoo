@@ -18,8 +18,8 @@ export function TestimonialsSection() {
     <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
-          kicker="Customer Stories"
-          title="{t.lovedBy}"
+          kicker={t.customerStories}
+          title={t.lovedBy}
           description="Join thousands of satisfied customers who have discovered the transformative power of K-beauty."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
@@ -74,7 +74,7 @@ export function TestimonialsSection() {
                 {/* Product */}
                 {testimonial.productName && (
                   <p className="text-sm text-rose-mauve font-medium mb-4">
-                    Purchased: {testimonial.productName}
+                    {dictionary.common.purchased}: {testimonial.productName}
                   </p>
                 )}
 

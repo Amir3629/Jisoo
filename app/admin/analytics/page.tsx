@@ -129,7 +129,6 @@ export default function AnalyticsPage() {
       <PageHeader
         title="Analytics Dashboard"
         description="Comprehensive insights into your business performance"
-        icon={<TrendingUp className="h-6 w-6" />}
         actions={
           <div className="flex items-center gap-3">
             <Select value={dateRange} onValueChange={setDateRange}>

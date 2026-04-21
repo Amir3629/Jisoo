@@ -2,6 +2,10 @@ import type { Metadata, Viewport } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
+import { LocaleProvider } from '@/components/providers/locale-provider'
+import { RegionProvider } from '@/components/providers/region-provider'
+import { CartProvider } from '@/components/providers/cart-provider'
+import { defaultLocale, dictionaries, getDirection } from '@/lib/i18n'
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -48,7 +52,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} bg-warm-ivory`}>
       <body className="font-sans antialiased">
-        {children}
+        <LocaleProvider value={{ locale: defaultLocale, dictionary: dictionaries[defaultLocale], dir: getDirection(defaultLocale) }}>
+          <RegionProvider initialLanguage={defaultLocale}>
+            <CartProvider>{children}</CartProvider>
+          </RegionProvider>
+        </LocaleProvider>
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>
