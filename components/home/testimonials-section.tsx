@@ -8,11 +8,10 @@ import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
-import { localizedUi } from '@/lib/localized-ui'
 
 export function TestimonialsSection() {
-  const { locale } = useLocale()
-  const t = localizedUi[locale]
+  const { locale, dictionary } = useLocale()
+  const t = dictionary.home
   const containerRef = useRef<HTMLDivElement>(null)
 
   return (

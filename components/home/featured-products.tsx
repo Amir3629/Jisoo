@@ -8,11 +8,10 @@ import { ProductCard } from '@/components/product/product-card'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
-import { localizedUi } from '@/lib/localized-ui'
 
 export function FeaturedProducts() {
-  const { locale } = useLocale()
-  const t = localizedUi[locale]
+  const { locale, dictionary } = useLocale()
+  const t = dictionary.home
   const featuredProducts = products.filter(p => p.isBestSeller || p.isNew).slice(0, 8)
 
   return (

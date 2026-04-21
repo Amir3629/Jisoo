@@ -8,7 +8,6 @@ import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
-import { localizedUi } from '@/lib/localized-ui'
 
 const socialPosts = [
   {
@@ -60,8 +59,8 @@ const socialPosts = [
 ]
 
 export function SocialSection() {
-  const { locale } = useLocale()
-  const t = localizedUi[locale]
+  const { locale, dictionary } = useLocale()
+  const t = dictionary.home
   return (
     <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">

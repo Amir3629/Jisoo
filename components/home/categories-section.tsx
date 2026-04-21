@@ -8,11 +8,10 @@ import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
-import { localizedUi } from '@/lib/localized-ui'
 
 export function CategoriesSection() {
-  const { locale } = useLocale()
-  const t = localizedUi[locale]
+  const { locale, dictionary } = useLocale()
+  const t = dictionary.home
   const displayCategories = categories.slice(0, 4)
 
   return (

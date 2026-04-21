@@ -10,7 +10,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea'
 import { products } from '@/lib/data'
 import { useLocale } from '@/components/providers/locale-provider'
-import { i18nContent } from '@/lib/i18n-content'
 import { generateTranslationDraft, improveMarketingCopy } from '@/lib/ai/admin-ai'
 
 type Lang = 'ar' | 'fr' | 'de'
@@ -33,8 +32,8 @@ const uiFields = [
 ]
 
 export default function TranslationsPage() {
-  const { locale } = useLocale()
-  const copy = i18nContent[locale].translationCenter
+  const { locale, dictionary } = useLocale()
+  const copy = dictionary.admin.translationCenter
 
   const seedRows: Row[] = useMemo(() => {
     const productRows = products.slice(0, 6).flatMap((p) => [

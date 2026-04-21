@@ -10,14 +10,13 @@ import { products } from "@/lib/data";
 import { useCart } from "@/components/providers/cart-provider";
 import { useRegion } from "@/components/providers/region-provider";
 import { useLocale } from "@/components/providers/locale-provider";
-import { localizedUi } from "@/lib/localized-ui";
 
 export default function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState(products.slice(0, 8));
   const { addItem } = useCart();
   const { formatPrice } = useRegion();
-  const { locale } = useLocale();
-  const t = localizedUi[locale];
+  const { locale, dictionary } = useLocale();
+  const t = dictionary.home;
 
   const removeFromWishlist = (productId: string) => {
     setWishlistItems((items) => items.filter((item) => item.id !== productId));
@@ -116,7 +115,7 @@ export default function WishlistPage() {
                   size="sm"
                 >
                   <ShoppingBag className="w-4 h-4 mr-2" />
-                  {t.addToCart}
+                  {dictionary.cart.addToCart}
                 </Button>
               </div>
             </motion.div>

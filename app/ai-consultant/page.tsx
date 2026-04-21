@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { products, formatPrice } from '@/lib/data'
 import { useRegion } from '@/components/providers/region-provider'
 import { useLocale } from '@/components/providers/locale-provider'
-import { i18nContent } from '@/lib/i18n-content'
 import { runCustomerAssistant } from '@/lib/ai/customer-ai'
 import { localizeHref } from '@/lib/i18n'
 
@@ -20,9 +19,9 @@ interface Message {
 }
 
 export default function AIConsultantPage() {
-  const { locale } = useLocale()
+  const { locale, dictionary } = useLocale()
   const { region } = useRegion()
-  const copy = i18nContent[locale].aiCustomer
+  const copy = dictionary.ai
 
   const [messages, setMessages] = useState<Message[]>([{ id: 'a1', role: 'assistant', content: copy.subtitle }])
   const [input, setInput] = useState('')
