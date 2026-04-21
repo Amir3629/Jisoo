@@ -12,6 +12,7 @@ import { ConcernsSection } from '@/components/home/concerns-section'
 import { TestimonialsSection } from '@/components/home/testimonials-section'
 import { SocialSection } from '@/components/home/social-section'
 import { HomeAtmosphereCanvas } from '@/components/layout/home-atmosphere-canvas'
+import { FloatingAssistant } from '@/components/ai/floating-assistant'
 
 export function HomePageShell() {
   return (
@@ -32,6 +33,7 @@ export function HomePageShell() {
       <TestimonialsSection />
       <SocialSection />
       <Footer />
+      <FloatingAssistant />
     </main>
   )
 }
