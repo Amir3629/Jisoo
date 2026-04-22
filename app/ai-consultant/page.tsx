@@ -1,103 +1,130 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import Link from 'next/link'
-import { Bot, RotateCcw, Send, Sparkles, User } from 'lucide-react'
+import { Bot, Mic, MicOff, RotateCcw, Send, Sparkles, Volume2, VolumeX, Waves, Radio } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { products, formatPrice } from '@/lib/data'
 import { useRegion } from '@/components/providers/region-provider'
 import { useLocale } from '@/components/providers/locale-provider'
-import { runCustomerAssistant } from '@/lib/ai/customer-ai'
 import { localizeHref } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
+import { useConciergeController } from '@/components/ai/use-concierge-controller'
 
-interface Message {
-  id: string
-  role: 'user' | 'assistant'
-  content: string
-  slugs?: string[]
-  suggestions?: string[]
+const actionAccent: Record<string, string> = {
+  product: 'border-plum/25 bg-plum/5',
+  policy: 'border-rose-mauve/25 bg-rose-mauve/5',
+  support: 'border-champagne-gold/40 bg-champagne-gold/10',
+  navigation: 'border-border bg-white',
 }
 
 export default function AIConsultantPage() {
-  const { locale, dictionary } = useLocale()
+  const { locale } = useLocale()
   const { region } = useRegion()
-  const copy = dictionary.ai
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-  const [messages, setMessages] = useState<Message[]>([{ id: 'a1', role: 'assistant', content: copy.subtitle }])
-  const [input, setInput] = useState('')
-  const [loading, setLoading] = useState(false)
+  const {
+    messages,
+    input,
+    setInput,
+    send,
+    loading,
+    listening,
+    speaking,
+    voiceEnabled,
+    setVoiceEnabled,
+    toggleListening,
+    reset,
+    voiceModeType,
+    setVoiceModeType,
+    voiceSupported,
+  } = useConciergeController({ locale, region })
 
-  const send = (text?: string) => {
-    const q = (text ?? input).trim()
-    if (!q) return
-    setMessages((prev) => [...prev, { id: `${Date.now()}-u`, role: 'user', content: q }])
-    setInput('')
-    setLoading(true)
-    setTimeout(() => {
-      const result = runCustomerAssistant(q, region)
-      setMessages((prev) => [...prev, { id: `${Date.now()}-a`, role: 'assistant', content: result.answer, slugs: result.productSlugs, suggestions: result.suggestions }])
-      setLoading(false)
-    }, 700)
-  }
-
-  const bySlug = useMemo(() => new Map(products.map((p) => [p.slug, p])), [])
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
+  }, [messages, loading])
 
   return (
     <div className="min-h-screen bg-background pt-24 pb-10 px-4">
-      <div className="max-w-4xl mx-auto rounded-3xl border bg-card overflow-hidden">
-        <div className="p-4 border-b flex items-center justify-between">
+      <div className="max-w-5xl mx-auto rounded-3xl border border-rose-mauve/20 bg-card overflow-hidden shadow-editorial">
+        <div className="p-4 border-b flex items-center justify-between bg-gradient-to-r from-plum to-rose-mauve text-white">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-gradient-to-br from-plum to-rose-mauve text-white grid place-items-center"><Sparkles className="h-4 w-4" /></div>
+            <div className={cn('h-10 w-10 rounded-full bg-white/20 grid place-items-center', speaking && 'animate-pulse')}>
+              <Sparkles className="h-4 w-4" />
+            </div>
             <div>
-              <h1 className="font-serif text-lg">{copy.title}</h1>
-              <p className="text-xs text-muted-foreground">{copy.subtitle}</p>
+              <h1 className="font-serif text-lg">JISOO Beauty Concierge</h1>
+              <p className="text-xs text-white/80">{region} · JISOO-only knowledge</p>
             </div>
           </div>
-          <Button variant="ghost" size="sm" onClick={() => setMessages([{ id: 'a1', role: 'assistant', content: copy.subtitle }])}>
-            <RotateCcw className="h-4 w-4 mr-2" />{copy.startOver}
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : 'browser')}>
+              {voiceModeType}
+            </Button>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={() => setVoiceEnabled(prev => !prev)}>
+              {voiceEnabled ? <Volume2 className="h-4 w-4 mr-2" /> : <VolumeX className="h-4 w-4 mr-2" />} Voice
+            </Button>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={reset}>
+              <RotateCcw className="h-4 w-4 mr-2" />Reset
+            </Button>
+          </div>
         </div>
 
-        <div className="p-4 space-y-4 max-h-[60vh] overflow-auto">
-          {messages.map((m) => (
-            <div key={m.id} className={`flex gap-2 ${m.role === 'user' ? 'justify-end' : ''}`}>
-              {m.role === 'assistant' && <Bot className="h-5 w-5 text-plum mt-1" />}
-              <div className={`rounded-2xl px-4 py-3 text-sm max-w-[80%] ${m.role === 'user' ? 'bg-charcoal text-white' : 'bg-muted'}`}>
-                <p>{m.content}</p>
-                {m.slugs && (
+        <div className="px-4 py-2 border-b text-[11px] text-muted-foreground flex items-center gap-2">
+          {listening ? <Radio className="h-3.5 w-3.5 text-rose-mauve animate-pulse" /> : speaking ? <Waves className="h-3.5 w-3.5 text-plum" /> : <Bot className="h-3.5 w-3.5" />}
+          <span>{listening ? 'Listening…' : speaking ? 'Speaking…' : 'Ready for your question'}</span>
+        </div>
+
+        <div ref={scrollRef} className="p-4 space-y-4 max-h-[62vh] overflow-auto">
+          {messages.map((message) => (
+            <div key={message.id} className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : ''}`}>
+              <div className={`rounded-2xl px-4 py-3 text-sm max-w-[88%] ${message.role === 'user' ? 'bg-charcoal text-white' : 'bg-muted border border-rose-mauve/15'}`}>
+                <p>{message.content}</p>
+
+                {message.actions && message.actions.length > 0 && (
                   <div className="mt-3 grid sm:grid-cols-2 gap-2">
-                    {m.slugs.map((slug) => {
-                      const p = bySlug.get(slug)
-                      if (!p) return null
-                      return (
-                        <Link key={slug} href={localizeHref(`/product/${slug}`, locale)} className="rounded-xl border bg-background p-2 block">
-                          <p className="font-medium text-xs">{p.name}</p>
-                          <p className="text-xs text-muted-foreground">{formatPrice(p.price)}</p>
-                        </Link>
-                      )
-                    })}
+                    {message.actions.map((action) => (
+                      <Link key={action.id} href={localizeHref(action.href, locale)} className={cn('rounded-xl border p-2 block', actionAccent[action.type])}>
+                        <p className="font-medium text-xs">{action.title}</p>
+                        <p className="text-xs text-muted-foreground">{action.description}</p>
+                      </Link>
+                    ))}
                   </div>
                 )}
-                {m.suggestions && (
-                  <div className="mt-3">
-                    <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1">{copy.suggested}</p>
-                    <div className="flex flex-wrap gap-1">
-                      {m.suggestions.map((s) => (
-                        <button key={s} onClick={() => send(s)} className="text-xs px-2 py-1 rounded-full border hover:bg-secondary">{s}</button>
-                      ))}
-                    </div>
+
+                {message.suggestions && (
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {message.suggestions.map((suggestion) => (
+                      <button key={suggestion} onClick={() => send(suggestion)} className="text-xs px-2 py-1 rounded-full border hover:bg-secondary">
+                        {suggestion}
+                      </button>
+                    ))}
                   </div>
                 )}
               </div>
-              {m.role === 'user' && <User className="h-5 w-5 mt-1" />}
             </div>
           ))}
-          {loading && <p className="text-xs text-muted-foreground">{copy.typing}</p>}
+
+          {loading && <p className="text-xs text-muted-foreground">Concierge is preparing your recommendation...</p>}
         </div>
 
         <div className="border-t p-3 flex gap-2">
-          <input value={input} onChange={(e) => setInput(e.target.value)} placeholder={copy.inputPlaceholder} className="flex-1 rounded-full border px-4 py-2 bg-background" />
+          <Button type="button" variant="outline" size="icon" disabled={!voiceSupported} className={listening ? 'bg-rose-mauve text-white' : ''} onClick={toggleListening}>
+            {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
+          </Button>
+          <input
+            value={input}
+            onChange={(event) => setInput(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') send()
+            }}
+            placeholder="Ask about products, ingredients, routines, policies, or order support"
+            className="flex-1 rounded-full border px-4 py-2 bg-background"
+          />
           <Button onClick={() => send()} className="rounded-full"><Send className="h-4 w-4" /></Button>
+        </div>
+
+        <div className="px-3 pb-3 text-[11px] text-muted-foreground">
+          This concierge is limited to JISOO support and beauty topics. Realtime mode is scaffolded and falls back to browser voice when unavailable.
         </div>
       </div>
     </div>
