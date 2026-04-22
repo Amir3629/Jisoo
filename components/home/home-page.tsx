@@ -13,27 +13,30 @@ import { TestimonialsSection } from '@/components/home/testimonials-section'
 import { SocialSection } from '@/components/home/social-section'
 import { HomeAtmosphereCanvas } from '@/components/layout/home-atmosphere-canvas'
 import { FloatingAssistant } from '@/components/ai/floating-assistant'
+import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
 
 export function HomePageShell() {
   return (
-    <main className="min-h-screen relative">
-      <HomeAtmosphereCanvas />
-      <div className="pointer-events-none fixed inset-y-0 left-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-rose-mauve/25 to-transparent -z-[5]" />
-      <div className="pointer-events-none fixed inset-y-0 right-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-champagne-gold/25 to-transparent -z-[5]" />
-      <Header />
-      <HeroSection />
-      <div className="transition-veil" />
-      <PartnersSection />
-      <CategoriesSection />
-      <FeaturedProducts />
-      <div className="transition-veil" />
-      <RitualSection />
-      <AiAssistantTeaser />
-      <ConcernsSection />
-      <TestimonialsSection />
-      <SocialSection />
-      <Footer />
-      <FloatingAssistant />
-    </main>
+    <LuxuryIntroSplash>
+      <main className="min-h-screen relative">
+        <HomeAtmosphereCanvas />
+        <div className="pointer-events-none fixed inset-y-0 left-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-rose-mauve/25 to-transparent -z-[5]" />
+        <div className="pointer-events-none fixed inset-y-0 right-6 hidden xl:block w-px bg-gradient-to-b from-transparent via-champagne-gold/25 to-transparent -z-[5]" />
+        <Header />
+        <HeroSection />
+        <div className="transition-veil" />
+        <PartnersSection />
+        <CategoriesSection />
+        <FeaturedProducts />
+        <div className="transition-veil" />
+        <RitualSection />
+        <AiAssistantTeaser />
+        <ConcernsSection />
+        <TestimonialsSection />
+        <SocialSection />
+        <Footer />
+        <FloatingAssistant />
+      </main>
+    </LuxuryIntroSplash>
   )
 }
