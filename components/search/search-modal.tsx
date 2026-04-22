@@ -183,7 +183,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           >
                             <div className="w-16 h-16 rounded-lg bg-nude-beige overflow-hidden flex-shrink-0">
                               <Image
-                                src={product.images[0]?.src || '/placeholder-product.jpg'}
+                                src={product.images[0]?.src || '/placeholder.jpg'}
                                 alt={product.name}
                                 width={64}
                                 height={64}

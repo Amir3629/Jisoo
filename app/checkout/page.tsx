@@ -370,7 +370,7 @@ export default function CheckoutPage() {
                 >
                   <div className="relative w-16 h-16 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.product.images[0]?.src || "/placeholder-product.jpg"}
+                      src={item.product.images[0]?.src || "/placeholder.jpg"}
                       alt={item.product.name}
                       fill
                       className="object-cover"

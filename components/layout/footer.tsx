@@ -59,7 +59,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-plum text-warm-ivory">
+    <footer className="bg-gradient-to-b from-rose-mauve to-[#c988a0] text-warm-ivory">
       {/* Newsletter Section */}
       <div className="border-b border-rose-mauve/20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-16">

@@ -9,14 +9,14 @@ import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 
 const concerns = [
-  { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blue-200 to-cyan-100', count: 42 },
-  { id: 'soothing', name: 'Soothing', icon: Heart, color: 'from-pink-200 to-rose-100', count: 28 },
-  { id: 'glow', name: 'Glow & Radiance', icon: Sparkles, color: 'from-amber-200 to-yellow-100', count: 35 },
-  { id: 'pores', name: 'Pores', icon: Circle, color: 'from-purple-200 to-violet-100', count: 18 },
-  { id: 'tone-up', name: 'Tone-Up', icon: Sun, color: 'from-orange-200 to-amber-100', count: 24 },
-  { id: 'sensitive', name: 'Sensitive Skin', icon: Shield, color: 'from-green-200 to-emerald-100', count: 31 },
-  { id: 'anti-aging', name: 'Anti-Aging', icon: Clock, color: 'from-indigo-200 to-blue-100', count: 22 },
-  { id: 'acne', name: 'Acne & Blemishes', icon: XCircle, color: 'from-red-200 to-rose-100', count: 19 },
+  { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blush-pink/70 to-nude-beige', count: 42 },
+  { id: 'soothing', name: 'Soothing', icon: Heart, color: 'from-rose-mauve/30 to-blush-pink/70', count: 28 },
+  { id: 'glow', name: 'Glow & Radiance', icon: Sparkles, color: 'from-champagne-gold/35 to-nude-beige', count: 35 },
+  { id: 'pores', name: 'Pores', icon: Circle, color: 'from-rose-mauve/20 to-rose-mauve/25', count: 18 },
+  { id: 'tone-up', name: 'Tone-Up', icon: Sun, color: 'from-champagne-gold/30 to-blush-pink/45', count: 24 },
+  { id: 'sensitive', name: 'Sensitive Skin', icon: Shield, color: 'from-nude-beige to-blush-pink/55', count: 31 },
+  { id: 'anti-aging', name: 'Anti-Aging', icon: Clock, color: 'from-rose-mauve/15 to-champagne-gold/25', count: 22 },
+  { id: 'acne', name: 'Acne & Blemishes', icon: XCircle, color: 'from-rose-mauve/25 to-blush-pink/60', count: 19 },
 ]
 
 export function ConcernsSection() {
@@ -86,7 +86,7 @@ export function ConcernsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-plum/5 via-rose-mauve/5 to-champagne-gold/5 border border-blush-pink/30"
+          className="mt-16 p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-rose-mauve/5 via-rose-mauve/5 to-champagne-gold/5 border border-blush-pink/30"
         >
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
@@ -101,8 +101,8 @@ export function ConcernsSection() {
               href="/help/shipping"
               className={cn(
                 'px-6 py-3 rounded-full whitespace-nowrap',
-                'bg-plum text-warm-ivory font-medium',
-                'hover:bg-plum/90 transition-colors'
+                'bg-rose-mauve text-warm-ivory font-medium',
+                'hover:bg-rose-mauve/90 transition-colors'
               )}
             >
               {t.viewShippingInfo}

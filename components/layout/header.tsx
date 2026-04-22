@@ -45,7 +45,7 @@ export function Header() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-rose-mauve via-champagne-gold to-rose-mauve"
+        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-blush-pink via-champagne-gold to-rose-mauve"
         style={{ scaleX: progress }}
       />
       <motion.header
@@ -60,7 +60,7 @@ export function Header() {
         )}
       >
         {/* Top Bar */}
-        <div className="hidden lg:block bg-gradient-to-r from-plum to-[#5d2b57] text-warm-ivory">
+        <div className="hidden lg:block bg-gradient-to-r from-rose-mauve to-[#c988a0] text-warm-ivory">
           <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
             <p className="font-light tracking-wide">
               {dictionary.header.freeShipping.replace('{{amount}}', `${config.currencySymbol}100`)}
@@ -88,7 +88,7 @@ export function Header() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2 -ml-2 text-charcoal hover:text-plum transition-colors"
+              className="lg:hidden p-2 -ml-2 text-charcoal hover:text-rose-mauve transition-colors"
               aria-label={dictionary.header.actions.openMenu}
             >
               <Menu className="w-6 h-6" />
@@ -97,13 +97,13 @@ export function Header() {
             {/* Logo */}
             <Link href={localizeHref('/', locale)} className="flex-shrink-0 flex flex-col items-start">
               <motion.h1
-                className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-plum"
+                className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-rose-mauve"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
                 JISOO
               </motion.h1>
-              <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-plum/70 mt-0.5">
+              <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-rose-mauve/80 mt-0.5">
                 Seoul Edition
               </span>
             </Link>
@@ -121,9 +121,9 @@ export function Header() {
                     href={localizeHref(link.href, locale)}
                     className={cn(
                       'text-sm font-medium tracking-[0.09em] transition-colors relative py-2',
-                      'text-charcoal hover:text-plum',
+                      'text-charcoal hover:text-rose-mauve',
                       'after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5',
-                      'after:bg-rose-mauve after:scale-x-0 after:origin-center',
+                      'after:bg-rose-mauve/80 after:scale-x-0 after:origin-center',
                       'after:transition-transform after:duration-300',
                       'hover:after:scale-x-100'
                     )}
@@ -151,7 +151,7 @@ export function Header() {
                             <div key={category.id}>
                               <Link
                                 href={localizeHref(`/shop/${category.slug}`, locale)}
-                                className="font-medium text-charcoal hover:text-plum transition-colors"
+                                className="font-medium text-charcoal hover:text-rose-mauve transition-colors"
                               >
                                 {category.name}
                               </Link>
@@ -161,7 +161,7 @@ export function Header() {
                                     <li key={sub.id}>
                                       <Link
                                         href={localizeHref(`/shop/${sub.slug}`, locale)}
-                                        className="text-sm text-muted-foreground hover:text-plum transition-colors"
+                                        className="text-sm text-muted-foreground hover:text-rose-mauve transition-colors"
                                       >
                                         {sub.name}
                                       </Link>
@@ -183,7 +183,7 @@ export function Header() {
             <div className="flex items-center gap-2 lg:gap-4">
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-charcoal hover:text-plum transition-colors"
+                className="p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.search}
               >
                 <Search className="w-5 h-5" />
@@ -191,7 +191,7 @@ export function Header() {
 
               <Link
                 href={localizeHref('/account', locale)}
-                className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
+                className="hidden sm:block p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.account}
               >
                 <User className="w-5 h-5" />
@@ -199,7 +199,7 @@ export function Header() {
 
               <Link
                 href={localizeHref('/account/wishlist', locale)}
-                className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
+                className="hidden sm:block p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.wishlist}
               >
                 <Heart className="w-5 h-5" />
@@ -207,7 +207,7 @@ export function Header() {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-charcoal hover:text-plum transition-colors"
+                className="relative p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.cart}
               >
                 <ShoppingBag className="w-5 h-5" />
@@ -248,10 +248,10 @@ export function Header() {
             >
               <div className="p-6">
                 <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-2xl font-serif font-bold text-plum">JISOO</h2>
+                  <h2 className="text-2xl font-serif font-bold text-rose-mauve">JISOO</h2>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 -mr-2 text-charcoal hover:text-plum"
+                    className="p-2 -mr-2 text-charcoal hover:text-rose-mauve"
                   >
                     <X className="w-6 h-6" />
                   </button>
@@ -263,7 +263,7 @@ export function Header() {
                       key={link.href}
                       href={localizeHref(link.href, locale)}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-lg font-medium text-charcoal hover:text-plum transition-colors"
+                      className="block text-lg font-medium text-charcoal hover:text-rose-mauve transition-colors"
                     >
                       {dictionary.header.nav[link.key]}
                     </Link>
@@ -274,7 +274,7 @@ export function Header() {
                   <Link
                     href={localizeHref('/account', locale)}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
+                    className="flex items-center gap-3 py-3 text-charcoal hover:text-rose-mauve transition-colors"
                   >
                     <User className="w-5 h-5" />
                     <span>{dictionary.common.account}</span>
@@ -282,7 +282,7 @@ export function Header() {
                   <Link
                     href={localizeHref('/account/wishlist', locale)}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors"
+                    className="flex items-center gap-3 py-3 text-charcoal hover:text-rose-mauve transition-colors"
                   >
                     <Heart className="w-5 h-5" />
                     <span>{dictionary.common.wishlist}</span>
@@ -292,7 +292,7 @@ export function Header() {
                       setIsMobileMenuOpen(false)
                       setIsRegionOpen(true)
                     }}
-                    className="flex items-center gap-3 py-3 text-charcoal hover:text-plum transition-colors w-full"
+                    className="flex items-center gap-3 py-3 text-charcoal hover:text-rose-mauve transition-colors w-full"
                   >
                     <Globe className="w-5 h-5" />
                     <span>{config.name}</span>
