@@ -9,14 +9,14 @@ import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 
 const concerns = [
-  { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blue-200 to-cyan-100', count: 42 },
-  { id: 'soothing', name: 'Soothing', icon: Heart, color: 'from-pink-200 to-rose-100', count: 28 },
-  { id: 'glow', name: 'Glow & Radiance', icon: Sparkles, color: 'from-amber-200 to-yellow-100', count: 35 },
-  { id: 'pores', name: 'Pores', icon: Circle, color: 'from-purple-200 to-violet-100', count: 18 },
-  { id: 'tone-up', name: 'Tone-Up', icon: Sun, color: 'from-orange-200 to-amber-100', count: 24 },
-  { id: 'sensitive', name: 'Sensitive Skin', icon: Shield, color: 'from-green-200 to-emerald-100', count: 31 },
-  { id: 'anti-aging', name: 'Anti-Aging', icon: Clock, color: 'from-indigo-200 to-blue-100', count: 22 },
-  { id: 'acne', name: 'Acne & Blemishes', icon: XCircle, color: 'from-red-200 to-rose-100', count: 19 },
+  { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blush-pink/70 to-nude-beige', count: 42 },
+  { id: 'soothing', name: 'Soothing', icon: Heart, color: 'from-rose-mauve/30 to-blush-pink/70', count: 28 },
+  { id: 'glow', name: 'Glow & Radiance', icon: Sparkles, color: 'from-champagne-gold/35 to-nude-beige', count: 35 },
+  { id: 'pores', name: 'Pores', icon: Circle, color: 'from-plum/20 to-rose-mauve/25', count: 18 },
+  { id: 'tone-up', name: 'Tone-Up', icon: Sun, color: 'from-champagne-gold/30 to-blush-pink/45', count: 24 },
+  { id: 'sensitive', name: 'Sensitive Skin', icon: Shield, color: 'from-nude-beige to-blush-pink/55', count: 31 },
+  { id: 'anti-aging', name: 'Anti-Aging', icon: Clock, color: 'from-plum/15 to-champagne-gold/25', count: 22 },
+  { id: 'acne', name: 'Acne & Blemishes', icon: XCircle, color: 'from-rose-mauve/25 to-blush-pink/60', count: 19 },
 ]
 
 export function ConcernsSection() {

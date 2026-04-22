@@ -58,7 +58,7 @@ export default function AdminDashboard() {
           value={`€${overview.totalSales.toLocaleString()}`}
           change={overview.salesGrowth}
           changeLabel="vs last month"
-          icon={<DollarSign className="h-5 w-5 text-emerald-600" />}
+          icon={<DollarSign className="h-5 w-5 text-rose-mauve" />}
           variant="primary"
         />
         <StatCard
@@ -78,7 +78,7 @@ export default function AdminDashboard() {
         <StatCard
           title="Pending Products"
           value={overview.pendingSupplierProducts}
-          icon={<Package className="h-5 w-5 text-amber-600" />}
+          icon={<Package className="h-5 w-5 text-rose-mauve" />}
           variant="accent"
         />
       </div>
@@ -88,17 +88,17 @@ export default function AdminDashboard() {
         <Link href="/admin/suppliers" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-amber-200 bg-amber-50 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-champagne-gold/35 bg-champagne-gold/10 p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-amber-100">
-                <Package className="h-5 w-5 text-amber-700" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-champagne-gold/20">
+                <Package className="h-5 w-5 text-plum" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-amber-900">{overview.pendingSupplierProducts}</p>
-                <p className="text-sm text-amber-700">Supplier Products</p>
+                <p className="text-2xl font-semibold text-plum">{overview.pendingSupplierProducts}</p>
+                <p className="text-sm text-plum">Supplier Products</p>
               </div>
-              <ArrowRight className="ml-auto h-4 w-4 text-amber-600 opacity-0 transition-opacity group-hover:opacity-100" />
+              <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </motion.div>
         </Link>
@@ -124,17 +124,17 @@ export default function AdminDashboard() {
         <Link href="/admin/regions" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-orange-200 bg-orange-50 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-champagne-gold/35 bg-nude-beige p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100">
-                <Globe2 className="h-5 w-5 text-orange-700" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-champagne-gold/20">
+                <Globe2 className="h-5 w-5 text-plum" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-orange-900">{overview.regionRestrictionAlerts}</p>
-                <p className="text-sm text-orange-700">Region Restrictions</p>
+                <p className="text-2xl font-semibold text-plum">{overview.regionRestrictionAlerts}</p>
+                <p className="text-sm text-plum">Region Restrictions</p>
               </div>
-              <ArrowRight className="ml-auto h-4 w-4 text-orange-600 opacity-0 transition-opacity group-hover:opacity-100" />
+              <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </motion.div>
         </Link>
@@ -142,17 +142,17 @@ export default function AdminDashboard() {
         <Link href="/admin/translations" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-blue-200 bg-blue-50 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-rose-mauve/30 bg-blush-pink/40 p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
-                <Languages className="h-5 w-5 text-blue-700" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blush-pink/60">
+                <Languages className="h-5 w-5 text-plum" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-blue-900">{overview.translationTasks}</p>
-                <p className="text-sm text-blue-700">Translation Tasks</p>
+                <p className="text-2xl font-semibold text-plum">{overview.translationTasks}</p>
+                <p className="text-sm text-plum">Translation Tasks</p>
               </div>
-              <ArrowRight className="ml-auto h-4 w-4 text-blue-600 opacity-0 transition-opacity group-hover:opacity-100" />
+              <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </motion.div>
         </Link>
@@ -194,7 +194,7 @@ export default function AdminDashboard() {
                     <p className="text-sm font-semibold text-foreground">€{product.revenue.toLocaleString()}</p>
                     <p className={cn(
                       'text-xs',
-                      product.trend === 'up' ? 'text-emerald-600' : product.trend === 'down' ? 'text-rose-600' : 'text-muted-foreground'
+                      product.trend === 'up' ? 'text-rose-mauve' : product.trend === 'down' ? 'text-rose-600' : 'text-muted-foreground'
                     )}>
                       {product.trend === 'up' ? '↑' : product.trend === 'down' ? '↓' : '→'} {product.conversionRate}% conv.
                     </p>
@@ -230,7 +230,7 @@ export default function AdminDashboard() {
                     className={cn(
                       'rounded-lg border p-3 transition-all hover:shadow-sm cursor-pointer',
                       insight.priority === 'high' ? 'border-rose-200 bg-rose-50/50' :
-                      insight.priority === 'medium' ? 'border-amber-200 bg-amber-50/50' :
+                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/10/50' :
                       'border-border/50 bg-card'
                     )}
                   >
@@ -239,7 +239,7 @@ export default function AdminDashboard() {
                         'mt-0.5 h-2 w-2 rounded-full shrink-0',
                         insight.priority === 'high' ? 'bg-rose-500' :
                         insight.priority === 'medium' ? 'bg-amber-500' :
-                        'bg-blue-500'
+                        'bg-rose-mauve'
                       )} />
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-foreground">{insight.title}</p>
@@ -276,14 +276,14 @@ export default function AdminDashboard() {
                     <div className={cn(
                       'flex h-10 w-10 items-center justify-center rounded-lg',
                       action.priority === 'high' ? 'bg-rose-100' :
-                      action.priority === 'medium' ? 'bg-amber-100' :
-                      'bg-blue-100'
+                      action.priority === 'medium' ? 'bg-champagne-gold/20' :
+                      'bg-blush-pink/60'
                     )}>
                       <Clock className={cn(
                         'h-5 w-5',
                         action.priority === 'high' ? 'text-rose-600' :
-                        action.priority === 'medium' ? 'text-amber-600' :
-                        'text-blue-600'
+                        action.priority === 'medium' ? 'text-rose-mauve' :
+                        'text-rose-mauve'
                       )} />
                     </div>
                     <div className="flex-1 min-w-0">

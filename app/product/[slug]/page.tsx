@@ -117,7 +117,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 className="relative aspect-square rounded-3xl overflow-hidden bg-white"
               >
                 <Image
-                  src={product.images[selectedImage]?.src || '/placeholder-product.jpg'}
+                  src={product.images[selectedImage]?.src || '/placeholder.jpg'}
                   alt={product.images[selectedImage]?.alt || product.name}
                   fill
                   className="object-cover"

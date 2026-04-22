@@ -59,7 +59,7 @@ export function StatCard({
               {determinedTrend === 'up' && (
                 <div className={cn(
                   'flex items-center gap-0.5 text-sm font-medium',
-                  variant === 'primary' ? 'text-white/90' : 'text-emerald-600'
+                  variant === 'primary' ? 'text-white/90' : 'text-rose-mauve'
                 )}>
                   <TrendingUp className="h-3.5 w-3.5" />
                   <span>+{Math.abs(change)}%</span>
