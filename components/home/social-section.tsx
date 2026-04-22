@@ -153,8 +153,8 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-rose-mauve/90 text-white font-medium border border-rose-mauve/30',
-              'hover:bg-charcoal/90 transition-colors'
+              'bg-rose-mauve/90 text-white font-medium border border-rose-mauve/25',
+              'hover:bg-rose-mauve/80 transition-colors'
             )}
           >
             <Play className="w-5 h-5" />

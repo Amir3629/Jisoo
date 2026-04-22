@@ -88,7 +88,7 @@ export default function AdminDashboard() {
         <Link href="/admin/suppliers" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-champagne-gold/35 bg-champagne-gold/10 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-champagne-gold/35 bg-champagne-gold/12 p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-champagne-gold/20">
@@ -106,17 +106,17 @@ export default function AdminDashboard() {
         <Link href="/admin/products" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-rose-200 bg-rose-50 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-rose-200/70 bg-rose-50/80 p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-100">
-                <AlertTriangle className="h-5 w-5 text-rose-700" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-rose-100/80">
+                <AlertTriangle className="h-5 w-5 text-rose-500" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-rose-900">{overview.lowStockAlerts}</p>
-                <p className="text-sm text-rose-700">Low Stock Alerts</p>
+                <p className="text-2xl font-semibold text-rose-800">{overview.lowStockAlerts}</p>
+                <p className="text-sm text-rose-500">Low Stock Alerts</p>
               </div>
-              <ArrowRight className="ml-auto h-4 w-4 text-rose-600 opacity-0 transition-opacity group-hover:opacity-100" />
+              <ArrowRight className="ml-auto h-4 w-4 text-rose-500 opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
           </motion.div>
         </Link>
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
         <Link href="/admin/translations" className="group">
           <motion.div
             whileHover={{ scale: 1.02 }}
-            className="rounded-xl border border-rose-mauve/30 bg-blush-pink/40 p-4 transition-all hover:shadow-md"
+            className="rounded-xl border border-rose-mauve/25 bg-blush-pink/40 p-4 transition-all hover:shadow-md"
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blush-pink/60">
@@ -194,7 +194,7 @@ export default function AdminDashboard() {
                     <p className="text-sm font-semibold text-foreground">€{product.revenue.toLocaleString()}</p>
                     <p className={cn(
                       'text-xs',
-                      product.trend === 'up' ? 'text-rose-mauve' : product.trend === 'down' ? 'text-rose-600' : 'text-muted-foreground'
+                      product.trend === 'up' ? 'text-rose-mauve' : product.trend === 'down' ? 'text-rose-500' : 'text-muted-foreground'
                     )}>
                       {product.trend === 'up' ? '↑' : product.trend === 'down' ? '↓' : '→'} {product.conversionRate}% conv.
                     </p>
@@ -229,8 +229,8 @@ export default function AdminDashboard() {
                     transition={{ delay: index * 0.1 }}
                     className={cn(
                       'rounded-lg border p-3 transition-all hover:shadow-sm cursor-pointer',
-                      insight.priority === 'high' ? 'border-rose-200 bg-rose-50/50' :
-                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/10' :
+                      insight.priority === 'high' ? 'border-rose-200/70 bg-rose-50/80/50' :
+                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/12' :
                       'border-border/50 bg-card'
                     )}
                   >
@@ -275,13 +275,13 @@ export default function AdminDashboard() {
                   >
                     <div className={cn(
                       'flex h-10 w-10 items-center justify-center rounded-lg',
-                      action.priority === 'high' ? 'bg-rose-100' :
+                      action.priority === 'high' ? 'bg-rose-100/80' :
                       action.priority === 'medium' ? 'bg-champagne-gold/20' :
                       'bg-blush-pink/60'
                     )}>
                       <Clock className={cn(
                         'h-5 w-5',
-                        action.priority === 'high' ? 'text-rose-600' :
+                        action.priority === 'high' ? 'text-rose-500' :
                         action.priority === 'medium' ? 'text-rose-mauve' :
                         'text-rose-mauve'
                       )} />

@@ -165,24 +165,24 @@
   
   /* Premium shadows */
   .shadow-luxury {
-    box-shadow: 0 4px 20px rgba(75, 34, 71, 0.08), 0 8px 40px rgba(183, 110, 138, 0.06);
+    box-shadow: 0 10px 26px rgba(183, 110, 138, 0.10), 0 2px 10px rgba(201, 164, 106, 0.08);
   }
   
   .shadow-elevated {
-    box-shadow: 0 12px 40px rgba(75, 34, 71, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 14px 34px rgba(183, 110, 138, 0.14), 0 6px 16px rgba(201, 164, 106, 0.08);
   }
 
   .shadow-editorial {
     box-shadow:
-      0 20px 50px rgba(24, 14, 22, 0.18),
+      0 18px 44px rgba(133, 78, 104, 0.18),
       0 2px 0 rgba(255, 255, 255, 0.35) inset,
-      0 -1px 0 rgba(75, 34, 71, 0.18) inset;
+      0 -1px 0 rgba(183, 110, 138, 0.22) inset;
   }
 
   .surface-velvet {
     background:
       linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 244, 0.84) 40%, rgba(243, 231, 224, 0.76) 100%);
-    border: 1px solid rgba(183, 110, 138, 0.22);
+    border: 1px solid rgba(183, 110, 138, 0.18);
   }
 
   .mesh-luxury {
@@ -262,7 +262,7 @@
   
   .hover-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 12px 40px rgba(75, 34, 71, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 14px 34px rgba(183, 110, 138, 0.14), 0 6px 16px rgba(201, 164, 106, 0.08);
   }
   
   /* Smooth scrolling */

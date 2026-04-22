@@ -60,7 +60,7 @@ export function HeroSection() {
                 href="/shop"
                 className={cn(
                   'group inline-flex items-center gap-2 rounded-full px-8 py-4',
-                  'bg-rose-mauve text-warm-ivory font-medium shadow-editorial'
+                  'bg-rose-mauve/95 text-warm-ivory font-medium shadow-editorial hover:bg-rose-mauve/85 transition-colors'
                 )}
               >
                 {t.discoverCollection}

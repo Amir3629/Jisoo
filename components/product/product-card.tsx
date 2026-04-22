@@ -76,7 +76,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.isNew && (
-              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve text-warm-ivory rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve/95 text-warm-ivory rounded-full">
                 New
               </span>
             )}
@@ -86,7 +86,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
               </span>
             )}
             {product.compareAtPrice && (
-              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve text-warm-ivory rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve/95 text-warm-ivory rounded-full">
                 Sale
               </span>
             )}
@@ -124,7 +124,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 onClick={handleAddToCart}
                 className={cn(
                   'flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
-                  'bg-rose-mauve text-warm-ivory font-medium text-sm',
+                  'bg-rose-mauve/95 text-warm-ivory font-medium text-sm',
                   'hover:bg-rose-mauve/90 transition-colors'
                 )}
               >
