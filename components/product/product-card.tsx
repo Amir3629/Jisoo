@@ -6,8 +6,10 @@ import { motion } from 'framer-motion'
 import { ShoppingBag, Heart } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
+import { useRegion } from '@/components/providers/region-provider'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
+import { evaluateRegionAccess } from '@/lib/services/region-access'
 
 interface ProductCardProps {
   product: Product
@@ -16,6 +18,12 @@ interface ProductCardProps {
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { addItem } = useCart()
+  const { region } = useRegion()
+  const access = evaluateRegionAccess(product, region)
+
+  if (!access.isVisible) {
+    return null
+  }
 
   return (
     <motion.article
@@ -87,13 +95,14 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <Button
             type="button"
             onClick={() => addItem(product)}
+            disabled={!access.isBuyable}
             className={cn(
               'rounded-full px-4',
               'bg-rose-mauve text-white hover:bg-rose-mauve/90'
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />
-            Add
+            {access.isBuyable ? 'Add' : 'Unavailable'}
           </Button>
         </div>
       </div>
