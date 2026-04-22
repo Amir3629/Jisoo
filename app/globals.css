@@ -20,10 +20,10 @@
   --card-foreground: #1E1A1D;
   --popover: #FFFFFF;
   --popover-foreground: #1E1A1D;
-  --primary: #4B2247;
+  --primary: #B76E8A;
   --primary-foreground: #FFF8F4;
   --secondary: #F3E7E0;
-  --secondary-foreground: #4B2247;
+  --secondary-foreground: #7E4A62;
   --muted: #F3E7E0;
   --muted-foreground: #6B5B63;
   --accent: #B76E8A;
@@ -36,7 +36,7 @@
   --radius: 0.75rem;
   
   /* Chart colors */
-  --chart-1: #4B2247;
+  --chart-1: #B76E8A;
   --chart-2: #B76E8A;
   --chart-3: #E9C7D1;
   --chart-4: #C9A46A;
@@ -137,7 +137,7 @@
   
   /* Luxury gradients */
   .gradient-premium {
-    background: linear-gradient(135deg, var(--plum) 0%, var(--rose-mauve) 50%, var(--blush-pink) 100%);
+    background: linear-gradient(135deg, var(--rose-mauve) 0%, #c988a0 50%, var(--blush-pink) 100%);
   }
   
   .gradient-soft {
@@ -151,7 +151,7 @@
   /* Text gradients */
   .text-gradient-premium {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, var(--plum) 0%, var(--rose-mauve) 100%);
+    background-image: linear-gradient(135deg, var(--rose-mauve) 0%, var(--blush-pink) 100%);
   }
   
   /* Glow effects */

@@ -78,7 +78,7 @@ export default function PaymentPage() {
         );
       case "amex":
         return (
-          <div className="w-10 h-6 bg-plum rounded flex items-center justify-center text-white text-[6px] font-bold">
+          <div className="w-10 h-6 bg-rose-mauve rounded flex items-center justify-center text-white text-[6px] font-bold">
             AMEX
           </div>
         );

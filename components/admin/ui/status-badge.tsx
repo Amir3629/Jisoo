@@ -62,47 +62,47 @@ interface StatusBadgeProps {
 
 const statusConfig: Record<StatusType, { label: string; color: string; icon: React.ElementType }> = {
   // Generic
-  success: { label: 'Success', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: CheckCircle2 },
+  success: { label: 'Success', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: CheckCircle2 },
   error: { label: 'Error', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: XCircle },
-  warning: { label: 'Warning', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: AlertTriangle },
-  pending: { label: 'Pending', color: 'bg-blush-pink/60 text-plum border-rose-mauve/30', icon: Clock },
-  info: { label: 'Info', color: 'bg-nude-beige text-plum border-blush-pink/45', icon: FileText },
+  warning: { label: 'Warning', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: AlertTriangle },
+  pending: { label: 'Pending', color: 'bg-blush-pink/60 text-charcoal border-rose-mauve/30', icon: Clock },
+  info: { label: 'Info', color: 'bg-nude-beige text-charcoal border-blush-pink/45', icon: FileText },
   neutral: { label: 'Neutral', color: 'bg-warm-ivory text-charcoal/80 border-blush-pink/40', icon: FileText },
 
   // Market status
-  visible_and_buyable: { label: 'Buyable', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: ShoppingCart },
-  visible_but_not_buyable: { label: 'View Only', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: Eye },
+  visible_and_buyable: { label: 'Buyable', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: ShoppingCart },
+  visible_but_not_buyable: { label: 'View Only', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: Eye },
   hidden: { label: 'Hidden', color: 'bg-warm-ivory text-charcoal/70 border-blush-pink/40', icon: EyeOff },
-  pending_compliance: { label: 'Pending Compliance', color: 'bg-champagne-gold/15 text-plum border-champagne-gold/35', icon: Clock },
+  pending_compliance: { label: 'Pending Compliance', color: 'bg-champagne-gold/15 text-charcoal border-champagne-gold/35', icon: Clock },
 
   // Compliance status
-  compliant: { label: 'Compliant', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: CheckCircle2 },
+  compliant: { label: 'Compliant', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: CheckCircle2 },
   non_compliant: { label: 'Non-Compliant', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: XCircle },
-  pending_review: { label: 'Pending Review', color: 'bg-blush-pink/60 text-plum border-rose-mauve/30', icon: Clock },
+  pending_review: { label: 'Pending Review', color: 'bg-blush-pink/60 text-charcoal border-rose-mauve/30', icon: Clock },
   expired: { label: 'Expired', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: AlertTriangle },
   missing: { label: 'Missing', color: 'bg-warm-ivory text-charcoal/70 border-blush-pink/40', icon: XCircle },
 
   // Product change type
-  new: { label: 'New', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: CheckCircle2 },
-  updated: { label: 'Updated', color: 'bg-blush-pink/60 text-plum border-rose-mauve/30', icon: FileText },
+  new: { label: 'New', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: CheckCircle2 },
+  updated: { label: 'Updated', color: 'bg-blush-pink/60 text-charcoal border-rose-mauve/30', icon: FileText },
   removed: { label: 'Removed', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: XCircle },
   unchanged: { label: 'Unchanged', color: 'bg-warm-ivory text-charcoal/70 border-blush-pink/40', icon: FileText },
 
   // Translation status
-  machine_translated: { label: 'Machine', color: 'bg-plum/10 text-plum border-rose-mauve/30', icon: Loader2 },
-  human_reviewed: { label: 'Reviewed', color: 'bg-blush-pink/60 text-plum border-rose-mauve/30', icon: Eye },
-  approved: { label: 'Approved', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: CheckCircle2 },
-  published: { label: 'Published', color: 'bg-plum/10 text-plum border-plum/20', icon: Globe },
+  machine_translated: { label: 'Machine', color: 'bg-blush-pink/50 text-charcoal border-rose-mauve/25', icon: Loader2 },
+  human_reviewed: { label: 'Reviewed', color: 'bg-blush-pink/60 text-charcoal border-rose-mauve/30', icon: Eye },
+  approved: { label: 'Approved', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: CheckCircle2 },
+  published: { label: 'Published', color: 'bg-blush-pink/45 text-charcoal border-rose-mauve/25', icon: Globe },
 
   // Ingestion status
-  staged: { label: 'Staged', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: Clock },
+  staged: { label: 'Staged', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: Clock },
   rejected: { label: 'Rejected', color: 'bg-rose-100 text-rose-700 border-rose-200', icon: XCircle },
 
   // Order status
-  confirmed: { label: 'Confirmed', color: 'bg-blush-pink/60 text-plum border-rose-mauve/30', icon: CheckCircle2 },
-  processing: { label: 'Processing', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: Loader2 },
-  shipped: { label: 'Shipped', color: 'bg-plum/10 text-plum border-rose-mauve/30', icon: ShoppingCart },
-  delivered: { label: 'Delivered', color: 'bg-champagne-gold/20 text-plum border-champagne-gold/35', icon: CheckCircle2 },
+  confirmed: { label: 'Confirmed', color: 'bg-blush-pink/60 text-charcoal border-rose-mauve/30', icon: CheckCircle2 },
+  processing: { label: 'Processing', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: Loader2 },
+  shipped: { label: 'Shipped', color: 'bg-blush-pink/50 text-charcoal border-rose-mauve/25', icon: ShoppingCart },
+  delivered: { label: 'Delivered', color: 'bg-champagne-gold/20 text-charcoal border-champagne-gold/35', icon: CheckCircle2 },
   cancelled: { label: 'Cancelled', color: 'bg-warm-ivory text-charcoal/70 border-blush-pink/40', icon: XCircle },
 }
 

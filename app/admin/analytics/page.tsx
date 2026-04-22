@@ -59,7 +59,7 @@ const categoryData = [
   { name: "Moisturizers", value: 25, revenue: 245000, color: "#D4A574" },
   { name: "Cleansers", value: 18, revenue: 176400, color: "#E9C7D1" },
   { name: "Sunscreens", value: 12, revenue: 117600, color: "#F3E7E0" },
-  { name: "Masks", value: 10, revenue: 98000, color: "#B76E8A" },
+  { name: "Masks", value: 10, revenue: 98000, color: "#C68CA2" },
 ]
 
 const regionalData = [
@@ -172,7 +172,7 @@ export default function AnalyticsPage() {
                   </div>
                   <div
                     className={`flex items-center gap-1 text-sm font-medium ${
-                      stat.trend === "up" ? "text-rose-mauve" : "text-plum"
+                      stat.trend === "up" ? "text-rose-600" : "text-charcoal"
                     }`}
                   >
                     {stat.trend === "up" ? (
@@ -353,7 +353,7 @@ export default function AnalyticsPage() {
                     <span className="font-medium text-sm">{region.region}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">${(region.revenue / 1000).toFixed(0)}k</span>
-                      <span className="text-xs text-rose-mauve flex items-center">
+                      <span className="text-xs text-rose-600 flex items-center">
                         <TrendingUp className="h-3 w-3 mr-0.5" />
                         {region.growth}%
                       </span>
@@ -393,7 +393,7 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="text-right">
                     <p className="font-medium text-sm">${product.revenue.toLocaleString()}</p>
-                    <p className="text-xs text-rose-mauve">+{product.growth}%</p>
+                    <p className="text-xs text-rose-600">+{product.growth}%</p>
                   </div>
                 </div>
               ))}
@@ -414,7 +414,7 @@ export default function AnalyticsPage() {
                     <span className="font-medium">{source.source}</span>
                     <div className="flex items-center gap-4">
                       <span className="text-muted-foreground">{source.visitors.toLocaleString()} visitors</span>
-                      <span className="text-rose-mauve">{source.conversion}% conv.</span>
+                      <span className="text-rose-600">{source.conversion}% conv.</span>
                     </div>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">

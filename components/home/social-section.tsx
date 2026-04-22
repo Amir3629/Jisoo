@@ -139,7 +139,7 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-gradient-to-r from-plum via-rose-mauve to-champagne-gold text-white font-medium shadow-luxury',
+              'bg-gradient-to-r from-rose-mauve via-rose-mauve to-champagne-gold text-white font-medium shadow-luxury',
               'hover:opacity-90 transition-opacity'
             )}
           >
@@ -153,7 +153,7 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-plum/90 text-white font-medium border border-rose-mauve/30',
+              'bg-rose-mauve/90 text-white font-medium border border-rose-mauve/30',
               'hover:bg-charcoal/90 transition-colors'
             )}
           >
@@ -172,8 +172,8 @@ export function SocialSection() {
           className="mt-16 text-center"
         >
           <p className="text-muted-foreground">
-            Tag <strong className="text-plum">@JISOOBeauty</strong> and use{' '}
-            <strong className="text-plum">#JISOOGlow</strong> to be featured!
+            Tag <strong className="text-rose-mauve">@JISOOBeauty</strong> and use{' '}
+            <strong className="text-rose-mauve">#JISOOGlow</strong> to be featured!
           </p>
         </motion.div>
       </div>

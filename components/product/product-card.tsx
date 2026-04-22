@@ -76,7 +76,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.isNew && (
-              <span className="px-3 py-1 text-xs font-medium bg-plum text-warm-ivory rounded-full">
+              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve text-warm-ivory rounded-full">
                 New
               </span>
             )}
@@ -124,8 +124,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
                 onClick={handleAddToCart}
                 className={cn(
                   'flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
-                  'bg-plum text-warm-ivory font-medium text-sm',
-                  'hover:bg-plum/90 transition-colors'
+                  'bg-rose-mauve text-warm-ivory font-medium text-sm',
+                  'hover:bg-rose-mauve/90 transition-colors'
                 )}
               >
                 <ShoppingBag className="w-4 h-4" />
@@ -146,10 +146,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
         {/* Product Info */}
         <div>
-          <p className="text-xs text-rose-mauve font-medium uppercase tracking-[0.18em] mb-1">
+          <p className="text-xs text-rose-mauve/90 font-medium uppercase tracking-[0.18em] mb-1">
             {product.category}
           </p>
-          <h3 className="font-serif text-lg text-charcoal group-hover:text-plum transition-colors line-clamp-1">
+          <h3 className="font-serif text-lg text-charcoal group-hover:text-rose-mauve transition-colors line-clamp-1">
             {product.name}
           </h3>
           {product.subtitle && (
@@ -180,7 +180,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
           {/* Price */}
           <div className="flex items-center gap-2 mt-3">
-            <span className="font-semibold text-plum text-lg">
+            <span className="font-semibold text-rose-mauve text-lg">
               {formatPrice(product.price)}
             </span>
             {product.compareAtPrice && (
@@ -192,7 +192,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
           {/* Region Notice */}
           {isVisibleOnly && (
-            <p className="text-xs text-rose-mauve mt-2">
+            <p className="text-xs text-rose-mauve/90 mt-2">
               {dictionary.regionMessages.visible_but_not_buyable}
             </p>
           )}

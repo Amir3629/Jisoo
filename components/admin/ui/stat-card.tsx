@@ -35,8 +35,8 @@ export function StatCard({
       className={cn(
         'rounded-xl border p-5 transition-all duration-300 hover:shadow-luxury',
         variant === 'default' && 'bg-card border-border/50',
-        variant === 'primary' && 'bg-gradient-to-br from-plum to-rose-mauve text-white border-transparent',
-        variant === 'accent' && 'bg-gradient-to-br from-champagne-gold/20 to-nude-beige border-champagne-gold/30',
+        variant === 'primary' && 'bg-gradient-to-br from-rose-mauve to-[#c988a0] text-white border-rose-mauve/40',
+        variant === 'accent' && 'bg-gradient-to-br from-blush-pink/55 to-nude-beige border-champagne-gold/35',
         className
       )}
     >

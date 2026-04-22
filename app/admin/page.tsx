@@ -66,14 +66,14 @@ export default function AdminDashboard() {
           value={overview.totalOrders.toLocaleString()}
           change={overview.ordersGrowth}
           changeLabel="vs last month"
-          icon={<ShoppingBag className="h-5 w-5 text-plum" />}
+          icon={<ShoppingBag className="h-5 w-5 text-rose-mauve" />}
         />
         <StatCard
           title="Conversion Rate"
           value={`${overview.conversionRate}%`}
           change={overview.conversionGrowth}
           changeLabel="vs last month"
-          icon={<TrendingUp className="h-5 w-5 text-plum" />}
+          icon={<TrendingUp className="h-5 w-5 text-rose-mauve" />}
         />
         <StatCard
           title="Pending Products"
@@ -92,11 +92,11 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-champagne-gold/20">
-                <Package className="h-5 w-5 text-plum" />
+                <Package className="h-5 w-5 text-rose-mauve" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-plum">{overview.pendingSupplierProducts}</p>
-                <p className="text-sm text-plum">Supplier Products</p>
+                <p className="text-2xl font-semibold text-rose-mauve">{overview.pendingSupplierProducts}</p>
+                <p className="text-sm text-rose-mauve">Supplier Products</p>
               </div>
               <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
@@ -128,11 +128,11 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-champagne-gold/20">
-                <Globe2 className="h-5 w-5 text-plum" />
+                <Globe2 className="h-5 w-5 text-rose-mauve" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-plum">{overview.regionRestrictionAlerts}</p>
-                <p className="text-sm text-plum">Region Restrictions</p>
+                <p className="text-2xl font-semibold text-rose-mauve">{overview.regionRestrictionAlerts}</p>
+                <p className="text-sm text-rose-mauve">Region Restrictions</p>
               </div>
               <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
@@ -146,11 +146,11 @@ export default function AdminDashboard() {
           >
             <div className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blush-pink/60">
-                <Languages className="h-5 w-5 text-plum" />
+                <Languages className="h-5 w-5 text-rose-mauve" />
               </div>
               <div>
-                <p className="text-2xl font-semibold text-plum">{overview.translationTasks}</p>
-                <p className="text-sm text-plum">Translation Tasks</p>
+                <p className="text-2xl font-semibold text-rose-mauve">{overview.translationTasks}</p>
+                <p className="text-sm text-rose-mauve">Translation Tasks</p>
               </div>
               <ArrowRight className="ml-auto h-4 w-4 text-rose-mauve opacity-0 transition-opacity group-hover:opacity-100" />
             </div>
@@ -230,7 +230,7 @@ export default function AdminDashboard() {
                     className={cn(
                       'rounded-lg border p-3 transition-all hover:shadow-sm cursor-pointer',
                       insight.priority === 'high' ? 'border-rose-200 bg-rose-50/50' :
-                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/10/50' :
+                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/10' :
                       'border-border/50 bg-card'
                     )}
                   >

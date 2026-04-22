@@ -60,7 +60,7 @@ export function HeroSection() {
                 href="/shop"
                 className={cn(
                   'group inline-flex items-center gap-2 rounded-full px-8 py-4',
-                  'bg-plum text-warm-ivory font-medium shadow-editorial'
+                  'bg-rose-mauve text-warm-ivory font-medium shadow-editorial'
                 )}
               >
                 {t.discoverCollection}
@@ -69,7 +69,7 @@ export function HeroSection() {
 
               <Link
                 href="/about"
-                className="inline-flex items-center rounded-full border border-plum/30 px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
+                className="inline-flex items-center rounded-full border border-rose-mauve/35 px-8 py-4 text-rose-mauve font-medium hover:bg-rose-mauve/5 transition-colors"
               >
                 {t.ourStory}
               </Link>
@@ -81,8 +81,8 @@ export function HeroSection() {
                 ['98%', 'Repurchase Intent'],
                 ['3', 'Korean Lab Partners'],
               ].map(([value, label]) => (
-                <div key={label} className="rounded-2xl border border-plum/15 bg-white/65 backdrop-blur-sm px-4 py-4">
-                  <p className="text-2xl font-serif text-plum">{value}</p>
+                <div key={label} className="rounded-2xl border border-rose-mauve/20 bg-white/65 backdrop-blur-sm px-4 py-4">
+                  <p className="text-2xl font-serif text-rose-mauve">{value}</p>
                   <p className="mt-1 text-xs uppercase tracking-[0.15em] text-charcoal/60">{label}</p>
                 </div>
               ))}
@@ -97,7 +97,7 @@ export function HeroSection() {
           >
             <motion.div
               style={{ y: badgeY }}
-              className="absolute -top-4 right-4 z-20 rounded-full border border-rose-mauve/35 bg-white/85 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-plum shadow-editorial backdrop-blur-sm"
+              className="absolute -top-4 right-4 z-20 rounded-full border border-rose-mauve/35 bg-white/85 px-4 py-2 text-[10px] uppercase tracking-[0.2em] text-rose-mauve shadow-editorial backdrop-blur-sm"
             >
               Editor&apos;s Selection
             </motion.div>

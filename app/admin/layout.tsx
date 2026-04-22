@@ -75,7 +75,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       {/* Logo */}
       <div className="flex h-16 items-center justify-between px-4 border-b border-border/50">
         <Link href={localizeHref('/admin', locale)} className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-plum to-rose-mauve">
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-rose-mauve to-rose-mauve">
             <span className="font-serif text-lg font-bold text-white">J</span>
           </div>
           <AnimatePresence>
@@ -114,7 +114,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
                 className={cn(
                   'group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200',
                   isActive
-                    ? 'bg-plum text-white shadow-sm'
+                    ? 'bg-rose-mauve text-white shadow-sm'
                     : 'text-muted-foreground hover:bg-secondary hover:text-foreground'
                 )}
               >
