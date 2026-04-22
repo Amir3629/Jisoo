@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 const concerns = [
   { id: 'hydration', name: 'Hydration', icon: Droplets, color: 'from-blush-pink/70 to-nude-beige', count: 42 },
@@ -44,7 +45,7 @@ export function ConcernsSection() {
               transition={{ duration: 0.5, delay: index * 0.05 }}
             >
               <Link
-                href={`/shop?concern=${concern.id}`}
+                href={localizeHref(`/shop?concern=${concern.id}`, locale)}
                 className="group block"
               >
                 <div
@@ -98,7 +99,7 @@ export function ConcernsSection() {
               </p>
             </div>
             <Link
-              href="/help/shipping"
+              href={localizeHref('/help/shipping', locale)}
               className={cn(
                 'px-6 py-3 rounded-full whitespace-nowrap',
                 'bg-plum text-warm-ivory font-medium',

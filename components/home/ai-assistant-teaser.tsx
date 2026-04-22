@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 const features = [
   {
@@ -108,7 +109,7 @@ export function AiAssistantTeaser() {
               className="mt-10"
             >
               <Link
-                href="/ai-consultant"
+                href={localizeHref('/ai-consultant', locale)}
                 className={cn(
                   'inline-flex items-center gap-2 px-8 py-4 rounded-full',
                   'bg-champagne-gold text-charcoal font-medium',
