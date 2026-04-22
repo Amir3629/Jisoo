@@ -8,6 +8,7 @@ import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 export function HeroSection() {
   const { locale, dictionary } = useLocale()
@@ -57,7 +58,7 @@ export function HeroSection() {
               className="mt-10 flex flex-wrap items-center gap-4"
             >
               <Link
-                href="/shop"
+                href={localizeHref('/shop', locale)}
                 className={cn(
                   'group inline-flex items-center gap-2 rounded-full px-8 py-4',
                   'bg-rose-mauve/95 text-warm-ivory font-medium shadow-editorial hover:bg-rose-mauve/85 transition-colors'
@@ -68,7 +69,7 @@ export function HeroSection() {
               </Link>
 
               <Link
-                href="/about"
+                href={localizeHref('/about', locale)}
                 className="inline-flex items-center rounded-full border border-plum/30 px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
               >
                 {t.ourStory}
