@@ -1,17 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Heart, ShoppingBag, Eye, Star } from 'lucide-react'
-import type { Product, Region } from '@/lib/types'
-import { formatPrice } from '@/lib/data'
+import { ShoppingBag, Heart } from 'lucide-react'
+import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
-import { useRegion } from '@/components/providers/region-provider'
+import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import { useLocale } from '@/components/providers/locale-provider'
-import { localizeHref } from '@/lib/i18n'
-import { EditorialMedia } from '@/components/ui/editorial-media'
 
 interface ProductCardProps {
   product: Product
@@ -19,185 +15,88 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
-  const [isHovered, setIsHovered] = useState(false)
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  const { addToCart } = useCart()
-  const { region } = useRegion()
-  const { locale, dictionary } = useLocale()
-
-  const availability = product.regionAvailability[region]
-  const isBuyable = availability === 'visible_and_buyable'
-  const isVisibleOnly = availability === 'visible_but_not_buyable'
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    if (isBuyable) {
-      addToCart(product)
-    }
-  }
-
-  const handleWishlist = (e: React.MouseEvent) => {
-    e.preventDefault()
-    e.stopPropagation()
-    setIsWishlisted(!isWishlisted)
-  }
+  const { addItem } = useCart()
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
+    <motion.article
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      className="group"
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ duration: 0.45, delay: index * 0.05 }}
+      className="group overflow-hidden rounded-[2rem] border border-rose-mauve/15 bg-white/95 shadow-[0_18px_50px_rgba(91,42,68,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(176,106,136,0.14)]"
     >
-      <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
-        {/* Image Container */}
-        <div className="relative aspect-[3/4] rounded-[1.6rem] overflow-hidden mb-4 shadow-editorial">
-          {/* Product Image */}
-          <EditorialMedia
-            src={product.images[0]?.src}
-            alt={product.name}
-            className="absolute inset-0"
-            hint={product.isBestSeller ? 'Best Seller' : product.isNew ? 'New Drop' : 'Curated'}
+      <Link href={`/product/${product.slug}`} className="block">
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#f7efe9]">
+          <Image
+            src={product.images?.[0]?.src || '/placeholder.jpg'}
+            alt={product.images?.[0]?.alt || product.name}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
-          {/* Overlay */}
-          <div
-            className={cn(
-              'absolute inset-0 bg-gradient-to-t from-charcoal/30 via-transparent to-transparent',
-              'opacity-0 transition-opacity duration-300',
-              isHovered && 'opacity-100'
-            )}
-          />
-
-          {/* Badges */}
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.isNew && (
-              <span className="px-3 py-1 text-xs font-medium bg-plum text-warm-ivory rounded-full">
+              <span className="rounded-full bg-rose-mauve/95 px-3 py-1 text-xs font-medium text-warm-ivory">
                 New
               </span>
             )}
             {product.isBestSeller && (
-              <span className="px-3 py-1 text-xs font-medium bg-champagne-gold text-charcoal rounded-full">
+              <span className="rounded-full bg-champagne-gold px-3 py-1 text-xs font-medium text-charcoal">
                 Best Seller
               </span>
             )}
-            {product.compareAtPrice && (
-              <span className="px-3 py-1 text-xs font-medium bg-rose-mauve text-warm-ivory rounded-full">
-                Sale
-              </span>
-            )}
-            {isVisibleOnly && (
-              <span className="px-3 py-1 text-xs font-medium bg-charcoal/80 text-warm-ivory rounded-full">
-                View Only
-              </span>
-            )}
           </div>
 
-          {/* Wishlist Button */}
           <button
-            onClick={handleWishlist}
-            className={cn(
-              'absolute top-3 right-3 p-2.5 rounded-full transition-all duration-300',
-                  'bg-white/85 backdrop-blur-xl shadow-sm',
-                  isWishlisted ? 'text-rose-mauve' : 'text-charcoal/70',
-                  'hover:scale-110'
-                )}
+            type="button"
+            aria-label={`Add ${product.name} to wishlist`}
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/85 text-rose-mauve shadow-sm backdrop-blur transition hover:scale-105 hover:bg-white"
           >
-            <Heart
-              className={cn('w-5 h-5', isWishlisted && 'fill-current')}
-            />
+            <Heart className="h-4 w-4" />
           </button>
-
-          {/* Action Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: isHovered ? 1 : 0, y: isHovered ? 0 : 20 }}
-            transition={{ duration: 0.3 }}
-            className="absolute bottom-4 left-4 right-4 flex gap-2"
-          >
-            {isBuyable && (
-              <button
-                onClick={handleAddToCart}
-                className={cn(
-                  'flex-1 flex items-center justify-center gap-2 py-3 rounded-full',
-                  'bg-plum text-warm-ivory font-medium text-sm',
-                  'hover:bg-plum/90 transition-colors'
-                )}
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span>{dictionary.product.addToCart}</span>
-              </button>
-            )}
-            <button
-              className={cn(
-                'p-3 rounded-full',
-                'bg-white/90 backdrop-blur-sm text-charcoal',
-                'hover:bg-white transition-colors'
-              )}
-            >
-              <Eye className="w-4 h-4" />
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Product Info */}
-        <div>
-          <p className="text-xs text-rose-mauve font-medium uppercase tracking-[0.18em] mb-1">
-            {product.category}
-          </p>
-          <h3 className="font-serif text-lg text-charcoal group-hover:text-plum transition-colors line-clamp-1">
-            {product.name}
-          </h3>
-          {product.subtitle && (
-            <p className="text-sm text-muted-foreground mt-0.5 line-clamp-1">
-              {product.subtitle}
-            </p>
-          )}
-
-          {/* Rating */}
-          <div className="flex items-center gap-1.5 mt-2">
-            <div className="flex items-center gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={cn(
-                    'w-3.5 h-3.5',
-                    i < Math.floor(product.rating)
-                      ? 'text-champagne-gold fill-current'
-                      : 'text-blush-pink'
-                  )}
-                />
-              ))}
-            </div>
-            <span className="text-xs text-muted-foreground">
-              ({product.reviewCount})
-            </span>
-          </div>
-
-          {/* Price */}
-          <div className="flex items-center gap-2 mt-3">
-            <span className="font-semibold text-plum text-lg">
-              {formatPrice(product.price)}
-            </span>
-            {product.compareAtPrice && (
-              <span className="text-sm text-muted-foreground line-through">
-                {formatPrice(product.compareAtPrice)}
-              </span>
-            )}
-          </div>
-
-          {/* Region Notice */}
-          {isVisibleOnly && (
-            <p className="text-xs text-rose-mauve mt-2">
-              {dictionary.regionMessages.visible_but_not_buyable}
-            </p>
-          )}
         </div>
       </Link>
-    </motion.div>
+
+      <div className="space-y-4 p-5">
+        <div className="space-y-2">
+          <p className="text-xs uppercase tracking-[0.22em] text-rose-mauve/80">
+            {product.category}
+          </p>
+          <Link href={`/product/${product.slug}`} className="block">
+            <h3 className="text-lg font-medium leading-snug text-charcoal transition-colors group-hover:text-rose-mauve">
+              {product.name}
+            </h3>
+          </Link>
+          <p className="line-clamp-2 text-sm leading-6 text-charcoal/65">
+            {product.description}
+          </p>
+        </div>
+
+        <div className="flex items-center justify-between">
+          <div className="flex items-baseline gap-2">
+            <span className="text-lg font-semibold text-charcoal">
+              €{product.price.toFixed(2)}
+            </span>
+            {product.compareAtPrice && product.compareAtPrice > product.price && (
+              <span className="text-sm text-charcoal/40 line-through">
+                €{product.compareAtPrice.toFixed(2)}
+              </span>
+            )}
+          </div>
+
+          <Button
+            type="button"
+            onClick={() => addItem(product)}
+            className={cn(
+              'rounded-full px-4',
+              'bg-rose-mauve text-white hover:bg-rose-mauve/90'
+            )}
+          >
+            <ShoppingBag className="mr-2 h-4 w-4" />
+            Add
+          </Button>
+        </div>
+      </div>
+    </motion.article>
   )
 }
