@@ -13,6 +13,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
 
 const values = [
   {
@@ -79,6 +81,8 @@ const milestones = [
 ];
 
 export default function AboutPage() {
+  const { locale } = useLocale();
+
   const { scrollYProgress } = useScroll();
 
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
@@ -359,7 +363,7 @@ export default function AboutPage() {
                 variant="secondary"
                 className="rounded-none"
               >
-                <Link href="/ai-consultant">
+                <Link href={localizeHref('/ai-consultant', locale)}>
                   Meet Your AI Consultant
                   <Sparkles className="ml-2 w-4 h-4" />
                 </Link>
@@ -370,7 +374,7 @@ export default function AboutPage() {
                 variant="outline"
                 className="rounded-none border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
               >
-                <Link href="/shop">
+                <Link href={localizeHref('/shop', locale)}>
                   Shop Collection
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>

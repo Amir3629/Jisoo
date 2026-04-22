@@ -8,6 +8,7 @@ import { ProductCard } from '@/components/product/product-card'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 export function FeaturedProducts() {
   const { locale, dictionary } = useLocale()
@@ -26,7 +27,7 @@ export function FeaturedProducts() {
             ghostLabel="COLLECT"
           />
           <Link
-            href="/shop"
+            href={localizeHref('/shop', locale)}
             className="inline-flex items-center gap-2 text-plum font-medium hover:text-rose-mauve transition-colors"
           >
             {t.viewEntireEdit}
