@@ -57,9 +57,9 @@ const revenueData = [
 const categoryData = [
   { name: "Serums", value: 35, revenue: 342500, color: "#E8B4B8" },
   { name: "Moisturizers", value: 25, revenue: 245000, color: "#D4A574" },
-  { name: "Cleansers", value: 18, revenue: 176400, color: "#A6C4A6" },
-  { name: "Sunscreens", value: 12, revenue: 117600, color: "#B8D4E8" },
-  { name: "Masks", value: 10, revenue: 98000, color: "#D8C4E8" },
+  { name: "Cleansers", value: 18, revenue: 176400, color: "#E9C7D1" },
+  { name: "Sunscreens", value: 12, revenue: 117600, color: "#F3E7E0" },
+  { name: "Masks", value: 10, revenue: 98000, color: "#B76E8A" },
 ]
 
 const regionalData = [
@@ -172,7 +172,7 @@ export default function AnalyticsPage() {
                   </div>
                   <div
                     className={`flex items-center gap-1 text-sm font-medium ${
-                      stat.trend === "up" ? "text-emerald-600" : "text-red-600"
+                      stat.trend === "up" ? "text-rose-mauve" : "text-plum"
                     }`}
                   >
                     {stat.trend === "up" ? (
@@ -274,9 +274,9 @@ export default function AnalyticsPage() {
                     <Line
                       type="monotone"
                       dataKey="customers"
-                      stroke="#A6C4A6"
+                      stroke="#E9C7D1"
                       strokeWidth={2}
-                      dot={{ fill: "#A6C4A6", strokeWidth: 2 }}
+                      dot={{ fill: "#E9C7D1", strokeWidth: 2 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -353,7 +353,7 @@ export default function AnalyticsPage() {
                     <span className="font-medium text-sm">{region.region}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-sm text-muted-foreground">${(region.revenue / 1000).toFixed(0)}k</span>
-                      <span className="text-xs text-emerald-600 flex items-center">
+                      <span className="text-xs text-rose-mauve flex items-center">
                         <TrendingUp className="h-3 w-3 mr-0.5" />
                         {region.growth}%
                       </span>
@@ -393,7 +393,7 @@ export default function AnalyticsPage() {
                   </div>
                   <div className="text-right">
                     <p className="font-medium text-sm">${product.revenue.toLocaleString()}</p>
-                    <p className="text-xs text-emerald-600">+{product.growth}%</p>
+                    <p className="text-xs text-rose-mauve">+{product.growth}%</p>
                   </div>
                 </div>
               ))}
@@ -414,7 +414,7 @@ export default function AnalyticsPage() {
                     <span className="font-medium">{source.source}</span>
                     <div className="flex items-center gap-4">
                       <span className="text-muted-foreground">{source.visitors.toLocaleString()} visitors</span>
-                      <span className="text-emerald-600">{source.conversion}% conv.</span>
+                      <span className="text-rose-mauve">{source.conversion}% conv.</span>
                     </div>
                   </div>
                   <div className="h-2 bg-muted rounded-full overflow-hidden">

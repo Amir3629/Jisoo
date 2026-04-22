@@ -69,7 +69,7 @@ export function HeroSection() {
 
               <Link
                 href="/about"
-                className="inline-flex items-center rounded-full border border-plum/3px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
+                className="inline-flex items-center rounded-full border border-plum/30 px-8 py-4 text-plum font-medium hover:bg-plum/5 transition-colors"
               >
                 {t.ourStory}
               </Link>

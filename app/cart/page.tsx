@@ -81,7 +81,7 @@ export default function CartPage() {
               >
                 <div className="relative w-24 h-24 md:w-32 md:h-32 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                   <Image
-                    src={item.product.images[0]?.src || "/placeholder-product.jpg"}
+                    src={item.product.images[0]?.src || "/placeholder.jpg"}
                     alt={item.product.name}
                     fill
                     className="object-cover"

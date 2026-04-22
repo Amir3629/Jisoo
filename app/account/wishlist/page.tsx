@@ -69,7 +69,7 @@ export default function WishlistPage() {
               <div className="relative aspect-square overflow-hidden">
                 <Link href={localizeHref(`/product/${product.slug}`, locale)}>
                   <Image
-                    src={product.images[0]?.src || "/placeholder-product.jpg"}
+                    src={product.images[0]?.src || "/placeholder.jpg"}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"

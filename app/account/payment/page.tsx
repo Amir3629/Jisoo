@@ -65,7 +65,7 @@ export default function PaymentPage() {
     switch (type) {
       case "visa":
         return (
-          <div className="w-10 h-6 bg-blue-600 rounded flex items-center justify-center text-white text-[8px] font-bold">
+          <div className="w-10 h-6 bg-rose-mauve rounded flex items-center justify-center text-white text-[8px] font-bold">
             VISA
           </div>
         );
@@ -78,7 +78,7 @@ export default function PaymentPage() {
         );
       case "amex":
         return (
-          <div className="w-10 h-6 bg-blue-800 rounded flex items-center justify-center text-white text-[6px] font-bold">
+          <div className="w-10 h-6 bg-plum rounded flex items-center justify-center text-white text-[6px] font-bold">
             AMEX
           </div>
         );

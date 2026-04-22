@@ -146,7 +146,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
       <div className="border-t border-border/50 p-4">
         <div className={cn('flex items-center gap-3', collapsed && 'justify-center')}>
           <Avatar className="h-9 w-9">
-            <AvatarImage src="/avatars/admin.jpg" />
+            <AvatarImage src="/placeholder-user.jpg" />
             <AvatarFallback className="bg-rose-mauve text-white">JA</AvatarFallback>
           </Avatar>
           <AnimatePresence>

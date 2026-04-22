@@ -13,7 +13,7 @@ const socialPosts = [
   {
     id: 1,
     type: 'instagram',
-    image: '/social/post-1.jpg',
+    image: '/placeholder.jpg',
     likes: '12.4K',
     comments: '234',
     caption: 'Glass skin goals achieved with our new essence',
@@ -21,14 +21,14 @@ const socialPosts = [
   {
     id: 2,
     type: 'tiktok',
-    image: '/social/post-2.jpg',
+    image: '/products/glass-skin-essence-1.jpg',
     views: '2.1M',
     caption: 'My 10-step K-beauty routine',
   },
   {
     id: 3,
     type: 'instagram',
-    image: '/social/post-3.jpg',
+    image: '/products/luminous-glow-serum-1.jpg',
     likes: '8.9K',
     comments: '156',
     caption: 'Before & after using Luminous Glow Serum',
@@ -36,7 +36,7 @@ const socialPosts = [
   {
     id: 4,
     type: 'instagram',
-    image: '/social/post-4.jpg',
+    image: '/placeholder.jpg',
     likes: '15.2K',
     comments: '342',
     caption: 'Unboxing the new summer collection',
@@ -44,14 +44,14 @@ const socialPosts = [
   {
     id: 5,
     type: 'tiktok',
-    image: '/social/post-5.jpg',
+    image: '/products/glass-skin-essence-1.jpg',
     views: '890K',
     caption: 'POV: Your skin after K-beauty',
   },
   {
     id: 6,
     type: 'instagram',
-    image: '/social/post-6.jpg',
+    image: '/products/luminous-glow-serum-1.jpg',
     likes: '11.1K',
     comments: '198',
     caption: 'Cica Repair Ampoule saved my skin',
@@ -66,7 +66,7 @@ export function SocialSection() {
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"
-          title="{t.joinCommunity}"
+          title={t.joinCommunity}
           description="Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
@@ -139,7 +139,7 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-medium',
+              'bg-gradient-to-r from-plum via-rose-mauve to-champagne-gold text-white font-medium shadow-luxury',
               'hover:opacity-90 transition-opacity'
             )}
           >
@@ -153,7 +153,7 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-charcoal text-white font-medium',
+              'bg-plum/90 text-white font-medium border border-rose-mauve/30',
               'hover:bg-charcoal/90 transition-colors'
             )}
           >

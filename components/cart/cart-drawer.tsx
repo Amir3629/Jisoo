@@ -88,7 +88,7 @@ export function CartDrawer() {
                       {/* Product Image */}
                       <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-nude-beige flex-shrink-0">
                         <Image
-                          src={item.product.images[0]?.src || '/placeholder-product.jpg'}
+                          src={item.product.images[0]?.src || '/placeholder.jpg'}
                           alt={item.product.name}
                           fill
                           className="object-cover"
