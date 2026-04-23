@@ -20,26 +20,26 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'JISOO | Premium Korean Beauty',
-  description: 'Discover curated Korean beauty essentials. Premium skincare and makeup from Seoul to the world. Experience the art of K-beauty with JISOO.',
-  keywords: ['Korean beauty', 'K-beauty', 'skincare', 'makeup', 'JISOO', 'luxury beauty', 'Korean skincare'],
-  authors: [{ name: 'JISOO Beauty' }],
+  title: 'JISOO | Premium Korean Cosmetic',
+  description: 'Discover curated Korean cosmetic essentials. Premium skincare and makeup from Seoul to the world. Experience the art of modern K-cosmetics with JISOO.',
+  keywords: ['Korean cosmetic', 'K-cosmetics', 'skincare', 'makeup', 'JISOO', 'luxury cosmetic', 'Korean skincare'],
+  authors: [{ name: 'JISOO Cosmetic' }],
   openGraph: {
-    title: 'JISOO | Premium Korean Beauty',
-    description: 'Discover curated Korean beauty essentials from Seoul to the world.',
+    title: 'JISOO | Premium Korean Cosmetic',
+    description: 'Discover curated Korean cosmetic essentials from Seoul to the world.',
     type: 'website',
     locale: 'en_US',
     siteName: 'JISOO',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'JISOO | Premium Korean Beauty',
-    description: 'Discover curated Korean beauty essentials from Seoul to the world.',
+    title: 'JISOO | Premium Korean Cosmetic',
+    description: 'Discover curated Korean cosmetic essentials from Seoul to the world.',
   },
 }
 
 export const viewport: Viewport = {
-  themeColor: '#4B2247',
+  themeColor: '#6F4B66',
   width: 'device-width',
   initialScale: 1,
 }
