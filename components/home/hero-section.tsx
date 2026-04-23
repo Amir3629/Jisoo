@@ -194,9 +194,9 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[68vh] overflow-hidden rounded-[2rem]">
+    <section className="relative h-[68vh] overflow-hidden">
       <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/24 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
       <div className="absolute bottom-10 left-8 max-w-2xl lg:bottom-14 lg:left-14">
         <p className="text-kicker text-white/85">JISOO Editorial</p>
         <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">The Rose Light Standard</h1>
@@ -209,23 +209,32 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
 
 function CinematicTypographyHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[68vh] place-items-center overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_50%_30%,#faedf2_0%,#fff9f5_44%,#f8eee5_100%)] px-6 text-center">
-      <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="max-w-5xl font-serif text-6xl leading-[0.9] text-charcoal lg:text-[7.7rem]">
-        Cinematic
-        <span className="block text-rose-mauve">Beauty Narrative</span>
-      </motion.h1>
-      <p className="max-w-2xl text-charcoal/65">Typography-first hero concept with gallery-like composition and restrained media accents.</p>
-      <div className="absolute left-8 top-8 h-44 w-36 overflow-hidden rounded-2xl shadow-elevated lg:h-56 lg:w-44"><HeroImage src={media.primary} alt="Typography accent" className="h-full" /></div>
-      <div className="absolute bottom-10 right-8 h-48 w-36 overflow-hidden rounded-2xl shadow-elevated lg:h-64 lg:w-52"><HeroImage src={media.secondary ?? media.primary} alt="Typography accent two" className="h-full" /></div>
-      <div className="absolute bottom-12"><PrimaryCta locale={locale} subtle /></div>
+    <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-9 pt-10 text-center lg:px-14 lg:pb-12">
+      <div className="mx-auto max-w-5xl">
+        <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="font-serif text-6xl leading-[0.9] text-charcoal lg:text-[7.4rem]">
+          Cinematic
+          <span className="block text-rose-mauve">Beauty Narrative</span>
+        </motion.h1>
+        <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
+      </div>
+
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-3 gap-2 lg:grid-cols-5 lg:gap-3">
+        <HeroImage src={media.primary} alt="Editorial tile 1" className="aspect-[4/5]" />
+        <HeroImage src={media.secondary ?? media.primary} alt="Editorial tile 2" className="aspect-[4/5]" />
+        <HeroImage src={media.primary} alt="Editorial tile 3" className="aspect-[4/5]" />
+        <HeroImage src={media.secondary ?? media.primary} alt="Editorial tile 4" className="hidden aspect-[4/5] lg:block" />
+        <HeroImage src={media.primary} alt="Editorial tile 5" className="hidden aspect-[4/5] lg:block" />
+      </div>
+
+      <div className="absolute left-1/2 top-[55%] -translate-x-1/2 lg:top-[58%]"><PrimaryCta locale={locale} subtle /></div>
     </section>
   )
 }
 
 function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="grid min-h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[1.1fr_0.9fr]">
-      <div className="relative p-8 lg:p-14">
+    <section className="grid min-h-[68vh] overflow-hidden lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="relative bg-[#fff9f6] p-8 lg:p-14">
         <h1 className="font-serif text-5xl text-charcoal lg:text-7xl">Layered Ritual Architecture</h1>
         <p className="mt-5 max-w-lg text-charcoal/68">Commerce-meets-editorial split direction with stacked visual ingredients.</p>
         <div className="mt-8"><PrimaryCta locale={locale} /></div>
@@ -234,7 +243,7 @@ function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia })
           <HeroImage src={media.tertiary ?? media.primary} alt="Stack media 2" className="aspect-[4/5] rounded-2xl" />
         </div>
       </div>
-      <HeroImage src={media.primary} alt="Split hero" className="h-full min-h-[420px]" />
+      <HeroImage src={media.primary} alt="Split hero" className="h-full min-h-[68vh]" />
     </section>
   )
 }
