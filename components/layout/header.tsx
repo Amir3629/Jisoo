@@ -45,7 +45,7 @@ export function Header() {
   return (
     <>
       <motion.div
-        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-rose-mauve via-champagne-gold to-rose-mauve"
+        className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#e8c8d4] via-champagne-gold to-[#f4dfcf]"
         style={{ scaleX: progress }}
       />
       <motion.header
@@ -55,30 +55,16 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500',
           isScrolled
-            ? 'bg-warm-ivory/90 backdrop-blur-2xl shadow-editorial border-b border-rose-mauve/20'
+            ? 'bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_16px_34px_rgba(191,141,151,0.14)] border-b border-[#e9d5df]'
             : 'bg-transparent'
         )}
       >
         {/* Top Bar */}
-        <div className="hidden lg:block bg-gradient-to-r from-plum to-[#5d2b57] text-warm-ivory">
-          <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
-            <p className="font-light tracking-wide">
+        <div className="hidden lg:block bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] text-charcoal border-b border-[#ead9cd]">
+          <div className="max-w-7xl mx-auto px-6 py-1.5 text-center text-[11px]">
+            <p className="font-light tracking-[0.08em]">
               {dictionary.header.freeShipping.replace('{{amount}}', `${config.currencySymbol}100`)}
             </p>
-            <div className="flex items-center gap-6">
-              <LocaleSwitcher />
-              <button
-                onClick={() => setIsRegionOpen(true)}
-                className="flex items-center gap-1.5 hover:text-blush-pink transition-colors"
-              >
-                <Globe className="w-3.5 h-3.5" />
-                <span>{config.name}</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <Link href={localizeHref('/help', locale)} className="hover:text-blush-pink transition-colors">
-                {dictionary.header.nav.help}
-              </Link>
-            </div>
           </div>
         </div>
 
@@ -97,13 +83,13 @@ export function Header() {
             {/* Logo */}
             <Link href={localizeHref('/', locale)} className="flex-shrink-0 flex flex-col items-start">
               <motion.h1
-                className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-plum"
+              className="text-2xl lg:text-3xl font-serif font-bold tracking-tight text-[#7a5568]"
                 whileHover={{ scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
                 JISOO
               </motion.h1>
-              <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-plum/70 mt-0.5">
+              <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-[#7a5568]/70 mt-0.5">
                 Seoul Edition
               </span>
             </Link>
@@ -121,7 +107,7 @@ export function Header() {
                     href={localizeHref(link.href, locale)}
                     className={cn(
                       'text-sm font-medium tracking-[0.09em] transition-colors relative py-2',
-                      'text-charcoal hover:text-plum',
+                      'text-charcoal hover:text-rose-mauve',
                       'after:absolute after:left-0 after:bottom-0 after:w-full after:h-0.5',
                       'after:bg-rose-mauve after:scale-x-0 after:origin-center',
                       'after:transition-transform after:duration-300',
@@ -151,7 +137,7 @@ export function Header() {
                             <div key={category.id}>
                               <Link
                                 href={localizeHref(`/shop/${category.slug}`, locale)}
-                                className="font-medium text-charcoal hover:text-plum transition-colors"
+                                className="font-medium text-charcoal hover:text-rose-mauve transition-colors"
                               >
                                 {category.name}
                               </Link>
@@ -161,7 +147,7 @@ export function Header() {
                                     <li key={sub.id}>
                                       <Link
                                         href={localizeHref(`/shop/${sub.slug}`, locale)}
-                                        className="text-sm text-muted-foreground hover:text-plum transition-colors"
+                                        className="text-sm text-muted-foreground hover:text-rose-mauve transition-colors"
                                       >
                                         {sub.name}
                                       </Link>
@@ -180,10 +166,21 @@ export function Header() {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-2 lg:gap-4">
+            <div className="flex items-center gap-1 lg:gap-3">
+              <div className="hidden lg:flex items-center gap-2 pr-1">
+                <LocaleSwitcher />
+                <button
+                  onClick={() => setIsRegionOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-rose-mauve/20 bg-white/70 px-2.5 py-1 text-[11px] text-charcoal/75 hover:border-rose-mauve/40 hover:text-rose-mauve transition-colors"
+                >
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>{config.name}</span>
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </div>
               <button
                 onClick={() => setIsSearchOpen(true)}
-                className="p-2 text-charcoal hover:text-plum transition-colors"
+                className="p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.search}
               >
                 <Search className="w-5 h-5" />
@@ -191,7 +188,7 @@ export function Header() {
 
               <Link
                 href={localizeHref('/account', locale)}
-                className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
+                className="hidden sm:block p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.account}
               >
                 <User className="w-5 h-5" />
@@ -199,7 +196,7 @@ export function Header() {
 
               <Link
                 href={localizeHref('/account/wishlist', locale)}
-                className="hidden sm:block p-2 text-charcoal hover:text-plum transition-colors"
+                className="hidden sm:block p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.wishlist}
               >
                 <Heart className="w-5 h-5" />
@@ -207,7 +204,7 @@ export function Header() {
 
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 text-charcoal hover:text-plum transition-colors"
+                className="relative p-2 text-charcoal hover:text-rose-mauve transition-colors"
                 aria-label={dictionary.header.actions.cart}
               >
                 <ShoppingBag className="w-5 h-5" />

@@ -20,6 +20,7 @@ import type {
   AdminCustomer,
   ProductPerformance,
 } from './types'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 // ============ Suppliers ============
 export const suppliers: Supplier[] = [
@@ -709,3 +710,26 @@ export const topProductsPerformance: ProductPerformance[] = [
   { productId: 'prod-7', productName: 'Glass Skin Essence', productImage: '/products/glass-skin-essence-1.jpg', revenue: 28600, unitsSold: 550, views: 14200, conversionRate: 3.9, returnRate: 0.9, averageRating: 4.8, trend: 'up' },
   { productId: 'prod-3', productName: 'Gentle Cloud Foam Cleanser', productImage: '/products/gentle-foam-cleanser-1.jpg', revenue: 22400, unitsSold: 700, views: 11500, conversionRate: 6.1, returnRate: 0.3, averageRating: 4.7, trend: 'stable' },
 ]
+
+for (const supplier of suppliers) {
+  supplier.logo = resolveImageSrc(supplier.logo)
+}
+
+for (const supplierProduct of supplierProducts) {
+  supplierProduct.images = supplierProduct.images.map(image => resolveImageSrc(image))
+}
+
+for (const mediaAsset of mediaAssets) {
+  mediaAsset.originalUrl = resolveImageSrc(mediaAsset.originalUrl)
+  mediaAsset.watermarkedUrl = mediaAsset.watermarkedUrl ? resolveImageSrc(mediaAsset.watermarkedUrl) : undefined
+  mediaAsset.thumbnailUrl = resolveImageSrc(mediaAsset.thumbnailUrl)
+  mediaAsset.crops = mediaAsset.crops.map(crop => ({ ...crop, url: resolveImageSrc(crop.url) }))
+}
+
+for (const customer of adminCustomers) {
+  customer.avatar = customer.avatar ? resolveImageSrc(customer.avatar) : undefined
+}
+
+for (const product of topProductsPerformance) {
+  product.productImage = resolveImageSrc(product.productImage)
+}
