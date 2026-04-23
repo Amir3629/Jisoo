@@ -20,7 +20,7 @@ export class RealtimeVoiceMode implements VoiceMode {
     // TODO: stop realtime stream
   }
 
-  speak(_text: string, _voiceEnabled: boolean, _locale: string) {
+  async speak(_text: string, _voiceEnabled: boolean, _locale: string): Promise<void> {
     // TODO: in realtime mode, speech output will be streamed from provider
   }
 

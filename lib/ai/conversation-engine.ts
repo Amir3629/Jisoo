@@ -1,5 +1,6 @@
 import { products } from '@/lib/data'
 import type { Region } from '@/lib/types'
+import { enforceJisooDomain } from '@/lib/ai/domain-lock'
 
 export type ConciergeRole = 'user' | 'assistant'
 
@@ -31,10 +32,6 @@ interface SessionContext {
   intent?: 'recommendation' | 'policy' | 'order_support' | 'ingredient' | 'comparison' | 'general'
 }
 
-const domainTerms = [
-  'jisoo', 'skincare', 'beauty', 'serum', 'cream', 'cleanser', 'ingredient', 'routine', 'shipping', 'return', 'refund', 'policy', 'order', 'help', 'contact', 'compare', 'product',
-]
-
 const concernLexicon: Record<string, string[]> = {
   hydration: ['dry', 'dehydrated', 'hydration'],
   sensitivity: ['sensitive', 'redness', 'barrier', 'irritation'],
@@ -53,11 +50,6 @@ const returnPolicies: Record<Region, string> = {
   UAE: 'UAE returns are generally supported for eligible unopened items within 14 days of delivery.',
   EU: 'EU returns are generally supported for eligible unopened items within 14 days of delivery.',
   CA: 'Canada returns are supported for eligible unopened items within 14 days, with additional compliance retention for safety cases.',
-}
-
-function isDomainLocked(query: string) {
-  const lower = query.toLowerCase()
-  return domainTerms.some(term => lower.includes(term))
 }
 
 function inferConcern(text: string): string | undefined {
@@ -110,10 +102,11 @@ export function generateConciergeTurn({ query, region, history }: { query: strin
   const trimmed = query.trim()
   const context = extractContext([...history, { id: 'pending', role: 'user', content: trimmed }])
 
-  if (!isDomainLocked(trimmed)) {
+  const domainLock = enforceJisooDomain(trimmed)
+
+  if (!domainLock.allowed) {
     return {
-      answer:
-        'I’m your JISOO Beauty Concierge, so I stay focused on JISOO products, skincare routines, ingredients, policies, and order support. If you share your skin concern, I can guide you immediately.',
+      answer: domainLock.redirectMessage,
       actions: [
         { id: 'support', type: 'support', title: 'Contact JISOO Concierge', description: 'Talk with our team for product or order assistance.', href: '/help/contact' },
         { id: 'shop', type: 'navigation', title: 'Browse JISOO collection', description: 'Explore all formulas available by your market.', href: '/shop' },

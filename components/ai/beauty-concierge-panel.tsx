@@ -32,6 +32,7 @@ export function BeautyConciergePanel() {
     loading,
     listening,
     speaking,
+    partialTranscript,
     voiceEnabled,
     setVoiceEnabled,
     toggleListening,
@@ -76,7 +77,7 @@ export function BeautyConciergePanel() {
                 <span>{listening ? 'Listening...' : speaking ? 'Speaking...' : 'Ready'}</span>
               </div>
               <div className="inline-flex items-center gap-2">
-                <button onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : 'browser')} className="rounded-full border px-2 py-0.5 hover:text-foreground">
+                <button onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : voiceModeType === 'realtime' ? 'provider' : 'browser')} className="rounded-full border px-2 py-0.5 hover:text-foreground">
                   {voiceModeType}
                 </button>
                 <button onClick={() => setVoiceEnabled(prev => !prev)} className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 hover:text-foreground">
@@ -86,6 +87,11 @@ export function BeautyConciergePanel() {
             </div>
 
             <div ref={scrollRef} className="max-h-[56vh] space-y-3 overflow-auto px-3 py-3">
+              {partialTranscript && (
+                <div className="rounded-xl border border-dashed border-rose-mauve/25 bg-rose-mauve/5 px-3 py-2 text-xs text-muted-foreground">
+                  Live transcript: {partialTranscript}
+                </div>
+              )}
               {messages.map(message => (
                 <div key={message.id} className={cn('flex', message.role === 'user' ? 'justify-end' : 'justify-start')}>
                   <div

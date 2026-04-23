@@ -2,16 +2,17 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { generateConciergeTurn, type ConciergeAction, type ConciergeTurn } from '@/lib/ai/conversation-engine'
-import { createVoiceMode } from '@/lib/ai/voice/factory'
-import type { VoiceModeType } from '@/lib/ai/voice/types'
+import type { VoiceModeType, VoiceActivityState } from '@/lib/ai/voice/types'
 import type { Region } from '@/lib/types'
+import { deriveRuntimeState } from '@/lib/ai/voice/state-machine'
+import { VoiceSessionManager } from '@/lib/ai/voice/voice-session-manager'
 
 export interface ConciergeUIMessage extends ConciergeTurn {
   actions?: ConciergeAction[]
   suggestions?: string[]
 }
 
-const STORAGE_KEY = 'jisoo_concierge_memory_v2'
+const STORAGE_KEY = 'jisoo_concierge_memory_v3'
 
 export function useConciergeController({ locale, region, defaultVoiceMode = 'browser' }: { locale: string; region: Region; defaultVoiceMode?: VoiceModeType }) {
   const [messages, setMessages] = useState<ConciergeUIMessage[]>([
@@ -24,12 +25,16 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
     },
   ])
   const [input, setInput] = useState('')
+  const [partialTranscript, setPartialTranscript] = useState('')
   const [loading, setLoading] = useState(false)
   const [listening, setListening] = useState(false)
   const [speaking, setSpeaking] = useState(false)
+  const [interrupted, setInterrupted] = useState(false)
+  const [errored, setErrored] = useState(false)
   const [voiceEnabled, setVoiceEnabled] = useState(true)
   const [voiceModeType, setVoiceModeType] = useState<VoiceModeType>(defaultVoiceMode)
-  const voiceModeRef = useRef<ReturnType<typeof createVoiceMode> | null>(null)
+  const [voiceActivity, setVoiceActivity] = useState<VoiceActivityState>('idle')
+  const managerRef = useRef<VoiceSessionManager | null>(null)
 
   useEffect(() => {
     try {
@@ -44,36 +49,18 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
 
   useEffect(() => {
     try {
-      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-20)))
+      sessionStorage.setItem(STORAGE_KEY, JSON.stringify(messages.slice(-25)))
     } catch {
       // ignore
     }
   }, [messages])
 
-  useEffect(() => {
-    voiceModeRef.current?.dispose?.()
-
-    voiceModeRef.current = createVoiceMode(
-      voiceModeType,
-      {
-        onTranscript: transcript => {
-          setInput(transcript)
-          send(transcript)
-        },
-        onListeningChange: setListening,
-      },
-      locale,
-    )
-
-    return () => voiceModeRef.current?.dispose?.()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [voiceModeType, locale, region])
-
   const send = (text?: string) => {
     const q = (text ?? input).trim()
     if (!q || loading) return
 
-    voiceModeRef.current?.interrupt()
+    const interruptionSeq = managerRef.current?.interrupt() ?? 0
+    setInterrupted(true)
     setSpeaking(false)
 
     const userTurn: ConciergeUIMessage = { id: `${Date.now()}-u`, role: 'user', content: q }
@@ -81,9 +68,13 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
 
     setMessages(history)
     setInput('')
+    setPartialTranscript('')
     setLoading(true)
+    setErrored(false)
 
-    window.setTimeout(() => {
+    window.setTimeout(async () => {
+      if (managerRef.current?.isStale(interruptionSeq)) return
+
       const response = generateConciergeTurn({ query: q, region, history })
       const assistantTurn: ConciergeUIMessage = {
         id: `${Date.now()}-a`,
@@ -95,31 +86,63 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
 
       setMessages(prev => [...prev, assistantTurn])
       setLoading(false)
+      setInterrupted(false)
 
       if (voiceEnabled) {
         setSpeaking(true)
-        voiceModeRef.current?.speak(response.answer, voiceEnabled, locale)
-        window.setTimeout(() => setSpeaking(false), Math.min(4000, Math.max(1200, response.answer.length * 24)))
+        await managerRef.current?.speak(response.answer, voiceEnabled, locale)
+        setSpeaking(false)
       }
-    }, 380)
+    }, 320)
   }
 
+  useEffect(() => {
+    managerRef.current?.dispose()
+
+    managerRef.current = new VoiceSessionManager(
+      {
+        onPartialTranscript: transcript => {
+          setPartialTranscript(transcript)
+          setInput(transcript)
+        },
+        onFinalTranscript: transcript => {
+          setPartialTranscript('')
+          setInput(transcript)
+          send(transcript)
+        },
+        onListeningChange: setListening,
+        onVoiceActivity: setVoiceActivity,
+        onError: () => {
+          setErrored(true)
+          setListening(false)
+        },
+      },
+      locale,
+      voiceModeType,
+    )
+
+    return () => managerRef.current?.dispose()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [voiceModeType, locale, region])
+
   const toggleListening = () => {
-    const mode = voiceModeRef.current
-    if (!mode || !mode.supported) return
+    if (!managerRef.current?.isSupported()) return
 
     if (listening) {
-      mode.stopListening()
+      managerRef.current.stopListening()
       return
     }
 
-    mode.interrupt()
+    managerRef.current.interrupt()
+    setInterrupted(true)
     setSpeaking(false)
-    mode.startListening()
+    managerRef.current.startListening()
   }
 
   const reset = () => {
-    voiceModeRef.current?.interrupt()
+    managerRef.current?.interrupt()
+    managerRef.current?.clearTranscript()
+    setPartialTranscript('')
     setMessages([
       {
         id: 'intro',
@@ -131,20 +154,29 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
     ])
   }
 
+  const runtimeState = useMemo(
+    () => deriveRuntimeState({ listening, speaking, loading, interrupted, errored }),
+    [listening, speaking, loading, interrupted, errored],
+  )
+
   return {
     messages,
     input,
     setInput,
+    partialTranscript,
     send,
     loading,
     listening,
     speaking,
+    interrupted,
+    runtimeState,
+    voiceActivity,
     voiceEnabled,
     setVoiceEnabled,
     toggleListening,
     reset,
     voiceModeType,
     setVoiceModeType,
-    voiceSupported: voiceModeRef.current?.supported ?? false,
+    voiceSupported: managerRef.current?.isSupported() ?? false,
   }
 }

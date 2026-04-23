@@ -30,6 +30,7 @@ export default function AIConsultantPage() {
     loading,
     listening,
     speaking,
+    partialTranscript,
     voiceEnabled,
     setVoiceEnabled,
     toggleListening,
@@ -57,7 +58,7 @@ export default function AIConsultantPage() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : 'browser')}>
+            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : voiceModeType === 'realtime' ? 'provider' : 'browser')}>
               {voiceModeType}
             </Button>
             <Button variant="ghost" size="sm" className="text-white hover:bg-white/20" onClick={() => setVoiceEnabled(prev => !prev)}>
@@ -75,6 +76,11 @@ export default function AIConsultantPage() {
         </div>
 
         <div ref={scrollRef} className="p-4 space-y-4 max-h-[62vh] overflow-auto">
+          {partialTranscript && (
+            <div className="rounded-xl border border-dashed border-rose-mauve/25 bg-rose-mauve/5 px-3 py-2 text-xs text-muted-foreground">
+              Live transcript: {partialTranscript}
+            </div>
+          )}
           {messages.map((message) => (
             <div key={message.id} className={`flex gap-2 ${message.role === 'user' ? 'justify-end' : ''}`}>
               <div className={`rounded-2xl px-4 py-3 text-sm max-w-[88%] ${message.role === 'user' ? 'bg-charcoal text-white' : 'bg-muted border border-rose-mauve/15'}`}>
