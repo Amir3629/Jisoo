@@ -5,64 +5,64 @@
 
 :root {
   /* JISOO K-Beauty Brand Palette */
-  --plum: #4B2247;
-  --rose-mauve: #B76E8A;
-  --blush-pink: #E9C7D1;
-  --warm-ivory: #FFF8F4;
-  --nude-beige: #F3E7E0;
-  --champagne-gold: #C9A46A;
-  --charcoal: #1E1A1D;
+  --plum: #6F4B66;
+  --rose-mauve: #C992A9;
+  --blush-pink: #F0D7E0;
+  --warm-ivory: #FFF9F5;
+  --nude-beige: #F8EDE6;
+  --champagne-gold: #D3B07A;
+  --charcoal: #2C2528;
   
   /* Semantic tokens mapped to brand */
-  --background: #FFF8F4;
-  --foreground: #1E1A1D;
+  --background: #FFF9F5;
+  --foreground: #2C2528;
   --card: #FFFFFF;
-  --card-foreground: #1E1A1D;
+  --card-foreground: #2C2528;
   --popover: #FFFFFF;
-  --popover-foreground: #1E1A1D;
-  --primary: #4B2247;
+  --popover-foreground: #2C2528;
+  --primary: #6F4B66;
   --primary-foreground: #FFF8F4;
-  --secondary: #F3E7E0;
-  --secondary-foreground: #4B2247;
-  --muted: #F3E7E0;
-  --muted-foreground: #6B5B63;
-  --accent: #B76E8A;
+  --secondary: #F8EDE6;
+  --secondary-foreground: #6F4B66;
+  --muted: #F8EDE6;
+  --muted-foreground: #7A676F;
+  --accent: #C992A9;
   --accent-foreground: #FFF8F4;
   --destructive: #D64545;
   --destructive-foreground: #FFFFFF;
-  --border: #E9C7D1;
-  --input: #E9C7D1;
-  --ring: #B76E8A;
+  --border: #F0D7E0;
+  --input: #F0D7E0;
+  --ring: #C992A9;
   --radius: 0.75rem;
   
   /* Chart colors */
-  --chart-1: #4B2247;
-  --chart-2: #B76E8A;
-  --chart-3: #E9C7D1;
-  --chart-4: #C9A46A;
-  --chart-5: #F3E7E0;
+  --chart-1: #6F4B66;
+  --chart-2: #C992A9;
+  --chart-3: #F0D7E0;
+  --chart-4: #D3B07A;
+  --chart-5: #F8EDE6;
 }
 
 .dark {
   --background: #1E1A1D;
   --foreground: #FFF8F4;
-  --card: #2A2328;
+  --card: #3A3236;
   --card-foreground: #FFF8F4;
-  --popover: #2A2328;
+  --popover: #3A3236;
   --popover-foreground: #FFF8F4;
-  --primary: #E9C7D1;
-  --primary-foreground: #1E1A1D;
+  --primary: #F0D7E0;
+  --primary-foreground: #2C2528;
   --secondary: #3D3339;
-  --secondary-foreground: #F3E7E0;
+  --secondary-foreground: #F8EDE6;
   --muted: #3D3339;
-  --muted-foreground: #A89A9F;
-  --accent: #B76E8A;
+  --muted-foreground: #B6A7AE;
+  --accent: #C992A9;
   --accent-foreground: #FFF8F4;
   --destructive: #D64545;
   --destructive-foreground: #FFFFFF;
   --border: #3D3339;
   --input: #3D3339;
-  --ring: #B76E8A;
+  --ring: #C992A9;
 }
 
 @theme inline {
@@ -116,7 +116,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: #fff8f4;
+    background: #fff9f5;
   }
   
   /* RTL Support */

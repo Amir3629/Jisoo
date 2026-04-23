@@ -17,6 +17,7 @@ import {
   Droplets, Shield, Sparkles, Clock, Leaf, Info, MessageCircle
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { evaluateRegionAccess } from '@/lib/services/region-access'
 
 const iconMap: Record<string, React.ElementType> = {
   droplet: Droplets,
@@ -68,9 +69,9 @@ export default function ProductPage({ params }: ProductPageProps) {
     )
   }
 
-  const availability = product.regionAvailability[region]
-  const isBuyable = availability === 'visible_and_buyable'
-  const isVisibleOnly = availability === 'visible_but_not_buyable'
+  const access = evaluateRegionAccess(product, region)
+  const isBuyable = access.isBuyable
+  const isVisibleOnly = access.status === 'visible_but_not_buyable'
 
   const handleAddToCart = () => {
     if (isBuyable) {
@@ -223,14 +224,14 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Region Availability */}
-              {isVisibleOnly && (
+              {(isVisibleOnly || access.status === 'pending_review') && (
                 <div className="mt-4 p-4 rounded-xl bg-rose-mauve/10 border border-rose-mauve/20">
                   <div className="flex items-start gap-3">
                     <Info className="w-5 h-5 text-rose-mauve flex-shrink-0 mt-0.5" />
                     <div>
                       <p className="font-medium text-charcoal">{dictionary.product.notAvailableInRegionTitle}</p>
                       <p className="text-sm text-muted-foreground mt-1">
-                        {dictionary.product.notAvailableInRegionBody}
+                        {access.complianceWarning ?? dictionary.product.notAvailableInRegionBody}
                       </p>
                     </div>
                   </div>
