@@ -61,24 +61,10 @@ export function Header() {
       >
         {/* Top Bar */}
         <div className="hidden lg:block bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] text-charcoal border-b border-[#ead9cd]">
-          <div className="max-w-7xl mx-auto px-6 py-2 flex items-center justify-between text-xs">
-            <p className="font-light tracking-wide">
+          <div className="max-w-7xl mx-auto px-6 py-1.5 text-center text-[11px]">
+            <p className="font-light tracking-[0.08em]">
               {dictionary.header.freeShipping.replace('{{amount}}', `${config.currencySymbol}100`)}
             </p>
-            <div className="flex items-center gap-6">
-              <LocaleSwitcher />
-              <button
-                onClick={() => setIsRegionOpen(true)}
-                className="flex items-center gap-1.5 hover:text-rose-mauve transition-colors"
-              >
-                <Globe className="w-3.5 h-3.5" />
-                <span>{config.name}</span>
-                <ChevronDown className="w-3 h-3" />
-              </button>
-              <Link href={localizeHref('/help', locale)} className="hover:text-rose-mauve transition-colors">
-                {dictionary.header.nav.help}
-              </Link>
-            </div>
           </div>
         </div>
 
@@ -180,7 +166,18 @@ export function Header() {
             </nav>
 
             {/* Actions */}
-            <div className="flex items-center gap-2 lg:gap-4">
+            <div className="flex items-center gap-1 lg:gap-3">
+              <div className="hidden lg:flex items-center gap-2 pr-1">
+                <LocaleSwitcher />
+                <button
+                  onClick={() => setIsRegionOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-rose-mauve/20 bg-white/70 px-2.5 py-1 text-[11px] text-charcoal/75 hover:border-rose-mauve/40 hover:text-rose-mauve transition-colors"
+                >
+                  <Globe className="h-3.5 w-3.5" />
+                  <span>{config.name}</span>
+                  <ChevronDown className="h-3 w-3" />
+                </button>
+              </div>
               <button
                 onClick={() => setIsSearchOpen(true)}
                 className="p-2 text-charcoal hover:text-rose-mauve transition-colors"

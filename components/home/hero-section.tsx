@@ -67,9 +67,9 @@ export function HeroSection() {
   const media = useMemo(() => getMediaForConcept(activeId), [activeId])
 
   return (
-    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-20 pb-8 lg:pt-24">
+    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-[8.5rem] pb-8 lg:pt-[9.25rem]">
       <div className="relative mx-auto max-w-[1500px] px-3 lg:px-6">
-        <div className="relative min-h-[82vh] lg:min-h-[88vh]">
+        <div className="relative min-h-[68vh] lg:min-h-[72vh]">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeId}
@@ -194,7 +194,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[82vh] overflow-hidden rounded-[2.6rem]">
+    <section className="relative h-[68vh] overflow-hidden rounded-[2rem]">
       <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/24 to-transparent" />
       <div className="absolute bottom-10 left-8 max-w-2xl lg:bottom-14 lg:left-14">
@@ -209,14 +209,14 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
 
 function CinematicTypographyHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[82vh] place-items-center overflow-hidden rounded-[2.6rem] bg-[radial-gradient(circle_at_50%_30%,#faedf2_0%,#fff9f5_44%,#f8eee5_100%)] px-6 text-center">
+    <section className="relative grid h-[68vh] place-items-center overflow-hidden rounded-[2rem] bg-[radial-gradient(circle_at_50%_30%,#faedf2_0%,#fff9f5_44%,#f8eee5_100%)] px-6 text-center">
       <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="max-w-5xl font-serif text-6xl leading-[0.9] text-charcoal lg:text-[7.7rem]">
         Cinematic
         <span className="block text-rose-mauve">Beauty Narrative</span>
       </motion.h1>
       <p className="max-w-2xl text-charcoal/65">Typography-first hero concept with gallery-like composition and restrained media accents.</p>
-      <div className="absolute left-8 top-8 h-44 w-36 rotate-[-6deg] overflow-hidden rounded-2xl shadow-elevated lg:h-56 lg:w-44"><HeroImage src={media.primary} alt="Typography accent" className="h-full" /></div>
-      <div className="absolute bottom-10 right-8 h-48 w-36 rotate-[7deg] overflow-hidden rounded-2xl shadow-elevated lg:h-64 lg:w-52"><HeroImage src={media.secondary ?? media.primary} alt="Typography accent two" className="h-full" /></div>
+      <div className="absolute left-8 top-8 h-44 w-36 overflow-hidden rounded-2xl shadow-elevated lg:h-56 lg:w-44"><HeroImage src={media.primary} alt="Typography accent" className="h-full" /></div>
+      <div className="absolute bottom-10 right-8 h-48 w-36 overflow-hidden rounded-2xl shadow-elevated lg:h-64 lg:w-52"><HeroImage src={media.secondary ?? media.primary} alt="Typography accent two" className="h-full" /></div>
       <div className="absolute bottom-12"><PrimaryCta locale={locale} subtle /></div>
     </section>
   )
@@ -224,7 +224,7 @@ function CinematicTypographyHero({ locale, media }: { locale: Locale; media: Her
 
 function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="grid min-h-[82vh] overflow-hidden rounded-[2.6rem] lg:grid-cols-[1.1fr_0.9fr]">
+    <section className="grid min-h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[1.1fr_0.9fr]">
       <div className="relative p-8 lg:p-14">
         <h1 className="font-serif text-5xl text-charcoal lg:text-7xl">Layered Ritual Architecture</h1>
         <p className="mt-5 max-w-lg text-charcoal/68">Commerce-meets-editorial split direction with stacked visual ingredients.</p>
@@ -241,7 +241,7 @@ function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia })
 
 function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[82vh] place-items-center overflow-hidden rounded-[2.6rem] bg-white px-6 text-center">
+    <section className="relative grid h-[68vh] place-items-center overflow-hidden rounded-[2rem] bg-white px-6 text-center">
       <div className="max-w-4xl">
         <p className="text-kicker text-charcoal/48">Quiet Luxury Formula House</p>
         <h1 className="mt-4 font-serif text-5xl text-charcoal lg:text-7xl">Minimal. Elegant. Seoul.</h1>
@@ -257,7 +257,7 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
 
 function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[82vh] overflow-hidden rounded-[2.6rem] lg:grid-cols-[0.95fr_1.05fr]">
+    <section className="relative grid h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[0.95fr_1.05fr]">
       <div className="z-10 bg-white/85 p-8 lg:p-12">
         <p className="text-kicker text-rose-mauve">Campaign Cover / Vol.04</p>
         <h1 className="mt-4 font-serif text-6xl leading-[0.9] text-charcoal lg:text-8xl">THE GLOW ISSUE</h1>
@@ -274,7 +274,7 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
 
 function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[82vh] overflow-hidden rounded-[2.6rem] bg-charcoal">
+    <section className="relative h-[68vh] overflow-hidden rounded-[2rem] bg-charcoal">
       <HeroVideo media={media} className="absolute inset-0 opacity-88" />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
       <div className="relative flex h-full items-center px-8 lg:px-14">
@@ -291,12 +291,12 @@ function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }
 
 function FloatingArchitectureHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[82vh] overflow-hidden rounded-[2.6rem] bg-[linear-gradient(160deg,#fff8f4_0%,#faeef3_52%,#f8efe5_100%)]">
+    <section className="relative h-[68vh] overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#fff8f4_0%,#faeef3_52%,#f8efe5_100%)]">
       <div className="absolute left-1/2 top-1/2 h-[410px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[2.2rem] shadow-[0_28px_70px_rgba(186,138,153,0.28)] lg:h-[520px] lg:w-[360px]">
         <HeroImage src={media.primary} alt="Floating main" className="h-full" />
       </div>
-      <div className="absolute left-[18%] top-[22%] h-44 w-32 -rotate-[12deg] overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.secondary ?? media.primary} alt="Floating secondary" className="h-full" /></div>
-      <div className="absolute right-[16%] bottom-[20%] h-44 w-32 rotate-[10deg] overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.tertiary ?? media.primary} alt="Floating tertiary" className="h-full" /></div>
+      <div className="absolute left-[18%] top-[22%] h-44 w-32 overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.secondary ?? media.primary} alt="Floating secondary" className="h-full" /></div>
+      <div className="absolute right-[16%] bottom-[20%] h-44 w-32 overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.tertiary ?? media.primary} alt="Floating tertiary" className="h-full" /></div>
       <div className="absolute left-8 top-8 max-w-xl lg:left-12 lg:top-12">
         <h1 className="font-serif text-4xl text-charcoal lg:text-6xl">Floating Product Architecture</h1>
         <p className="mt-3 text-charcoal/65">Asymmetric, object-led visual concept with sculptural campaign rhythm.</p>
@@ -308,7 +308,7 @@ function FloatingArchitectureHero({ locale, media }: { locale: Locale; media: He
 
 function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[82vh] overflow-hidden rounded-[2.6rem]">
+    <section className="relative h-[68vh] overflow-hidden rounded-[2rem]">
       <HeroImage src={media.primary} alt="Mist background" className="absolute inset-0" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.65),transparent_46%),linear-gradient(145deg,rgba(251,239,245,0.48),rgba(248,238,230,0.44))]" />
       <div className="absolute left-8 top-10 max-w-xl rounded-[2rem] border border-white/65 bg-white/34 p-7 backdrop-blur-xl lg:left-12 lg:top-12 lg:p-9">
@@ -324,7 +324,7 @@ function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) 
 
 function MagazineGridHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="grid min-h-[82vh] grid-cols-2 gap-3 rounded-[2.2rem] bg-[#fffaf6] p-3 lg:grid-cols-12 lg:grid-rows-6 lg:gap-4 lg:p-4">
+    <section className="grid min-h-[68vh] grid-cols-2 gap-3 rounded-[2rem] bg-[#fffaf6] p-3 lg:grid-cols-12 lg:grid-rows-6 lg:gap-4 lg:p-4">
       <div className="col-span-2 lg:col-span-7 lg:row-span-6">
         <HeroImage src={media.primary} alt="Magazine main" className="h-full min-h-[320px] rounded-[1.6rem]" />
       </div>
@@ -344,7 +344,7 @@ function MagazineGridHero({ locale, media }: { locale: Locale; media: HeroMedia 
 
 function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="grid min-h-[82vh] overflow-hidden rounded-[2.6rem] lg:grid-cols-[0.95fr_1.05fr]">
+    <section className="grid min-h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[0.95fr_1.05fr]">
       <div className="bg-[#fffaf7] p-8 lg:p-12">
         <p className="text-kicker text-rose-mauve">Luxury Commerce Hero</p>
         <h1 className="mt-3 font-serif text-5xl text-charcoal lg:text-7xl">Shop Signature Essentials</h1>
