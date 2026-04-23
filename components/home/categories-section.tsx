@@ -8,6 +8,7 @@ import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 export function CategoriesSection() {
   const { locale, dictionary } = useLocale()
@@ -27,7 +28,7 @@ export function CategoriesSection() {
               ghostLabel="EDIT"
             />
             <Link
-              href="/shop"
+              href={localizeHref('/shop', locale)}
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-plum/30 px-6 py-3 text-plum font-medium hover:bg-plum/5 transition-colors"
             >
               {t.browseAllCategories}
@@ -45,7 +46,7 @@ export function CategoriesSection() {
                 transition={{ duration: 0.9, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
                 className={index % 2 === 1 ? 'lg:ml-14' : ''}
               >
-                <Link href={`/shop/${category.slug}`} className="group block">
+                <Link href={localizeHref(`/shop/${category.slug}`, locale)} className="group block">
                   <div className="relative rounded-[2rem] overflow-hidden shadow-editorial">
                     <EditorialMedia
                       src={category.image}
@@ -73,4 +74,3 @@ export function CategoriesSection() {
     </AtmosphereSection>
   )
 }
-

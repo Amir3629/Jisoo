@@ -26,12 +26,13 @@ type CheckoutStep = "information" | "shipping" | "payment";
 
 export default function CheckoutPage() {
   const { items, subtotal, clearCart } = useCart();
-  const { formatPrice } = useRegion();
+  const { formatPrice, region, currency } = useRegion();
   const { locale, dictionary } = useLocale();
   const c = dictionary.common;
   const [step, setStep] = useState<CheckoutStep>("information");
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
+  const [placedOrderNumber, setPlacedOrderNumber] = useState<string | null>(null);
 
   const shipping = subtotal > 50 ? 0 : 5.99;
   const tax = subtotal * 0.08;
@@ -45,10 +46,29 @@ export default function CheckoutPage() {
 
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsProcessing(false);
-    setOrderComplete(true);
-    clearCart();
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          region,
+          currency,
+          cartItems: items,
+          paymentProvider: 'paypal',
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Checkout failed')
+      }
+
+      const payload = await response.json()
+      setPlacedOrderNumber(payload.order.id)
+      setOrderComplete(true)
+      clearCart()
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   if (orderComplete) {
@@ -68,7 +88,7 @@ export default function CheckoutPage() {
               Your order has been placed successfully.
             </p>
             <p className="text-sm text-muted-foreground mb-8">
-              Order #JIS-{Math.random().toString(36).substring(2, 8).toUpperCase()}
+              Order #{placedOrderNumber ?? "JIS-PENDING"}
             </p>
             <p className="text-sm text-muted-foreground mb-8 max-w-md mx-auto">
               We&apos;ve sent a confirmation email with your order details and tracking information.

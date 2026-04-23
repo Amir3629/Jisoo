@@ -8,6 +8,7 @@ import { EditorialMedia } from '@/components/ui/editorial-media'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 const ritualSteps = [
   {
@@ -151,7 +152,7 @@ export function RitualSection() {
             className="mt-20 text-center"
           >
             <Link
-              href="/shop"
+              href={localizeHref('/shop', locale)}
               className={cn(
                 'inline-flex items-center gap-2 rounded-full px-8 py-4',
                 'bg-plum font-medium text-warm-ivory transition-all duration-300 hover:bg-plum/90',
