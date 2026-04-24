@@ -36,5 +36,9 @@ export const localizedUi: Record<Locale, Record<string, string>> = {
   ko: {
     discoverCollection: '컬렉션 보기', ourStory: '브랜드 스토리', browseAllCategories: '전체 카테고리 보기', exploreChapter: '챕터 보기', viewEntireEdit: '전체 에디트 보기', addToCart: '장바구니 담기', shopTheRitual: '리추얼 쇼핑', tryAiAssistant: 'AI 어시스턴트 체험', viewShippingInfo: '배송 정보 보기', followInstagram: '인스타그램 팔로우', followTiktok: '틱톡 팔로우', lovedBy: '뷰티 애호가들의 선택', shopByConcern: '피부 고민별 쇼핑', joinCommunity: '뷰티 커뮤니티 참여', help: '도움말', company: '회사', legal: '법률',
     notAvailable: '구매 불가'
+  },
+  tr: {
+    discoverCollection: 'Koleksiyonu Keşfet', ourStory: 'Hikayemiz', browseAllCategories: 'Tüm Kategorileri Gör', exploreChapter: 'Bölümü Keşfet', viewEntireEdit: 'Tüm Seçkiyi Gör', addToCart: 'Sepete Ekle', shopTheRitual: 'Rutini Satın Al', tryAiAssistant: 'AI Asistanı Dene', viewShippingInfo: 'Kargo Bilgisi', followInstagram: 'Instagram’da Takip Et', followTiktok: 'TikTok’ta Takip Et', lovedBy: 'Güzellik Tutkunlarının Favorisi', shopByConcern: 'İhtiyaca Göre Alışveriş', joinCommunity: 'Topluluğa Katıl', help: 'Yardım', company: 'Şirket', legal: 'Yasal',
+    notAvailable: 'Mevcut değil'
   }
 }

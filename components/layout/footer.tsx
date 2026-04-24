@@ -15,6 +15,7 @@ const footerLinks = {
     { label: 'Best Sellers', href: '/shop/best-sellers' },
     { label: 'New Arrivals', href: '/shop/new-arrivals' },
     { label: 'Gift Sets', href: '/shop/sets' },
+    { label: 'Gift Cards', href: '/gift-cards' },
   ],
   help: [
     { label: 'Contact Us', href: '/help/contact' },
@@ -22,6 +23,7 @@ const footerLinks = {
     { label: 'Shipping Info', href: '/help/shipping' },
     { label: 'Returns & Exchanges', href: '/help/returns' },
     { label: 'Track Order', href: '/account/orders' },
+    { label: 'Tips & Care', href: '/tips' },
   ],
   company: [
     { label: 'Our Story', href: '/about' },
@@ -59,9 +61,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-plum text-warm-ivory">
+    <footer className="bg-gradient-to-br from-[#fff7f2] via-[#fceef2] to-[#f7ece3] text-charcoal">
       {/* Newsletter Section */}
-      <div className="border-b border-rose-mauve/20">
+      <div className="border-b border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -73,7 +75,7 @@ export function Footer() {
             <h3 className="text-2xl lg:text-3xl font-serif mb-3">
               {dictionary.footer.newsletterTitle}
             </h3>
-            <p className="text-blush-pink/80 mb-8">
+            <p className="text-charcoal/70 mb-8">
               {dictionary.footer.newsletterBody}
             </p>
 
@@ -81,7 +83,7 @@ export function Footer() {
               <motion.p
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-champagne-gold font-medium"
+                className="text-[#b79263] font-medium"
               >
                 {dictionary.footer.subscribed}
               </motion.p>
@@ -94,9 +96,9 @@ export function Footer() {
                   placeholder={dictionary.footer.emailPlaceholder}
                   className={cn(
                     'flex-1 px-5 py-3.5 rounded-full',
-                    'bg-warm-ivory/10 border border-warm-ivory/20',
-                    'text-warm-ivory placeholder:text-warm-ivory/50',
-                    'focus:outline-none focus:border-champagne-gold',
+                    'bg-white/80 border border-[#e8d4c1]',
+                    'text-charcoal placeholder:text-charcoal/45',
+                    'focus:outline-none focus:border-[#cfac7f]',
                     'transition-colors duration-300'
                   )}
                   required
@@ -107,8 +109,8 @@ export function Footer() {
                   type="submit"
                   className={cn(
                     'px-8 py-3.5 rounded-full',
-                    'bg-champagne-gold text-charcoal font-medium',
-                    'hover:bg-champagne-gold/90 transition-colors',
+                    'bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] text-white font-medium',
+                    'hover:brightness-105 transition-colors',
                     'flex items-center justify-center gap-2'
                   )}
                 >
@@ -129,7 +131,7 @@ export function Footer() {
             <Link href={localizeHref('/', locale)} className="inline-block">
               <h2 className="text-3xl font-serif font-bold mb-4">JISOO</h2>
             </Link>
-            <p className="text-blush-pink/70 text-sm leading-relaxed mb-6">
+            <p className="text-charcoal/65 text-sm leading-relaxed mb-6">
               Curating the finest Korean beauty for the world. 
               Premium skincare and makeup, delivered with care.
             </p>
@@ -140,7 +142,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-warm-ivory/10 hover:bg-champagne-gold hover:text-charcoal transition-all duration-300"
+                  className="p-2 rounded-full bg-white/70 border border-[#ecd8ca] hover:bg-[#d9bd97] hover:text-white transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -151,7 +153,7 @@ export function Footer() {
 
           {/* Link Columns */}
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.common.shop}
             </h4>
             <ul className="space-y-3">
@@ -159,7 +161,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
                       {link.label}
                   </Link>
@@ -169,7 +171,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.help}
             </h4>
             <ul className="space-y-3">
@@ -177,7 +179,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -187,7 +189,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.company}
             </h4>
             <ul className="space-y-3">
@@ -195,7 +197,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
                     {link.label === 'Our Story' ? t.ourStory : link.label}
                   </Link>
@@ -205,7 +207,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.legal}
             </h4>
             <ul className="space-y-3">
@@ -213,7 +215,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -225,9 +227,9 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-rose-mauve/20">
+      <div className="border-t border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-blush-pink/60">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-charcoal/55">
             <p>&copy; {new Date().getFullYear()} JISOO Beauty. All rights reserved.</p>
             <div className="flex items-center gap-6">
               <span>Made with care from Seoul to the world</span>
