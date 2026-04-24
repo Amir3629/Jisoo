@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 const iconMap: Record<string, React.ElementType> = {
   droplet: Droplets,
@@ -118,7 +119,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 className="relative aspect-square rounded-3xl overflow-hidden bg-white"
               >
                 <Image
-                  src={product.images[selectedImage]?.src || '/placeholder.jpg'}
+                  src={resolveImageSrc(product.images[selectedImage]?.src)}
                   alt={product.images[selectedImage]?.alt || product.name}
                   fill
                   className="object-cover"
@@ -161,7 +162,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       )}
                     >
                       <Image
-                        src={image.src}
+                        src={resolveImageSrc(image.src)}
                         alt={image.alt}
                         fill
                         className="object-cover"
