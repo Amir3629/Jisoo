@@ -316,9 +316,15 @@ function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }
 function FloatingArchitectureHero({ locale }: { locale: Locale }) {
   return (
     <section className="relative h-[68vh] overflow-hidden">
-      <HeroImage src={FLOATING_ARCHITECTURE_BACKGROUND} alt="Floating architecture background" className="absolute inset-0" />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-charcoal/18 to-charcoal/36" />
-      <div className="relative flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
+      <Image
+        src={FLOATING_ARCHITECTURE_BACKGROUND}
+        alt="Floating architecture background"
+        fill
+        className="absolute inset-0 h-full w-full object-cover"
+        priority
+      />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/24 to-charcoal/38" />
+      <div className="relative z-10 flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
         <div className="max-w-2xl text-white">
           <h1 className="font-serif text-4xl lg:text-6xl">Floating Product Architecture</h1>
           <p className="mt-3 max-w-xl text-white/84">Asymmetric, object-led visual concept with sculptural campaign rhythm.</p>
