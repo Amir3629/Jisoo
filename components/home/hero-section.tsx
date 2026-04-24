@@ -46,6 +46,12 @@ const CINEMATIC_HERO_GALLERY_IMAGES = [
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
 ]
 const FLOATING_ARCHITECTURE_BACKGROUND = '/hero7/Untitled design (32).png'
+const MAGAZINE_GRID_IMAGES = [
+  '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
+  '/first slide example/ChatGPT Image Apr 23, 2026, 08_15_52 PM.png',
+  '/first slide example/ChatGPT Image Apr 23, 2026, 08_19_23 PM.png',
+  '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
+]
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -93,8 +99,8 @@ export function HeroSection() {
             {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
             {activeId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
             {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
-            {activeId === 'mist-glass' && <MistGlassHero locale={locale} media={media} />}
-            {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} media={media} />}
+            {activeId === 'mist-glass' && <MistGlassHero locale={locale} />}
+            {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} />}
             {activeId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
           </motion.div>
         </AnimatePresence>
@@ -315,11 +321,11 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
   )
 }
 
-function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+function MistGlassHero({ locale }: { locale: Locale }) {
   return (
     <section className="relative h-screen w-full overflow-hidden">
       <Image
-        src={media.primary}
+        src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Mist glass background"
         fill
         className="absolute inset-0 h-full w-full object-cover"
@@ -338,15 +344,15 @@ function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) 
   )
 }
 
-function MagazineGridHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+function MagazineGridHero({ locale }: { locale: Locale }) {
   return (
     <section className="grid min-h-[68vh] grid-cols-2 gap-3 rounded-[2rem] bg-[#fffaf6] p-3 lg:grid-cols-12 lg:grid-rows-6 lg:gap-4 lg:p-4">
       <div className="col-span-2 lg:col-span-7 lg:row-span-6">
-        <HeroImage src={media.primary} alt="Magazine main" className="h-full min-h-[320px] rounded-[1.6rem]" />
+        <HeroImage src={MAGAZINE_GRID_IMAGES[0]} alt="Magazine main" className="h-full min-h-[320px] rounded-[1.6rem]" />
       </div>
-      <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={media.secondary ?? media.primary} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
-      <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={media.tertiary ?? media.primary} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
-      <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={media.quaternary ?? media.primary} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
+      <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[1]} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
+      <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[2]} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
+      <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-2 flex items-center rounded-[1.2rem] border border-rose-mauve/18 bg-white/86 p-5 lg:col-span-5 lg:row-span-3 lg:p-7">
         <div>
           <h1 className="font-serif text-3xl text-charcoal lg:text-5xl">Editorial Layout Mosaic</h1>
