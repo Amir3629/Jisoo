@@ -72,10 +72,11 @@ export function HeroSection() {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const media = useMemo(() => getMediaForConcept(activeId), [activeId])
+  const isMistGlass = activeId === 'mist-glass'
 
   return (
-    <section className="relative w-full overflow-hidden pt-[7.5rem] lg:pt-[8.5rem]">
-      <div className="relative w-full min-h-[calc(100vh-7.5rem)] lg:min-h-[calc(100vh-8.5rem)]">
+    <section className={cn('relative w-full overflow-hidden', isMistGlass ? 'pt-0' : 'pt-[7.5rem] lg:pt-[8.5rem]')}>
+      <div className={cn('relative w-full', isMistGlass ? 'min-h-screen' : 'min-h-[calc(100vh-7.5rem)] lg:min-h-[calc(100vh-8.5rem)]')}>
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}
@@ -316,8 +317,14 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
 
 function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[68vh] w-full overflow-hidden">
-      <HeroImage src={media.primary} alt="Mist glass background" className="absolute inset-0" />
+    <section className="relative h-screen w-full overflow-hidden">
+      <Image
+        src={media.primary}
+        alt="Mist glass background"
+        fill
+        className="absolute inset-0 h-full w-full object-cover"
+        priority
+      />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
         <div className="max-w-2xl text-white">
