@@ -216,6 +216,18 @@ function CinematicTypographyHero({ locale, media }: { locale: Locale; media: Her
           <span className="block text-rose-mauve">Beauty Narrative</span>
         </motion.h1>
         <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {[
+            { label: 'Eye', href: '/tips/eye' },
+            { label: 'Face', href: '/tips/face' },
+            { label: 'Hair', href: '/tips/hair' },
+            { label: 'Skin', href: '/tips/skin' },
+          ].map(item => (
+            <Link key={item.label} href={localizeHref(item.href, locale)} className="h-16 w-16 rounded-full border border-rose-mauve/25 bg-white/80 text-xs font-medium text-charcoal flex items-center justify-center hover:border-rose-mauve/50 transition-colors">
+              {item.label}
+            </Link>
+          ))}
+        </div>
       </div>
 
       <div className="mx-auto grid w-full max-w-6xl translate-y-3 grid-cols-3 gap-2 lg:translate-y-4 lg:grid-cols-5 lg:gap-3">

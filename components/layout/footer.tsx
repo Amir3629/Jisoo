@@ -15,6 +15,7 @@ const footerLinks = {
     { label: 'Best Sellers', href: '/shop/best-sellers' },
     { label: 'New Arrivals', href: '/shop/new-arrivals' },
     { label: 'Gift Sets', href: '/shop/sets' },
+    { label: 'Gift Cards', href: '/gift-cards' },
   ],
   help: [
     { label: 'Contact Us', href: '/help/contact' },
@@ -22,6 +23,7 @@ const footerLinks = {
     { label: 'Shipping Info', href: '/help/shipping' },
     { label: 'Returns & Exchanges', href: '/help/returns' },
     { label: 'Track Order', href: '/account/orders' },
+    { label: 'Tips & Care', href: '/tips' },
   ],
   company: [
     { label: 'Our Story', href: '/about' },

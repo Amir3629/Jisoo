@@ -28,6 +28,14 @@ export const regionConfigs: Record<string, RegionConfig> = {
     languages: ['en', 'fr', 'ko'],
     defaultLanguage: 'en',
   },
+  TR: {
+    code: 'TR',
+    name: 'Turkey',
+    currency: 'TRY',
+    currencySymbol: '₺',
+    languages: ['tr', 'en', 'ko'],
+    defaultLanguage: 'tr',
+  },
 }
 
 // Partner Companies
@@ -722,6 +730,7 @@ export function formatPrice(amount: number, currency: string = 'EUR'): string {
     EUR: '€',
     AED: 'AED ',
     CAD: 'CA$',
+    TRY: '₺',
   }
   return `${symbols[currency] || currency}${amount.toFixed(2)}`
 }

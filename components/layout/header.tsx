@@ -13,13 +13,20 @@ import { LocaleSwitcher } from '@/components/i18n/locale-switcher'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 import { SearchModal } from '@/components/search/search-modal'
 import { RegionSelector } from '@/components/layout/region-selector'
-import { categories } from '@/lib/data'
 
-const navLinks: Array<{ href: string; key: 'shop' | 'new' | 'bestSellers' | 'story'; hasDropdown?: boolean }> = [
-  { href: '/shop', key: 'shop', hasDropdown: true },
-  { href: '/shop/new-arrivals', key: 'new' },
-  { href: '/shop/best-sellers', key: 'bestSellers' },
-  { href: '/about', key: 'story' },
+const navLinks: Array<{ href: string; label: string; hasDropdown?: boolean }> = [
+  { href: '/shop/women', label: 'Women', hasDropdown: true },
+  { href: '/shop/men', label: 'Men', hasDropdown: true },
+  { href: '/tips', label: 'Tips' },
+  { href: '/gift-cards', label: 'Gift Cards' },
+  { href: '/rewards', label: 'Rewards' },
+]
+const submenuCategories = ['Hydration', 'Serum', 'Cream', 'Sunscreen', 'Cleanser', 'Toner', 'Hair Care', 'Beard Care', 'Gift Sets', 'Best Sellers']
+const topBarMessages = [
+  { label: 'Free shipping on orders over €100', href: null },
+  { label: 'TikTok', href: 'https://www.tiktok.com' },
+  { label: 'Facebook', href: 'https://www.facebook.com' },
+  { label: 'Instagram', href: 'https://www.instagram.com' },
 ]
 
 export function Header() {
@@ -28,6 +35,8 @@ export function Header() {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isRegionOpen, setIsRegionOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
+  const [topBarIndex, setTopBarIndex] = useState(0)
+  const [mode, setMode] = useState<'soft' | 'color'>('color')
   const { itemCount, setIsCartOpen } = useCart()
   const { config } = useRegion()
   const { locale, dictionary } = useLocale()
@@ -41,6 +50,21 @@ export function Header() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+  useEffect(() => {
+    const timer = window.setInterval(() => setTopBarIndex(prev => (prev + 1) % topBarMessages.length), 3800)
+    return () => window.clearInterval(timer)
+  }, [])
+  useEffect(() => {
+    const stored = window.localStorage.getItem('jisoo-mode')
+    const next = stored === 'soft' ? 'soft' : 'color'
+    setMode(next)
+    document.documentElement.setAttribute('data-ui-mode', next)
+  }, [])
+  const toggleMode = (next: 'soft' | 'color') => {
+    setMode(next)
+    window.localStorage.setItem('jisoo-mode', next)
+    document.documentElement.setAttribute('data-ui-mode', next)
+  }
 
   return (
     <>
@@ -62,9 +86,15 @@ export function Header() {
         {/* Top Bar */}
         <div className="hidden lg:block bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] text-charcoal border-b border-[#ead9cd]">
           <div className="max-w-7xl mx-auto px-6 py-1.5 text-center text-[11px]">
-            <p className="font-light tracking-[0.08em]">
-              {dictionary.header.freeShipping.replace('{{amount}}', `${config.currencySymbol}100`)}
-            </p>
+            <AnimatePresence mode="wait">
+              <motion.div key={topBarIndex} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} className="font-light tracking-[0.08em]">
+                {topBarMessages[topBarIndex].href ? (
+                  <a href={topBarMessages[topBarIndex].href!} target="_blank" rel="noopener noreferrer" className="hover:text-rose-mauve underline-offset-2 hover:underline">
+                    {topBarMessages[topBarIndex].label}
+                  </a>
+                ) : topBarMessages[topBarIndex].label}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
 
@@ -95,7 +125,7 @@ export function Header() {
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-6">
               {navLinks.map(link => (
                 <div
                   key={link.href}
@@ -115,7 +145,7 @@ export function Header() {
                     )}
                   >
                     <span className="flex items-center gap-1">
-                      {dictionary.header.nav[link.key]}
+                      {link.label}
                       {link.hasDropdown && (
                         <ChevronDown className="w-3.5 h-3.5" />
                       )}
@@ -132,30 +162,11 @@ export function Header() {
                         transition={{ duration: 0.2 }}
                         className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
                       >
-                        <div className="surface-velvet rounded-2xl shadow-editorial p-6 w-[560px] grid grid-cols-2 gap-6">
-                          {categories.slice(0, 4).map(category => (
-                            <div key={category.id}>
-                              <Link
-                                href={localizeHref(`/shop/${category.slug}`, locale)}
-                                className="font-medium text-charcoal hover:text-rose-mauve transition-colors"
-                              >
-                                {category.name}
-                              </Link>
-                              {category.subcategories && (
-                                <ul className="mt-2 space-y-1">
-                                  {category.subcategories.slice(0, 4).map(sub => (
-                                    <li key={sub.id}>
-                                      <Link
-                                        href={localizeHref(`/shop/${sub.slug}`, locale)}
-                                        className="text-sm text-muted-foreground hover:text-rose-mauve transition-colors"
-                                      >
-                                        {sub.name}
-                                      </Link>
-                                    </li>
-                                  ))}
-                                </ul>
-                              )}
-                            </div>
+                        <div className="surface-velvet rounded-2xl shadow-editorial p-6 w-[560px] grid grid-cols-2 gap-3">
+                          {submenuCategories.map(item => (
+                            <Link key={item} href={localizeHref(`/shop?category=${encodeURIComponent(item.toLowerCase())}`, locale)} className="text-sm text-charcoal hover:text-rose-mauve transition-colors">
+                              {item}
+                            </Link>
                           ))}
                         </div>
                       </motion.div>
@@ -167,6 +178,10 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-1 lg:gap-3">
+              <div className="hidden lg:flex items-center rounded-full border border-rose-mauve/20 bg-white/70 p-1">
+                <button onClick={() => toggleMode('soft')} className={cn('px-2.5 py-1 text-[10px] rounded-full', mode === 'soft' ? 'bg-white text-charcoal' : 'text-charcoal/60')}>Soft</button>
+                <button onClick={() => toggleMode('color')} className={cn('px-2.5 py-1 text-[10px] rounded-full', mode === 'color' ? 'bg-rose-mauve text-white' : 'text-charcoal/60')}>Color</button>
+              </div>
               <div className="hidden lg:flex items-center gap-2 pr-1">
                 <LocaleSwitcher />
                 <button
@@ -262,7 +277,7 @@ export function Header() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="block text-lg font-medium text-charcoal hover:text-plum transition-colors"
                     >
-                      {dictionary.header.nav[link.key]}
+                      {link.label}
                     </Link>
                   ))}
                 </nav>

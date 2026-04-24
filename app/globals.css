@@ -254,6 +254,12 @@
     background-size: 2.2px 2.2px;
     mix-blend-mode: multiply;
   }
+
+  :root[data-ui-mode='soft'] {
+    --rose-mauve: #cdb7bf;
+    --blush-pink: #f8f2f4;
+    --champagne-gold: #c6b69f;
+  }
   
   /* Hover animations */
   .hover-lift {
