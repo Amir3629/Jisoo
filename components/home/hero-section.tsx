@@ -73,10 +73,11 @@ export function HeroSection() {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const media = useMemo(() => getMediaForConcept(activeId), [activeId])
+  const isFloatingArchitecture = activeId === 'floating-architecture'
 
   return (
     <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-[8.5rem] pb-8 lg:pt-[9.25rem]">
-      <div className="relative mx-auto max-w-[1500px] px-3 lg:px-6">
+      <div className={cn('relative', isFloatingArchitecture ? 'w-full px-0' : 'mx-auto max-w-[1500px] px-3 lg:px-6')}>
         <div className="relative min-h-[68vh] lg:min-h-[72vh]">
           <AnimatePresence mode="wait">
             <motion.div
