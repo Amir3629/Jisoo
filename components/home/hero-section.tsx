@@ -209,7 +209,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
 
 function CinematicTypographyHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-9 pt-10 text-center lg:px-14 lg:pb-12">
+    <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-7 pt-10 text-center lg:px-14 lg:pb-9">
       <div className="mx-auto max-w-5xl">
         <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="font-serif text-6xl leading-[0.9] text-charcoal lg:text-[7.4rem]">
           Cinematic
@@ -218,7 +218,7 @@ function CinematicTypographyHero({ locale, media }: { locale: Locale; media: Her
         <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
       </div>
 
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-3 gap-2 lg:grid-cols-5 lg:gap-3">
+      <div className="mx-auto grid w-full max-w-6xl translate-y-3 grid-cols-3 gap-2 lg:translate-y-4 lg:grid-cols-5 lg:gap-3">
         <HeroImage src={media.primary} alt="Editorial tile 1" className="aspect-[4/5]" />
         <HeroImage src={media.secondary ?? media.primary} alt="Editorial tile 2" className="aspect-[4/5]" />
         <HeroImage src={media.primary} alt="Editorial tile 3" className="aspect-[4/5]" />
@@ -226,7 +226,7 @@ function CinematicTypographyHero({ locale, media }: { locale: Locale; media: Her
         <HeroImage src={media.primary} alt="Editorial tile 5" className="hidden aspect-[4/5] lg:block" />
       </div>
 
-      <div className="absolute left-1/2 top-[55%] -translate-x-1/2 lg:top-[58%]"><PrimaryCta locale={locale} subtle /></div>
+      <div className="absolute left-1/2 top-[52%] -translate-x-1/2 lg:top-[55%]"><PrimaryCta locale={locale} subtle /></div>
     </section>
   )
 }
@@ -250,15 +250,18 @@ function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia })
 
 function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[68vh] place-items-center overflow-hidden rounded-[2rem] bg-white px-6 text-center">
-      <div className="max-w-4xl">
-        <p className="text-kicker text-charcoal/48">Quiet Luxury Formula House</p>
-        <h1 className="mt-4 font-serif text-5xl text-charcoal lg:text-7xl">Minimal. Elegant. Seoul.</h1>
-        <p className="mx-auto mt-4 max-w-xl text-charcoal/62">Whitespace-first design that feels premium, modern, and timeless.</p>
-        <div className="mt-7"><PrimaryCta locale={locale} subtle /></div>
+    <section className="grid h-[68vh] overflow-hidden lg:grid-cols-[1.05fr_0.95fr]">
+      <div className="flex items-center bg-gradient-to-br from-[#fffdfb] to-[#f9f0ea] px-7 lg:px-14">
+        <div className="max-w-xl">
+          <p className="text-kicker text-charcoal/48">Quiet Luxury Formula House</p>
+          <h1 className="mt-4 font-serif text-5xl text-charcoal lg:text-7xl">Minimal. Elegant. Seoul.</h1>
+          <p className="mt-4 max-w-lg text-charcoal/62">A modern minimal direction with balanced editorial typography and a premium visual anchor.</p>
+          <div className="mt-7"><PrimaryCta locale={locale} subtle /></div>
+        </div>
       </div>
-      <div className="absolute bottom-0 left-1/2 h-[46%] w-[280px] -translate-x-1/2 overflow-hidden rounded-t-[2rem] border border-rose-mauve/15 lg:w-[360px]">
-        <HeroImage src={media.primary} alt="Minimal center product" className="h-full" />
+      <div className="relative">
+        <HeroImage src={media.primary} alt="Minimal hero visual" className="absolute inset-0" />
+        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/28 via-transparent to-charcoal/8" />
       </div>
     </section>
   )
@@ -266,16 +269,19 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
 
 function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative grid h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[0.95fr_1.05fr]">
-      <div className="z-10 bg-white/85 p-8 lg:p-12">
-        <p className="text-kicker text-rose-mauve">Campaign Cover / Vol.04</p>
-        <h1 className="mt-4 font-serif text-6xl leading-[0.9] text-charcoal lg:text-8xl">THE GLOW ISSUE</h1>
-        <p className="mt-5 max-w-md text-charcoal/65">Fashion cover styling with bold typography and runway composition.</p>
-        <div className="mt-7 flex gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-rose-mauve/30 px-5 py-3 text-sm text-charcoal"><PlayCircle className="h-4 w-4" />Consult</Link></div>
+    <section className="relative h-[68vh] overflow-hidden">
+      <HeroVideo media={media} className="absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/35 to-charcoal/15" />
+      <div className="relative flex h-full items-center px-7 lg:px-14">
+        <div className="max-w-2xl text-white">
+          <p className="text-kicker text-white/78">Campaign Cover / Vol.04</p>
+          <h1 className="mt-4 font-serif text-6xl leading-[0.9] lg:text-8xl">THE GLOW ISSUE</h1>
+          <p className="mt-5 max-w-xl text-white/80">Campaign-cover direction with open cinematic media and premium editorial hierarchy.</p>
+          <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm text-white backdrop-blur-sm"><PlayCircle className="h-4 w-4" />Consult</Link></div>
+        </div>
       </div>
-      <div className="relative">
-        <HeroVideo media={media} className="absolute inset-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/30 to-transparent" />
+      <div className="absolute bottom-6 right-6 hidden h-48 w-36 overflow-hidden rounded-2xl border border-white/45 shadow-xl lg:block">
+        <HeroImage src={media.secondary ?? media.primary} alt="Campaign detail visual" className="h-full" />
       </div>
     </section>
   )

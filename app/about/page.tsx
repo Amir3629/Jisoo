@@ -94,13 +94,13 @@ export default function AboutPage() {
       <section className="relative h-[80vh] overflow-hidden">
         <motion.div style={{ y }} className="absolute inset-0">
           <Image
-            src="https://images.unsplash.com/photo-1596755389378-c31d21fd1273?w=1920"
+            src="/background/photo-1596755389378-c31d21fd1273.jpeg"
             alt="Korean beauty heritage"
             fill
             className="object-cover"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-background/40 to-background" />
+          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/35 to-background/95" />
         </motion.div>
         <motion.div
           style={{ opacity }}
