@@ -39,6 +39,13 @@ const HERO_ASSETS = {
 }
 
 const FALLBACK_IMAGES = ['/products/luminous-glow-serum-1.jpg', '/products/glass-skin-essence-1.jpg']
+const CINEMATIC_HERO_GALLERY_IMAGES = [
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
+]
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -80,7 +87,7 @@ export function HeroSection() {
               className="h-full"
             >
               {activeId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
-              {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} media={media} />}
+              {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
               {activeId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
               {activeId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
               {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
@@ -207,7 +214,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
   )
 }
 
-function CinematicTypographyHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+function CinematicTypographyHero({ locale }: { locale: Locale }) {
   return (
     <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-7 pt-10 text-center lg:px-14 lg:pb-9">
       <div className="mx-auto max-w-5xl">
@@ -216,26 +223,14 @@ function CinematicTypographyHero({ locale, media }: { locale: Locale; media: Her
           <span className="block text-rose-mauve">Beauty Narrative</span>
         </motion.h1>
         <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
-        <div className="mt-6 flex flex-wrap justify-center gap-3">
-          {[
-            { label: 'Eye', href: '/tips/eye' },
-            { label: 'Face', href: '/tips/face' },
-            { label: 'Hair', href: '/tips/hair' },
-            { label: 'Skin', href: '/tips/skin' },
-          ].map(item => (
-            <Link key={item.label} href={localizeHref(item.href, locale)} className="h-16 w-16 rounded-full border border-rose-mauve/25 bg-white/80 text-xs font-medium text-charcoal flex items-center justify-center hover:border-rose-mauve/50 transition-colors">
-              {item.label}
-            </Link>
-          ))}
-        </div>
       </div>
 
       <div className="mx-auto grid w-full max-w-6xl translate-y-3 grid-cols-3 gap-2 lg:translate-y-4 lg:grid-cols-5 lg:gap-3">
-        <HeroImage src={media.primary} alt="Editorial tile 1" className="aspect-[4/5]" />
-        <HeroImage src={media.secondary ?? media.primary} alt="Editorial tile 2" className="aspect-[4/5]" />
-        <HeroImage src={media.primary} alt="Editorial tile 3" className="aspect-[4/5]" />
-        <HeroImage src={media.secondary ?? media.primary} alt="Editorial tile 4" className="hidden aspect-[4/5] lg:block" />
-        <HeroImage src={media.primary} alt="Editorial tile 5" className="hidden aspect-[4/5] lg:block" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[0]} alt="Editorial tile 1" className="aspect-[4/5]" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[1]} alt="Editorial tile 2" className="aspect-[4/5]" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[2]} alt="Editorial tile 3" className="aspect-[4/5]" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[3]} alt="Editorial tile 4" className="hidden aspect-[4/5] lg:block" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[4]} alt="Editorial tile 5" className="hidden aspect-[4/5] lg:block" />
       </div>
 
       <div className="absolute left-1/2 top-[52%] -translate-x-1/2 lg:top-[55%]"><PrimaryCta locale={locale} subtle /></div>
