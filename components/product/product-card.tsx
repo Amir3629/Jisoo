@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { localizeHref } from '@/lib/i18n'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 interface ProductCardProps {
   product: Product
@@ -39,7 +40,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f7efe9]">
           <Image
-            src={product.images?.[0]?.src || '/placeholder.jpg'}
+            src={resolveImageSrc(product.images?.[0]?.src)}
             alt={product.images?.[0]?.alt || product.name}
             fill
             className="object-cover transition-transform duration-700 group-hover:scale-105"
@@ -101,7 +102,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             disabled={!access.isBuyable}
             className={cn(
               'rounded-full px-4',
-              'bg-rose-mauve text-white hover:bg-rose-mauve/90'
+              'bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-white hover:brightness-105'
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />
