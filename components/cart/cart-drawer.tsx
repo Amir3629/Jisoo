@@ -9,6 +9,7 @@ import { formatPrice } from '@/lib/data'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 export function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity } = useCart()
@@ -88,7 +89,7 @@ export function CartDrawer() {
                       {/* Product Image */}
                       <div className="relative w-24 h-24 rounded-xl overflow-hidden bg-nude-beige flex-shrink-0">
                         <Image
-                          src={item.product.images[0]?.src || '/placeholder.jpg'}
+                          src={resolveImageSrc(item.product.images[0]?.src)}
                           alt={item.product.name}
                           fill
                           className="object-cover"

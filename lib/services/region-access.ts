@@ -16,7 +16,7 @@ const warningByStatus: Partial<Record<ProductAvailability, string>> = {
 }
 
 export function evaluateRegionAccess(product: Product, region: Region): RegionAccessResult {
-  const status = product.regionAvailability[region]
+  const status = product.regionAvailability[region] ?? 'visible_but_not_buyable'
 
   return {
     productId: product.id,

@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 interface SearchModalProps {
   isOpen: boolean
@@ -25,9 +26,9 @@ const trendingSearches = [
 ]
 
 const popularCategories = [
-  { name: 'Serums', href: '/shop/serums', image: '/categories/serums.jpg' },
-  { name: 'Moisturizers', href: '/shop/moisturizers', image: '/categories/moisturizers.jpg' },
-  { name: 'Cleansers', href: '/shop/cleansers', image: '/categories/cleansers.jpg' },
+  { name: 'Serums', href: '/shop/serums', image: resolveImageSrc('/categories/serums.jpg') },
+  { name: 'Moisturizers', href: '/shop/moisturizers', image: resolveImageSrc('/categories/moisturizers.jpg') },
+  { name: 'Cleansers', href: '/shop/cleansers', image: resolveImageSrc('/categories/cleansers.jpg') },
 ]
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
@@ -183,7 +184,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           >
                             <div className="w-16 h-16 rounded-lg bg-nude-beige overflow-hidden flex-shrink-0">
                               <Image
-                                src={product.images[0]?.src || '/placeholder.jpg'}
+                                src={resolveImageSrc(product.images[0]?.src)}
                                 alt={product.name}
                                 width={64}
                                 height={64}

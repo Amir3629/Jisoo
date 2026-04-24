@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, subtotal, itemCount } = useCart();
@@ -81,7 +82,7 @@ export default function CartPage() {
               >
                 <div className="relative w-24 h-24 md:w-32 md:h-32 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                   <Image
-                    src={item.product.images[0]?.src || "/placeholder.jpg"}
+                    src={resolveImageSrc(item.product.images[0]?.src)}
                     alt={item.product.name}
                     fill
                     className="object-cover"
