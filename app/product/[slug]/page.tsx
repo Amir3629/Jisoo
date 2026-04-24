@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 const iconMap: Record<string, React.ElementType> = {
   droplet: Droplets,
@@ -118,7 +119,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 className="relative aspect-square rounded-3xl overflow-hidden bg-white"
               >
                 <Image
-                  src={product.images[selectedImage]?.src || '/placeholder.jpg'}
+                  src={resolveImageSrc(product.images[selectedImage]?.src)}
                   alt={product.images[selectedImage]?.alt || product.name}
                   fill
                   className="object-cover"
@@ -161,7 +162,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       )}
                     >
                       <Image
-                        src={image.src}
+                        src={resolveImageSrc(image.src)}
                         alt={image.alt}
                         fill
                         className="object-cover"
@@ -530,6 +531,15 @@ export default function ProductPage({ params }: ProductPageProps) {
                           <p className="text-muted-foreground">{review.content}</p>
                         </div>
                       ))}
+                      <div className="p-6 rounded-2xl border border-dashed border-rose-mauve/30 bg-white/70">
+                        <h4 className="font-medium text-charcoal">Customer Photo Upload (UI Scaffold)</h4>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.
+                        </p>
+                        <button className="mt-4 rounded-full border border-rose-mauve/25 px-4 py-2 text-sm text-charcoal hover:border-rose-mauve/45">
+                          Choose Photo
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center py-12">
