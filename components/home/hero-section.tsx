@@ -39,10 +39,10 @@ const HERO_ASSETS = {
 
 const FALLBACK_IMAGES = ['/products/luminous-glow-serum-1.jpg', '/products/glass-skin-essence-1.jpg']
 const CINEMATIC_HERO_GALLERY_IMAGES = [
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
 ]
 const FLOATING_ARCHITECTURE_BACKGROUND = '/hero7/Untitled design (32).png'

@@ -2,7 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle2, ChevronLeft, ChevronRight, Clapperboard, Copy, Heart, Instagram, MessageCircle } from 'lucide-react'
 
-const INSTAGRAM_URL = 'https://www.instagram.com/'
+const INSTAGRAM_URL = 'https://www.instagram.com/jisoocosmetics/'
 
 const feed = [
   {
