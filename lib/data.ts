@@ -1,4 +1,5 @@
 import type { Product, Category, Partner, Customer, Order, Review, Testimonial, RegionConfig, Coupon } from './types'
+import { resolveImageSrc } from './image-fallbacks'
 
 // Region Configurations
 export const regionConfigs: Record<string, RegionConfig> = {
@@ -26,6 +27,14 @@ export const regionConfigs: Record<string, RegionConfig> = {
     currencySymbol: 'CA$',
     languages: ['en', 'fr', 'ko'],
     defaultLanguage: 'en',
+  },
+  TR: {
+    code: 'TR',
+    name: 'Turkey',
+    currency: 'TRY',
+    currencySymbol: '₺',
+    languages: ['tr', 'en', 'ko'],
+    defaultLanguage: 'tr',
   },
 }
 
@@ -668,6 +677,31 @@ export const skinConcerns = [
   { id: 'acne', name: 'Acne & Blemishes', icon: 'x-circle' },
 ]
 
+for (const partner of partners) {
+  partner.logo = resolveImageSrc(partner.logo)
+}
+
+for (const category of categories) {
+  category.image = resolveImageSrc(category.image)
+  for (const subcategory of category.subcategories ?? []) {
+    subcategory.image = resolveImageSrc(subcategory.image)
+  }
+}
+
+for (const product of products) {
+  product.images = product.images.map(image => ({ ...image, src: resolveImageSrc(image.src) }))
+}
+
+for (const review of reviews) {
+  review.customerAvatar = resolveImageSrc(review.customerAvatar)
+}
+
+for (const testimonial of testimonials) {
+  testimonial.customerAvatar = resolveImageSrc(testimonial.customerAvatar)
+}
+
+sampleCustomer.avatar = resolveImageSrc(sampleCustomer.avatar)
+
 // Helper functions
 export function getProductBySlug(slug: string): Product | undefined {
   return products.find(p => p.slug === slug)
@@ -696,6 +730,7 @@ export function formatPrice(amount: number, currency: string = 'EUR'): string {
     EUR: '€',
     AED: 'AED ',
     CAD: 'CA$',
+    TRY: '₺',
   }
   return `${symbols[currency] || currency}${amount.toFixed(2)}`
 }

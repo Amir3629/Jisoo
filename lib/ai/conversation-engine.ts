@@ -44,12 +44,14 @@ const shippingPolicies: Record<Region, string> = {
   UAE: 'For UAE, delivery is typically 2-4 business days for in-stock items.',
   EU: 'For EU destinations, delivery is typically 3-6 business days depending on country.',
   CA: 'For Canada, delivery typically ranges from 4-8 business days with region-specific compliance handling where required.',
+  TR: 'For Turkey destinations, delivery is typically 3-7 business days based on city and customs.',
 }
 
 const returnPolicies: Record<Region, string> = {
   UAE: 'UAE returns are generally supported for eligible unopened items within 14 days of delivery.',
   EU: 'EU returns are generally supported for eligible unopened items within 14 days of delivery.',
   CA: 'Canada returns are supported for eligible unopened items within 14 days, with additional compliance retention for safety cases.',
+  TR: 'Turkey returns are supported for eligible unopened items within 14 days of delivery.',
 }
 
 function inferConcern(text: string): string | undefined {
@@ -85,7 +87,7 @@ function productActions(region: Region, concern?: string): ConciergeAction[] {
     id: `product-${product.id}`,
     type: 'product',
     title: product.name,
-    description: `${product.shortDescription} · ${product.regionAvailability[region].replaceAll('_', ' ')}`,
+    description: `${product.shortDescription} · ${(product.regionAvailability[region] ?? 'visible_but_not_buyable').replaceAll('_', ' ')}`,
     href: `/product/${product.slug}`,
   }))
 }
@@ -144,7 +146,7 @@ export function generateConciergeTurn({ query, region, history }: { query: strin
   const mentionedProduct = products.find(product => trimmed.toLowerCase().includes(product.slug) || trimmed.toLowerCase().includes(product.name.toLowerCase()))
   if (mentionedProduct) {
     return {
-      answer: `${mentionedProduct.name} is ideal for ${mentionedProduct.concerns.slice(0, 2).join(' and ')}. Key ingredients include ${mentionedProduct.ingredients.slice(0, 3).map(item => item.name).join(', ')}. In ${region}, this product is ${mentionedProduct.regionAvailability[region].replaceAll('_', ' ')}. Application: ${mentionedProduct.howToUse}`,
+      answer: `${mentionedProduct.name} is ideal for ${mentionedProduct.concerns.slice(0, 2).join(' and ')}. Key ingredients include ${mentionedProduct.ingredients.slice(0, 3).map(item => item.name).join(', ')}. In ${region}, this product is ${(mentionedProduct.regionAvailability[region] ?? 'visible_but_not_buyable').replaceAll('_', ' ')}. Application: ${mentionedProduct.howToUse}`,
       actions: [
         {
           id: `product-${mentionedProduct.id}`,
