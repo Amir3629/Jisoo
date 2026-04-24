@@ -73,73 +73,52 @@ export function HeroSection() {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const media = useMemo(() => getMediaForConcept(activeId), [activeId])
-  const isFloatingArchitecture = activeId === 'floating-architecture'
 
   return (
-    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-[8.5rem] pb-8 lg:pt-[9.25rem]">
-      <div className={cn('relative', isFloatingArchitecture ? 'w-full px-0' : 'mx-auto max-w-[1500px] px-3 lg:px-6')}>
-        <div className="relative min-h-[68vh] lg:min-h-[72vh]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeId}
-              initial={{ opacity: 0, scale: 1.015, y: 16 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.992, y: -10 }}
-              transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="h-full"
-            >
-              {activeId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
-              {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
-              {activeId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
-              {activeId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
-              {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
-              {activeId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
-              {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
-              {activeId === 'mist-glass' && <MistGlassHero locale={locale} media={media} />}
-              {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} media={media} />}
-              {activeId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
-            </motion.div>
-          </AnimatePresence>
+    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-[8.5rem] lg:pt-[9.25rem]">
+      <div className="relative min-h-[72vh]">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeId}
+            initial={{ opacity: 0, scale: 1.015, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.992, y: -10 }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            className="h-full"
+          >
+            {activeId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
+            {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
+            {activeId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
+            {activeId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
+            {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
+            {activeId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
+            {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
+            {activeId === 'mist-glass' && <MistGlassHero locale={locale} media={media} />}
+            {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} media={media} />}
+            {activeId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
+          </motion.div>
+        </AnimatePresence>
 
-          <div className="absolute right-3 top-1/2 z-40 hidden -translate-y-1/2 lg:block">
-            <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
-              <div className="grid gap-1.5">
-                {heroConcepts.map((concept, index) => (
-                  <button
-                    key={concept.id}
-                    onClick={() => setActiveId(concept.id)}
-                    className={cn(
-                      'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
-                      activeId === concept.id
-                        ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
-                        : 'border border-rose-mauve/20 bg-white/90 text-charcoal/75 hover:border-rose-mauve/45'
-                    )}
-                    aria-label={`Switch hero concept ${index + 1}`}
-                    title={`${index + 1}. ${concept.name}`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
+        <div className="absolute right-3 top-1/2 z-40 -translate-y-1/2">
+          <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
+            <div className="grid gap-1.5">
+              {heroConcepts.map((concept, index) => (
+                <button
+                  key={concept.id}
+                  onClick={() => setActiveId(concept.id)}
+                  className={cn(
+                    'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
+                    activeId === concept.id
+                      ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
+                      : 'border border-rose-mauve/20 bg-white/90 text-charcoal/75 hover:border-rose-mauve/45'
+                  )}
+                  aria-label={`Switch hero concept ${index + 1}`}
+                  title={`${index + 1}. ${concept.name}`}
+                >
+                  {index + 1}
+                </button>
+              ))}
             </div>
-          </div>
-
-          <div className="mt-4 flex flex-wrap gap-2 px-1 lg:hidden">
-            {heroConcepts.map((concept, index) => (
-              <button
-                key={concept.id}
-                onClick={() => setActiveId(concept.id)}
-                className={cn(
-                  'h-8 w-8 rounded-full text-xs font-semibold transition-all',
-                  activeId === concept.id
-                    ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white'
-                    : 'border border-rose-mauve/20 bg-white/85 text-charcoal/70'
-                )}
-                aria-label={`Switch hero concept ${index + 1}`}
-              >
-                {index + 1}
-              </button>
-            ))}
           </div>
         </div>
       </div>
