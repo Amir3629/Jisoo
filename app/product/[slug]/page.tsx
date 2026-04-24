@@ -530,6 +530,15 @@ export default function ProductPage({ params }: ProductPageProps) {
                           <p className="text-muted-foreground">{review.content}</p>
                         </div>
                       ))}
+                      <div className="p-6 rounded-2xl border border-dashed border-rose-mauve/30 bg-white/70">
+                        <h4 className="font-medium text-charcoal">Customer Photo Upload (UI Scaffold)</h4>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.
+                        </p>
+                        <button className="mt-4 rounded-full border border-rose-mauve/25 px-4 py-2 text-sm text-charcoal hover:border-rose-mauve/45">
+                          Choose Photo
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center py-12">

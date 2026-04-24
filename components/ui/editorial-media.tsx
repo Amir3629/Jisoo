@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { cn } from '@/lib/utils'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 interface EditorialMediaProps {
   src?: string
@@ -22,13 +23,14 @@ export function EditorialMedia({
   overlayClassName,
 }: EditorialMediaProps) {
   const [imageError, setImageError] = useState(false)
-  const showImage = Boolean(src) && !imageError
+  const safeSrc = resolveImageSrc(src)
+  const showImage = Boolean(safeSrc) && !imageError
 
   return (
     <div className={cn('relative overflow-hidden', className)}>
       {showImage ? (
         <Image
-          src={src as string}
+          src={safeSrc}
           alt={alt}
           fill
           priority={priority}
@@ -49,4 +51,3 @@ export function EditorialMedia({
     </div>
   )
 }
-

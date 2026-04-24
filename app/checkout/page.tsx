@@ -354,6 +354,9 @@ export default function CheckoutPage() {
                     <Lock className="w-4 h-4" />
                     <span>Your payment information is secure and encrypted</span>
                   </div>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Guest checkout is available. Create an account after purchase to start saving JISOO rewards points.
+                  </p>
 
                   <Button
                     onClick={handlePlaceOrder}
