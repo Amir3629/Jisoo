@@ -6,7 +6,6 @@ import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, PlayCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
 
@@ -75,8 +74,8 @@ export function HeroSection() {
   const media = useMemo(() => getMediaForConcept(activeId), [activeId])
 
   return (
-    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden pt-[8.5rem] lg:pt-[9.25rem]">
-      <div className="relative min-h-[72vh]">
+    <section className="relative w-full overflow-hidden pt-[7.5rem] lg:pt-[8.5rem]">
+      <div className="relative w-full min-h-[calc(100vh-7.5rem)] lg:min-h-[calc(100vh-8.5rem)]">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeId}
@@ -84,7 +83,7 @@ export function HeroSection() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.992, y: -10 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full"
+            className="h-full w-full"
           >
             {activeId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
             {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
@@ -122,7 +121,7 @@ export function HeroSection() {
           </div>
         </div>
       </div>
-    </AtmosphereSection>
+    </section>
   )
 }
 
@@ -295,7 +294,7 @@ function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }
 
 function FloatingArchitectureHero({ locale }: { locale: Locale }) {
   return (
-    <section className="relative h-[68vh] overflow-hidden">
+    <section className="relative h-full min-h-[calc(100vh-7.5rem)] w-full overflow-hidden lg:min-h-[calc(100vh-8.5rem)]">
       <Image
         src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Floating architecture background"
@@ -317,16 +316,17 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
 
 function MistGlassHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[68vh] overflow-hidden rounded-[2rem]">
-      <HeroImage src={media.primary} alt="Mist background" className="absolute inset-0" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.65),transparent_46%),linear-gradient(145deg,rgba(251,239,245,0.48),rgba(248,238,230,0.44))]" />
-      <div className="absolute left-8 top-10 max-w-xl rounded-[2rem] border border-white/65 bg-white/34 p-7 backdrop-blur-xl lg:left-12 lg:top-12 lg:p-9">
-        <p className="text-kicker text-[#b79263]">Glass Fade Direction</p>
-        <h1 className="mt-3 font-serif text-4xl text-charcoal lg:text-6xl">Mist, Glow, Precision</h1>
-        <p className="mt-4 text-charcoal/68">Luxury glassmorphism hero with diffused overlays and premium softness.</p>
-        <div className="mt-7"><PrimaryCta locale={locale} /></div>
+    <section className="relative h-[68vh] w-full overflow-hidden">
+      <HeroImage src={media.primary} alt="Mist glass background" className="absolute inset-0" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
+      <div className="relative z-10 flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
+        <div className="max-w-2xl text-white">
+          <p className="text-kicker text-white/78">Glass Fade Direction</p>
+          <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
+          <p className="mt-4 max-w-xl text-white/82">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+          <div className="mt-7"><PrimaryCta locale={locale} /></div>
+        </div>
       </div>
-      <div className="absolute right-10 bottom-10 h-64 w-48 overflow-hidden rounded-[1.6rem] border border-white/55 shadow-xl"><HeroImage src={media.secondary ?? media.primary} alt="Mist detail" className="h-full" /></div>
     </section>
   )
 }
