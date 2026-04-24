@@ -1,75 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { CheckCircle2, ChevronLeft, ChevronRight, Clapperboard, Copy, Heart, Instagram, MessageCircle } from 'lucide-react'
+import { CheckCircle2, Instagram } from 'lucide-react'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/jisoocosmetics/'
-
-const feed = [
-  {
-    id: 1,
-    src: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
-    caption: 'Rose-light layering for luminous skin.',
-    likes: '1,842',
-    comments: '48',
-    type: 'carousel' as const,
-  },
-  {
-    id: 2,
-    src: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
-    caption: 'Texture focus: soft cream melt ritual.',
-    likes: '2,106',
-    comments: '61',
-    type: 'reel' as const,
-  },
-  {
-    id: 3,
-    src: '/hero7/Untitled design (32).png',
-    caption: 'Seoul studio visual direction.',
-    likes: '1,507',
-    comments: '33',
-    type: 'carousel' as const,
-  },
-  {
-    id: 4,
-    src: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
-    caption: 'Hydration with a clean editorial finish.',
-    likes: '1,928',
-    comments: '54',
-    type: 'reel' as const,
-  },
-  {
-    id: 5,
-    src: '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
-    caption: 'Morning SPF ritual, polished and light.',
-    likes: '1,673',
-    comments: '39',
-    type: 'carousel' as const,
-  },
-  {
-    id: 6,
-    src: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
-    caption: 'Dropper precision with glass-skin glow.',
-    likes: '2,241',
-    comments: '72',
-    type: 'reel' as const,
-  },
-  {
-    id: 7,
-    src: '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png',
-    caption: 'Night barrier support and calm finish.',
-    likes: '1,492',
-    comments: '30',
-    type: 'carousel' as const,
-  },
-  {
-    id: 8,
-    src: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
-    caption: 'Signature cream ritual by JISOO Seoul.',
-    likes: '2,011',
-    comments: '58',
-    type: 'reel' as const,
-  },
-]
 
 export function InstagramShowcase() {
   return (
@@ -119,48 +52,29 @@ export function InstagramShowcase() {
           ))}
         </div>
 
-        <div className="relative">
-          <button
-            type="button"
-            aria-label="Previous posts"
-            className="absolute left-2 top-1/2 z-20 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/90 text-charcoal shadow-sm md:flex"
-          >
-            <ChevronLeft className="h-4 w-4" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next posts"
-            className="absolute right-2 top-1/2 z-20 hidden h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/90 text-charcoal shadow-sm md:flex"
-          >
-            <ChevronRight className="h-4 w-4" />
-          </button>
+        <div className="rounded-2xl border border-[#eee1d8] bg-white p-4 lg:p-6">
+          <p className="text-sm font-medium text-charcoal">Live Instagram feed integration</p>
+          <p className="mt-2 text-sm text-charcoal/70">
+            A real feed requires an Instagram embed/widget snippet (or Graph API token).
+            Paste your approved embed code into this container and remove this helper text.
+          </p>
 
-          <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
-            {feed.map(post => (
-              <a
-                key={post.id}
-                href={INSTAGRAM_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]"
-              >
-                <div className="relative aspect-[4/5]">
-                  <Image src={post.src} alt={post.caption} fill className="object-cover transition duration-500 group-hover:scale-105" />
-                </div>
-
-                <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
-                  {post.type === 'carousel' ? <Copy className="h-3.5 w-3.5" /> : <Clapperboard className="h-3.5 w-3.5" />}
-                </div>
-
-                <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-t from-black/70 via-black/10 to-transparent p-2 opacity-0 transition group-hover:opacity-100">
-                  <div className="mb-1 flex items-center gap-3 text-[11px] font-medium text-white">
-                    <span className="inline-flex items-center gap-1"><Heart className="h-3 w-3" />{post.likes}</span>
-                    <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" />{post.comments}</span>
-                  </div>
-                  <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{post.caption}</p>
-                </div>
-              </a>
-            ))}
+          <div className="mt-4 rounded-xl border border-dashed border-[#d8c7bb] bg-[#fffaf6] p-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal/55">Embed placeholder</p>
+            <pre className="mt-3 overflow-x-auto rounded-lg bg-black/90 p-3 text-xs text-white/90">
+{`<!-- Paste your real Instagram widget/embed snippet here -->
+<div id="jisoocosmetics-instagram-feed"></div>
+<!-- Example vendor script include goes here -->`}
+            </pre>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-charcoal/80 hover:text-charcoal"
+            >
+              <Instagram className="h-4 w-4" />
+              Open the real profile on Instagram
+            </a>
           </div>
         </div>
 
