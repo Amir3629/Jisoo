@@ -46,6 +46,7 @@ const CINEMATIC_HERO_GALLERY_IMAGES = [
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
 ]
+const FLOATING_ARCHITECTURE_BACKGROUND = '/hero7/Untitled design (32).png'
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -92,7 +93,7 @@ export function HeroSection() {
               {activeId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
               {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
               {activeId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
-              {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} media={media} />}
+              {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
               {activeId === 'mist-glass' && <MistGlassHero locale={locale} media={media} />}
               {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} media={media} />}
               {activeId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
@@ -223,17 +224,18 @@ function CinematicTypographyHero({ locale }: { locale: Locale }) {
           <span className="block text-rose-mauve">Beauty Narrative</span>
         </motion.h1>
         <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
+        <div className="mt-6">
+          <PrimaryCta locale={locale} subtle />
+        </div>
       </div>
 
-      <div className="mx-auto grid w-full max-w-6xl translate-y-3 grid-cols-3 gap-2 lg:translate-y-4 lg:grid-cols-5 lg:gap-3">
-        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[0]} alt="Editorial tile 1" className="aspect-[4/5]" />
-        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[1]} alt="Editorial tile 2" className="aspect-[4/5]" />
-        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[2]} alt="Editorial tile 3" className="aspect-[4/5]" />
-        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[3]} alt="Editorial tile 4" className="hidden aspect-[4/5] lg:block" />
-        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[4]} alt="Editorial tile 5" className="hidden aspect-[4/5] lg:block" />
+      <div className="mx-auto grid w-full max-w-6xl translate-y-5 grid-cols-5 items-end gap-1 lg:translate-y-6 lg:gap-1.5">
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[0]} alt="Editorial tile 1" className="h-36 sm:h-44 lg:h-52" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[1]} alt="Editorial tile 2" className="h-36 sm:h-44 lg:h-52" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[2]} alt="Editorial tile 3" className="h-36 sm:h-44 lg:h-52" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[3]} alt="Editorial tile 4" className="h-36 sm:h-44 lg:h-52" />
+        <HeroImage src={CINEMATIC_HERO_GALLERY_IMAGES[4]} alt="Editorial tile 5" className="h-36 sm:h-44 lg:h-52" />
       </div>
-
-      <div className="absolute left-1/2 top-[52%] -translate-x-1/2 lg:top-[55%]"><PrimaryCta locale={locale} subtle /></div>
     </section>
   )
 }
@@ -311,18 +313,17 @@ function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }
   )
 }
 
-function FloatingArchitectureHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+function FloatingArchitectureHero({ locale }: { locale: Locale }) {
   return (
-    <section className="relative h-[68vh] overflow-hidden rounded-[2rem] bg-[linear-gradient(160deg,#fff8f4_0%,#faeef3_52%,#f8efe5_100%)]">
-      <div className="absolute left-1/2 top-1/2 h-[410px] w-[290px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[2.2rem] shadow-[0_28px_70px_rgba(186,138,153,0.28)] lg:h-[520px] lg:w-[360px]">
-        <HeroImage src={media.primary} alt="Floating main" className="h-full" />
-      </div>
-      <div className="absolute left-[18%] top-[22%] h-44 w-32 overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.secondary ?? media.primary} alt="Floating secondary" className="h-full" /></div>
-      <div className="absolute right-[16%] bottom-[20%] h-44 w-32 overflow-hidden rounded-2xl shadow-xl lg:h-56 lg:w-44"><HeroImage src={media.tertiary ?? media.primary} alt="Floating tertiary" className="h-full" /></div>
-      <div className="absolute left-8 top-8 max-w-xl lg:left-12 lg:top-12">
-        <h1 className="font-serif text-4xl text-charcoal lg:text-6xl">Floating Product Architecture</h1>
-        <p className="mt-3 text-charcoal/65">Asymmetric, object-led visual concept with sculptural campaign rhythm.</p>
-        <div className="mt-6"><PrimaryCta locale={locale} subtle /></div>
+    <section className="relative h-[68vh] overflow-hidden">
+      <HeroImage src={FLOATING_ARCHITECTURE_BACKGROUND} alt="Floating architecture background" className="absolute inset-0" />
+      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/45 via-charcoal/18 to-charcoal/36" />
+      <div className="relative flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
+        <div className="max-w-2xl text-white">
+          <h1 className="font-serif text-4xl lg:text-6xl">Floating Product Architecture</h1>
+          <p className="mt-3 max-w-xl text-white/84">Asymmetric, object-led visual concept with sculptural campaign rhythm.</p>
+          <div className="mt-6"><PrimaryCta locale={locale} /></div>
+        </div>
       </div>
     </section>
   )
