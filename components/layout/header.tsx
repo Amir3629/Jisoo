@@ -169,9 +169,9 @@ export function Header() {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 pt-4"
+                        className="absolute top-full left-1/2 z-[70] -translate-x-1/2 pt-4"
                       >
-                        <div className="surface-velvet rounded-2xl shadow-editorial p-6 w-[560px] grid grid-cols-2 gap-3">
+                        <div className="surface-velvet-dropdown rounded-2xl shadow-editorial p-6 w-[560px] grid grid-cols-2 gap-3">
                           {submenuCategories.map(item => (
                             <Link key={item} href={localizeHref(`/shop?category=${encodeURIComponent(item.toLowerCase())}`, locale)} className="text-sm text-charcoal hover:text-rose-mauve transition-colors">
                               {item}
