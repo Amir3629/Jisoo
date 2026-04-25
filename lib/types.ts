@@ -1,7 +1,7 @@
 // Region and Locale Types
-export type Region = 'UAE' | 'EU' | 'CA'
-export type Language = 'en' | 'ar' | 'fr' | 'de' | 'ko'
-export type Currency = 'AED' | 'EUR' | 'CAD'
+export type Region = 'UAE' | 'EU' | 'CA' | 'TR'
+export type Language = 'en' | 'ar' | 'fr' | 'de' | 'ko' | 'tr'
+export type Currency = 'AED' | 'EUR' | 'CAD' | 'TRY'
 
 export interface RegionConfig {
   code: Region
@@ -75,7 +75,7 @@ export interface Product {
   isNew?: boolean
   isBestSeller?: boolean
   isLimitedEdition?: boolean
-  regionAvailability: Record<Region, ProductAvailability>
+  regionAvailability: Partial<Record<Region, ProductAvailability>>
   variants?: ProductVariant[]
   relatedProducts?: string[]
   createdAt: string

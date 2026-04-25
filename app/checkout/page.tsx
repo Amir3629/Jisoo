@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 type CheckoutStep = "information" | "shipping" | "payment";
 
@@ -354,6 +355,9 @@ export default function CheckoutPage() {
                     <Lock className="w-4 h-4" />
                     <span>Your payment information is secure and encrypted</span>
                   </div>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Guest checkout is available. Create an account after purchase to start saving JISOO rewards points.
+                  </p>
 
                   <Button
                     onClick={handlePlaceOrder}
@@ -390,7 +394,7 @@ export default function CheckoutPage() {
                 >
                   <div className="relative w-16 h-16 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.product.images[0]?.src || "/placeholder.jpg"}
+                      src={resolveImageSrc(item.product.images[0]?.src)}
                       alt={item.product.name}
                       fill
                       className="object-cover"
