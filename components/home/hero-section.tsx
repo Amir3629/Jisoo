@@ -216,12 +216,12 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
       </div>
 
       <div className="px-4 pb-8 pt-6 lg:px-14 lg:pb-10 lg:pt-7">
-        <div className="flex snap-x items-start gap-5 overflow-x-auto py-1 lg:grid lg:grid-cols-5 lg:gap-6 lg:overflow-visible">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-4 py-1 sm:gap-x-8 sm:gap-y-5 lg:gap-x-10 lg:gap-y-4">
           {categoryNav.map(item => (
             <Link
               key={item.label}
               href={localizeHref(item.href, locale)}
-              className="group flex min-w-[122px] snap-start flex-col items-center text-center"
+              className="group flex w-[122px] flex-col items-center text-center sm:w-[128px]"
             >
               <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-[4.5rem] lg:w-[4.5rem]">
                 <Image src={item.image} alt={item.label} fill className="object-cover" />
