@@ -178,9 +178,19 @@ export function Header() {
 
             {/* Actions */}
             <div className="flex items-center gap-1 lg:gap-3">
-              <div className="hidden lg:flex items-center rounded-full border border-rose-mauve/20 bg-white/70 p-1">
-                <button onClick={() => toggleMode('soft')} className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'soft' ? 'bg-charcoal text-white' : 'text-charcoal/65 hover:text-charcoal')}>Soft</button>
-                <button onClick={() => toggleMode('color')} className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'color' ? 'bg-charcoal text-white' : 'text-charcoal/65 hover:text-charcoal')}>Color</button>
+              <div className="hidden lg:flex items-center rounded-full border border-rose-mauve/25 bg-warm-ivory/70 p-1 backdrop-blur-sm">
+                <button
+                  onClick={() => toggleMode('soft')}
+                  className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'soft' ? 'bg-[#e8d7d8] text-charcoal' : 'text-charcoal/60 hover:text-charcoal')}
+                >
+                  Soft
+                </button>
+                <button
+                  onClick={() => toggleMode('color')}
+                  className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'color' ? 'bg-[#e8d7d8] text-charcoal' : 'text-charcoal/60 hover:text-charcoal')}
+                >
+                  Color
+                </button>
               </div>
               <div className="hidden lg:flex items-center gap-2 pr-1">
                 <LocaleSwitcher />

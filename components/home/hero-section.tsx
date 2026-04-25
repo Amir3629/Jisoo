@@ -197,28 +197,30 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
   ]
 
   return (
-    <section className="relative h-[68vh] overflow-hidden">
-      <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
-      <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
-        <p className="text-kicker text-white/85">JISOO Editorial</p>
-        <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">The Rose Light Standard</h1>
-        <p className="mt-4 text-white/82">A full-bleed image direction built for premium campaign storytelling.</p>
-        <div className="mt-7"><PrimaryCta locale={locale} /></div>
+    <section className="bg-[#fdf8f5]">
+      <div className="relative h-[68vh] overflow-hidden">
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
+        <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
+          <p className="text-kicker text-white/85">JISOO Editorial</p>
+          <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">The Rose Light Standard</h1>
+          <p className="mt-4 text-white/82">A full-bleed image direction built for premium campaign storytelling.</p>
+          <div className="mt-7"><PrimaryCta locale={locale} /></div>
+        </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-5 px-4 lg:px-14">
-        <div className="flex snap-x items-center gap-4 overflow-x-auto rounded-2xl border border-white/20 bg-black/25 p-3 backdrop-blur-sm lg:grid lg:grid-cols-5 lg:overflow-visible">
+      <div className="px-4 pb-8 pt-6 lg:px-14 lg:pb-10 lg:pt-7">
+        <div className="flex snap-x items-start gap-5 overflow-x-auto py-1 lg:grid lg:grid-cols-5 lg:gap-6 lg:overflow-visible">
           {categoryNav.map(item => (
             <Link
               key={item.label}
               href={localizeHref(item.href, locale)}
               className="group flex min-w-[122px] snap-start flex-col items-center text-center"
             >
-              <div className="relative h-14 w-14 overflow-hidden rounded-full ring-1 ring-white/45 transition group-hover:ring-white/75">
+              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-[4.5rem] lg:w-[4.5rem]">
                 <Image src={item.image} alt={item.label} fill className="object-cover" />
               </div>
-              <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-white/95">
+              <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-charcoal/80 transition-colors group-hover:text-charcoal">
                 {item.label}
                 <ArrowRight className="h-3 w-3" />
               </span>
