@@ -15,6 +15,7 @@ const footerLinks = {
     { label: 'Best Sellers', href: '/shop/best-sellers' },
     { label: 'New Arrivals', href: '/shop/new-arrivals' },
     { label: 'Gift Sets', href: '/shop/sets' },
+    { label: 'Gift Cards', href: '/gift-cards' },
   ],
   help: [
     { label: 'Contact Us', href: '/help/contact' },
@@ -22,6 +23,7 @@ const footerLinks = {
     { label: 'Shipping Info', href: '/help/shipping' },
     { label: 'Returns & Exchanges', href: '/help/returns' },
     { label: 'Track Order', href: '/account/orders' },
+    { label: 'Tips & Care', href: '/tips' },
   ],
   company: [
     { label: 'Our Story', href: '/about' },
@@ -49,6 +51,20 @@ export function Footer() {
   const [isSubscribed, setIsSubscribed] = useState(false)
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const brandBody = locale === 'ar' ? 'نقدم أفضل منتجات الجمال الكوري للعالم بعناية.' : locale === 'fr' ? 'Nous sélectionnons le meilleur de la beauté coréenne pour le monde.' : locale === 'de' ? 'Wir kuratieren die beste koreanische Beauty für die Welt.' : locale === 'ko' ? '프리미엄 K-뷰티를 전 세계에 전합니다.' : locale === 'tr' ? 'Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz.' : 'Curating the finest Korean beauty for the world. Premium skincare and makeup, delivered with care.'
+  const rights = locale === 'ar' ? 'جميع الحقوق محفوظة.' : locale === 'fr' ? 'Tous droits réservés.' : locale === 'de' ? 'Alle Rechte vorbehalten.' : locale === 'ko' ? '모든 권리 보유.' : locale === 'tr' ? 'Tüm hakları saklıdır.' : 'All rights reserved.'
+  const madeWithCare = locale === 'ar' ? 'صُنع بعناية من سيول إلى العالم' : locale === 'fr' ? 'Conçu avec soin de Séoul au monde' : locale === 'de' ? 'Mit Sorgfalt von Seoul in die Welt' : locale === 'ko' ? '서울에서 세계로, 정성으로' : locale === 'tr' ? 'Seul’den dünyaya özenle' : 'Made with care from Seoul to the world'
+  const localizedLink = (label: string) => locale === 'ar'
+    ? ({ 'Skincare': 'العناية بالبشرة', 'Makeup': 'المكياج', 'Best Sellers': 'الأكثر مبيعًا', 'New Arrivals': 'وصل حديثًا', 'Gift Sets': 'مجموعات هدايا', 'Gift Cards': 'بطاقات هدايا', 'Contact Us': 'اتصل بنا', 'FAQs': 'الأسئلة الشائعة', 'Shipping Info': 'معلومات الشحن', 'Returns & Exchanges': 'الإرجاع والاستبدال', 'Track Order': 'تتبع الطلب', 'Tips & Care': 'نصائح وعناية', 'Our Story': 'قصتنا', 'Korean Partners': 'شركاء كوريون', 'Sustainability': 'الاستدامة', 'Careers': 'الوظائف', 'Press': 'الصحافة', 'Privacy Policy': 'سياسة الخصوصية', 'Terms of Service': 'شروط الخدمة', 'Cookie Policy': 'سياسة ملفات الارتباط', 'Accessibility': 'إمكانية الوصول' }[label] ?? label)
+    : locale === 'fr'
+      ? ({ 'Skincare': 'Soin', 'Makeup': 'Maquillage', 'Best Sellers': 'Meilleures ventes', 'New Arrivals': 'Nouveautés', 'Gift Sets': 'Coffrets cadeaux', 'Gift Cards': 'Cartes cadeaux', 'Contact Us': 'Contactez-nous', 'FAQs': 'FAQ', 'Shipping Info': 'Infos livraison', 'Returns & Exchanges': 'Retours & Échanges', 'Track Order': 'Suivre la commande', 'Tips & Care': 'Conseils & Soin', 'Korean Partners': 'Partenaires coréens', 'Sustainability': 'Durabilité', 'Careers': 'Carrières', 'Press': 'Presse', 'Privacy Policy': 'Politique de confidentialité', 'Terms of Service': 'Conditions de service', 'Cookie Policy': 'Politique cookies', 'Accessibility': 'Accessibilité' }[label] ?? label)
+      : locale === 'de'
+        ? ({ 'Skincare': 'Hautpflege', 'Makeup': 'Make-up', 'Best Sellers': 'Bestseller', 'New Arrivals': 'Neuheiten', 'Gift Sets': 'Geschenksets', 'Gift Cards': 'Geschenkkarten', 'Contact Us': 'Kontakt', 'FAQs': 'FAQ', 'Shipping Info': 'Versandinfo', 'Returns & Exchanges': 'Rückgabe & Umtausch', 'Track Order': 'Bestellung verfolgen', 'Tips & Care': 'Tipps & Pflege', 'Our Story': 'Unsere Geschichte', 'Korean Partners': 'Koreanische Partner', 'Sustainability': 'Nachhaltigkeit', 'Careers': 'Karriere', 'Press': 'Presse', 'Privacy Policy': 'Datenschutz', 'Terms of Service': 'Nutzungsbedingungen', 'Cookie Policy': 'Cookie-Richtlinie', 'Accessibility': 'Barrierefreiheit' }[label] ?? label)
+        : locale === 'ko'
+          ? ({ 'Skincare': '스킨케어', 'Makeup': '메이크업', 'Best Sellers': '베스트셀러', 'New Arrivals': '신상품', 'Gift Sets': '기프트 세트', 'Gift Cards': '기프트 카드', 'Contact Us': '문의하기', 'FAQs': '자주 묻는 질문', 'Shipping Info': '배송 정보', 'Returns & Exchanges': '반품 및 교환', 'Track Order': '주문 추적', 'Tips & Care': '팁 & 케어', 'Our Story': '브랜드 스토리', 'Korean Partners': '한국 파트너', 'Sustainability': '지속가능성', 'Careers': '채용', 'Press': '보도자료', 'Privacy Policy': '개인정보 처리방침', 'Terms of Service': '이용약관', 'Cookie Policy': '쿠키 정책', 'Accessibility': '접근성' }[label] ?? label)
+          : locale === 'tr'
+            ? ({ 'Skincare': 'Cilt Bakımı', 'Makeup': 'Makyaj', 'Best Sellers': 'Çok Satanlar', 'New Arrivals': 'Yeni Gelenler', 'Gift Sets': 'Hediye Setleri', 'Gift Cards': 'Hediye Kartları', 'Contact Us': 'Bize Ulaşın', 'FAQs': 'SSS', 'Shipping Info': 'Kargo Bilgisi', 'Returns & Exchanges': 'İade ve Değişim', 'Track Order': 'Sipariş Takibi', 'Tips & Care': 'İpuçları ve Bakım', 'Our Story': 'Hikayemiz', 'Korean Partners': 'Koreli Ortaklar', 'Sustainability': 'Sürdürülebilirlik', 'Careers': 'Kariyer', 'Press': 'Basın', 'Privacy Policy': 'Gizlilik Politikası', 'Terms of Service': 'Hizmet Şartları', 'Cookie Policy': 'Çerez Politikası', 'Accessibility': 'Erişilebilirlik' }[label] ?? label)
+            : label
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -59,9 +75,9 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-plum text-warm-ivory">
+    <footer className="bg-gradient-to-br from-[#fff7f2] via-[#fceef2] to-[#f7ece3] text-charcoal">
       {/* Newsletter Section */}
-      <div className="border-b border-rose-mauve/20">
+      <div className="border-b border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -73,7 +89,7 @@ export function Footer() {
             <h3 className="text-2xl lg:text-3xl font-serif mb-3">
               {dictionary.footer.newsletterTitle}
             </h3>
-            <p className="text-blush-pink/80 mb-8">
+            <p className="text-charcoal/70 mb-8">
               {dictionary.footer.newsletterBody}
             </p>
 
@@ -81,7 +97,7 @@ export function Footer() {
               <motion.p
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-champagne-gold font-medium"
+                className="text-[#b79263] font-medium"
               >
                 {dictionary.footer.subscribed}
               </motion.p>
@@ -94,9 +110,9 @@ export function Footer() {
                   placeholder={dictionary.footer.emailPlaceholder}
                   className={cn(
                     'flex-1 px-5 py-3.5 rounded-full',
-                    'bg-warm-ivory/10 border border-warm-ivory/20',
-                    'text-warm-ivory placeholder:text-warm-ivory/50',
-                    'focus:outline-none focus:border-champagne-gold',
+                    'bg-white/80 border border-[#e8d4c1]',
+                    'text-charcoal placeholder:text-charcoal/45',
+                    'focus:outline-none focus:border-[#cfac7f]',
                     'transition-colors duration-300'
                   )}
                   required
@@ -107,8 +123,8 @@ export function Footer() {
                   type="submit"
                   className={cn(
                     'px-8 py-3.5 rounded-full',
-                    'bg-champagne-gold text-charcoal font-medium',
-                    'hover:bg-champagne-gold/90 transition-colors',
+                    'bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] text-white font-medium',
+                    'hover:brightness-105 transition-colors',
                     'flex items-center justify-center gap-2'
                   )}
                 >
@@ -129,10 +145,7 @@ export function Footer() {
             <Link href={localizeHref('/', locale)} className="inline-block">
               <h2 className="text-3xl font-serif font-bold mb-4">JISOO</h2>
             </Link>
-            <p className="text-blush-pink/70 text-sm leading-relaxed mb-6">
-              Curating the finest Korean beauty for the world. 
-              Premium skincare and makeup, delivered with care.
-            </p>
+            <p className="text-charcoal/65 text-sm leading-relaxed mb-6">{brandBody}</p>
             <div className="flex items-center gap-4">
               {socialLinks.map(social => (
                 <a
@@ -140,7 +153,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-warm-ivory/10 hover:bg-champagne-gold hover:text-charcoal transition-all duration-300"
+                  className="p-2 rounded-full bg-white/70 border border-[#ecd8ca] hover:bg-[#d9bd97] hover:text-white transition-all duration-300"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -151,7 +164,7 @@ export function Footer() {
 
           {/* Link Columns */}
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.common.shop}
             </h4>
             <ul className="space-y-3">
@@ -159,9 +172,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                      {link.label}
+                      {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -169,7 +182,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.help}
             </h4>
             <ul className="space-y-3">
@@ -177,9 +190,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label}
+                    {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -187,7 +200,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.company}
             </h4>
             <ul className="space-y-3">
@@ -195,9 +208,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label === 'Our Story' ? t.ourStory : link.label}
+                    {link.label === 'Our Story' ? t.ourStory : localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -205,7 +218,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4 className="font-medium text-champagne-gold mb-4 text-sm uppercase tracking-wider">
+            <h4 className="font-medium text-[#b79263] mb-4 text-sm uppercase tracking-wider">
               {dictionary.footer.sections.legal}
             </h4>
             <ul className="space-y-3">
@@ -213,9 +226,9 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-blush-pink/70 hover:text-warm-ivory transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label}
+                    {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -225,12 +238,12 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-rose-mauve/20">
+      <div className="border-t border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-blush-pink/60">
-            <p>&copy; {new Date().getFullYear()} JISOO Beauty. All rights reserved.</p>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-charcoal/55">
+            <p>&copy; {new Date().getFullYear()} JISOO Beauty. {rights}</p>
             <div className="flex items-center gap-6">
-              <span>Made with care from Seoul to the world</span>
+              <span>{madeWithCare}</span>
             </div>
           </div>
         </div>

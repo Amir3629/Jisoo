@@ -18,6 +18,7 @@ import {
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 const iconMap: Record<string, React.ElementType> = {
   droplet: Droplets,
@@ -53,6 +54,22 @@ export default function ProductPage({ params }: ProductPageProps) {
   const { region } = useRegion()
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const copy = {
+    share: locale === 'ar' ? 'مشاركة' : locale === 'fr' ? 'Partager' : locale === 'de' ? 'Teilen' : locale === 'ko' ? '공유' : locale === 'tr' ? 'Paylaş' : 'Share',
+    askAi: locale === 'ar' ? 'اسأل مساعد الذكاء الاصطناعي' : locale === 'fr' ? 'Demander à l’assistant IA' : locale === 'de' ? 'KI-Assistent fragen' : locale === 'ko' ? 'AI 어시스턴트에게 묻기' : locale === 'tr' ? 'AI Asistanına Sor' : 'Ask AI Assistant',
+    size: locale === 'ar' ? 'الحجم' : locale === 'fr' ? 'Taille' : locale === 'de' ? 'Größe' : locale === 'ko' ? '용량' : locale === 'tr' ? 'Boyut' : 'Size',
+    texture: locale === 'ar' ? 'الملمس' : locale === 'fr' ? 'Texture' : locale === 'de' ? 'Textur' : locale === 'ko' ? '텍스처' : locale === 'tr' ? 'Doku' : 'Texture',
+    finish: locale === 'ar' ? 'اللمسة النهائية' : locale === 'fr' ? 'Fini' : locale === 'de' ? 'Finish' : locale === 'ko' ? '피니시' : locale === 'tr' ? 'Bitiş' : 'Finish',
+    skinTypes: locale === 'ar' ? 'أنواع البشرة' : locale === 'fr' ? 'Types de peau' : locale === 'de' ? 'Hauttypen' : locale === 'ko' ? '피부 타입' : locale === 'tr' ? 'Cilt Tipleri' : 'Skin Types',
+    detailsTab: locale === 'ar' ? 'التفاصيل وطريقة الاستخدام' : locale === 'fr' ? 'Détails & Utilisation' : locale === 'de' ? 'Details & Anwendung' : locale === 'ko' ? '상세 정보 & 사용법' : locale === 'tr' ? 'Detaylar ve Kullanım' : 'Details & How to Use',
+    about: locale === 'ar' ? 'عن هذا المنتج' : locale === 'fr' ? 'À propos de ce produit' : locale === 'de' ? 'Über dieses Produkt' : locale === 'ko' ? '제품 소개' : locale === 'tr' ? 'Bu Ürün Hakkında' : 'About This Product',
+    howToUse: locale === 'ar' ? 'طريقة الاستخدام' : locale === 'fr' ? 'Mode d’utilisation' : locale === 'de' ? 'Anwendung' : locale === 'ko' ? '사용 방법' : locale === 'tr' ? 'Kullanım Şekli' : 'How to Use',
+    keyBenefits: locale === 'ar' ? 'الفوائد الرئيسية' : locale === 'fr' ? 'Bénéfices clés' : locale === 'de' ? 'Hauptvorteile' : locale === 'ko' ? '핵심 효능' : locale === 'tr' ? 'Temel Faydalar' : 'Key Benefits',
+    keyIngredients: locale === 'ar' ? 'المكونات الرئيسية' : locale === 'fr' ? 'Ingrédients clés' : locale === 'de' ? 'Hauptinhaltsstoffe' : locale === 'ko' ? '주요 성분' : locale === 'tr' ? 'Temel İçerikler' : 'Key Ingredients',
+    verified: locale === 'ar' ? 'موثق' : locale === 'fr' ? 'Vérifié' : locale === 'de' ? 'Verifiziert' : locale === 'ko' ? '인증됨' : locale === 'tr' ? 'Doğrulandı' : 'Verified',
+    noReviews: locale === 'ar' ? 'لا توجد مراجعات بعد. كوني الأولى!' : locale === 'fr' ? 'Pas encore d’avis. Soyez la première !' : locale === 'de' ? 'Noch keine Bewertungen. Sei die Erste!' : locale === 'ko' ? '아직 리뷰가 없습니다. 첫 리뷰를 남겨보세요!' : locale === 'tr' ? 'Henüz yorum yok. İlk yorumu sen yap!' : 'No reviews yet. Be the first to review!',
+    youMayAlsoLike: locale === 'ar' ? 'قد يعجبك أيضًا' : locale === 'fr' ? 'Vous aimerez aussi' : locale === 'de' ? 'Das könnte dir auch gefallen' : locale === 'ko' ? '함께 보면 좋은 제품' : locale === 'tr' ? 'Bunlar da İlginizi Çekebilir' : 'You May Also Like',
+  }
 
   if (!product) {
     return (
@@ -118,7 +135,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 className="relative aspect-square rounded-3xl overflow-hidden bg-white"
               >
                 <Image
-                  src={product.images[selectedImage]?.src || '/placeholder.jpg'}
+                  src={resolveImageSrc(product.images[selectedImage]?.src)}
                   alt={product.images[selectedImage]?.alt || product.name}
                   fill
                   className="object-cover"
@@ -161,7 +178,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       )}
                     >
                       <Image
-                        src={image.src}
+                        src={resolveImageSrc(image.src)}
                         alt={image.alt}
                         fill
                         className="object-cover"
@@ -335,37 +352,37 @@ export default function ProductPage({ params }: ProductPageProps) {
               <div className="mt-6 flex items-center gap-6 text-sm">
                 <button className="flex items-center gap-2 text-muted-foreground hover:text-plum transition-colors">
                   <Share2 className="w-4 h-4" />
-                  <span>Share</span>
+                  <span>{copy.share}</span>
                 </button>
                 <Link
                   href={localizeHref('/ai-consultant', locale)}
                   className="flex items-center gap-2 text-rose-mauve hover:text-plum transition-colors"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  <span>Ask AI Assistant</span>
+                  <span>{copy.askAi}</span>
                 </Link>
               </div>
 
               {/* Size & Info */}
               <div className="mt-8 pt-8 border-t border-blush-pink/30 grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <span className="text-muted-foreground">Size</span>
+                  <span className="text-muted-foreground">{copy.size}</span>
                   <p className="font-medium text-charcoal">{product.size}</p>
                 </div>
                 {product.texture && (
                   <div>
-                    <span className="text-muted-foreground">Texture</span>
+                    <span className="text-muted-foreground">{copy.texture}</span>
                     <p className="font-medium text-charcoal">{product.texture}</p>
                   </div>
                 )}
                 {product.finish && (
                   <div>
-                    <span className="text-muted-foreground">Finish</span>
+                    <span className="text-muted-foreground">{copy.finish}</span>
                     <p className="font-medium text-charcoal">{product.finish}</p>
                   </div>
                 )}
                 <div>
-                  <span className="text-muted-foreground">Skin Types</span>
+                  <span className="text-muted-foreground">{copy.skinTypes}</span>
                   <p className="font-medium text-charcoal">{product.skinTypes.slice(0, 2).join(', ')}</p>
                 </div>
               </div>
@@ -390,7 +407,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                     : 'text-muted-foreground hover:text-charcoal'
                 )}
               >
-                {tab === 'details' && 'Details & How to Use'}
+                {tab === 'details' && copy.detailsTab}
                 {tab === 'ingredients' && 'Ingredients'}
                 {tab === 'reviews' && `Reviews (${product.reviewCount})`}
                 {activeTab === tab && (
@@ -416,14 +433,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                 >
                   <div>
                     <h3 className="text-xl font-serif font-semibold text-charcoal mb-4">
-                      About This Product
+                      {copy.about}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
                       {product.description}
                     </p>
 
                     <h3 className="text-xl font-serif font-semibold text-charcoal mt-8 mb-4">
-                      How to Use
+                      {copy.howToUse}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
                       {product.howToUse}
@@ -432,7 +449,7 @@ export default function ProductPage({ params }: ProductPageProps) {
 
                   <div>
                     <h3 className="text-xl font-serif font-semibold text-charcoal mb-6">
-                      Key Benefits
+                      {copy.keyBenefits}
                     </h3>
                     <div className="space-y-4">
                       {product.benefits.map((benefit, index) => {
@@ -464,7 +481,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                   exit={{ opacity: 0, y: -10 }}
                 >
                   <h3 className="text-xl font-serif font-semibold text-charcoal mb-6">
-                    Key Ingredients
+                    {copy.keyIngredients}
                   </h3>
                   <div className="grid md:grid-cols-2 gap-6">
                     {product.ingredients.map((ingredient, index) => (
@@ -520,7 +537,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 </div>
                                 {review.isVerified && (
                                   <span className="text-xs text-green-600 flex items-center gap-1">
-                                    <Check className="w-3 h-3" /> Verified
+                                    <Check className="w-3 h-3" /> {copy.verified}
                                   </span>
                                 )}
                               </div>
@@ -530,10 +547,19 @@ export default function ProductPage({ params }: ProductPageProps) {
                           <p className="text-muted-foreground">{review.content}</p>
                         </div>
                       ))}
+                      <div className="p-6 rounded-2xl border border-dashed border-rose-mauve/30 bg-white/70">
+                        <h4 className="font-medium text-charcoal">Customer Photo Upload (UI Scaffold)</h4>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.
+                        </p>
+                        <button className="mt-4 rounded-full border border-rose-mauve/25 px-4 py-2 text-sm text-charcoal hover:border-rose-mauve/45">
+                          Choose Photo
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <div className="text-center py-12">
-                      <p className="text-muted-foreground">No reviews yet. Be the first to review!</p>
+                      <p className="text-muted-foreground">{copy.noReviews}</p>
                     </div>
                   )}
                 </motion.div>
@@ -548,7 +574,7 @@ export default function ProductPage({ params }: ProductPageProps) {
         <section className="py-16 lg:py-24 bg-warm-ivory">
           <div className="max-w-7xl mx-auto px-4 lg:px-6">
             <h2 className="text-2xl lg:text-3xl font-serif font-bold text-charcoal mb-8">
-              You May Also Like
+              {copy.youMayAlsoLike}
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {relatedProducts.map((product, index) => (

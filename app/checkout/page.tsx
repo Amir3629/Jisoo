@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 type CheckoutStep = "information" | "shipping" | "payment";
 
@@ -29,6 +30,24 @@ export default function CheckoutPage() {
   const { formatPrice, region, currency } = useRegion();
   const { locale, dictionary } = useLocale();
   const c = dictionary.common;
+  const copy = {
+    information: locale === 'ar' ? 'المعلومات' : locale === 'fr' ? 'Informations' : locale === 'de' ? 'Informationen' : locale === 'ko' ? '정보' : locale === 'tr' ? 'Bilgiler' : 'Information',
+    shipping: dictionary.cart.shipping,
+    payment: locale === 'ar' ? 'الدفع' : locale === 'fr' ? 'Paiement' : locale === 'de' ? 'Zahlung' : locale === 'ko' ? '결제' : locale === 'tr' ? 'Ödeme' : 'Payment',
+    contactInfo: locale === 'ar' ? 'معلومات التواصل' : locale === 'fr' ? 'Coordonnées' : locale === 'de' ? 'Kontaktinformationen' : locale === 'ko' ? '연락처 정보' : locale === 'tr' ? 'İletişim Bilgileri' : 'Contact Information',
+    shippingAddress: c.shippingAddress,
+    continueShipping: locale === 'ar' ? 'متابعة إلى الشحن' : locale === 'fr' ? 'Continuer vers la livraison' : locale === 'de' ? 'Weiter zum Versand' : locale === 'ko' ? '배송 단계로 계속' : locale === 'tr' ? 'Kargoya devam et' : 'Continue to Shipping',
+    shippingMethod: locale === 'ar' ? 'طريقة الشحن' : locale === 'fr' ? 'Mode de livraison' : locale === 'de' ? 'Versandart' : locale === 'ko' ? '배송 방법' : locale === 'tr' ? 'Kargo Yöntemi' : 'Shipping Method',
+    continuePayment: locale === 'ar' ? 'متابعة إلى الدفع' : locale === 'fr' ? 'Continuer vers le paiement' : locale === 'de' ? 'Weiter zur Zahlung' : locale === 'ko' ? '결제 단계로 계속' : locale === 'tr' ? 'Ödemeye devam et' : 'Continue to Payment',
+    orderSummary: dictionary.cart.orderSummary,
+    subtotal: dictionary.cart.subtotal,
+    estimatedTax: locale === 'ar' ? 'ضريبة تقديرية' : locale === 'fr' ? 'Taxe estimée' : locale === 'de' ? 'Geschätzte Steuer' : locale === 'ko' ? '예상 세금' : locale === 'tr' ? 'Tahmini Vergi' : 'Estimated Tax',
+    free: locale === 'ar' ? 'مجاني' : locale === 'fr' ? 'Gratuit' : locale === 'de' ? 'Kostenlos' : locale === 'ko' ? '무료' : locale === 'tr' ? 'Ücretsiz' : 'Free',
+    processing: locale === 'ar' ? 'جارٍ المعالجة...' : locale === 'fr' ? 'Traitement...' : locale === 'de' ? 'Wird verarbeitet...' : locale === 'ko' ? '처리 중...' : locale === 'tr' ? 'İşleniyor...' : 'Processing...',
+    securePayment: locale === 'ar' ? 'معلومات الدفع آمنة ومشفرة' : locale === 'fr' ? 'Vos informations de paiement sont sécurisées et chiffrées' : locale === 'de' ? 'Deine Zahlungsdaten sind sicher und verschlüsselt' : locale === 'ko' ? '결제 정보는 안전하게 암호화됩니다' : locale === 'tr' ? 'Ödeme bilgileriniz güvenli ve şifrelenmiştir' : 'Your payment information is secure and encrypted',
+    freeShippingBenefit: locale === 'ar' ? 'شحن مجاني للطلبات فوق 50$' : locale === 'fr' ? 'Livraison gratuite dès 50$' : locale === 'de' ? 'Kostenloser Versand ab 50$' : locale === 'ko' ? '50달러 이상 무료배송' : locale === 'tr' ? '50$ üzeri ücretsiz kargo' : 'Free shipping on orders over $50',
+    freeSamplesBenefit: locale === 'ar' ? 'عينات مجانية مع كل طلب' : locale === 'fr' ? 'Échantillons gratuits à chaque commande' : locale === 'de' ? 'Kostenlose Proben bei jeder Bestellung' : locale === 'ko' ? '모든 주문에 무료 샘플 제공' : locale === 'tr' ? 'Her siparişte ücretsiz numune' : 'Free samples with every order',
+  }
   const [step, setStep] = useState<CheckoutStep>("information");
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
@@ -39,9 +58,9 @@ export default function CheckoutPage() {
   const total = subtotal + shipping + tax;
 
   const steps: { key: CheckoutStep; label: string }[] = [
-    { key: "information", label: "Information" },
-    { key: "shipping", label: "Shipping" },
-    { key: "payment", label: "Payment" },
+    { key: "information", label: copy.information },
+    { key: "shipping", label: copy.shipping },
+    { key: "payment", label: copy.payment },
   ];
 
   const handlePlaceOrder = async () => {
@@ -165,7 +184,7 @@ export default function CheckoutPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                 >
-                  <h2 className="font-serif text-2xl mb-6">Contact Information</h2>
+                  <h2 className="font-serif text-2xl mb-6">{copy.contactInfo}</h2>
                   <div className="space-y-4">
                     <div>
                       <Label htmlFor="email">Email</Label>
@@ -184,7 +203,7 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
-                  <h2 className="font-serif text-2xl mt-10 mb-6">Shipping Address</h2>
+                  <h2 className="font-serif text-2xl mt-10 mb-6">{copy.shippingAddress}</h2>
                   <div className="grid gap-4">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -229,7 +248,7 @@ export default function CheckoutPage() {
                     className="w-full rounded-none mt-8"
                     size="lg"
                   >
-                    Continue to Shipping
+                    {copy.continueShipping}
                   </Button>
                 </motion.div>
               )}
@@ -249,7 +268,7 @@ export default function CheckoutPage() {
                     Return to information
                   </button>
 
-                  <h2 className="font-serif text-2xl mb-6">Shipping Method</h2>
+                  <h2 className="font-serif text-2xl mb-6">{copy.shippingMethod}</h2>
                   <div className="space-y-3">
                     <label className="flex items-center justify-between p-4 border border-primary bg-primary/5 cursor-pointer">
                       <div className="flex items-center gap-3">
@@ -261,7 +280,7 @@ export default function CheckoutPage() {
                           <p className="text-sm text-muted-foreground">5-7 business days</p>
                         </div>
                       </div>
-                      <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+                      <span>{shipping === 0 ? copy.free : formatPrice(shipping)}</span>
                     </label>
                     <label className="flex items-center justify-between p-4 border border-border hover:border-muted-foreground cursor-pointer transition-colors">
                       <div className="flex items-center gap-3">
@@ -290,7 +309,7 @@ export default function CheckoutPage() {
                     className="w-full rounded-none mt-8"
                     size="lg"
                   >
-                    Continue to Payment
+                    {copy.continuePayment}
                   </Button>
                 </motion.div>
               )}
@@ -310,7 +329,7 @@ export default function CheckoutPage() {
                     Return to shipping
                   </button>
 
-                  <h2 className="font-serif text-2xl mb-6">Payment</h2>
+                  <h2 className="font-serif text-2xl mb-6">{copy.payment}</h2>
                   <div className="border border-border p-6">
                     <div className="flex items-center gap-3 mb-6">
                       <CreditCard className="w-5 h-5" />
@@ -352,8 +371,11 @@ export default function CheckoutPage() {
 
                   <div className="flex items-center gap-2 mt-6 text-sm text-muted-foreground">
                     <Lock className="w-4 h-4" />
-                    <span>Your payment information is secure and encrypted</span>
+                    <span>{copy.securePayment}</span>
                   </div>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Guest checkout is available. Create an account after purchase to start saving JISOO rewards points.
+                  </p>
 
                   <Button
                     onClick={handlePlaceOrder}
@@ -368,7 +390,7 @@ export default function CheckoutPage() {
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                           className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
                         />
-                        Processing...
+                        {copy.processing}
                       </span>
                     ) : (
                       `Pay ${formatPrice(total)}`
@@ -381,7 +403,7 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div className="lg:pl-12 lg:border-l border-border">
-            <h2 className="font-serif text-xl mb-6">Order Summary</h2>
+            <h2 className="font-serif text-xl mb-6">{copy.orderSummary}</h2>
             <div className="space-y-4">
               {items.map((item) => (
                 <div
@@ -390,7 +412,7 @@ export default function CheckoutPage() {
                 >
                   <div className="relative w-16 h-16 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                     <Image
-                      src={item.product.images[0]?.src || "/placeholder.jpg"}
+                      src={resolveImageSrc(item.product.images[0]?.src)}
                       alt={item.product.name}
                       fill
                       className="object-cover"
@@ -420,21 +442,21 @@ export default function CheckoutPage() {
 
             <div className="mt-6 pt-6 border-t border-border space-y-3">
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Subtotal</span>
+                <span className="text-muted-foreground">{copy.subtotal}</span>
                 <span>{formatPrice(subtotal)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Shipping</span>
-                <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+                <span className="text-muted-foreground">{dictionary.cart.shipping}</span>
+                <span>{shipping === 0 ? copy.free : formatPrice(shipping)}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-muted-foreground">Estimated Tax</span>
+                <span className="text-muted-foreground">{copy.estimatedTax}</span>
                 <span>{formatPrice(tax)}</span>
               </div>
             </div>
 
             <div className="flex justify-between py-6 border-t border-border mt-6 font-medium text-lg">
-              <span>Total</span>
+              <span>{dictionary.cart.total}</span>
               <span>{formatPrice(total)}</span>
             </div>
 
@@ -442,11 +464,11 @@ export default function CheckoutPage() {
             <div className="mt-6 pt-6 border-t border-border space-y-3">
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Truck className="w-4 h-4 flex-shrink-0" />
-                <span>Free shipping on orders over $50</span>
+                <span>{copy.freeShippingBenefit}</span>
               </div>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Gift className="w-4 h-4 flex-shrink-0" />
-                <span>Free samples with every order</span>
+                <span>{copy.freeSamplesBenefit}</span>
               </div>
             </div>
           </div>
