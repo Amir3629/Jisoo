@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import Script from 'next/script'
 import { CheckCircle2, Instagram } from 'lucide-react'
 
 const INSTAGRAM_URL = 'https://www.instagram.com/jisoocosmetics/'
@@ -7,6 +8,7 @@ const INSTAGRAM_URL = 'https://www.instagram.com/jisoocosmetics/'
 export function InstagramShowcase() {
   return (
     <section className="mx-auto w-full max-w-[1500px] px-4 py-16 lg:px-6">
+      <Script id="elfsight-platform" src="https://elfsightcdn.com/platform.js" strategy="afterInteractive" />
       <div className="relative overflow-hidden rounded-[2rem] border border-[#e8d9cf] bg-[#fffdfb] p-4 shadow-[0_20px_60px_rgba(42,32,35,0.08)] sm:p-5 lg:p-6">
         <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#eee1d8] pb-4">
           <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-center gap-3">
@@ -52,30 +54,8 @@ export function InstagramShowcase() {
           ))}
         </div>
 
-        <div className="rounded-2xl border border-[#eee1d8] bg-white p-4 lg:p-6">
-          <p className="text-sm font-medium text-charcoal">Live Instagram feed integration</p>
-          <p className="mt-2 text-sm text-charcoal/70">
-            A real feed requires an Instagram embed/widget snippet (or Graph API token).
-            Paste your approved embed code into this container and remove this helper text.
-          </p>
-
-          <div className="mt-4 rounded-xl border border-dashed border-[#d8c7bb] bg-[#fffaf6] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-charcoal/55">Embed placeholder</p>
-            <pre className="mt-3 overflow-x-auto rounded-lg bg-black/90 p-3 text-xs text-white/90">
-{`<!-- Paste your real Instagram widget/embed snippet here -->
-<div id="jisoocosmetics-instagram-feed"></div>
-<!-- Example vendor script include goes here -->`}
-            </pre>
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-charcoal/80 hover:text-charcoal"
-            >
-              <Instagram className="h-4 w-4" />
-              Open the real profile on Instagram
-            </a>
-          </div>
+        <div className="rounded-2xl border border-[#eee1d8] bg-white p-2 sm:p-3 lg:p-4">
+          <div className="elfsight-app-c1e1c5fb-090c-44f4-8806-944402444301" data-elfsight-app-lazy />
         </div>
 
         <Link href={INSTAGRAM_URL} target="_blank" className="mt-4 inline-flex text-sm font-medium text-charcoal/70 hover:text-charcoal">
