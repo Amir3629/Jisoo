@@ -15,13 +15,13 @@ const SOCIAL_LINKS: Record<SocialTab, string> = {
 
 const LOCAL_SOCIAL_MEDIA = [
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
-  '/hero7/Untitled design (32).png',
+  '/skincare-ingredients-featured.jpg',
+  '/black-skincare-expert-recommended-products-295961-1635525452337-square-1200-80.jpg',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
+  '/hero7/Untitled design (32).png',
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
 ]
 
 const INSTAGRAM_POSTS = [
@@ -224,6 +224,13 @@ function SocialPanel({
   link: string
   children: React.ReactNode
 }) {
+  const actionButtonClass =
+    platform === 'instagram'
+      ? 'bg-gradient-to-r from-[#f56040] via-[#d62976] to-[#8a3ab9] text-white hover:brightness-105'
+      : platform === 'tiktok'
+        ? 'bg-[#111111] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_10px_rgba(37,244,238,0.2),0_0_12px_rgba(254,44,85,0.16)] hover:bg-black'
+        : 'bg-[#1877f2] text-white hover:brightness-105'
+
   return (
     <>
       <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#eee1d8] pb-4">
@@ -244,7 +251,7 @@ function SocialPanel({
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-black/85"
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${actionButtonClass}`}
         >
           {platform === 'instagram' && <Instagram className="h-4 w-4" />}
           {platform === 'tiktok' && <PlayCircle className="h-4 w-4" />}
