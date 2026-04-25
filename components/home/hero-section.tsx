@@ -195,7 +195,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'الشفاه والخدود' : locale === 'fr' ? 'LÈVRES & JOUES' : locale === 'de' ? 'LIPPEN & WANGEN' : locale === 'ko' ? '립 & 치크' : locale === 'tr' ? 'DUDAK & YANAK' : 'LIPS & CHEEKS', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png', href: '/shop?category=lips-cheeks' },
-    { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png', href: '/shop?category=eyes' },
+    { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/stunning-blue-eye-stockcake.jpg.webp', href: '/shop?category=eyes' },
     { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
     { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
   ]
@@ -369,7 +369,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         priority
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
-      <div className="relative z-10 flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
+      <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-white">
           <p className="text-kicker text-white/78">Glass Fade Direction</p>
           <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
