@@ -14,10 +14,10 @@ type HeroMedia = { primary: string; secondary?: string; tertiary?: string; quate
 
 const heroConcepts: HeroConcept[] = [
   { id: 'image-editorial', name: 'Image Editorial' },
-  { id: 'cinematic-type', name: 'Cinematic Type' },
+  { id: 'campaign-cover', name: 'Campaign Cover' },
   { id: 'split-stack', name: 'Split Stack' },
   { id: 'minimal-white', name: 'Minimal White' },
-  { id: 'campaign-cover', name: 'Campaign Cover' },
+  { id: 'cinematic-type', name: 'Cinematic Type' },
   { id: 'video-motion', name: 'Video Motion' },
   { id: 'floating-architecture', name: 'Floating Architecture' },
   { id: 'mist-glass', name: 'Mist Glass' },
@@ -64,7 +64,7 @@ const conceptMediaMap: Record<string, HeroMedia> = {
   'split-stack': { primary: pickAsset(2), secondary: pickAsset(3), tertiary: pickAsset(4) },
   'minimal-white': { primary: pickAsset(4) },
   'campaign-cover': { primary: pickAsset(5), secondary: pickAsset(0), video: HERO_ASSETS.video, preferVideo: true },
-  'video-motion': { primary: pickAsset(1), video: HERO_ASSETS.video, preferVideo: true },
+  'video-motion': { primary: pickAsset(1) },
   'floating-architecture': { primary: pickAsset(0), secondary: pickAsset(3), tertiary: pickAsset(5) },
   'mist-glass': { primary: pickAsset(3), secondary: pickAsset(2) },
   'magazine-grid': { primary: pickAsset(5), secondary: pickAsset(4), tertiary: pickAsset(1), quaternary: pickAsset(0) },
@@ -300,8 +300,10 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
         </div>
       </div>
       <div className="relative">
-        <HeroImage src={media.primary} alt="Minimal hero visual" className="absolute inset-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/28 via-transparent to-charcoal/8" />
+        <div className="absolute inset-0 overflow-hidden rounded-[2rem] lg:translate-x-[-2%]">
+          <HeroImage src={media.primary} alt="Minimal hero visual" className="absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/28 via-transparent to-charcoal/8" />
+        </div>
       </div>
     </section>
   )
@@ -310,7 +312,7 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
 function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
     <section className="relative h-[68vh] overflow-hidden">
-      <HeroVideo media={media} className="absolute inset-0" />
+      <HeroImage src="/ChatGPT Image Apr 24, 2026, 10_47_39 PM.png" alt="Campaign cover background" className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/35 to-charcoal/15" />
       <div className="relative flex h-full items-center px-7 lg:px-14">
         <div className="max-w-2xl text-white">
@@ -329,15 +331,17 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
 
 function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
-    <section className="relative h-[68vh] overflow-hidden rounded-[2rem] bg-charcoal">
-      <HeroVideo media={media} className="absolute inset-0 opacity-88" />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
-      <div className="relative flex h-full items-center px-8 lg:px-14">
-        <div className="max-w-2xl text-white">
-          <p className="text-kicker text-white/75">Motion Editorial</p>
-          <h1 className="mt-4 font-serif text-5xl lg:text-7xl">A Living Campaign Hero</h1>
-          <p className="mt-5 text-white/80">Video-led immersive concept for launches, seasonal campaigns, and cinematic storytelling.</p>
-          <div className="mt-8"><PrimaryCta locale={locale} /></div>
+    <section className="px-4 lg:px-8">
+      <div className="relative mx-auto h-[68vh] max-w-[92rem] overflow-hidden rounded-[2rem] bg-charcoal">
+        <HeroVideo media={media} className="absolute inset-0 opacity-88" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
+        <div className="relative flex h-full items-center px-8 lg:px-14">
+          <div className="max-w-2xl text-white">
+            <p className="text-kicker text-white/75">Motion Editorial</p>
+            <h1 className="mt-4 font-serif text-5xl lg:text-7xl">A Living Campaign Hero</h1>
+            <p className="mt-5 text-white/80">Video-led immersive concept for launches, seasonal campaigns, and cinematic storytelling.</p>
+            <div className="mt-8"><PrimaryCta locale={locale} /></div>
+          </div>
         </div>
       </div>
     </section>
@@ -351,7 +355,7 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
         src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Floating architecture background"
         fill
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-bottom"
         priority
       />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/24 to-charcoal/38" />
@@ -398,11 +402,20 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
       <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[1]} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[2]} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
-      <div className="col-span-2 flex items-center rounded-[1.2rem] border border-rose-mauve/18 bg-white/86 p-5 lg:col-span-5 lg:row-span-3 lg:p-7">
+      <div className="col-span-2 flex items-center rounded-[1.8rem] border border-rose-mauve/22 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(253,244,240,0.78))] p-6 shadow-[0_18px_45px_rgba(173,131,145,0.16)] backdrop-blur-[2px] lg:col-span-5 lg:row-span-3 lg:p-8">
         <div>
-          <h1 className="font-serif text-3xl text-charcoal lg:text-5xl">Editorial Layout Mosaic</h1>
-          <p className="mt-2 text-charcoal/64">Magazine-inspired spatial rhythm with modular media storytelling.</p>
-          <div className="mt-5"><PrimaryCta locale={locale} subtle /></div>
+          <p className="text-kicker text-rose-mauve/78">JISOO Editorial</p>
+          <h1 className="mt-2 font-serif text-[2rem] leading-[1.03] tracking-[-0.015em] text-charcoal lg:text-[3.4rem]">Editorial Layout Mosaic</h1>
+          <p className="mt-3 max-w-xl text-[0.97rem] leading-relaxed text-charcoal/62 lg:text-[1.02rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
+          <div className="mt-6">
+            <Link
+              href={localizeHref('/shop', locale)}
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white shadow-[0_12px_28px_rgba(194,147,160,0.34)] transition-all hover:brightness-105"
+            >
+              Discover the Edit
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
