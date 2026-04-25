@@ -34,6 +34,11 @@ const policyByRegion: Record<Region, { shipping: string; returns: string; suppor
     returns: 'Canada returns for eligible unopened items are supported within 14 days; compliance cases are retained longer.',
     support: 'For Canada, we also log complaint and safety inquiries for compliance workflows when required.',
   },
+  TR: {
+    shipping: 'Turkey deliveries generally arrive within 3-7 business days depending on destination.',
+    returns: 'Turkey returns are supported for eligible unopened items within 14 days of delivery.',
+    support: 'For Turkey, concierge support can help with tracking, return guidance, and follow-up.',
+  },
 }
 
 const fallbackSuggestions = [
@@ -81,7 +86,7 @@ function buildProductAnswer(input: string, region: Region): ConciergeReply | nul
 
   if (!product) return null
 
-  const availability = product.regionAvailability[region]
+  const availability = product.regionAvailability[region] ?? 'visible_but_not_buyable'
   const ingredientPreview = product.ingredients.slice(0, 3).map(ingredient => ingredient.name).join(', ')
 
   return {
