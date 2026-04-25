@@ -11,6 +11,7 @@ import { useCart } from "@/components/providers/cart-provider";
 import { useRegion } from "@/components/providers/region-provider";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 export default function WishlistPage() {
   const [wishlistItems, setWishlistItems] = useState(products.slice(0, 8));
@@ -69,7 +70,7 @@ export default function WishlistPage() {
               <div className="relative aspect-square overflow-hidden">
                 <Link href={localizeHref(`/product/${product.slug}`, locale)}>
                   <Image
-                    src={product.images[0]?.src || "/placeholder.jpg"}
+                    src={resolveImageSrc(product.images[0]?.src)}
                     alt={product.name}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
