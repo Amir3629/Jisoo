@@ -241,14 +241,22 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
 function CinematicTypographyHero({ locale }: { locale: Locale }) {
   return (
     <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-7 pt-10 text-center lg:px-14 lg:pb-9">
-      <div className="mx-auto max-w-5xl">
-        <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="font-serif text-6xl leading-[0.9] text-charcoal lg:text-[7.4rem]">
-          Cinematic
-          <span className="block text-rose-mauve">Beauty Narrative</span>
+      <div className="mx-auto max-w-4xl">
+        <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="font-serif text-4xl leading-[1.02] tracking-[-0.01em] text-charcoal sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+          Seoul Glow,
+          <span className="mt-1 block text-rose-mauve">Softly Revealed</span>
         </motion.h1>
-        <p className="mx-auto mt-4 max-w-2xl text-charcoal/65">Typography-first hero concept with an open editorial composition and gallery rhythm.</p>
-        <div className="mt-6">
-          <PrimaryCta locale={locale} subtle />
+        <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-charcoal/68 sm:text-base">
+          A curated Korean beauty ritual shaped for luminous skin, delicate color, and everyday elegance.
+        </p>
+        <div className="mt-7">
+          <Link
+            href={localizeHref('/shop', locale)}
+            className="inline-flex items-center gap-2 rounded-full border border-rose-mauve/30 bg-white/80 px-6 py-3 text-sm font-medium text-charcoal transition-all hover:bg-white"
+          >
+            Discover the Collection
+            <ArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </div>
 
