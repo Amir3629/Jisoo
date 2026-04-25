@@ -11,6 +11,7 @@ import { AiAssistantTeaser } from '@/components/home/ai-assistant-teaser'
 import { ConcernsSection } from '@/components/home/concerns-section'
 import { TestimonialsSection } from '@/components/home/testimonials-section'
 import { SocialSection } from '@/components/home/social-section'
+import { InstagramShowcase } from '@/components/home/instagram-showcase'
 import { HomeAtmosphereCanvas } from '@/components/layout/home-atmosphere-canvas'
 import { FloatingAssistant } from '@/components/ai/floating-assistant'
 import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
@@ -34,6 +35,7 @@ export function HomePageShell() {
         <ConcernsSection />
         <TestimonialsSection />
         <SocialSection />
+        <InstagramShowcase />
         <Footer />
         <FloatingAssistant />
       </main>

@@ -19,12 +19,12 @@ export function LocaleSwitcher() {
   })()
 
   return (
-    <div className="flex items-center gap-1 rounded-full border border-white/20 px-2 py-1 text-[11px] uppercase tracking-[0.18em]">
+    <div className="flex items-center gap-1 rounded-full border border-charcoal/18 bg-charcoal/5 px-2 py-1 text-[11px] uppercase tracking-[0.18em]">
       {locales.map((l) => (
         <Link
           key={l}
           href={localizeHref(normalizedPath, l)}
-          className={cn('rounded-full px-2 py-1 transition-colors', locale === l ? 'bg-white/20 text-white' : 'text-white/70 hover:text-white')}
+          className={cn('rounded-full px-2 py-1 transition-colors', locale === l ? 'bg-charcoal text-white' : 'text-charcoal/70 hover:text-charcoal')}
         >
           {l}
         </Link>
