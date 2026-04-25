@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CheckCircle2, Clapperboard, Copy, Facebook, Heart, Instagram, MessageCircle, PlayCircle, Share2 } from 'lucide-react'
+import { useLocale } from '@/components/providers/locale-provider'
+import type { Locale } from '@/lib/i18n'
 
 type SocialTab = 'instagram' | 'tiktok' | 'facebook'
 
@@ -57,8 +59,50 @@ const FACEBOOK_POSTS = [
   ['Editor picks for spring.', '3.6K', '190', '66'],
 ] as const
 
+const SOCIAL_COPY: Record<
+  Locale,
+  {
+    stats: { posts: string; followers: string; following: string; likes: string }
+    cta: { follow: string; likeFollow: string }
+    viewProfile: string
+  }
+> = {
+  en: {
+    stats: { posts: 'Posts', followers: 'Followers', following: 'Following', likes: 'Likes' },
+    cta: { follow: 'Follow', likeFollow: 'Like / Follow' },
+    viewProfile: 'View full profile →',
+  },
+  ar: {
+    stats: { posts: 'المنشورات', followers: 'المتابعون', following: 'يتابع', likes: 'الإعجابات' },
+    cta: { follow: 'متابعة', likeFollow: 'إعجاب / متابعة' },
+    viewProfile: 'عرض الملف الكامل ←',
+  },
+  fr: {
+    stats: { posts: 'Publications', followers: 'Abonnés', following: 'Abonnements', likes: 'Mentions J’aime' },
+    cta: { follow: 'Suivre', likeFollow: 'Aimer / Suivre' },
+    viewProfile: 'Voir le profil complet →',
+  },
+  de: {
+    stats: { posts: 'Beiträge', followers: 'Follower', following: 'Folgt', likes: 'Gefällt mir' },
+    cta: { follow: 'Folgen', likeFollow: 'Gefällt mir / Folgen' },
+    viewProfile: 'Vollständiges Profil anzeigen →',
+  },
+  ko: {
+    stats: { posts: '게시물', followers: '팔로워', following: '팔로잉', likes: '좋아요' },
+    cta: { follow: '팔로우', likeFollow: '좋아요 / 팔로우' },
+    viewProfile: '전체 프로필 보기 →',
+  },
+  tr: {
+    stats: { posts: 'Gönderi', followers: 'Takipçi', following: 'Takip', likes: 'Beğeni' },
+    cta: { follow: 'Takip Et', likeFollow: 'Beğen / Takip Et' },
+    viewProfile: 'Tam profili görüntüle →',
+  },
+}
+
 export function InstagramShowcase() {
   const [activeTab, setActiveTab] = useState<SocialTab>('instagram')
+  const { locale } = useLocale()
+  const copy = SOCIAL_COPY[locale]
 
   return (
     <section className="mx-auto w-full max-w-[1500px] px-4 py-16 lg:px-6">
@@ -106,12 +150,13 @@ export function InstagramShowcase() {
             title="JISOO Cosmetics"
             handle="@jisoocosmetics"
             stats={[
-              { label: 'Posts', value: '248' },
-              { label: 'Followers', value: '128K' },
-              { label: 'Following', value: '108' },
+              { label: copy.stats.posts, value: '248' },
+              { label: copy.stats.followers, value: '128K' },
+              { label: copy.stats.following, value: '108' },
             ]}
-            ctaLabel="Follow"
+            ctaLabel={copy.cta.follow}
             link={SOCIAL_LINKS.instagram}
+            viewProfileLabel={copy.viewProfile}
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {INSTAGRAM_POSTS.map((post, index) => (
@@ -141,12 +186,13 @@ export function InstagramShowcase() {
             title="JISOO Cosmetics"
             handle="@jisoocosmetics"
             stats={[
-              { label: 'Posts', value: '148' },
-              { label: 'Followers', value: '86.4K' },
-              { label: 'Following', value: '39' },
+              { label: copy.stats.posts, value: '148' },
+              { label: copy.stats.followers, value: '86.4K' },
+              { label: copy.stats.following, value: '39' },
             ]}
-            ctaLabel="Follow"
+            ctaLabel={copy.cta.follow}
             link={SOCIAL_LINKS.tiktok}
+            viewProfileLabel={copy.viewProfile}
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {TIKTOK_POSTS.map((post, index) => (
@@ -176,12 +222,13 @@ export function InstagramShowcase() {
             title="JISOO Cosmetics"
             handle="@jisoocosmetics"
             stats={[
-              { label: 'Posts', value: '612' },
-              { label: 'Followers', value: '53K' },
-              { label: 'Likes', value: '49K' },
+              { label: copy.stats.posts, value: '612' },
+              { label: copy.stats.followers, value: '53K' },
+              { label: copy.stats.likes, value: '49K' },
             ]}
-            ctaLabel="Like / Follow"
+            ctaLabel={copy.cta.likeFollow}
             link={SOCIAL_LINKS.facebook}
+            viewProfileLabel={copy.viewProfile}
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {FACEBOOK_POSTS.map((post, index) => (
@@ -214,6 +261,7 @@ function SocialPanel({
   stats,
   ctaLabel,
   link,
+  viewProfileLabel,
   children,
 }: {
   platform: SocialTab
@@ -222,6 +270,7 @@ function SocialPanel({
   stats: Array<{ label: string; value: string }>
   ctaLabel: string
   link: string
+  viewProfileLabel: string
   children: React.ReactNode
 }) {
   const actionButtonClass =
@@ -278,7 +327,7 @@ function SocialPanel({
       {children}
 
       <Link href={link} target="_blank" className="mt-4 inline-flex text-sm font-medium text-charcoal/70 hover:text-charcoal">
-        View full profile →
+        {viewProfileLabel}
       </Link>
     </>
   )
