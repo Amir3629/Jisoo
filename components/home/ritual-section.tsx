@@ -9,6 +9,7 @@ import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 const ritualSteps = [
   {
@@ -17,7 +18,7 @@ const ritualSteps = [
     description:
       'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
     color: 'from-blush-pink/30',
-    image: '/products/gentle-foam-cleanser-1.jpg',
+    image: resolveImageSrc('/products/gentle-foam-cleanser-1.jpg'),
   },
   {
     number: '02',
@@ -25,7 +26,7 @@ const ritualSteps = [
     description:
       'Our Glass Skin Essence preps your skin for optimal absorption. Fermented botanicals plump and hydrate.',
     color: 'from-rose-mauve/20',
-    image: '/products/glass-skin-essence-1.jpg',
+    image: resolveImageSrc('/products/glass-skin-essence-1.jpg'),
   },
   {
     number: '03',
@@ -33,7 +34,7 @@ const ritualSteps = [
     description:
       'Apply targeted treatments. Our serums address specific concerns from brightening to soothing.',
     color: 'from-champagne-gold/20',
-    image: '/products/luminous-glow-serum-1.jpg',
+    image: resolveImageSrc('/products/luminous-glow-serum-1.jpg'),
   },
   {
     number: '04',
@@ -41,7 +42,7 @@ const ritualSteps = [
     description:
       'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
     color: 'from-plum/10',
-    image: '/products/hydra-cloud-cream-1.jpg',
+    image: resolveImageSrc('/products/hydra-cloud-cream-1.jpg'),
   },
   {
     number: '05',
@@ -49,13 +50,19 @@ const ritualSteps = [
     description:
       'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
     color: 'from-nude-beige/40',
-    image: '/products/tone-up-sun-cream-1.jpg',
+    image: resolveImageSrc('/products/tone-up-sun-cream-1.jpg'),
   },
 ]
 
 export function RitualSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const copy = {
+    kicker: locale === 'ar' ? 'طريق الجمال الكوري' : locale === 'fr' ? 'La voie K-Beauty' : locale === 'de' ? 'Der K-Beauty Weg' : locale === 'ko' ? 'K-뷰티 방식' : locale === 'tr' ? 'K-Beauty Yolu' : 'The K-Beauty Way',
+    title: locale === 'ar' ? 'طقس الجمال الكوري' : locale === 'fr' ? 'Le rituel de la beauté coréenne' : locale === 'de' ? 'Das Ritual koreanischer Schönheit' : locale === 'ko' ? '코리안 뷰티 리추얼' : locale === 'tr' ? 'Kore Güzellik Ritüeli' : 'The Ritual of Korean Beauty',
+    description: locale === 'ar' ? 'اكتشفي فن طبقات المنتجات لتحقيق أفضل النتائج.' : locale === 'fr' ? 'Découvrez l’art de superposer les soins pour une efficacité maximale.' : locale === 'de' ? 'Entdecke das Schichten von Produkten für maximale Wirksamkeit.' : locale === 'ko' ? '최대 효능을 위한 레이어링 루틴을 경험하세요.' : locale === 'tr' ? 'Maksimum etki için ürünleri katmanlama sanatını keşfedin.' : 'Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results.',
+    step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
+  }
   return (
     <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32" withVeilTop>
       <div className="relative">
@@ -71,9 +78,9 @@ export function RitualSection() {
 
         <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
           <ChapterHeading
-            kicker="The K-Beauty Way"
-            title="The Ritual of Korean Beauty"
-            description="Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results."
+            kicker={copy.kicker}
+            title={copy.title}
+            description={copy.description}
             align="center"
             ghostLabel="RITUAL"
             className="mx-auto mb-16 max-w-4xl lg:mb-24"
@@ -130,7 +137,7 @@ export function RitualSection() {
                         src={step.image}
                         alt={step.title}
                         className="absolute inset-0"
-                        hint={`Step ${step.number}`}
+                        hint={`${copy.step} ${step.number}`}
                       />
 
                       <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />
@@ -155,8 +162,8 @@ export function RitualSection() {
               href={localizeHref('/shop', locale)}
               className={cn(
                 'inline-flex items-center gap-2 rounded-full px-8 py-4',
-                'bg-plum font-medium text-warm-ivory transition-all duration-300 hover:bg-plum/90',
-                'shadow-lg shadow-plum/20'
+                'bg-gradient-to-r from-rose-mauve to-champagne-gold font-medium text-white transition-all duration-300 hover:brightness-105',
+                'shadow-lg shadow-rose-mauve/20'
               )}
             >
               {t.shopTheRitual}
