@@ -5,12 +5,12 @@
 
 :root {
   /* JISOO K-Beauty Brand Palette */
-  --plum: #6F4B66;
-  --rose-mauve: #C992A9;
-  --blush-pink: #F0D7E0;
-  --warm-ivory: #FFF9F5;
-  --nude-beige: #F8EDE6;
-  --champagne-gold: #D3B07A;
+  --plum: #9e7b8a;
+  --rose-mauve: #d6a8ba;
+  --blush-pink: #f6e2ea;
+  --warm-ivory: #fffaf6;
+  --nude-beige: #f8efe7;
+  --champagne-gold: #cfae84;
   --charcoal: #2C2528;
   
   /* Semantic tokens mapped to brand */
@@ -20,24 +20,24 @@
   --card-foreground: #2C2528;
   --popover: #FFFFFF;
   --popover-foreground: #2C2528;
-  --primary: #6F4B66;
-  --primary-foreground: #FFF8F4;
+  --primary: #d6a8ba;
+  --primary-foreground: #ffffff;
   --secondary: #F8EDE6;
-  --secondary-foreground: #6F4B66;
+  --secondary-foreground: #8c6677;
   --muted: #F8EDE6;
   --muted-foreground: #7A676F;
-  --accent: #C992A9;
-  --accent-foreground: #FFF8F4;
+  --accent: #efd2de;
+  --accent-foreground: #6f4f5d;
   --destructive: #D64545;
   --destructive-foreground: #FFFFFF;
   --border: #F0D7E0;
   --input: #F0D7E0;
-  --ring: #C992A9;
+  --ring: #d6a8ba;
   --radius: 0.75rem;
   
   /* Chart colors */
-  --chart-1: #6F4B66;
-  --chart-2: #C992A9;
+  --chart-1: #d6a8ba;
+  --chart-2: #cfae84;
   --chart-3: #F0D7E0;
   --chart-4: #D3B07A;
   --chart-5: #F8EDE6;
@@ -185,6 +185,12 @@
     border: 1px solid rgba(183, 110, 138, 0.18);
   }
 
+  .surface-velvet-dropdown {
+    background: linear-gradient(160deg, #fffaf8 0%, #fff7f4 100%);
+    border: 1px solid rgba(183, 110, 138, 0.2);
+    backdrop-filter: blur(12px);
+  }
+
   .mesh-luxury {
     background:
       radial-gradient(circle at 15% 18%, rgba(233, 199, 209, 0.42), transparent 28%),
@@ -253,6 +259,12 @@
     background-image: radial-gradient(rgba(30, 26, 29, 0.05) 0.45px, transparent 0.45px);
     background-size: 2.2px 2.2px;
     mix-blend-mode: multiply;
+  }
+
+  :root[data-ui-mode='soft'] {
+    --rose-mauve: #cdb7bf;
+    --blush-pink: #f8f2f4;
+    --champagne-gold: #c6b69f;
   }
   
   /* Hover animations */
