@@ -15,13 +15,13 @@ const SOCIAL_LINKS: Record<SocialTab, string> = {
 
 const LOCAL_SOCIAL_MEDIA = [
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png',
-  '/hero7/Untitled design (32).png',
+  '/skincare-ingredients-featured.jpg',
+  '/black-skincare-expert-recommended-products-295961-1635525452337-square-1200-80.jpg',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
+  '/hero7/Untitled design (32).png',
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_31_29 PM.png',
+  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
 ]
 
 const INSTAGRAM_POSTS = [
@@ -63,7 +63,7 @@ export function InstagramShowcase() {
   return (
     <section className="mx-auto w-full max-w-[1500px] px-4 py-16 lg:px-6">
       <div className="relative overflow-hidden rounded-[2rem] border border-[#e8d9cf] bg-[#fffdfb] p-4 shadow-[0_20px_60px_rgba(42,32,35,0.08)] sm:p-5 lg:p-6">
-        <div className="mb-4 flex flex-wrap gap-2 border-b border-[#eee1d8] pb-4">
+        <div className="mb-4 flex justify-center gap-2 border-b border-[#eee1d8] pb-4">
           {[
             { id: 'instagram', label: 'Instagram', icon: Instagram },
             { id: 'tiktok', label: 'TikTok', icon: PlayCircle },
@@ -71,19 +71,30 @@ export function InstagramShowcase() {
           ].map(tab => {
             const Icon = tab.icon
             const isActive = activeTab === tab.id
+            const activeClass =
+              tab.id === 'instagram'
+                ? 'border-transparent bg-gradient-to-r from-[#f56040] via-[#d62976] to-[#8a3ab9] text-white shadow-[0_8px_24px_rgba(214,41,118,0.35)]'
+                : tab.id === 'tiktok'
+                  ? 'border-transparent bg-[#111111] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_16px_rgba(37,244,238,0.25),0_0_18px_rgba(254,44,85,0.22)]'
+                  : 'border-transparent bg-[#1877f2] text-white shadow-[0_10px_24px_rgba(24,119,242,0.35)]'
+
+            const inactiveClass =
+              tab.id === 'instagram'
+                ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
+                : tab.id === 'tiktok'
+                  ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
+                  : 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
+
             return (
               <button
                 key={tab.id}
                 type="button"
                 onClick={() => setActiveTab(tab.id as SocialTab)}
-                className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${
-                  isActive
-                    ? 'bg-charcoal text-white'
-                    : 'border border-[#e8d9cf] bg-white text-charcoal/70 hover:text-charcoal'
-                }`}
+                aria-label={tab.label}
+                title={tab.label}
+                className={`inline-flex h-11 w-11 items-center justify-center rounded-full border text-sm font-medium transition ${isActive ? activeClass : inactiveClass}`}
               >
                 <Icon className="h-4 w-4" />
-                {tab.label}
               </button>
             )
           })}
@@ -213,6 +224,13 @@ function SocialPanel({
   link: string
   children: React.ReactNode
 }) {
+  const actionButtonClass =
+    platform === 'instagram'
+      ? 'bg-gradient-to-r from-[#f56040] via-[#d62976] to-[#8a3ab9] text-white hover:brightness-105'
+      : platform === 'tiktok'
+        ? 'bg-[#111111] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_10px_rgba(37,244,238,0.2),0_0_12px_rgba(254,44,85,0.16)] hover:bg-black'
+        : 'bg-[#1877f2] text-white hover:brightness-105'
+
   return (
     <>
       <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#eee1d8] pb-4">
@@ -233,7 +251,7 @@ function SocialPanel({
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 rounded-full bg-black px-4 py-2 text-sm font-medium text-white transition hover:bg-black/85"
+          className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition ${actionButtonClass}`}
         >
           {platform === 'instagram' && <Instagram className="h-4 w-4" />}
           {platform === 'tiktok' && <PlayCircle className="h-4 w-4" />}
