@@ -14,10 +14,10 @@ type HeroMedia = { primary: string; secondary?: string; tertiary?: string; quate
 
 const heroConcepts: HeroConcept[] = [
   { id: 'image-editorial', name: 'Image Editorial' },
-  { id: 'cinematic-type', name: 'Cinematic Type' },
+  { id: 'campaign-cover', name: 'Campaign Cover' },
   { id: 'split-stack', name: 'Split Stack' },
   { id: 'minimal-white', name: 'Minimal White' },
-  { id: 'campaign-cover', name: 'Campaign Cover' },
+  { id: 'cinematic-type', name: 'Cinematic Type' },
   { id: 'video-motion', name: 'Video Motion' },
   { id: 'floating-architecture', name: 'Floating Architecture' },
   { id: 'mist-glass', name: 'Mist Glass' },
@@ -300,8 +300,10 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
         </div>
       </div>
       <div className="relative">
-        <HeroImage src={media.primary} alt="Minimal hero visual" className="absolute inset-0" />
-        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/28 via-transparent to-charcoal/8" />
+        <div className="absolute inset-0 overflow-hidden rounded-[2rem] lg:translate-x-[-2%]">
+          <HeroImage src={media.primary} alt="Minimal hero visual" className="absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-charcoal/28 via-transparent to-charcoal/8" />
+        </div>
       </div>
     </section>
   )
@@ -310,7 +312,7 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
 function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
     <section className="relative h-[68vh] overflow-hidden">
-      <HeroVideo media={media} className="absolute inset-0" />
+      <HeroImage src="/ChatGPT Image Apr 24, 2026, 10_47_39 PM.png" alt="Campaign cover background" className="absolute inset-0" />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/35 to-charcoal/15" />
       <div className="relative flex h-full items-center px-7 lg:px-14">
         <div className="max-w-2xl text-white">
@@ -330,8 +332,10 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
 function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   return (
     <section className="relative h-[68vh] overflow-hidden rounded-[2rem] bg-charcoal">
-      <HeroVideo media={media} className="absolute inset-0 opacity-88" />
-      <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
+      <div className="absolute inset-0 mx-auto max-w-[92%] lg:max-w-[88%]">
+        <HeroVideo media={media} className="h-full w-full opacity-88" />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
+      </div>
       <div className="relative flex h-full items-center px-8 lg:px-14">
         <div className="max-w-2xl text-white">
           <p className="text-kicker text-white/75">Motion Editorial</p>
@@ -351,7 +355,7 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
         src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Floating architecture background"
         fill
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover object-bottom"
         priority
       />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/24 to-charcoal/38" />
