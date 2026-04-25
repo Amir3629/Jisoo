@@ -9,6 +9,7 @@ import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { resolveImageSrc } from '@/lib/image-fallbacks'
 
 const ritualSteps = [
   {
@@ -17,7 +18,7 @@ const ritualSteps = [
     description:
       'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
     color: 'from-blush-pink/30',
-    image: '/products/gentle-foam-cleanser-1.jpg',
+    image: resolveImageSrc('/products/gentle-foam-cleanser-1.jpg'),
   },
   {
     number: '02',
@@ -25,7 +26,7 @@ const ritualSteps = [
     description:
       'Our Glass Skin Essence preps your skin for optimal absorption. Fermented botanicals plump and hydrate.',
     color: 'from-rose-mauve/20',
-    image: '/products/glass-skin-essence-1.jpg',
+    image: resolveImageSrc('/products/glass-skin-essence-1.jpg'),
   },
   {
     number: '03',
@@ -33,7 +34,7 @@ const ritualSteps = [
     description:
       'Apply targeted treatments. Our serums address specific concerns from brightening to soothing.',
     color: 'from-champagne-gold/20',
-    image: '/products/luminous-glow-serum-1.jpg',
+    image: resolveImageSrc('/products/luminous-glow-serum-1.jpg'),
   },
   {
     number: '04',
@@ -41,7 +42,7 @@ const ritualSteps = [
     description:
       'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
     color: 'from-plum/10',
-    image: '/products/hydra-cloud-cream-1.jpg',
+    image: resolveImageSrc('/products/hydra-cloud-cream-1.jpg'),
   },
   {
     number: '05',
@@ -49,7 +50,7 @@ const ritualSteps = [
     description:
       'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
     color: 'from-nude-beige/40',
-    image: '/products/tone-up-sun-cream-1.jpg',
+    image: resolveImageSrc('/products/tone-up-sun-cream-1.jpg'),
   },
 ]
 
@@ -155,8 +156,8 @@ export function RitualSection() {
               href={localizeHref('/shop', locale)}
               className={cn(
                 'inline-flex items-center gap-2 rounded-full px-8 py-4',
-                'bg-plum font-medium text-warm-ivory transition-all duration-300 hover:bg-plum/90',
-                'shadow-lg shadow-plum/20'
+                'bg-gradient-to-r from-rose-mauve to-champagne-gold font-medium text-white transition-all duration-300 hover:brightness-105',
+                'shadow-lg shadow-rose-mauve/20'
               )}
             >
               {t.shopTheRitual}
