@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { products } from "@/lib/data";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 const recentOrders = [
   {
@@ -29,6 +30,18 @@ const recentOrders = [
 export default function AccountPage() {
   const { locale, dictionary } = useLocale();
   const c = dictionary.common;
+  const copy = {
+    welcome: locale === 'ar' ? 'مرحبًا بعودتك، سارة' : locale === 'fr' ? 'Bon retour, Sarah' : locale === 'de' ? 'Willkommen zurück, Sarah' : locale === 'ko' ? '다시 오신 것을 환영해요, Sarah' : locale === 'tr' ? 'Tekrar hoş geldin, Sarah' : 'Welcome back, Sarah',
+    memberSince: locale === 'ar' ? 'عضو منذ نوفمبر 2024' : locale === 'fr' ? 'Membre depuis novembre 2024' : locale === 'de' ? 'Mitglied seit November 2024' : locale === 'ko' ? '2024년 11월부터 회원' : locale === 'tr' ? 'Kasım 2024’ten beri üye' : 'Member since November 2024',
+    goldMember: locale === 'ar' ? 'عضو ذهبي' : locale === 'fr' ? 'Membre Gold' : locale === 'de' ? 'Gold-Mitglied' : locale === 'ko' ? '골드 멤버' : locale === 'tr' ? 'Gold Üye' : 'Gold Member',
+    points: locale === 'ar' ? 'نقطة' : locale === 'fr' ? 'points' : locale === 'de' ? 'Punkte' : locale === 'ko' ? '포인트' : locale === 'tr' ? 'puan' : 'points',
+    order: locale === 'ar' ? 'طلب' : locale === 'fr' ? 'Commande' : locale === 'de' ? 'Bestellung' : locale === 'ko' ? '주문' : locale === 'tr' ? 'Sipariş' : 'Order',
+    delivered: locale === 'ar' ? 'تم التسليم' : locale === 'fr' ? 'Livrée' : locale === 'de' ? 'Zugestellt' : locale === 'ko' ? '배송 완료' : locale === 'tr' ? 'Teslim Edildi' : 'Delivered',
+    manage: locale === 'ar' ? 'إدارة' : locale === 'fr' ? 'Gérer' : locale === 'de' ? 'Verwalten' : locale === 'ko' ? '관리' : locale === 'tr' ? 'Yönet' : 'Manage',
+    work: locale === 'ar' ? 'العمل' : locale === 'fr' ? 'Travail' : locale === 'de' ? 'Arbeit' : locale === 'ko' ? '직장' : locale === 'tr' ? 'İş' : 'Work',
+    rewardsTitle: locale === 'ar' ? 'ضاعف نقاطك هذا الشهر!' : locale === 'fr' ? 'Doublez vos points ce mois-ci !' : locale === 'de' ? 'Doppelte Punkte in diesem Monat!' : locale === 'ko' ? '이번 달 더블 포인트!' : locale === 'tr' ? 'Bu Ay Çifte Puan Kazanın!' : 'Earn Double Points This Month!',
+    rewardsBody: locale === 'ar' ? 'بصفتك عضوًا ذهبيًا، تحصل على ضعفي النقاط على جميع المشتريات حتى 31 ديسمبر.' : locale === 'fr' ? 'En tant que membre Gold, vous gagnez 2x points sur tous les achats jusqu’au 31 décembre.' : locale === 'de' ? 'Als Gold-Mitglied erhältst du bis zum 31. Dezember doppelte Punkte auf alle Einkäufe.' : locale === 'ko' ? '골드 멤버는 12월 31일까지 모든 구매에 2배 포인트가 적립됩니다.' : locale === 'tr' ? 'Gold üye olarak 31 Aralık’a kadar tüm alışverişlerde 2x puan kazanırsın.' : 'As a Gold member, you&apos;re earning 2x points on all purchases through December 31st.',
+  }
   const wishlistItems = products.slice(0, 3);
 
   return (
@@ -37,17 +50,17 @@ export default function AccountPage() {
       <div className="bg-card border border-border p-6">
         <div className="flex items-start justify-between">
           <div>
-          <h2 className="font-serif text-2xl mb-2">Welcome back, Sarah</h2>
+          <h2 className="font-serif text-2xl mb-2">{copy.welcome}</h2>
             <p className="text-muted-foreground">
-              Member since November 2024
+              {copy.memberSince}
             </p>
           </div>
           <div className="text-right">
             <div className="flex items-center gap-2 text-accent">
               <Star className="w-5 h-5 fill-current" />
-              <span className="font-medium">Gold Member</span>
+              <span className="font-medium">{copy.goldMember}</span>
             </div>
-            <p className="text-sm text-muted-foreground mt-1">450 points</p>
+            <p className="text-sm text-muted-foreground mt-1">450 {copy.points}</p>
           </div>
         </div>
       </div>
@@ -105,7 +118,7 @@ export default function AccountPage() {
               className="flex items-center justify-between py-4 border-b border-border last:border-0 last:pb-0"
             >
               <div>
-                <p className="font-medium">Order #{order.id}</p>
+                <p className="font-medium">{copy.order} #{order.id}</p>
                 <p className="text-sm text-muted-foreground">
                   {order.date} • {order.items} items
                 </p>
@@ -113,7 +126,7 @@ export default function AccountPage() {
               <div className="text-right">
                 <p className="font-medium">${order.total.toFixed(2)}</p>
                 <span className="inline-block px-2 py-0.5 text-xs bg-primary/10 text-primary">
-                  {order.status}
+                  {copy.delivered}
                 </span>
               </div>
             </div>
@@ -142,7 +155,7 @@ export default function AccountPage() {
             >
               <div className="relative aspect-square bg-muted mb-3 overflow-hidden">
                 <Image
-                  src={product.images[0]?.src || "/placeholder.jpg"}
+                  src={resolveImageSrc(product.images[0]?.src)}
                   alt={product.name}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -170,7 +183,7 @@ export default function AccountPage() {
             href={localizeHref('/account/addresses', locale)}
             className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 transition-colors"
           >
-            Manage
+            {copy.manage}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -190,7 +203,7 @@ export default function AccountPage() {
           <div className="p-4 border border-border">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="w-4 h-4" />
-              <span className="font-medium">Work</span>
+              <span className="font-medium">{copy.work}</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Sarah Kim<br />
@@ -205,9 +218,9 @@ export default function AccountPage() {
       {/* Rewards Banner */}
       <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-8 text-center">
         <Gift className="w-10 h-10 mx-auto mb-4 text-accent" />
-        <h3 className="font-serif text-xl mb-2">Earn Double Points This Month!</h3>
+        <h3 className="font-serif text-xl mb-2">{copy.rewardsTitle}</h3>
         <p className="text-muted-foreground mb-4 max-w-md mx-auto">
-          As a Gold member, you&apos;re earning 2x points on all purchases through December 31st.
+          {copy.rewardsBody}
         </p>
         <Button asChild className="rounded-none">
           <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
