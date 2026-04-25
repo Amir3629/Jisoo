@@ -38,6 +38,7 @@ const HERO_ASSETS = {
 }
 
 const FALLBACK_IMAGES = ['/products/luminous-glow-serum-1.jpg', '/products/glass-skin-essence-1.jpg']
+const HERO_ONE_EDITORIAL_IMAGE = '/first slide example/ChatGPT Image Apr 24, 2026, 10_47_39 PM.png'
 const CINEMATIC_HERO_GALLERY_IMAGES = [
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
   '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
@@ -58,7 +59,7 @@ function pickAsset(index: number) {
 }
 
 const conceptMediaMap: Record<string, HeroMedia> = {
-  'image-editorial': { primary: pickAsset(0) },
+  'image-editorial': { primary: HERO_ONE_EDITORIAL_IMAGE },
   'cinematic-type': { primary: pickAsset(1), secondary: pickAsset(2) },
   'split-stack': { primary: pickAsset(2), secondary: pickAsset(3), tertiary: pickAsset(4) },
   'minimal-white': { primary: pickAsset(4) },
@@ -187,15 +188,43 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 }
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+  const categoryNav = [
+    { label: 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
+    { label: 'LIPS & CHEEKS', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png', href: '/shop?category=lips-cheeks' },
+    { label: 'EYES', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png', href: '/shop?category=eyes' },
+    { label: 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
+    { label: 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
+  ]
+
   return (
     <section className="relative h-[68vh] overflow-hidden">
       <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
-      <div className="absolute bottom-10 left-8 max-w-2xl lg:bottom-14 lg:left-14">
+      <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
         <p className="text-kicker text-white/85">JISOO Editorial</p>
         <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">The Rose Light Standard</h1>
         <p className="mt-4 text-white/82">A full-bleed image direction built for premium campaign storytelling.</p>
         <div className="mt-7"><PrimaryCta locale={locale} /></div>
+      </div>
+
+      <div className="absolute inset-x-0 bottom-5 px-4 lg:px-14">
+        <div className="flex snap-x items-center gap-4 overflow-x-auto rounded-2xl border border-white/20 bg-black/25 p-3 backdrop-blur-sm lg:grid lg:grid-cols-5 lg:overflow-visible">
+          {categoryNav.map(item => (
+            <Link
+              key={item.label}
+              href={localizeHref(item.href, locale)}
+              className="group flex min-w-[122px] snap-start flex-col items-center text-center"
+            >
+              <div className="relative h-14 w-14 overflow-hidden rounded-full ring-1 ring-white/45 transition group-hover:ring-white/75">
+                <Image src={item.image} alt={item.label} fill className="object-cover" />
+              </div>
+              <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-white/95">
+                {item.label}
+                <ArrowRight className="h-3 w-3" />
+              </span>
+            </Link>
+          ))}
+        </div>
       </div>
     </section>
   )
