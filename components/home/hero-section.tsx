@@ -78,56 +78,59 @@ function getMediaForConcept(id: string): HeroMedia {
 export function HeroSection() {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const media = useMemo(() => getMediaForConcept(activeId), [activeId])
-  const isMistGlass = activeId === 'mist-glass'
+  const renderId = locale === 'en' ? activeId : 'image-editorial'
+  const media = useMemo(() => getMediaForConcept(renderId), [renderId])
+  const isMistGlass = renderId === 'mist-glass'
 
   return (
     <section className={cn('relative w-full overflow-hidden', isMistGlass ? 'pt-0' : 'pt-[7.5rem] lg:pt-[8.5rem]')}>
       <div className={cn('relative w-full', isMistGlass ? 'min-h-screen' : 'min-h-[calc(100vh-7.5rem)] lg:min-h-[calc(100vh-8.5rem)]')}>
         <AnimatePresence mode="wait">
           <motion.div
-            key={activeId}
+            key={renderId}
             initial={{ opacity: 0, scale: 1.015, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.992, y: -10 }}
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
           >
-            {activeId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
-            {activeId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
-            {activeId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
-            {activeId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
-            {activeId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
-            {activeId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
-            {activeId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
-            {activeId === 'mist-glass' && <MistGlassHero locale={locale} />}
-            {activeId === 'magazine-grid' && <MagazineGridHero locale={locale} />}
-            {activeId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
+            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
+            {renderId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
+            {renderId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
+            {renderId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
+            {renderId === 'campaign-cover' && <CampaignCoverHero locale={locale} media={media} />}
+            {renderId === 'video-motion' && <VideoMotionHero locale={locale} media={media} />}
+            {renderId === 'floating-architecture' && <FloatingArchitectureHero locale={locale} />}
+            {renderId === 'mist-glass' && <MistGlassHero locale={locale} />}
+            {renderId === 'magazine-grid' && <MagazineGridHero locale={locale} />}
+            {renderId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
           </motion.div>
         </AnimatePresence>
 
-        <div className="absolute right-3 top-1/2 z-40 -translate-y-1/2">
-          <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
-            <div className="grid gap-1.5">
-              {heroConcepts.map((concept, index) => (
-                <button
-                  key={concept.id}
-                  onClick={() => setActiveId(concept.id)}
-                  className={cn(
-                    'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
-                    activeId === concept.id
-                      ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
-                      : 'border border-rose-mauve/20 bg-white/90 text-charcoal/75 hover:border-rose-mauve/45'
-                  )}
-                  aria-label={`Switch hero concept ${index + 1}`}
-                  title={`${index + 1}. ${concept.name}`}
-                >
-                  {index + 1}
-                </button>
-              ))}
+        {locale === 'en' && (
+          <div className="absolute right-3 top-1/2 z-40 -translate-y-1/2">
+            <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
+              <div className="grid gap-1.5">
+                {heroConcepts.map((concept, index) => (
+                  <button
+                    key={concept.id}
+                    onClick={() => setActiveId(concept.id)}
+                    className={cn(
+                      'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
+                      activeId === concept.id
+                        ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
+                        : 'border border-rose-mauve/20 bg-white/90 text-charcoal/75 hover:border-rose-mauve/45'
+                    )}
+                    aria-label={`Switch hero concept ${index + 1}`}
+                    title={`${index + 1}. ${concept.name}`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </section>
   )
@@ -171,6 +174,7 @@ function HeroVideo({ media, className }: { media: HeroMedia; className?: string 
 }
 
 function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
+  const label = locale === 'ar' ? 'اكتشف التشكيلة' : locale === 'fr' ? 'Découvrir la collection' : locale === 'de' ? 'Kollektion entdecken' : locale === 'ko' ? '컬렉션 보기' : locale === 'tr' ? 'Koleksiyonu Keşfet' : 'Explore Collection'
   return (
     <Link
       href={localizeHref('/shop', locale)}
@@ -181,7 +185,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
           : 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105'
       )}
     >
-      Explore Collection
+      {label}
       <ArrowRight className="h-4 w-4" />
     </Link>
   )
@@ -189,12 +193,14 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const categoryNav = [
-    { label: 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
-    { label: 'LIPS & CHEEKS', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png', href: '/shop?category=lips-cheeks' },
-    { label: 'EYES', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png', href: '/shop?category=eyes' },
-    { label: 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
-    { label: 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
+    { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
+    { label: locale === 'ar' ? 'الشفاه والخدود' : locale === 'fr' ? 'LÈVRES & JOUES' : locale === 'de' ? 'LIPPEN & WANGEN' : locale === 'ko' ? '립 & 치크' : locale === 'tr' ? 'DUDAK & YANAK' : 'LIPS & CHEEKS', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_16_05 PM.png', href: '/shop?category=lips-cheeks' },
+    { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png', href: '/shop?category=eyes' },
+    { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
+    { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
   ]
+  const heading = locale === 'ar' ? 'معيار توهج الورد' : locale === 'fr' ? 'Le Standard Rose Lumière' : locale === 'de' ? 'Der Rose-Light Standard' : locale === 'ko' ? '로즈 라이트 스탠다드' : locale === 'tr' ? 'Gül Işığı Standardı' : 'The Rose Light Standard'
+  const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'A full-bleed image direction built for premium campaign storytelling.'
 
   return (
     <section className="bg-[#fdf8f5]">
@@ -203,8 +209,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
-          <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">The Rose Light Standard</h1>
-          <p className="mt-4 text-white/82">A full-bleed image direction built for premium campaign storytelling.</p>
+          <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">{heading}</h1>
+          <p className="mt-4 text-white/82">{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
       </div>

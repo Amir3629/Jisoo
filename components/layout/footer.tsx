@@ -51,6 +51,20 @@ export function Footer() {
   const [isSubscribed, setIsSubscribed] = useState(false)
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const brandBody = locale === 'ar' ? 'نقدم أفضل منتجات الجمال الكوري للعالم بعناية.' : locale === 'fr' ? 'Nous sélectionnons le meilleur de la beauté coréenne pour le monde.' : locale === 'de' ? 'Wir kuratieren die beste koreanische Beauty für die Welt.' : locale === 'ko' ? '프리미엄 K-뷰티를 전 세계에 전합니다.' : locale === 'tr' ? 'Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz.' : 'Curating the finest Korean beauty for the world. Premium skincare and makeup, delivered with care.'
+  const rights = locale === 'ar' ? 'جميع الحقوق محفوظة.' : locale === 'fr' ? 'Tous droits réservés.' : locale === 'de' ? 'Alle Rechte vorbehalten.' : locale === 'ko' ? '모든 권리 보유.' : locale === 'tr' ? 'Tüm hakları saklıdır.' : 'All rights reserved.'
+  const madeWithCare = locale === 'ar' ? 'صُنع بعناية من سيول إلى العالم' : locale === 'fr' ? 'Conçu avec soin de Séoul au monde' : locale === 'de' ? 'Mit Sorgfalt von Seoul in die Welt' : locale === 'ko' ? '서울에서 세계로, 정성으로' : locale === 'tr' ? 'Seul’den dünyaya özenle' : 'Made with care from Seoul to the world'
+  const localizedLink = (label: string) => locale === 'ar'
+    ? ({ 'Skincare': 'العناية بالبشرة', 'Makeup': 'المكياج', 'Best Sellers': 'الأكثر مبيعًا', 'New Arrivals': 'وصل حديثًا', 'Gift Sets': 'مجموعات هدايا', 'Gift Cards': 'بطاقات هدايا', 'Contact Us': 'اتصل بنا', 'FAQs': 'الأسئلة الشائعة', 'Shipping Info': 'معلومات الشحن', 'Returns & Exchanges': 'الإرجاع والاستبدال', 'Track Order': 'تتبع الطلب', 'Tips & Care': 'نصائح وعناية', 'Our Story': 'قصتنا', 'Korean Partners': 'شركاء كوريون', 'Sustainability': 'الاستدامة', 'Careers': 'الوظائف', 'Press': 'الصحافة', 'Privacy Policy': 'سياسة الخصوصية', 'Terms of Service': 'شروط الخدمة', 'Cookie Policy': 'سياسة ملفات الارتباط', 'Accessibility': 'إمكانية الوصول' }[label] ?? label)
+    : locale === 'fr'
+      ? ({ 'Skincare': 'Soin', 'Makeup': 'Maquillage', 'Best Sellers': 'Meilleures ventes', 'New Arrivals': 'Nouveautés', 'Gift Sets': 'Coffrets cadeaux', 'Gift Cards': 'Cartes cadeaux', 'Contact Us': 'Contactez-nous', 'FAQs': 'FAQ', 'Shipping Info': 'Infos livraison', 'Returns & Exchanges': 'Retours & Échanges', 'Track Order': 'Suivre la commande', 'Tips & Care': 'Conseils & Soin', 'Korean Partners': 'Partenaires coréens', 'Sustainability': 'Durabilité', 'Careers': 'Carrières', 'Press': 'Presse', 'Privacy Policy': 'Politique de confidentialité', 'Terms of Service': 'Conditions de service', 'Cookie Policy': 'Politique cookies', 'Accessibility': 'Accessibilité' }[label] ?? label)
+      : locale === 'de'
+        ? ({ 'Skincare': 'Hautpflege', 'Makeup': 'Make-up', 'Best Sellers': 'Bestseller', 'New Arrivals': 'Neuheiten', 'Gift Sets': 'Geschenksets', 'Gift Cards': 'Geschenkkarten', 'Contact Us': 'Kontakt', 'FAQs': 'FAQ', 'Shipping Info': 'Versandinfo', 'Returns & Exchanges': 'Rückgabe & Umtausch', 'Track Order': 'Bestellung verfolgen', 'Tips & Care': 'Tipps & Pflege', 'Our Story': 'Unsere Geschichte', 'Korean Partners': 'Koreanische Partner', 'Sustainability': 'Nachhaltigkeit', 'Careers': 'Karriere', 'Press': 'Presse', 'Privacy Policy': 'Datenschutz', 'Terms of Service': 'Nutzungsbedingungen', 'Cookie Policy': 'Cookie-Richtlinie', 'Accessibility': 'Barrierefreiheit' }[label] ?? label)
+        : locale === 'ko'
+          ? ({ 'Skincare': '스킨케어', 'Makeup': '메이크업', 'Best Sellers': '베스트셀러', 'New Arrivals': '신상품', 'Gift Sets': '기프트 세트', 'Gift Cards': '기프트 카드', 'Contact Us': '문의하기', 'FAQs': '자주 묻는 질문', 'Shipping Info': '배송 정보', 'Returns & Exchanges': '반품 및 교환', 'Track Order': '주문 추적', 'Tips & Care': '팁 & 케어', 'Our Story': '브랜드 스토리', 'Korean Partners': '한국 파트너', 'Sustainability': '지속가능성', 'Careers': '채용', 'Press': '보도자료', 'Privacy Policy': '개인정보 처리방침', 'Terms of Service': '이용약관', 'Cookie Policy': '쿠키 정책', 'Accessibility': '접근성' }[label] ?? label)
+          : locale === 'tr'
+            ? ({ 'Skincare': 'Cilt Bakımı', 'Makeup': 'Makyaj', 'Best Sellers': 'Çok Satanlar', 'New Arrivals': 'Yeni Gelenler', 'Gift Sets': 'Hediye Setleri', 'Gift Cards': 'Hediye Kartları', 'Contact Us': 'Bize Ulaşın', 'FAQs': 'SSS', 'Shipping Info': 'Kargo Bilgisi', 'Returns & Exchanges': 'İade ve Değişim', 'Track Order': 'Sipariş Takibi', 'Tips & Care': 'İpuçları ve Bakım', 'Our Story': 'Hikayemiz', 'Korean Partners': 'Koreli Ortaklar', 'Sustainability': 'Sürdürülebilirlik', 'Careers': 'Kariyer', 'Press': 'Basın', 'Privacy Policy': 'Gizlilik Politikası', 'Terms of Service': 'Hizmet Şartları', 'Cookie Policy': 'Çerez Politikası', 'Accessibility': 'Erişilebilirlik' }[label] ?? label)
+            : label
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
@@ -131,10 +145,7 @@ export function Footer() {
             <Link href={localizeHref('/', locale)} className="inline-block">
               <h2 className="text-3xl font-serif font-bold mb-4">JISOO</h2>
             </Link>
-            <p className="text-charcoal/65 text-sm leading-relaxed mb-6">
-              Curating the finest Korean beauty for the world. 
-              Premium skincare and makeup, delivered with care.
-            </p>
+            <p className="text-charcoal/65 text-sm leading-relaxed mb-6">{brandBody}</p>
             <div className="flex items-center gap-4">
               {socialLinks.map(social => (
                 <a
@@ -163,7 +174,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                      {link.label}
+                      {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -181,7 +192,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label}
+                    {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -199,7 +210,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label === 'Our Story' ? t.ourStory : link.label}
+                    {link.label === 'Our Story' ? t.ourStory : localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -217,7 +228,7 @@ export function Footer() {
                     href={localizeHref(link.href, locale)}
                     className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
                   >
-                    {link.label}
+                    {localizedLink(link.label)}
                   </Link>
                 </li>
               ))}
@@ -230,9 +241,9 @@ export function Footer() {
       <div className="border-t border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-charcoal/55">
-            <p>&copy; {new Date().getFullYear()} JISOO Beauty. All rights reserved.</p>
+            <p>&copy; {new Date().getFullYear()} JISOO Beauty. {rights}</p>
             <div className="flex items-center gap-6">
-              <span>Made with care from Seoul to the world</span>
+              <span>{madeWithCare}</span>
             </div>
           </div>
         </div>

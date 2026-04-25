@@ -14,21 +14,6 @@ import { CartDrawer } from '@/components/cart/cart-drawer'
 import { SearchModal } from '@/components/search/search-modal'
 import { RegionSelector } from '@/components/layout/region-selector'
 
-const navLinks: Array<{ href: string; label: string; hasDropdown?: boolean }> = [
-  { href: '/shop/women', label: 'Women', hasDropdown: true },
-  { href: '/shop/men', label: 'Men', hasDropdown: true },
-  { href: '/tips', label: 'Tips' },
-  { href: '/gift-cards', label: 'Gift Cards' },
-  { href: '/rewards', label: 'Rewards' },
-]
-const submenuCategories = ['Hydration', 'Serum', 'Cream', 'Sunscreen', 'Cleanser', 'Toner', 'Hair Care', 'Beard Care', 'Gift Sets', 'Best Sellers']
-const topBarMessages = [
-  { label: 'Free shipping on orders over €100', href: null },
-  { label: 'TikTok', href: 'https://www.tiktok.com' },
-  { label: 'Facebook', href: 'https://www.facebook.com' },
-  { label: 'Instagram', href: 'https://www.instagram.com' },
-]
-
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -40,6 +25,30 @@ export function Header() {
   const { itemCount, setIsCartOpen } = useCart()
   const { config } = useRegion()
   const { locale, dictionary } = useLocale()
+  const navLinks: Array<{ href: string; label: string; hasDropdown?: boolean }> = [
+    { href: '/shop/women', label: locale === 'ar' ? 'نساء' : locale === 'fr' ? 'Femmes' : locale === 'de' ? 'Damen' : locale === 'ko' ? '여성' : locale === 'tr' ? 'Kadın' : 'Women', hasDropdown: true },
+    { href: '/shop/men', label: locale === 'ar' ? 'رجال' : locale === 'fr' ? 'Hommes' : locale === 'de' ? 'Herren' : locale === 'ko' ? '남성' : locale === 'tr' ? 'Erkek' : 'Men', hasDropdown: true },
+    { href: '/tips', label: locale === 'ar' ? 'نصائح' : locale === 'fr' ? 'Conseils' : locale === 'de' ? 'Tipps' : locale === 'ko' ? '팁' : locale === 'tr' ? 'İpuçları' : 'Tips' },
+    { href: '/gift-cards', label: locale === 'ar' ? 'بطاقات هدايا' : locale === 'fr' ? 'Cartes Cadeaux' : locale === 'de' ? 'Geschenkkarten' : locale === 'ko' ? '기프트 카드' : locale === 'tr' ? 'Hediye Kartları' : 'Gift Cards' },
+    { href: '/rewards', label: locale === 'ar' ? 'المكافآت' : locale === 'fr' ? 'Récompenses' : locale === 'de' ? 'Prämien' : locale === 'ko' ? '리워드' : locale === 'tr' ? 'Ödüller' : 'Rewards' },
+  ]
+  const submenuCategories = locale === 'ar'
+    ? ['ترطيب', 'سيروم', 'كريم', 'واقي شمس', 'غسول', 'تونر', 'عناية بالشعر', 'عناية باللحية', 'مجموعات هدايا', 'الأكثر مبيعًا']
+    : locale === 'fr'
+      ? ['Hydratation', 'Sérum', 'Crème', 'Solaire', 'Nettoyant', 'Toner', 'Soin cheveux', 'Soin barbe', 'Coffrets cadeaux', 'Meilleures ventes']
+      : locale === 'de'
+        ? ['Feuchtigkeit', 'Serum', 'Creme', 'Sonnenschutz', 'Reiniger', 'Toner', 'Haarpflege', 'Bartpflege', 'Geschenksets', 'Bestseller']
+        : locale === 'ko'
+          ? ['보습', '세럼', '크림', '선케어', '클렌저', '토너', '헤어 케어', '비어드 케어', '기프트 세트', '베스트셀러']
+          : locale === 'tr'
+            ? ['Nemlendirme', 'Serum', 'Krem', 'Güneş Koruyucu', 'Temizleyici', 'Toner', 'Saç Bakımı', 'Sakal Bakımı', 'Hediye Setleri', 'Çok Satanlar']
+            : ['Hydration', 'Serum', 'Cream', 'Sunscreen', 'Cleanser', 'Toner', 'Hair Care', 'Beard Care', 'Gift Sets', 'Best Sellers']
+  const topBarMessages = [
+    { label: dictionary.header.freeShipping.replace('{{amount}}', '€100'), href: null },
+    { label: 'TikTok', href: 'https://www.tiktok.com' },
+    { label: 'Facebook', href: 'https://www.facebook.com' },
+    { label: 'Instagram', href: 'https://www.instagram.com' },
+  ]
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
@@ -120,7 +129,7 @@ export function Header() {
                 JISOO
               </motion.h1>
               <span className="hidden lg:block text-[10px] uppercase tracking-[0.22em] text-[#7a5568]/70 mt-0.5">
-                Seoul Edition
+                {locale === 'ar' ? 'إصدار سيول' : locale === 'fr' ? 'Édition Séoul' : locale === 'de' ? 'Seoul Edition' : locale === 'ko' ? '서울 에디션' : locale === 'tr' ? 'Seul Edisyonu' : 'Seoul Edition'}
               </span>
             </Link>
 
@@ -183,13 +192,13 @@ export function Header() {
                   onClick={() => toggleMode('soft')}
                   className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'soft' ? 'bg-[#e8d7d8] text-charcoal' : 'text-charcoal/60 hover:text-charcoal')}
                 >
-                  Soft
+                  {locale === 'ar' ? 'هادئ' : locale === 'fr' ? 'Doux' : locale === 'de' ? 'Soft' : locale === 'ko' ? '소프트' : locale === 'tr' ? 'Yumuşak' : 'Soft'}
                 </button>
                 <button
                   onClick={() => toggleMode('color')}
                   className={cn('px-2.5 py-1 text-[10px] rounded-full transition-colors', mode === 'color' ? 'bg-[#e8d7d8] text-charcoal' : 'text-charcoal/60 hover:text-charcoal')}
                 >
-                  Color
+                  {locale === 'ar' ? 'لون' : locale === 'fr' ? 'Couleur' : locale === 'de' ? 'Farbe' : locale === 'ko' ? '컬러' : locale === 'tr' ? 'Renk' : 'Color'}
                 </button>
               </div>
               <div className="hidden lg:flex items-center gap-2 pr-1">

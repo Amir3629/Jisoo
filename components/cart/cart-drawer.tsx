@@ -14,6 +14,8 @@ import { resolveImageSrc } from '@/lib/image-fallbacks'
 export function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity } = useCart()
   const { locale, dictionary } = useLocale()
+  const freeLabel = locale === 'ar' ? 'مجاني' : locale === 'fr' ? 'Gratuit' : locale === 'de' ? 'Kostenlos' : locale === 'ko' ? '무료' : locale === 'tr' ? 'Ücretsiz' : 'Free'
+  const freeShippingBanner = dictionary.header.freeShipping.replace('{{amount}}', '€100')
 
   return (
     <AnimatePresence>
@@ -164,13 +166,13 @@ export function CartDrawer() {
                 {/* Summary */}
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="text-muted-foreground">{dictionary.cart.subtotal}</span>
                     <span className="font-medium">{formatPrice(cart.subtotal)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Shipping</span>
+                    <span className="text-muted-foreground">{dictionary.cart.shipping}</span>
                     <span className="font-medium">
-                      {cart.shipping === 0 ? 'Free' : formatPrice(cart.shipping)}
+                      {cart.shipping === 0 ? freeLabel : formatPrice(cart.shipping)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -180,7 +182,7 @@ export function CartDrawer() {
                 </div>
 
                 <div className="flex justify-between pt-4 border-t border-blush-pink">
-                  <span className="font-medium text-charcoal">Total</span>
+                  <span className="font-medium text-charcoal">{dictionary.cart.total}</span>
                   <span className="text-lg font-semibold text-plum">
                     {formatPrice(cart.total)}
                   </span>
@@ -213,7 +215,7 @@ export function CartDrawer() {
                 </div>
 
                 <p className="text-xs text-center text-muted-foreground">
-                  Free shipping on orders over €100
+                  {freeShippingBanner}
                 </p>
               </div>
             )}

@@ -18,6 +18,11 @@ export default function CartPage() {
   const { locale, dictionary } = useLocale();
   const c = dictionary.common;
   const t = dictionary.cart;
+  const freeLabel = locale === 'ar' ? 'مجاني' : locale === 'fr' ? 'Gratuit' : locale === 'de' ? 'Kostenlos' : locale === 'ko' ? '무료' : locale === 'tr' ? 'Ücretsiz' : 'Free';
+  const freeShipHint = locale === 'ar' ? 'أضف' : locale === 'fr' ? 'Ajoutez encore' : locale === 'de' ? 'Füge noch' : locale === 'ko' ? '추가로' : locale === 'tr' ? 'Ücretsiz kargo için' : 'Add';
+  const freeShipTail = locale === 'ar' ? 'للحصول على شحن مجاني' : locale === 'fr' ? 'pour bénéficier de la livraison offerte' : locale === 'de' ? 'für kostenlosen Versand hinzu' : locale === 'ko' ? '더 담으면 무료배송' : locale === 'tr' ? 'daha ekleyin' : 'more for free shipping';
+  const benefitOne = locale === 'ar' ? 'شحن مجاني للطلبات فوق 50$' : locale === 'fr' ? 'Livraison gratuite dès 50$' : locale === 'de' ? 'Kostenloser Versand ab 50$' : locale === 'ko' ? '50달러 이상 무료배송' : locale === 'tr' ? '50$ üzeri ücretsiz kargo' : 'Free shipping on orders over $50';
+  const benefitTwo = locale === 'ar' ? 'عينات مجانية مع كل طلب' : locale === 'fr' ? 'Échantillons gratuits à chaque commande' : locale === 'de' ? 'Kostenlose Proben bei jeder Bestellung' : locale === 'ko' ? '모든 주문에 무료 샘플 제공' : locale === 'tr' ? 'Her siparişte ücretsiz numune' : 'Free samples with every order';
 
   const shipping = subtotal > 50 ? 0 : 5.99;
   const total = subtotal + shipping;
@@ -182,11 +187,11 @@ export default function CartPage() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-muted-foreground">{t.shipping}</span>
-                  <span>{shipping === 0 ? "Free" : formatPrice(shipping)}</span>
+                  <span>{shipping === 0 ? freeLabel : formatPrice(shipping)}</span>
                 </div>
                 {shipping > 0 && (
                   <p className="text-xs text-accent">
-                    Add {formatPrice(50 - subtotal)} more for free shipping
+                    {freeShipHint} {formatPrice(50 - subtotal)} {freeShipTail}
                   </p>
                 )}
               </div>
@@ -207,11 +212,11 @@ export default function CartPage() {
               <div className="mt-6 pt-6 border-t border-border space-y-3">
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <Truck className="w-4 h-4" />
-                  <span>Free shipping on orders over $50</span>
+                  <span>{benefitOne}</span>
                 </div>
                 <div className="flex items-center gap-3 text-sm text-muted-foreground">
                   <Gift className="w-4 h-4" />
-                  <span>Free samples with every order</span>
+                  <span>{benefitTwo}</span>
                 </div>
               </div>
             </div>

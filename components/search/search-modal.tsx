@@ -33,6 +33,28 @@ const popularCategories = [
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const { locale, dictionary } = useLocale()
+  const trendingLocalized = trendingSearches.map(term =>
+    locale === 'ar'
+      ? term === 'Glass Skin' ? 'بشرة زجاجية' : term === 'Vitamin C Serum' ? 'سيروم فيتامين C' : term === 'Sunscreen SPF50' ? 'واقي شمس SPF50' : term === 'Hydrating Cream' ? 'كريم مرطب' : term
+      : locale === 'fr'
+        ? term === 'Glass Skin' ? 'Peau de verre' : term === 'Vitamin C Serum' ? 'Sérum Vitamine C' : term === 'Sunscreen SPF50' ? 'Solaire SPF50' : term === 'Hydrating Cream' ? 'Crème hydratante' : term
+        : locale === 'de'
+          ? term === 'Glass Skin' ? 'Glass Skin' : term === 'Vitamin C Serum' ? 'Vitamin C Serum' : term === 'Sunscreen SPF50' ? 'Sonnenschutz SPF50' : term === 'Hydrating Cream' ? 'Feuchtigkeitscreme' : term
+          : locale === 'ko'
+            ? term === 'Glass Skin' ? '글래스 스킨' : term === 'Vitamin C Serum' ? '비타민 C 세럼' : term === 'Sunscreen SPF50' ? '선크림 SPF50' : term === 'Hydrating Cream' ? '보습 크림' : term
+            : locale === 'tr'
+              ? term === 'Glass Skin' ? 'Glass Skin' : term === 'Vitamin C Serum' ? 'C Vitamini Serumu' : term === 'Sunscreen SPF50' ? 'Güneş Koruyucu SPF50' : term === 'Hydrating Cream' ? 'Nemlendirici Krem' : term
+              : term
+  )
+  const categoriesLocalized = popularCategories.map(cat => ({
+    ...cat,
+    name: locale === 'ar' ? (cat.name === 'Serums' ? 'سيروم' : cat.name === 'Moisturizers' ? 'مرطبات' : 'منظفات')
+      : locale === 'fr' ? (cat.name === 'Serums' ? 'Sérums' : cat.name === 'Moisturizers' ? 'Hydratants' : 'Nettoyants')
+        : locale === 'de' ? (cat.name === 'Serums' ? 'Seren' : cat.name === 'Moisturizers' ? 'Feuchtigkeitspflege' : 'Reiniger')
+          : locale === 'ko' ? (cat.name === 'Serums' ? '세럼' : cat.name === 'Moisturizers' ? '모이스처라이저' : '클렌저')
+            : locale === 'tr' ? (cat.name === 'Serums' ? 'Serumlar' : cat.name === 'Moisturizers' ? 'Nemlendiriciler' : 'Temizleyiciler')
+              : cat.name,
+  }))
   const [query, setQuery] = useState('')
   const [results, setResults] = useState(products.slice(0, 4))
   const inputRef = useRef<HTMLInputElement>(null)
@@ -127,7 +149,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           {dictionary.search.trendingSearches}
                         </h3>
                         <div className="flex flex-wrap gap-2">
-                          {trendingSearches.map(term => (
+                          {trendingLocalized.map(term => (
                             <button
                               key={term}
                               onClick={() => setQuery(term)}
@@ -150,7 +172,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           {dictionary.search.popularCategories}
                         </h3>
                         <div className="space-y-3">
-                          {popularCategories.map(cat => (
+                          {categoriesLocalized.map(cat => (
                             <Link
                               key={cat.name}
                               href={localizeHref(cat.href, locale)}

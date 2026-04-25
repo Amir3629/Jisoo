@@ -57,6 +57,12 @@ const ritualSteps = [
 export function RitualSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const copy = {
+    kicker: locale === 'ar' ? 'طريق الجمال الكوري' : locale === 'fr' ? 'La voie K-Beauty' : locale === 'de' ? 'Der K-Beauty Weg' : locale === 'ko' ? 'K-뷰티 방식' : locale === 'tr' ? 'K-Beauty Yolu' : 'The K-Beauty Way',
+    title: locale === 'ar' ? 'طقس الجمال الكوري' : locale === 'fr' ? 'Le rituel de la beauté coréenne' : locale === 'de' ? 'Das Ritual koreanischer Schönheit' : locale === 'ko' ? '코리안 뷰티 리추얼' : locale === 'tr' ? 'Kore Güzellik Ritüeli' : 'The Ritual of Korean Beauty',
+    description: locale === 'ar' ? 'اكتشفي فن طبقات المنتجات لتحقيق أفضل النتائج.' : locale === 'fr' ? 'Découvrez l’art de superposer les soins pour une efficacité maximale.' : locale === 'de' ? 'Entdecke das Schichten von Produkten für maximale Wirksamkeit.' : locale === 'ko' ? '최대 효능을 위한 레이어링 루틴을 경험하세요.' : locale === 'tr' ? 'Maksimum etki için ürünleri katmanlama sanatını keşfedin.' : 'Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results.',
+    step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
+  }
   return (
     <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32" withVeilTop>
       <div className="relative">
@@ -72,9 +78,9 @@ export function RitualSection() {
 
         <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
           <ChapterHeading
-            kicker="The K-Beauty Way"
-            title="The Ritual of Korean Beauty"
-            description="Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results."
+            kicker={copy.kicker}
+            title={copy.title}
+            description={copy.description}
             align="center"
             ghostLabel="RITUAL"
             className="mx-auto mb-16 max-w-4xl lg:mb-24"
@@ -131,7 +137,7 @@ export function RitualSection() {
                         src={step.image}
                         alt={step.title}
                         className="absolute inset-0"
-                        hint={`Step ${step.number}`}
+                        hint={`${copy.step} ${step.number}`}
                       />
 
                       <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />

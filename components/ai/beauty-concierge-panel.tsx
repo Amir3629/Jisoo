@@ -40,6 +40,19 @@ export function BeautyConciergePanel() {
     setVoiceModeType,
     voiceSupported,
   } = useConciergeController({ locale, region })
+  const copy = {
+    statusListening: locale === 'ar' ? 'جارٍ الاستماع...' : locale === 'fr' ? 'Écoute...' : locale === 'de' ? 'Hört zu...' : locale === 'ko' ? '듣는 중...' : locale === 'tr' ? 'Dinleniyor...' : 'Listening...',
+    statusSpeaking: locale === 'ar' ? 'يتحدث...' : locale === 'fr' ? 'Parle...' : locale === 'de' ? 'Spricht...' : locale === 'ko' ? '말하는 중...' : locale === 'tr' ? 'Konuşuyor...' : 'Speaking...',
+    statusReady: locale === 'ar' ? 'جاهز' : locale === 'fr' ? 'Prêt' : locale === 'de' ? 'Bereit' : locale === 'ko' ? '준비됨' : locale === 'tr' ? 'Hazır' : 'Ready',
+    voice: locale === 'ar' ? 'صوت' : locale === 'fr' ? 'Voix' : locale === 'de' ? 'Sprache' : locale === 'ko' ? '음성' : locale === 'tr' ? 'Ses' : 'Voice',
+    transcript: locale === 'ar' ? 'النص المباشر:' : locale === 'fr' ? 'Transcription en direct :' : locale === 'de' ? 'Live-Transkript:' : locale === 'ko' ? '실시간 전사:' : locale === 'tr' ? 'Canlı döküm:' : 'Live transcript:',
+    loading: locale === 'ar' ? 'جاري إعداد التوصية...' : locale === 'fr' ? 'Le concierge prépare votre recommandation…' : locale === 'de' ? 'Concierge bereitet deine Empfehlung vor…' : locale === 'ko' ? '추천을 준비하고 있습니다…' : locale === 'tr' ? 'Öneriniz hazırlanıyor…' : 'Concierge is preparing your recommendation...',
+    placeholder: locale === 'ar' ? 'اسألي عن المنتجات أو الروتين أو المكونات أو الشحن أو الإرجاع أو دعم الطلب' : locale === 'fr' ? 'Demandez produits, routine, ingrédients, livraison, retours ou suivi de commande' : locale === 'de' ? 'Frage zu Produkten, Routine, Inhaltsstoffen, Versand, Rückgabe oder Bestellung' : locale === 'ko' ? '제품/루틴/성분/배송/반품/주문 문의를 입력하세요' : locale === 'tr' ? 'Ürünler, rutinler, içerikler, kargo, iade veya sipariş desteği sorun' : 'Ask about products, routines, ingredients, shipping, returns, or order support',
+    openAria: locale === 'ar' ? 'فتح مستشار JISOO' : locale === 'fr' ? 'Ouvrir le Concierge JISOO' : locale === 'de' ? 'JISOO Concierge öffnen' : locale === 'ko' ? 'JISOO 컨시어지 열기' : locale === 'tr' ? 'JISOO Danışmanı aç' : 'Open JISOO Beauty Concierge',
+    stopListening: locale === 'ar' ? 'إيقاف الاستماع' : locale === 'fr' ? 'Arrêter l’écoute' : locale === 'de' ? 'Zuhören beenden' : locale === 'ko' ? '음성 듣기 중지' : locale === 'tr' ? 'Dinlemeyi durdur' : 'Stop listening',
+    startVoice: locale === 'ar' ? 'بدء الإدخال الصوتي' : locale === 'fr' ? 'Démarrer la saisie vocale' : locale === 'de' ? 'Spracheingabe starten' : locale === 'ko' ? '음성 입력 시작' : locale === 'tr' ? 'Sesli girişi başlat' : 'Start voice input',
+    sendMessage: locale === 'ar' ? 'إرسال رسالة' : locale === 'fr' ? 'Envoyer le message' : locale === 'de' ? 'Nachricht senden' : locale === 'ko' ? '메시지 보내기' : locale === 'tr' ? 'Mesaj gönder' : 'Send message',
+  }
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' })
@@ -74,14 +87,14 @@ export function BeautyConciergePanel() {
             <div className="flex items-center justify-between border-b border-rose-mauve/10 px-3 py-2 text-[11px] text-muted-foreground">
               <div className="inline-flex items-center gap-1.5">
                 {listening ? <Radio className="h-3.5 w-3.5 text-rose-mauve animate-pulse" /> : speaking ? <Waves className="h-3.5 w-3.5 text-[#b79263]" /> : <Bot className="h-3.5 w-3.5" />}
-                <span>{listening ? 'Listening...' : speaking ? 'Speaking...' : 'Ready'}</span>
+                <span>{listening ? copy.statusListening : speaking ? copy.statusSpeaking : copy.statusReady}</span>
               </div>
               <div className="inline-flex items-center gap-2">
                 <button onClick={() => setVoiceModeType(voiceModeType === 'browser' ? 'realtime' : voiceModeType === 'realtime' ? 'provider' : 'browser')} className="rounded-full border px-2 py-0.5 hover:text-foreground">
                   {voiceModeType}
                 </button>
                 <button onClick={() => setVoiceEnabled(prev => !prev)} className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 hover:text-foreground">
-                  {voiceEnabled ? <Volume2 className="h-3 w-3" /> : <VolumeX className="h-3 w-3" />} Voice
+                  {voiceEnabled ? <Volume2 className="h-3 w-3" /> : <VolumeX className="h-3 w-3" />} {copy.voice}
                 </button>
               </div>
             </div>
@@ -89,7 +102,7 @@ export function BeautyConciergePanel() {
             <div ref={scrollRef} className="max-h-[56vh] space-y-3 overflow-auto px-3 py-3">
               {partialTranscript && (
                 <div className="rounded-xl border border-dashed border-rose-mauve/25 bg-rose-mauve/5 px-3 py-2 text-xs text-muted-foreground">
-                  Live transcript: {partialTranscript}
+                  {copy.transcript} {partialTranscript}
                 </div>
               )}
               {messages.map(message => (
@@ -134,7 +147,7 @@ export function BeautyConciergePanel() {
                 </div>
               ))}
 
-              {loading && <p className="text-xs text-muted-foreground">Concierge is preparing your recommendation...</p>}
+              {loading && <p className="text-xs text-muted-foreground">{copy.loading}</p>}
             </div>
 
             <footer className="border-t border-rose-mauve/15 p-3">
@@ -147,7 +160,7 @@ export function BeautyConciergePanel() {
                     'grid h-10 w-10 place-items-center rounded-full border transition-colors disabled:opacity-50',
                     listening ? 'border-rose-mauve bg-rose-mauve text-white' : 'border-border bg-background text-muted-foreground hover:text-rose-mauve'
                   )}
-                  aria-label={listening ? 'Stop listening' : 'Start voice input'}
+                  aria-label={listening ? copy.stopListening : copy.startVoice}
                 >
                   {listening ? <MicOff className="h-4 w-4" /> : <Mic className="h-4 w-4" />}
                 </button>
@@ -158,7 +171,7 @@ export function BeautyConciergePanel() {
                   onKeyDown={event => {
                     if (event.key === 'Enter') send()
                   }}
-                  placeholder="Ask about products, routines, ingredients, shipping, returns, or order support"
+                  placeholder={copy.placeholder}
                   className="flex-1 rounded-full border border-border bg-background px-4 py-2 text-sm focus:border-rose-mauve focus:outline-none"
                 />
 
@@ -166,7 +179,7 @@ export function BeautyConciergePanel() {
                   type="button"
                   onClick={() => send()}
                   className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-r from-rose-mauve to-[#d5b48d] text-white transition-colors hover:brightness-105"
-                  aria-label="Send message"
+                  aria-label={copy.sendMessage}
                 >
                   <Send className="h-4 w-4" />
                 </button>
@@ -181,7 +194,7 @@ export function BeautyConciergePanel() {
         whileTap={{ scale: 0.96 }}
         onClick={() => setOpen(prev => !prev)}
         className="group relative grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-[#e3bccb] to-[#d6b793] text-white shadow-[0_16px_35px_rgba(197,155,168,0.36)]"
-        aria-label="Open JISOO Beauty Concierge"
+        aria-label={copy.openAria}
       >
         <span className="absolute -inset-0.5 -z-10 rounded-full bg-gradient-to-br from-champagne-gold/40 to-rose-mauve/20 blur-sm opacity-0 transition-opacity group-hover:opacity-100" />
         <Sparkles className="h-5 w-5" />

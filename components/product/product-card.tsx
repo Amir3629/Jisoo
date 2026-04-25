@@ -22,8 +22,9 @@ interface ProductCardProps {
 export function ProductCard({ product, index = 0 }: ProductCardProps) {
   const { addItem } = useCart()
   const { region } = useRegion()
-  const { locale } = useLocale()
+  const { locale, dictionary } = useLocale()
   const access = evaluateRegionAccess(product, region)
+  const wishlistAria = locale === 'ar' ? `أضف ${product.name} إلى المفضلة` : locale === 'fr' ? `Ajouter ${product.name} à la liste d’envies` : locale === 'de' ? `${product.name} zur Wunschliste hinzufügen` : locale === 'ko' ? `${product.name} 위시리스트에 추가` : locale === 'tr' ? `${product.name} favorilere ekle` : `Add ${product.name} to wishlist`
 
   if (!access.isVisible) {
     return null
@@ -49,19 +50,19 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {product.isNew && (
               <span className="rounded-full bg-rose-mauve/95 px-3 py-1 text-xs font-medium text-warm-ivory">
-                New
+                {dictionary.common.new}
               </span>
             )}
             {product.isBestSeller && (
               <span className="rounded-full bg-champagne-gold px-3 py-1 text-xs font-medium text-charcoal">
-                Best Seller
+                {dictionary.common.bestSeller}
               </span>
             )}
           </div>
 
           <button
             type="button"
-            aria-label={`Add ${product.name} to wishlist`}
+            aria-label={wishlistAria}
             className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/85 text-rose-mauve shadow-sm backdrop-blur transition hover:scale-105 hover:bg-white"
           >
             <Heart className="h-4 w-4" />
@@ -106,7 +107,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />
-            {access.isBuyable ? 'Add' : 'Unavailable'}
+            {access.isBuyable ? dictionary.product.addToCart : dictionary.product.notAvailable}
           </Button>
         </div>
       </div>
