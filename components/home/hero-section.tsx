@@ -466,7 +466,7 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
 function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const playbackRateRef = useRef(1)
-  const shouldLoop = media.preferVideo === true
+  const shouldLoop = false
   const [isFrozen, setIsFrozen] = useState(false)
   const [hasVideoStarted, setHasVideoStarted] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
@@ -560,15 +560,6 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex w-full max-w-2xl flex-col items-start"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mb-6 h-9 w-36 sm:h-11 sm:w-44 lg:mb-7 lg:h-12 lg:w-52"
-          >
-            <Image src="/placeholder-logo.svg" alt="JISOO logo" fill sizes="220px" className="object-contain brightness-0 invert" />
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
