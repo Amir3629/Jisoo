@@ -57,6 +57,7 @@ const MAGAZINE_GRID_IMAGES = [
 const HYDRATION_HEADLINE = 'Hydrated Skin, Lasting Glow'
 const HYDRATION_BODY = 'Build a daily hydration ritual with moisture-rich formulas designed for plump, calm, and luminous skin.'
 const HYDRATION_CTA = 'Shop Hydrating Essentials'
+const DESIGN11_PLAYED_KEY = 'design11_intro_played'
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -469,6 +470,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const playbackRateRef = useRef(1)
   const shouldLoop = false
+  const [hasPlayedIntro, setHasPlayedIntro] = useState(false)
   const [isFrozen, setIsFrozen] = useState(false)
   const [hasVideoStarted, setHasVideoStarted] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
@@ -486,15 +488,32 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   }
 
   useEffect(() => {
+    if (typeof window === 'undefined') return
+    setHasPlayedIntro(window.sessionStorage.getItem(DESIGN11_PLAYED_KEY) === '1')
+  }, [])
+
+  useEffect(() => {
     // Reset frozen state when media or playback mode changes.
     const video = videoRef.current
     if (video) {
       video.playbackRate = 1
     }
     playbackRateRef.current = 1
-    setIsFrozen(false)
-    setHasVideoStarted(false)
-  }, [media.video, shouldLoop])
+    setIsFrozen(hasPlayedIntro)
+    setHasVideoStarted(hasPlayedIntro)
+  }, [media.video, shouldLoop, hasPlayedIntro])
+
+  const handleVideoLoadedMetadata = () => {
+    if (!hasPlayedIntro) return
+    const video = videoRef.current
+    if (!video) return
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      video.currentTime = Math.max(video.duration - 0.04, 0)
+    }
+    video.pause()
+    setHasVideoStarted(true)
+    setIsFrozen(true)
+  }
 
   const handleTimeUpdate = () => {
     const video = videoRef.current
@@ -531,6 +550,10 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         video.currentTime = video.duration
       }
     }
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem(DESIGN11_PLAYED_KEY, '1')
+    }
+    setHasPlayedIntro(true)
     setIsFrozen(true)
   }
 
@@ -540,11 +563,12 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
       <video
         ref={videoRef}
         src={media.video}
-        autoPlay
+        autoPlay={!hasPlayedIntro}
         muted
         loop={shouldLoop}
         playsInline
         preload="metadata"
+        onLoadedMetadata={handleVideoLoadedMetadata}
         onPlaying={markVideoPlaying}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
