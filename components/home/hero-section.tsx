@@ -464,22 +464,26 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
 
 function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isLooping, setIsLooping] = useState(true)
+  const shouldLoop = media.preferVideo === true
   const [isFrozen, setIsFrozen] = useState(false)
-
   useEffect(() => {
-    // Design 11: run the intro animation window, then freeze the background to a static frame.
-    const timer = window.setTimeout(() => {
-      const video = videoRef.current
-      if (video) {
-        video.pause()
-      }
-      setIsLooping(false)
-      setIsFrozen(true)
-    }, 3200)
+    // Reset frozen state when media or playback mode changes.
+    setIsFrozen(false)
+  }, [media.video, shouldLoop])
 
-    return () => window.clearTimeout(timer)
-  }, [])
+  const handleVideoEnded = () => {
+    if (shouldLoop) return
+
+    const video = videoRef.current
+    if (video) {
+      // Keep the final frame visible after playback completes.
+      video.pause()
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        video.currentTime = video.duration
+      }
+    }
+    setIsFrozen(true)
+  }
 
   return (
     <section className="relative h-[56vh] min-h-[460px] overflow-hidden sm:h-[64vh] sm:min-h-[500px] lg:h-[calc(100vh-8.5rem)] lg:min-h-[680px]">
@@ -489,10 +493,11 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         src={media.video}
         autoPlay
         muted
-        loop={isLooping}
+        loop={shouldLoop}
         playsInline
         preload="metadata"
         poster={media.primary}
+        onEnded={handleVideoEnded}
         className="absolute inset-0 h-full w-full object-cover"
       />
 
