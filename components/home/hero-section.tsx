@@ -95,7 +95,7 @@ export function HeroSection() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.992, y: -10 }}
             transition={{ duration: isDesign11 ? 0.2 : 0.55, ease: [0.22, 1, 0.36, 1] }}
-            className="h-full w-full"
+            className="absolute inset-0 h-full w-full"
           >
             {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
             {renderId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
