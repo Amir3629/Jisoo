@@ -81,19 +81,20 @@ export function HeroSection() {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const renderId = locale === 'en' ? activeId : 'image-editorial'
+  const isDesign11 = renderId === 'design-11-video-signature'
   const media = useMemo(() => getMediaForConcept(renderId), [renderId])
   const isMistGlass = renderId === 'mist-glass'
 
   return (
     <section className={cn('relative w-full overflow-hidden', isMistGlass ? 'pt-0' : 'pt-[7.5rem] lg:pt-[8.5rem]')}>
       <div className={cn('relative w-full', isMistGlass ? 'min-h-screen' : 'min-h-[calc(100vh-7.5rem)] lg:min-h-[calc(100vh-8.5rem)]')}>
-        <AnimatePresence mode="wait">
+        <AnimatePresence mode={isDesign11 ? 'sync' : 'wait'}>
           <motion.div
             key={renderId}
-            initial={{ opacity: 0, scale: 1.015, y: 16 }}
+            initial={isDesign11 ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 1.015, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.992, y: -10 }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: isDesign11 ? 0.2 : 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
           >
             {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} />}
