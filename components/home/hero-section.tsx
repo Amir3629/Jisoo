@@ -464,12 +464,51 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
 
 function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const playbackRateRef = useRef(1)
   const shouldLoop = media.preferVideo === true
   const [isFrozen, setIsFrozen] = useState(false)
+  const SLOWDOWN_WINDOW_SECONDS = 1.25
+  const MIN_END_PLAYBACK_RATE = 0.45
+
+  const setPlaybackRate = (nextRate: number) => {
+    const video = videoRef.current
+    if (!video) return
+    if (Math.abs(playbackRateRef.current - nextRate) < 0.01) return
+    video.playbackRate = nextRate
+    playbackRateRef.current = nextRate
+  }
+
   useEffect(() => {
     // Reset frozen state when media or playback mode changes.
+    const video = videoRef.current
+    if (video) {
+      video.playbackRate = 1
+    }
+    playbackRateRef.current = 1
     setIsFrozen(false)
   }, [media.video, shouldLoop])
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current
+    if (!video || isFrozen) return
+    if (!Number.isFinite(video.duration) || video.duration <= 0) return
+
+    const remaining = video.duration - video.currentTime
+    if (remaining <= 0) {
+      setPlaybackRate(1)
+      return
+    }
+
+    if (remaining <= SLOWDOWN_WINDOW_SECONDS) {
+      const normalized = remaining / SLOWDOWN_WINDOW_SECONDS
+      const eased = normalized * normalized
+      const nextRate = MIN_END_PLAYBACK_RATE + (1 - MIN_END_PLAYBACK_RATE) * eased
+      setPlaybackRate(Math.max(MIN_END_PLAYBACK_RATE, Math.min(1, nextRate)))
+      return
+    }
+
+    setPlaybackRate(1)
+  }
 
   const handleVideoEnded = () => {
     if (shouldLoop) return
@@ -478,6 +517,8 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     if (video) {
       // Keep the final frame visible after playback completes.
       video.pause()
+      video.playbackRate = 1
+      playbackRateRef.current = 1
       if (Number.isFinite(video.duration) && video.duration > 0) {
         video.currentTime = video.duration
       }
@@ -497,6 +538,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         playsInline
         preload="metadata"
         poster={media.primary}
+        onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
         className="absolute inset-0 h-full w-full object-cover"
       />
@@ -504,13 +546,13 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
 
-      {/* Foreground content: centered logo, concise headline/subheading, and tappable CTA with motion. */}
-      <div className="relative z-10 flex h-full items-center justify-center px-5 pb-10 pt-16 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:px-10 lg:pb-20">
+      {/* Foreground content: top-left aligned logo, concise headline/subheading, and tappable CTA with motion. */}
+      <div className="relative z-10 flex h-full items-start justify-start px-5 pb-10 pt-10 text-left sm:px-8 sm:pb-14 sm:pt-12 lg:px-10 lg:pb-20 lg:pt-14">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="mx-auto flex w-full max-w-4xl flex-col items-center"
+          className="flex w-full max-w-2xl flex-col items-start"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.94 }}
