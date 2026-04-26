@@ -469,6 +469,7 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
 function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const playbackRateRef = useRef(1)
+  const hasStoppedRef = useRef(false)
   const shouldLoop = false
   const [hasPlayedIntro, setHasPlayedIntro] = useState(false)
   const [isFrozen, setIsFrozen] = useState(false)
@@ -498,10 +499,38 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     if (video) {
       video.playbackRate = 1
     }
+    hasStoppedRef.current = false
     playbackRateRef.current = 1
     setIsFrozen(hasPlayedIntro)
     setHasVideoStarted(hasPlayedIntro)
   }, [media.video, shouldLoop, hasPlayedIntro])
+
+  useEffect(() => {
+    if (hasPlayedIntro) return
+    const video = videoRef.current
+    if (!video) return
+    void video.play().catch(() => {
+      // Keep silent: autoplay policies can block play() in some contexts.
+    })
+  }, [hasPlayedIntro, media.video])
+
+  const freezeAtFinalFrame = () => {
+    const video = videoRef.current
+    if (!video) return
+    video.pause()
+    video.playbackRate = 1
+    playbackRateRef.current = 1
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      video.currentTime = video.duration
+    }
+    hasStoppedRef.current = true
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.setItem(DESIGN11_PLAYED_KEY, '1')
+    }
+    setHasPlayedIntro(true)
+    setIsFrozen(true)
+    setHasVideoStarted(true)
+  }
 
   const handleVideoLoadedMetadata = () => {
     if (!hasPlayedIntro) return
@@ -513,6 +542,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     video.pause()
     setHasVideoStarted(true)
     setIsFrozen(true)
+    hasStoppedRef.current = true
   }
 
   const handleTimeUpdate = () => {
@@ -521,6 +551,10 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     if (!Number.isFinite(video.duration) || video.duration <= 0) return
 
     const remaining = video.duration - video.currentTime
+    if (!shouldLoop && !hasStoppedRef.current && remaining <= 0.05) {
+      freezeAtFinalFrame()
+      return
+    }
     if (remaining <= 0) {
       setPlaybackRate(1)
       return
@@ -539,22 +573,8 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
 
   const handleVideoEnded = () => {
     if (shouldLoop) return
-
-    const video = videoRef.current
-    if (video) {
-      // Keep the final frame visible after playback completes.
-      video.pause()
-      video.playbackRate = 1
-      playbackRateRef.current = 1
-      if (Number.isFinite(video.duration) && video.duration > 0) {
-        video.currentTime = video.duration
-      }
-    }
-    if (typeof window !== 'undefined') {
-      window.sessionStorage.setItem(DESIGN11_PLAYED_KEY, '1')
-    }
-    setHasPlayedIntro(true)
-    setIsFrozen(true)
+    if (hasStoppedRef.current) return
+    freezeAtFinalFrame()
   }
 
   return (
@@ -563,7 +583,6 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
       <video
         ref={videoRef}
         src={media.video}
-        autoPlay={!hasPlayedIntro}
         muted
         loop={shouldLoop}
         playsInline
