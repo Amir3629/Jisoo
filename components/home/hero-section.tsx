@@ -54,6 +54,9 @@ const MAGAZINE_GRID_IMAGES = [
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_19_23 PM.png',
   '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
 ]
+const HYDRATION_HEADLINE = 'Hydrated Skin, Lasting Glow'
+const HYDRATION_BODY = 'Build a daily hydration ritual with moisture-rich formulas designed for plump, calm, and luminous skin.'
+const HYDRATION_CTA = 'Shop Hydrating Essentials'
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -206,8 +209,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
     { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
   ]
-  const heading = locale === 'ar' ? 'معيار توهج الورد' : locale === 'fr' ? 'Le Standard Rose Lumière' : locale === 'de' ? 'Der Rose-Light Standard' : locale === 'ko' ? '로즈 라이트 스탠다드' : locale === 'tr' ? 'Gül Işığı Standardı' : 'The Rose Light Standard'
-  const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'A full-bleed image direction built for premium campaign storytelling.'
+  const heading = HYDRATION_HEADLINE
+  const body = HYDRATION_BODY
 
   return (
     <section className="bg-[#fdf8f5]">
@@ -216,7 +219,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
-          <p className="text-kicker text-white/85">JISOO Editorial</p>
+          <p className="text-kicker text-white/85">Hydration Focus</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
           <h1 className="mt-3 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white">{heading}</h1>
           <p className="mt-4 text-white/82">{body}</p>
@@ -252,18 +255,17 @@ function CinematicTypographyHero({ locale }: { locale: Locale }) {
     <section className="relative flex h-[68vh] flex-col justify-between overflow-hidden bg-[radial-gradient(circle_at_50%_24%,#fbeff4_0%,#fffaf6_48%,#f8efe7_100%)] px-6 pb-7 pt-10 text-center lg:px-14 lg:pb-9">
       <div className="mx-auto max-w-4xl">
         <motion.h1 initial={{ y: 18, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="font-serif text-4xl leading-[1.02] tracking-[-0.01em] text-charcoal sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
-          Seoul Glow,
-          <span className="mt-1 block text-rose-mauve">Softly Revealed</span>
+          {HYDRATION_HEADLINE}
         </motion.h1>
         <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-charcoal/68 sm:text-base">
-          A curated Korean beauty ritual shaped for luminous skin, delicate color, and everyday elegance.
+          {HYDRATION_BODY}
         </p>
         <div className="mt-7">
           <Link
             href={localizeHref('/shop', locale)}
             className="inline-flex items-center gap-2 rounded-full border border-rose-mauve/30 bg-white/80 px-6 py-3 text-sm font-medium text-charcoal transition-all hover:bg-white"
           >
-            Discover the Collection
+            {HYDRATION_CTA}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -284,8 +286,8 @@ function SplitStackHero({ locale, media }: { locale: Locale; media: HeroMedia })
   return (
     <section className="grid min-h-[68vh] overflow-hidden lg:grid-cols-[1.05fr_0.95fr]">
       <div className="relative bg-[#fff9f6] p-8 lg:p-14">
-        <h1 className="font-serif text-5xl text-charcoal lg:text-7xl">Layered Ritual Architecture</h1>
-        <p className="mt-5 max-w-lg text-charcoal/68">Commerce-meets-editorial split direction with stacked visual ingredients.</p>
+        <h1 className="font-serif text-5xl text-charcoal lg:text-7xl">{HYDRATION_HEADLINE}</h1>
+        <p className="mt-5 max-w-lg text-charcoal/68">{HYDRATION_BODY}</p>
         <div className="mt-8"><PrimaryCta locale={locale} /></div>
         <div className="mt-10 grid max-w-lg grid-cols-2 gap-4">
           <HeroImage src={media.secondary ?? media.primary} alt="Stack media 1" className="aspect-[4/5] rounded-2xl" />
@@ -302,9 +304,9 @@ function MinimalWhiteHero({ locale, media }: { locale: Locale; media: HeroMedia 
     <section className="grid h-[68vh] overflow-hidden lg:grid-cols-[1.05fr_0.95fr]">
       <div className="flex items-center bg-gradient-to-br from-[#fffdfb] to-[#f9f0ea] px-7 lg:px-14">
         <div className="max-w-xl">
-          <p className="text-kicker text-charcoal/48">Quiet Luxury Formula House</p>
-          <h1 className="mt-4 font-serif text-5xl text-charcoal lg:text-7xl">Minimal. Elegant. Seoul.</h1>
-          <p className="mt-4 max-w-lg text-charcoal/62">A modern minimal direction with balanced editorial typography and a premium visual anchor.</p>
+          <p className="text-kicker text-charcoal/48">Hydration Focus</p>
+          <h1 className="mt-4 font-serif text-5xl text-charcoal lg:text-7xl">{HYDRATION_HEADLINE}</h1>
+          <p className="mt-4 max-w-lg text-charcoal/62">{HYDRATION_BODY}</p>
           <div className="mt-7"><PrimaryCta locale={locale} subtle /></div>
         </div>
       </div>
@@ -325,9 +327,9 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/58 via-charcoal/35 to-charcoal/15" />
       <div className="relative flex h-full items-center px-7 lg:px-14">
         <div className="max-w-2xl text-white">
-          <p className="text-kicker text-white/78">Campaign Cover / Vol.04</p>
-          <h1 className="mt-4 font-serif text-6xl leading-[0.9] lg:text-8xl">THE GLOW ISSUE</h1>
-          <p className="mt-5 max-w-xl text-white/80">Campaign-cover direction with open cinematic media and premium editorial hierarchy.</p>
+          <p className="text-kicker text-white/78">Hydration Focus</p>
+          <h1 className="mt-4 font-serif text-6xl leading-[0.9] lg:text-8xl">{HYDRATION_HEADLINE}</h1>
+          <p className="mt-5 max-w-xl text-white/80">{HYDRATION_BODY}</p>
           <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm text-white backdrop-blur-sm"><PlayCircle className="h-4 w-4" />Consult</Link></div>
         </div>
       </div>
@@ -346,9 +348,9 @@ function VideoMotionHero({ locale, media }: { locale: Locale; media: HeroMedia }
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/56 via-charcoal/28 to-charcoal/44" />
         <div className="relative flex h-full items-center px-8 lg:px-14">
           <div className="max-w-2xl text-white">
-            <p className="text-kicker text-white/75">Motion Editorial</p>
-            <h1 className="mt-4 font-serif text-5xl lg:text-7xl">A Living Campaign Hero</h1>
-            <p className="mt-5 text-white/80">Video-led immersive concept for launches, seasonal campaigns, and cinematic storytelling.</p>
+            <p className="text-kicker text-white/75">Hydration Focus</p>
+            <h1 className="mt-4 font-serif text-5xl lg:text-7xl">{HYDRATION_HEADLINE}</h1>
+            <p className="mt-5 text-white/80">{HYDRATION_BODY}</p>
             <div className="mt-8"><PrimaryCta locale={locale} /></div>
           </div>
         </div>
@@ -370,8 +372,8 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
       <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/24 to-charcoal/38" />
       <div className="relative z-10 flex h-full items-start px-8 pt-10 lg:px-12 lg:pt-12">
         <div className="max-w-2xl text-white">
-          <h1 className="font-serif text-4xl lg:text-6xl">Floating Product Architecture</h1>
-          <p className="mt-3 max-w-xl text-white/84">Asymmetric, object-led visual concept with sculptural campaign rhythm.</p>
+          <h1 className="font-serif text-4xl lg:text-6xl">{HYDRATION_HEADLINE}</h1>
+          <p className="mt-3 max-w-xl text-white/84">{HYDRATION_BODY}</p>
           <div className="mt-6"><PrimaryCta locale={locale} /></div>
         </div>
       </div>
@@ -392,9 +394,9 @@ function MistGlassHero({ locale }: { locale: Locale }) {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-white">
-          <p className="text-kicker text-white/78">Glass Fade Direction</p>
-          <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
-          <p className="mt-4 max-w-xl text-white/82">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+          <p className="text-kicker text-white/78">Hydration Focus</p>
+          <h1 className="mt-3 font-serif text-4xl lg:text-6xl">{HYDRATION_HEADLINE}</h1>
+          <p className="mt-4 max-w-xl text-white/82">{HYDRATION_BODY}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
       </div>
@@ -419,16 +421,16 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
         className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-[0_20px_50px_rgba(176,128,144,0.16)] backdrop-blur-[4px] lg:col-span-5 lg:row-span-3 lg:p-8"
       >
         <div>
-          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO Editorial</p>
-          <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">Editorial Layout Mosaic</h1>
-          <p className="mt-3 max-w-xl text-[0.96rem] font-light leading-[1.78] text-charcoal/56 lg:text-[1.04rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
+          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">Hydration Focus</p>
+          <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">{HYDRATION_HEADLINE}</h1>
+          <p className="mt-3 max-w-xl text-[0.96rem] font-light leading-[1.78] text-charcoal/56 lg:text-[1.04rem]">{HYDRATION_BODY}</p>
           <div className="mt-6">
             <Link
               href={localizeHref('/shop', locale)}
-              aria-label="Discover the editorial edit"
+              aria-label="Shop hydrating essentials"
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#ce9fad] to-[#d9b991] px-6 py-3 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_12px_30px_rgba(194,147,160,0.3)] transition-all duration-300 hover:scale-[1.02] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-mauve/45 focus-visible:ring-offset-2"
             >
-              Discover the Edit
+              {HYDRATION_CTA}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -442,11 +444,11 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
   return (
     <section className="grid min-h-[68vh] overflow-hidden rounded-[2rem] lg:grid-cols-[0.95fr_1.05fr]">
       <div className="bg-[#fffaf7] p-8 lg:p-12">
-        <p className="text-kicker text-rose-mauve">Luxury Commerce Hero</p>
-        <h1 className="mt-3 font-serif text-5xl text-charcoal lg:text-7xl">Shop Signature Essentials</h1>
-        <p className="mt-4 max-w-lg text-charcoal/65">Conversion-first direction blending premium styling with direct shopping pathways.</p>
+        <p className="text-kicker text-rose-mauve">Hydration Focus</p>
+        <h1 className="mt-3 font-serif text-5xl text-charcoal lg:text-7xl">{HYDRATION_HEADLINE}</h1>
+        <p className="mt-4 max-w-lg text-charcoal/65">{HYDRATION_BODY}</p>
         <div className="mt-7 space-y-3">
-          {['Best Sellers', 'Starter Ritual', 'New Arrivals'].map(item => (
+          {['Hydrating Serum', 'Barrier Cream', 'Hydrating Set'].map(item => (
             <Link key={item} href={localizeHref('/shop', locale)} className="flex items-center justify-between rounded-xl border border-rose-mauve/20 bg-white px-4 py-3 text-sm font-medium text-charcoal hover:border-rose-mauve/35">
               {item}
               <ArrowRight className="h-4 w-4 text-rose-mauve" />
@@ -566,7 +568,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
             transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
             className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white"
           >
-            Signature Light, Quietly Cinematic
+            {HYDRATION_HEADLINE}
           </motion.h1>
 
           <motion.p
@@ -575,7 +577,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
             transition={{ duration: 0.65, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="mt-3 max-w-2xl text-[0.98rem] leading-relaxed text-white/88 sm:mt-4 sm:text-base"
           >
-            A refined hero direction blending editorial motion, soft rose atmosphere, and premium Seoul minimalism.
+            {HYDRATION_BODY}
           </motion.p>
 
           <motion.div
@@ -589,7 +591,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
               aria-label="Explore the signature collection"
               className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#cc9eac] to-[#d8b894] px-7 py-3 text-sm font-medium text-white shadow-[0_12px_30px_rgba(186,130,154,0.3)] transition-transform duration-300 hover:scale-[1.02] hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal/30 sm:text-[0.95rem]"
             >
-              Discover the Signature Edit
+              {HYDRATION_CTA}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </motion.div>
