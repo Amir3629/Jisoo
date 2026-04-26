@@ -138,8 +138,15 @@ export function Header() {
               {navLinks.map(link => (
                 <div
                   key={link.href}
+                  // P0: keep hover behavior and add keyboard parity for menu discovery.
                   onMouseEnter={() => link.hasDropdown && setActiveDropdown(link.href)}
                   onMouseLeave={() => setActiveDropdown(null)}
+                  onFocus={() => link.hasDropdown && setActiveDropdown(link.href)}
+                  onBlur={e => {
+                    if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+                      setActiveDropdown(null)
+                    }
+                  }}
                   className="relative"
                 >
                   <Link
@@ -275,6 +282,10 @@ export function Header() {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              // P0: explicit drawer semantics for assistive tech.
+              role="dialog"
+              aria-modal="true"
+              aria-label="Mobile navigation"
               className="fixed top-0 left-0 bottom-0 w-[85%] max-w-sm bg-warm-ivory z-50 lg:hidden overflow-y-auto"
             >
               <div className="p-6">
@@ -282,6 +293,7 @@ export function Header() {
                   <h2 className="text-2xl font-serif font-bold text-plum">JISOO</h2>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
+                    aria-label="Close menu"
                     className="p-2 -mr-2 text-charcoal hover:text-plum"
                   >
                     <X className="w-6 h-6" />
