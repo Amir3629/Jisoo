@@ -470,6 +470,10 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const [isVideoReady, setIsVideoReady] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
   const MIN_END_PLAYBACK_RATE = 0.45
+  const markVideoReady = () => {
+    if (isVideoReady) return
+    window.requestAnimationFrame(() => setIsVideoReady(true))
+  }
 
   const setPlaybackRate = (nextRate: number) => {
     const video = videoRef.current
@@ -540,10 +544,11 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         playsInline
         preload="metadata"
         poster={media.primary}
-        onLoadedData={() => setIsVideoReady(true)}
+        onCanPlay={markVideoReady}
+        onPlaying={markVideoReady}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
-        className="absolute inset-0 h-full w-full object-cover"
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
       />
 
       {/* Poster fade layer: prevents abrupt poster→video switch by crossfading once video data is ready. */}
