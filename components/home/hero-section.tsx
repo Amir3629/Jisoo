@@ -467,6 +467,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const playbackRateRef = useRef(1)
   const shouldLoop = media.preferVideo === true
   const [isFrozen, setIsFrozen] = useState(false)
+  const [isVideoReady, setIsVideoReady] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
   const MIN_END_PLAYBACK_RATE = 0.45
 
@@ -486,6 +487,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     }
     playbackRateRef.current = 1
     setIsFrozen(false)
+    setIsVideoReady(false)
   }, [media.video, shouldLoop])
 
   const handleTimeUpdate = () => {
@@ -538,10 +540,19 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         playsInline
         preload="metadata"
         poster={media.primary}
+        onLoadedData={() => setIsVideoReady(true)}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
         className="absolute inset-0 h-full w-full object-cover"
       />
+
+      {/* Poster fade layer: prevents abrupt poster→video switch by crossfading once video data is ready. */}
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out ${isVideoReady ? 'opacity-0' : 'opacity-100'}`}
+      >
+        <Image src={media.primary} alt="" fill sizes="100vw" className="object-cover" />
+      </div>
 
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
