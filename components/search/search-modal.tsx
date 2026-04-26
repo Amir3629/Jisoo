@@ -58,38 +58,77 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const [query, setQuery] = useState('')
   const [results, setResults] = useState(products.slice(0, 4))
   const inputRef = useRef<HTMLInputElement>(null)
+  const modalRef = useRef<HTMLDivElement>(null)
+  const previousFocusRef = useRef<HTMLElement | null>(null)
 
+  // P0: debounce user input to reduce per-keystroke filtering work.
   useEffect(() => {
-    if (isOpen) {
-      inputRef.current?.focus()
-    }
-  }, [isOpen])
+    const timer = window.setTimeout(() => {
+      if (query.length >= 2) {
+        const filtered = products.filter(
+          p =>
+            p.name.toLowerCase().includes(query.toLowerCase()) ||
+            p.tags.some(t => t.toLowerCase().includes(query.toLowerCase())) ||
+            p.category.toLowerCase().includes(query.toLowerCase())
+        )
+        setResults(filtered.slice(0, 6))
+      } else {
+        setResults(products.slice(0, 4))
+      }
+    }, 180)
 
-  useEffect(() => {
-    if (query.length >= 2) {
-      const filtered = products.filter(
-        p =>
-          p.name.toLowerCase().includes(query.toLowerCase()) ||
-          p.tags.some(t => t.toLowerCase().includes(query.toLowerCase())) ||
-          p.category.toLowerCase().includes(query.toLowerCase())
-      )
-      setResults(filtered.slice(0, 6))
-    } else {
-      setResults(products.slice(0, 4))
-    }
+    return () => window.clearTimeout(timer)
   }, [query])
 
+  // P0: add ESC handling, focus trap, body scroll lock, and focus restore for accessibility.
   useEffect(() => {
+    if (!isOpen) return
+
+    previousFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null
+    document.body.style.overflow = 'hidden'
+
+    const focusSelector = [
+      'a[href]',
+      'button:not([disabled])',
+      'textarea:not([disabled])',
+      'input:not([disabled])',
+      'select:not([disabled])',
+      '[tabindex]:not([tabindex="-1"])',
+    ].join(',')
+
+    const moveFocusIntoModal = () => {
+      inputRef.current?.focus()
+    }
+    window.requestAnimationFrame(moveFocusIntoModal)
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+
+      if (e.key !== 'Tab' || !modalRef.current) return
+      const focusable = Array.from(modalRef.current.querySelectorAll<HTMLElement>(focusSelector))
+      if (!focusable.length) return
+
+      const first = focusable[0]
+      const last = focusable[focusable.length - 1]
+
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
     }
-    if (isOpen) {
-      document.addEventListener('keydown', handleKeyDown)
-      document.body.style.overflow = 'hidden'
-    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
+      previousFocusRef.current?.focus()
     }
   }, [isOpen, onClose])
 
@@ -109,10 +148,14 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="search-modal-title"
             className="fixed top-0 left-0 right-0 z-50 max-h-[90vh] overflow-y-auto"
           >
-            <div className="bg-warm-ivory shadow-elevated">
+            <div ref={modalRef} className="bg-warm-ivory shadow-elevated">
               <div className="max-w-4xl mx-auto p-4 lg:p-6">
+                <h2 id="search-modal-title" className="sr-only">Search products</h2>
                 {/* Search Input */}
                 <div className="relative">
                   <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
@@ -132,6 +175,7 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                   />
                   <button
                     onClick={onClose}
+                    aria-label="Close search"
                     className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-muted-foreground hover:text-charcoal"
                   >
                     <X className="w-5 h-5" />

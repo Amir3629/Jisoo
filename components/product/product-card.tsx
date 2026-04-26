@@ -85,7 +85,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           </p>
         </div>
 
-        <div className="flex items-center justify-between">
+        {/* P0: allow wrapping so long localized CTA labels do not collide with price block. */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-semibold text-charcoal">
               €{product.price.toFixed(2)}

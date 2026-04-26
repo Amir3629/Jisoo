@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -23,6 +23,7 @@ const heroConcepts: HeroConcept[] = [
   { id: 'mist-glass', name: 'Mist Glass' },
   { id: 'magazine-grid', name: 'Magazine Grid' },
   { id: 'commerce-luxe', name: 'Commerce Luxe' },
+  { id: 'design-11-video-signature', name: 'Design 11 Video Signature' },
 ]
 
 const HERO_ASSETS = {
@@ -69,6 +70,7 @@ const conceptMediaMap: Record<string, HeroMedia> = {
   'mist-glass': { primary: pickAsset(3), secondary: pickAsset(2) },
   'magazine-grid': { primary: pickAsset(5), secondary: pickAsset(4), tertiary: pickAsset(1), quaternary: pickAsset(0) },
   'commerce-luxe': { primary: pickAsset(2), secondary: pickAsset(4) },
+  'design-11-video-signature': { primary: pickAsset(0), video: '/video.mp4' },
 }
 
 function getMediaForConcept(id: string): HeroMedia {
@@ -104,11 +106,13 @@ export function HeroSection() {
             {renderId === 'mist-glass' && <MistGlassHero locale={locale} />}
             {renderId === 'magazine-grid' && <MagazineGridHero locale={locale} />}
             {renderId === 'commerce-luxe' && <CommerceLuxeHero locale={locale} media={media} />}
+            {renderId === 'design-11-video-signature' && <Design11Hero locale={locale} media={media} />}
           </motion.div>
         </AnimatePresence>
 
         {locale === 'en' && (
-          <div className="absolute right-3 top-1/2 z-40 -translate-y-1/2">
+          <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
+            {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
             <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
               <div className="grid gap-1.5">
                 {heroConcepts.map((concept, index) => (
@@ -146,6 +150,8 @@ function HeroImage({ src, alt, className, priority }: { src: string; alt: string
         src={failed ? fallback : src}
         alt={alt}
         fill
+        // P0: provide responsive image sizing hints for better bandwidth/LCP behavior.
+        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 50vw"
         priority={priority}
         className="object-cover"
         onError={() => setFailed(true)}
@@ -204,12 +210,14 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
 
   return (
     <section className="bg-[#fdf8f5]">
-      <div className="relative h-[68vh] overflow-hidden">
+      {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
+      <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
-          <h1 className="mt-3 font-serif text-5xl text-white lg:text-7xl">{heading}</h1>
+          {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
+          <h1 className="mt-3 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white">{heading}</h1>
           <p className="mt-4 text-white/82">{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
@@ -402,6 +410,7 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
       <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[1]} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[2]} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
+<<<<<<< HEAD
       <div className="col-span-2 flex items-center rounded-[1.8rem] border border-rose-mauve/22 bg-[linear-gradient(135deg,rgba(255,255,255,0.92),rgba(253,244,240,0.78))] p-6 shadow-[0_18px_45px_rgba(173,131,145,0.16)] backdrop-blur-[2px] lg:col-span-5 lg:row-span-3 lg:p-8">
         <div>
           <p className="text-kicker text-rose-mauve/78">JISOO Editorial</p>
@@ -411,13 +420,31 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
             <Link
               href={localizeHref('/shop', locale)}
               className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white shadow-[0_12px_28px_rgba(194,147,160,0.34)] transition-all hover:brightness-105"
+=======
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.45 }}
+        transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+        className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-[0_20px_50px_rgba(176,128,144,0.16)] backdrop-blur-[4px] lg:col-span-5 lg:row-span-3 lg:p-8"
+      >
+        <div>
+          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO Editorial</p>
+          <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">Editorial Layout Mosaic</h1>
+          <p className="mt-3 max-w-xl text-[0.96rem] font-light leading-[1.78] text-charcoal/56 lg:text-[1.04rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
+          <div className="mt-6">
+            <Link
+              href={localizeHref('/shop', locale)}
+              aria-label="Discover the editorial edit"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#ce9fad] to-[#d9b991] px-6 py-3 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_12px_30px_rgba(194,147,160,0.3)] transition-all duration-300 hover:scale-[1.02] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-mauve/45 focus-visible:ring-offset-2"
+>>>>>>> codex-update-hero-11
             >
               Discover the Edit
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
@@ -443,6 +470,102 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
         <HeroImage src={media.primary} alt="Commerce visual" className="absolute inset-0" />
         <div className="absolute bottom-6 right-6 h-40 w-32 overflow-hidden rounded-2xl border border-white/60 shadow-xl lg:h-52 lg:w-40"><HeroImage src={media.secondary ?? media.primary} alt="Commerce detail" className="h-full" /></div>
       </div>
+    </section>
+  )
+}
+
+function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const [isLooping, setIsLooping] = useState(true)
+  const [isFrozen, setIsFrozen] = useState(false)
+
+  useEffect(() => {
+    // Design 11: run the intro animation window, then freeze the background to a static frame.
+    const timer = window.setTimeout(() => {
+      const video = videoRef.current
+      if (video) {
+        video.pause()
+      }
+      setIsLooping(false)
+      setIsFrozen(true)
+    }, 3200)
+
+    return () => window.clearTimeout(timer)
+  }, [])
+
+  return (
+    <section className="relative h-[56vh] min-h-[460px] overflow-hidden sm:h-[64vh] sm:min-h-[500px] lg:h-[calc(100vh-8.5rem)] lg:min-h-[680px]">
+      {/* Background media: autoplay + muted + loop for intro phase, then pause to a static visual frame. */}
+      <video
+        ref={videoRef}
+        src={media.video}
+        autoPlay
+        muted
+        loop={isLooping}
+        playsInline
+        preload="metadata"
+        poster={media.primary}
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+
+      {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
+
+      {/* Foreground content: centered logo, concise headline/subheading, and tappable CTA with motion. */}
+      <div className="relative z-10 flex h-full items-center justify-center px-5 pb-10 pt-16 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:px-10 lg:pb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="mx-auto flex w-full max-w-4xl flex-col items-center"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.94 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="relative mb-6 h-9 w-36 sm:h-11 sm:w-44 lg:mb-7 lg:h-12 lg:w-52"
+          >
+            <Image src="/placeholder-logo.svg" alt="JISOO logo" fill sizes="220px" className="object-contain brightness-0 invert" />
+          </motion.div>
+
+          <motion.h1
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            className="font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white"
+          >
+            Signature Light, Quietly Cinematic
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.65, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-3 max-w-2xl text-[0.98rem] leading-relaxed text-white/88 sm:mt-4 sm:text-base"
+          >
+            A refined hero direction blending editorial motion, soft rose atmosphere, and premium Seoul minimalism.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.58, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-6 sm:mt-7"
+          >
+            <Link
+              href={localizeHref('/shop', locale)}
+              aria-label="Explore the signature collection"
+              className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#cc9eac] to-[#d8b894] px-7 py-3 text-sm font-medium text-white shadow-[0_12px_30px_rgba(186,130,154,0.3)] transition-transform duration-300 hover:scale-[1.02] hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:ring-offset-2 focus-visible:ring-offset-charcoal/30 sm:text-[0.95rem]"
+            >
+              Discover the Signature Edit
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </motion.div>
+      </div>
+
+      {/* Static-state helper: keeps design deterministic after the intro animation window is finished. */}
+      {isFrozen && <span className="sr-only">Background animation complete</span>}
     </section>
   )
 }
