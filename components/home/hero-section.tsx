@@ -468,11 +468,16 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const shouldLoop = media.preferVideo === true
   const [isFrozen, setIsFrozen] = useState(false)
   const [isVideoReady, setIsVideoReady] = useState(false)
+  const [hasVideoStarted, setHasVideoStarted] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
   const MIN_END_PLAYBACK_RATE = 0.45
   const markVideoReady = () => {
     if (isVideoReady) return
     window.requestAnimationFrame(() => setIsVideoReady(true))
+  }
+  const markVideoPlaying = () => {
+    setHasVideoStarted(true)
+    markVideoReady()
   }
 
   const setPlaybackRate = (nextRate: number) => {
@@ -492,6 +497,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     playbackRateRef.current = 1
     setIsFrozen(false)
     setIsVideoReady(false)
+    setHasVideoStarted(false)
   }, [media.video, shouldLoop])
 
   const handleTimeUpdate = () => {
@@ -545,16 +551,16 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         preload="metadata"
         poster={media.primary}
         onCanPlay={markVideoReady}
-        onPlaying={markVideoReady}
+        onPlaying={markVideoPlaying}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
-        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${isVideoReady ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${hasVideoStarted ? 'opacity-100' : 'opacity-0'}`}
       />
 
       {/* Poster fade layer: prevents abrupt poster→video switch by crossfading once video data is ready. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 transition-opacity duration-700 ease-out ${isVideoReady ? 'opacity-0' : 'opacity-100'}`}
+        className={`pointer-events-none absolute inset-0 bg-[#21181e] transition-opacity duration-700 ease-out ${hasVideoStarted && isVideoReady ? 'opacity-0' : 'opacity-100'}`}
       >
         <Image src={media.primary} alt="" fill sizes="100vw" className="object-cover" />
       </div>
