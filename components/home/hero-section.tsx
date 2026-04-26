@@ -402,22 +402,29 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
       <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[1]} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[2]} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
-      <div className="col-span-2 flex items-center rounded-[1.8rem] border border-rose-mauve/20 bg-[linear-gradient(140deg,rgba(255,248,246,0.96),rgba(255,255,255,0.9))] p-6 shadow-[0_14px_34px_rgba(171,126,141,0.14)] backdrop-blur-[3px] lg:col-span-5 lg:row-span-3 lg:p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.45 }}
+        transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+        className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-[0_20px_50px_rgba(176,128,144,0.16)] backdrop-blur-[4px] lg:col-span-5 lg:row-span-3 lg:p-8"
+      >
         <div>
-          <p className="text-kicker tracking-[0.18em] text-rose-mauve/76">JISOO Editorial</p>
-          <h1 className="mt-2 font-serif text-[2.05rem] leading-[1.02] tracking-[-0.02em] text-charcoal lg:text-[3.45rem]">Editorial Layout Mosaic</h1>
-          <p className="mt-3 max-w-xl text-[0.97rem] leading-[1.72] text-charcoal/58 lg:text-[1.03rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
+          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO Editorial</p>
+          <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">Editorial Layout Mosaic</h1>
+          <p className="mt-3 max-w-xl text-[0.96rem] font-light leading-[1.78] text-charcoal/56 lg:text-[1.04rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
           <div className="mt-6">
             <Link
               href={localizeHref('/shop', locale)}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#ce9fad] to-[#d7b48d] px-6 py-3 text-sm font-medium text-white shadow-[0_10px_24px_rgba(194,147,160,0.28)] transition-all hover:brightness-105"
+              aria-label="Discover the editorial edit"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve via-[#ce9fad] to-[#d9b991] px-6 py-3 text-sm font-medium text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_12px_30px_rgba(194,147,160,0.3)] transition-all duration-300 hover:scale-[1.02] hover:brightness-[1.04] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-mauve/45 focus-visible:ring-offset-2"
             >
               Discover the Edit
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   )
 }
