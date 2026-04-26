@@ -467,17 +467,11 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const playbackRateRef = useRef(1)
   const shouldLoop = media.preferVideo === true
   const [isFrozen, setIsFrozen] = useState(false)
-  const [isVideoReady, setIsVideoReady] = useState(false)
   const [hasVideoStarted, setHasVideoStarted] = useState(false)
   const SLOWDOWN_WINDOW_SECONDS = 1.25
   const MIN_END_PLAYBACK_RATE = 0.45
-  const markVideoReady = () => {
-    if (isVideoReady) return
-    window.requestAnimationFrame(() => setIsVideoReady(true))
-  }
   const markVideoPlaying = () => {
     setHasVideoStarted(true)
-    markVideoReady()
   }
 
   const setPlaybackRate = (nextRate: number) => {
@@ -496,7 +490,6 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     }
     playbackRateRef.current = 1
     setIsFrozen(false)
-    setIsVideoReady(false)
     setHasVideoStarted(false)
   }, [media.video, shouldLoop])
 
@@ -539,7 +532,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   }
 
   return (
-    <section className="relative h-[56vh] min-h-[460px] overflow-hidden sm:h-[64vh] sm:min-h-[500px] lg:h-[calc(100vh-8.5rem)] lg:min-h-[680px]">
+    <section className="relative h-[56vh] min-h-[460px] overflow-hidden bg-[#21181e] sm:h-[64vh] sm:min-h-[500px] lg:h-[calc(100vh-8.5rem)] lg:min-h-[680px]">
       {/* Background media: autoplay + muted + loop for intro phase, then pause to a static visual frame. */}
       <video
         ref={videoRef}
@@ -549,21 +542,11 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
         loop={shouldLoop}
         playsInline
         preload="metadata"
-        poster={media.primary}
-        onCanPlay={markVideoReady}
         onPlaying={markVideoPlaying}
         onTimeUpdate={handleTimeUpdate}
         onEnded={handleVideoEnded}
         className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ease-out ${hasVideoStarted ? 'opacity-100' : 'opacity-0'}`}
       />
-
-      {/* Poster fade layer: prevents abrupt poster→video switch by crossfading once video data is ready. */}
-      <div
-        aria-hidden="true"
-        className={`pointer-events-none absolute inset-0 bg-[#21181e] transition-opacity duration-700 ease-out ${hasVideoStarted && isVideoReady ? 'opacity-0' : 'opacity-100'}`}
-      >
-        <Image src={media.primary} alt="" fill sizes="100vw" className="object-cover" />
-      </div>
 
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
