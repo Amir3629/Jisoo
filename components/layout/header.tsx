@@ -63,7 +63,7 @@ function AnimatedTopText({ text }: { text: string }) {
     ))
 
   return (
-    <span className="relative inline-flex min-w-[34ch] items-center justify-center overflow-hidden whitespace-nowrap">
+    <span className="relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap">
       {prev && (
         <span className="absolute inline-flex">
           {renderLetters(prev, 'exit')}
@@ -112,7 +112,7 @@ export function Header() {
         <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
           <AnimatePresence mode="wait">
             <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
+              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
             </motion.div>
           </AnimatePresence>
         </div>
