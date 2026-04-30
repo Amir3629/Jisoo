@@ -29,59 +29,65 @@ const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon cla
 const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
 
 function AnimatedTopText({ text }: { text: string }) {
-  const [shownText, setShownText] = useState(text)
-  const [phase, setPhase] = useState<'enter' | 'idle' | 'exit'>('enter')
+  const [current, setCurrent] = useState(text)
+  const [prev, setPrev] = useState<string | null>(null)
 
   useEffect(() => {
-    if (text === shownText) return
+    if (text === current) return
 
-    setPhase('exit')
+    setPrev(current)
 
-    const exitTimer = window.setTimeout(() => {
-      setShownText(text)
-      setPhase('enter')
-    }, 950)
+    const t = setTimeout(() => {
+      setCurrent(text)
+      setPrev(null)
+    }, 700)
 
-    const idleTimer = window.setTimeout(() => {
-      setPhase('idle')
-    }, 1750)
-
-    return () => {
-      window.clearTimeout(exitTimer)
-      window.clearTimeout(idleTimer)
-    }
-  }, [text, shownText])
-
-  const letters = Array.from(shownText)
+    return () => clearTimeout(t)
+  }, [text, current])
 
   return (
-    <motion.span
-      className="relative inline-flex min-w-[28ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle"
-      animate={
-        phase === 'exit'
-          ? { opacity: 0, x: 95, filter: 'blur(7px)' }
-          : { opacity: 1, x: 0, filter: 'blur(0px)' }
-      }
-      transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
-    >
-      <span className="inline-flex whitespace-nowrap">
-        {letters.map((letter, index) => (
+    <span className="relative inline-flex min-w-[28ch] items-center justify-center overflow-hidden whitespace-nowrap">
+      {prev && (
+        <motion.span
+          key={`old-${prev}`}
+          className="absolute"
+          initial={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          animate={{ opacity: 0, x: 90, filter: 'blur(5px)' }}
+          transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {prev}
+        </motion.span>
+      )}
+
+      <motion.span
+        key={current}
+        className="inline-flex"
+        initial="hidden"
+        animate="show"
+      >
+        {Array.from(current).map((l, i) => (
           <motion.span
-            key={`${shownText}-${index}-${phase}`}
+            key={`${current}-${i}`}
             className="inline-block"
-            initial={phase === 'enter' ? { opacity: 0, x: -12, filter: 'blur(3px)' } : false}
-            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-            transition={{
-              delay: phase === 'enter' ? 0.12 + index * 0.032 : 0,
-              duration: 0.42,
-              ease: [0.22, 1, 0.36, 1],
+            variants={{
+              hidden: { opacity: 0, y: 6, filter: 'blur(3px)' },
+              show: {
+                opacity: 1,
+                y: 0,
+                filter: 'blur(0px)',
+                transition: {
+                  delay: 0.12 + i * 0.032,
+                  duration: 0.38,
+                  ease: [0.22, 1, 0.36, 1],
+                },
+              },
             }}
           >
-            {letter === ' ' ? ' ' : letter}
+            {l === ' ' ? ' ' : l}
           </motion.span>
         ))}
-      </span>
-    </motion.span>
+      </motion.span>
+    </span>
   )
 }
 
