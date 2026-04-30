@@ -140,7 +140,7 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
   )
 }
 
-function HeroImage({ src, alt, className, priority }: { src: string; alt: string; className?: string; priority?: boolean }) {
+function HeroImage({ src, alt, className, imageClassName, priority }: { src: string; alt: string; className?: string; imageClassName?: string; priority?: boolean }) {
   const [failed, setFailed] = useState(false)
   const fallback = FALLBACK_IMAGES[0]
 
@@ -153,7 +153,7 @@ function HeroImage({ src, alt, className, priority }: { src: string; alt: string
         // P0: provide responsive image sizing hints for better bandwidth/LCP behavior.
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 50vw"
         priority={priority}
-        className="object-cover object-[center_36%]"
+        className={cn('object-cover', imageClassName)}
         onError={() => setFailed(true)}
       />
     </div>
@@ -212,7 +212,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-top [&_img]:scale-[1.08] [&_img]:-translate-y-10 lg:[&_img]:-translate-y-16" priority />
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" imageClassName="object-[center_0%]" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/38 via-charcoal/14 to-transparent" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
