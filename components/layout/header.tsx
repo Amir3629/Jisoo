@@ -37,7 +37,7 @@ export function Header() {
   const topBarMessages = [
     { label: dictionary.header.freeShipping.replace('{{amount}}', '€100') },
     { label: 'Facebook', href: 'https://www.facebook.com', icon: Facebook, className: 'text-[#1877F2]' },
-    { label: 'TikTok', href: 'https://www.tiktok.com', icon: Music2, className: 'text-[#ff2d55]' },
+    { label: 'TikTok', href: 'https://www.tiktok.com', icon: Music2, className: 'text-black drop-shadow-[1px_0_0_#22d3ee] [text-shadow:-1px_0_0_#ec4899]' },
     { label: 'Instagram', href: 'https://www.instagram.com', icon: Instagram, className: 'text-[#d946ef]' },
   ]
   const { scrollYProgress } = useScroll()
@@ -53,9 +53,9 @@ export function Header() {
     <motion.div className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#e8c8d4] via-champagne-gold to-[#f4dfcf]" style={{ scaleX: progress }} />
     <motion.header initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-150', isScrolled ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-warm-ivory/72 backdrop-blur-md')}>
       <div className="hidden border-b border-rose-mauve/12 bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] lg:block">
-        <div className="mx-auto max-w-7xl px-6 py-1.5 text-center text-[11px] tracking-[0.08em] text-charcoal/85">
+        <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
           <AnimatePresence mode="wait">
-            <motion.div key={topBarIndex} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+            <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
               {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return item.label; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><span>{item.label}</span><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
             </motion.div>
           </AnimatePresence>
@@ -65,7 +65,7 @@ export function Header() {
         <div className="relative flex h-16 items-center justify-between lg:h-[4.6rem]">
           <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden p-2 -ml-2" aria-label={dictionary.header.actions.openMenu}><Menu className="w-6 h-6" /></button>
           <Link href={localizeHref('/', locale)} className="relative z-10 flex-shrink-0">
-            <Image src="/LOGO/Jisoo LOGO.png" alt="JISOO" width={150} height={44} priority className="h-8 w-auto lg:h-10" />
+            <Image src="/LOGO/Jisoo LOGO.png" alt="JISOO" width={200} height={58} priority className="h-10 w-auto lg:h-[3.2rem]" />
           </Link>
           <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-7" aria-label="Primary navigation">
             {navLinks.map((link) => <Link key={link.href} href={localizeHref(link.href, locale)} className="text-sm tracking-[0.1em] text-charcoal hover:text-rose-mauve">{link.label}</Link>)}
@@ -78,7 +78,7 @@ export function Header() {
           </div>
         </div>
       </div>
-      <AnimatePresence>{isMegaOpen && <motion.div onMouseEnter={openMega} onMouseLeave={closeMega} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="hidden lg:block border-t border-rose-mauve/15 bg-white/95 backdrop-blur-xl"><div className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{megaGroups.map((group, gi) => <div key={group.title} className={cn('space-y-3', gi !== 3 && 'border-r border-rose-mauve/12 pr-6')}><p className="text-xs uppercase tracking-[0.14em] text-charcoal/55">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.label} href={localizeHref(item.href, locale)} className="block text-sm text-charcoal/85 transition-colors hover:text-rose-mauve">{item.label}</Link>)}</div></div>)}</div></motion.div>}</AnimatePresence>
+      <AnimatePresence>{isMegaOpen && <motion.div onMouseEnter={openMega} onMouseLeave={closeMega} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 8 }} className="hidden lg:block border-t border-rose-mauve/15 bg-warm-ivory/95 backdrop-blur-xl shadow-[0_16px_40px_rgba(188,143,157,0.16)]"><motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }} className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{megaGroups.map((group, gi) => <motion.div key={group.title} variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } }} className={cn('space-y-3', gi !== 3 && 'border-r border-rose-mauve/12 pr-6')}><p className="text-xs uppercase tracking-[0.14em] text-charcoal/55">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.label} href={localizeHref(item.href, locale)} className="block text-sm text-charcoal/85 transition-colors hover:text-rose-mauve">{item.label}</Link>)}</div></motion.div>)}</motion.div></motion.div>}</AnimatePresence>
     </motion.header>
     <AnimatePresence>{isMobileMenuOpen && <motion.div initial={{ x: '-100%' }} animate={{ x: 0 }} exit={{ x: '-100%' }} className="fixed top-0 left-0 bottom-0 z-50 w-[85%] max-w-sm overflow-y-auto bg-warm-ivory p-6 lg:hidden"><div className="mb-8 flex items-center justify-between"><Image src="/LOGO/Jisoo LOGO.png" alt="JISOO" width={120} height={36} className="h-8 w-auto" /><button onClick={() => setIsMobileMenuOpen(false)}><X className="w-6 h-6" /></button></div><nav className="space-y-5">{[...navLinks, ...megaGroups.flatMap(g => g.items)].map((link) => <Link key={link.href + link.label} href={localizeHref(link.href, locale)} onClick={() => setIsMobileMenuOpen(false)} className="block text-lg">{link.label}</Link>)}</nav></motion.div>}</AnimatePresence>
     <CartDrawer /><SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} /><RegionSelector isOpen={isRegionOpen} onClose={() => setIsRegionOpen(false)} />

@@ -212,7 +212,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-[center_29%]" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
@@ -223,7 +223,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         </div>
       </div>
 
-      <div className="px-4 pb-8 pt-6 lg:px-14 lg:pb-10 lg:pt-7">
+      <div className="px-4 pb-8 pt-2 -mt-2 lg:px-14 lg:pb-10 lg:pt-7">
         <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 py-2 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
