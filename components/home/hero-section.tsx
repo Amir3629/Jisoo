@@ -212,7 +212,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-[center_0%]" priority />
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-top [&_img]:scale-[1.08] [&_img]:-translate-y-10 lg:[&_img]:-translate-y-16" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/38 via-charcoal/14 to-transparent" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
@@ -223,15 +223,15 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         </div>
       </div>
 
-      <div className="px-4 pb-8 pt-4 -mt-3 lg:px-14 lg:pb-10 lg:pt-5">
-        <div className="mx-auto -translate-y-4 lg:-translate-y-6 flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
+      <div className="px-4 pb-8 pt-4 -mt-1 lg:px-14 lg:pb-10 lg:pt-5">
+        <div className="mx-auto lg:-translate-y-4 flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
               key={item.label}
               href={localizeHref(item.href, locale)}
               className="group flex w-[134px] flex-col items-center text-center sm:w-[146px]"
             >
-              <div className="relative h-24 w-24 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
+              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 sm:h-24 sm:w-24 lg:h-28 lg:w-28">
                 <Image src={item.image} alt={item.label} fill className="object-cover" />
               </div>
               <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-charcoal/80 transition-colors group-hover:text-charcoal">
