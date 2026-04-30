@@ -199,11 +199,11 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const categoryNav = [
-    { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
-    { label: locale === 'ar' ? 'الشفاه والخدود' : locale === 'fr' ? 'LÈVRES & JOUES' : locale === 'de' ? 'LIPPEN & WANGEN' : locale === 'ko' ? '립 & 치크' : locale === 'tr' ? 'DUDAK & YANAK' : 'LIPS & CHEEKS', image: '/lip.jpg', href: '/shop?category=lips-cheeks' },
-    { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/stunning-blue-eye-stockcake.jpg.webp', href: '/shop?category=eyes' },
-    { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
-    { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png', href: '/shop' },
+    { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/Icons/Face.png', href: '/shop?category=face' },
+    { label: locale === 'ar' ? 'الشفاه والخدود' : locale === 'fr' ? 'LÈVRES & JOUES' : locale === 'de' ? 'LIPPEN & WANGEN' : locale === 'ko' ? '립 & 치크' : locale === 'tr' ? 'DUDAK & YANAK' : 'LIPS & CHEEKS', image: '/Icons/lip.png', href: '/shop?category=lips-cheeks' },
+    { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/Icons/eyes.png', href: '/shop?category=eyes' },
+    { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/Icons/set.png', href: '/shop?category=bundles-sets' },
+    { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/Icons/all products.png', href: '/shop' },
   ]
   const heading = locale === 'ar' ? 'معيار توهج الورد' : locale === 'fr' ? 'Le Standard Rose Lumière' : locale === 'de' ? 'Der Rose-Light Standard' : locale === 'ko' ? '로즈 라이트 스탠다드' : locale === 'tr' ? 'Gül Işığı Standardı' : 'The Rose Light Standard'
   const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'A full-bleed image direction built for premium campaign storytelling.'
@@ -232,7 +232,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
               className="group flex w-[134px] flex-col items-center text-center sm:w-[146px]"
             >
               <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 sm:h-24 sm:w-24 lg:h-28 lg:w-28">
-                <Image src={item.image} alt={item.label} fill className="object-cover" />
+                <Image src={item.image} alt={item.label} fill sizes="(min-width: 1024px) 112px, (min-width: 640px) 96px, 80px" className="object-cover" />
               </div>
               <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-charcoal/80 transition-colors group-hover:text-charcoal">
                 {item.label}
