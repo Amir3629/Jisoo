@@ -31,7 +31,7 @@ const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon classN
 function AnimatedTopText({
   item,
 }: {
-  item: { label: string; href?: string; icon?: ({ className }: { className?: string }) => JSX.Element; className?: string }
+  item: { label: string; href?: string; icon?: ({ className }: { className?: string }) => React.ReactNode; className?: string }
 }) {
   const letters = Array.from(item.label)
   const Icon = item.icon
