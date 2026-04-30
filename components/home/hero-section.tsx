@@ -212,8 +212,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-[center_20%]" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-[center_9%]" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/20 to-charcoal/5" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}

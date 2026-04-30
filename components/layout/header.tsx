@@ -26,7 +26,37 @@ function BrandIcon({ children, className }: { children: ReactNode; className?: s
 }
 const FacebookBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.012 10.125 11.927v-8.437H7.078v-3.49h3.047V9.41c0-3.017 1.792-4.686 4.533-4.686 1.312 0 2.686.235 2.686.235v2.96H15.83c-1.49 0-1.955.926-1.955 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.085 24 18.092 24 12.073z"/></svg></BrandIcon>
 const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm8.9 1.85a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg></BrandIcon>
-const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M14.5 3h2.35a4.8 4.8 0 0 0 3.36 3.39v2.37a7.1 7.1 0 0 1-3.28-.82v7.2a5.53 5.53 0 1 1-5.45-5.53c.26 0 .51.02.75.05v2.48a3.06 3.06 0 1 0 2.27 2.96V3z"/></svg></BrandIcon>
+const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
+
+function AnimatedTopText({ text }: { text: string }) {
+  const chars = text.split('')
+  return (
+    <motion.span
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      variants={{
+        hidden: {},
+        show: { transition: { staggerChildren: 0.018, delayChildren: 0.02 } },
+        exit: { transition: { staggerChildren: 0.014, staggerDirection: -1 } },
+      }}
+      className="inline-flex"
+    >
+      {chars.map((ch, i) => (
+        <motion.span
+          key={`${ch}-${i}`}
+          variants={{
+            hidden: { opacity: 0, y: 4 },
+            show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
+            exit: { opacity: 0, y: -4, transition: { duration: 0.16 } },
+          }}
+        >
+          {ch === ' ' ? '\u00A0' : ch}
+        </motion.span>
+      ))}
+    </motion.span>
+  )
+}
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -63,7 +93,7 @@ export function Header() {
         <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
           <AnimatePresence mode="wait">
             <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              {(() => { const item = topBarMessages[topBarIndex]; const chars = item.label.split(''); if (!item.href || !item.icon) return <span className="inline-flex">{chars.map((ch, i) => <motion.span key={`${ch}-${i}`} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ delay: i * 0.02, duration: 0.24 }}>{ch === ' ' ? '\u00A0' : ch}</motion.span>)}</span>; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><span className="inline-flex">{chars.map((ch, i) => <motion.span key={`${ch}-${i}`} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -4 }} transition={{ delay: i * 0.02, duration: 0.24 }}>{ch === ' ' ? '\u00A0' : ch}</motion.span>)}</span><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
+              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
             </motion.div>
           </AnimatePresence>
         </div>
