@@ -77,10 +77,10 @@ function getMediaForConcept(id: string): HeroMedia {
   return conceptMediaMap[id] ?? { primary: pickAsset(0) }
 }
 
-export function HeroSection() {
+export function HeroSection({ forcedConceptId, showConceptPicker = true }: { forcedConceptId?: string; showConceptPicker?: boolean } = {}) {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const renderId = locale === 'en' ? activeId : 'image-editorial'
+  const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId), [renderId])
   const isMistGlass = renderId === 'mist-glass'
 
@@ -110,7 +110,7 @@ export function HeroSection() {
           </motion.div>
         </AnimatePresence>
 
-        {locale === 'en' && (
+        {false && (
           <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
             {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
             <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
@@ -153,7 +153,7 @@ function HeroImage({ src, alt, className, priority }: { src: string; alt: string
         // P0: provide responsive image sizing hints for better bandwidth/LCP behavior.
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 50vw"
         priority={priority}
-        className="object-cover"
+        className="object-cover object-[center_36%]"
         onError={() => setFailed(true)}
       />
     </div>
@@ -212,8 +212,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/62 via-charcoal/30 to-charcoal/10" />
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 [&_img]:object-[center_9%]" priority />
+        <div className="absolute inset-0 bg-gradient-to-r from-charcoal/48 via-charcoal/20 to-charcoal/5" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
@@ -223,15 +223,15 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         </div>
       </div>
 
-      <div className="px-4 pb-8 pt-6 lg:px-14 lg:pb-10 lg:pt-7">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-4 py-1 sm:gap-x-8 sm:gap-y-5 lg:gap-x-10 lg:gap-y-4">
+      <div className="px-4 pb-8 pt-2 -mt-2 lg:px-14 lg:pb-10 lg:pt-7">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 py-2 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
               key={item.label}
               href={localizeHref(item.href, locale)}
-              className="group flex w-[122px] flex-col items-center text-center sm:w-[128px]"
+              className="group flex w-[134px] flex-col items-center text-center sm:w-[146px]"
             >
-              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-[4.5rem] lg:w-[4.5rem]">
+              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-24 lg:w-24">
                 <Image src={item.image} alt={item.label} fill className="object-cover" />
               </div>
               <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-charcoal/80 transition-colors group-hover:text-charcoal">
@@ -388,7 +388,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.14),rgba(26,22,25,0.04))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-white">
           <p className="text-kicker text-white/78">Glass Fade Direction</p>
@@ -497,7 +497,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
       />
 
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.26)_42%,rgba(33,24,30,0.36)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
 
       {/* Foreground content: centered logo, concise headline/subheading, and tappable CTA with motion. */}
       <div className="relative z-10 flex h-full items-center justify-center px-5 pb-10 pt-16 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:px-10 lg:pb-20">

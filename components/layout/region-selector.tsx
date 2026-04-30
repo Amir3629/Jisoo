@@ -7,145 +7,33 @@ import { regionConfigs } from '@/lib/data'
 import type { Region, Language } from '@/lib/types'
 import { cn } from '@/lib/utils'
 
-interface RegionSelectorProps {
-  isOpen: boolean
-  onClose: () => void
-}
+interface RegionSelectorProps { isOpen: boolean; onClose: () => void }
 
-const languageNames: Record<Language, string> = {
-  en: 'English',
-  ar: 'العربية',
-  fr: 'Français',
-  de: 'Deutsch',
-  ko: '한국어',
-  tr: 'Türkçe',
+const languageMeta: Record<Language, { name: string; flag: string }> = {
+  en: { name: 'English', flag: '🇬🇧' }, ar: { name: 'Arabic', flag: '🇦🇪' }, fr: { name: 'French', flag: '🇫🇷' }, de: { name: 'German', flag: '🇩🇪' }, ko: { name: 'Korean', flag: '🇰🇷' }, tr: { name: 'Turkish', flag: '🇹🇷' },
 }
 
 export function RegionSelector({ isOpen, onClose }: RegionSelectorProps) {
-  const { region, language, config, setRegion, setLanguage } = useRegion()
+  const { region, language, setRegion, setLanguage } = useRegion()
+  const currentConfig = regionConfigs[region]
 
-  const handleRegionChange = (newRegion: Region) => {
-    setRegion(newRegion)
-  }
-
-  const handleLanguageChange = (newLanguage: Language) => {
-    setLanguage(newLanguage)
-  }
-
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-charcoal/50 backdrop-blur-sm z-50"
-            onClick={onClose}
-          />
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md bg-warm-ivory rounded-2xl shadow-elevated z-50 overflow-hidden"
-          >
-            {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-blush-pink">
-              <div className="flex items-center gap-3">
-                <Globe className="w-5 h-5 text-plum" />
-                <h2 className="text-lg font-serif font-semibold text-charcoal">
-                  Region & Language
-                </h2>
-              </div>
-              <button
-                onClick={onClose}
-                className="p-2 -mr-2 text-muted-foreground hover:text-charcoal transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-6">
-              {/* Region Selection */}
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                  Select Your Region
-                </h3>
-                <div className="space-y-2">
-                  {Object.values(regionConfigs).map(regionConfig => (
-                    <button
-                      key={regionConfig.code}
-                      onClick={() => handleRegionChange(regionConfig.code)}
-                      className={cn(
-                        'w-full flex items-center justify-between p-4 rounded-xl transition-all',
-                        region === regionConfig.code
-                          ? 'bg-plum text-warm-ivory'
-                          : 'bg-white border border-blush-pink hover:border-rose-mauve'
-                      )}
-                    >
-                      <div className="text-left">
-                        <p className="font-medium">{regionConfig.name}</p>
-                        <p
-                          className={cn(
-                            'text-sm',
-                            region === regionConfig.code
-                              ? 'text-blush-pink'
-                              : 'text-muted-foreground'
-                          )}
-                        >
-                          Currency: {regionConfig.currencySymbol}
-                        </p>
-                      </div>
-                      {region === regionConfig.code && (
-                        <Check className="w-5 h-5" />
-                      )}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Language Selection */}
-              <div>
-                <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                  Select Language
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {config.languages.map(lang => (
-                    <button
-                      key={lang}
-                      onClick={() => handleLanguageChange(lang)}
-                      className={cn(
-                        'px-4 py-2 rounded-full text-sm font-medium transition-all',
-                        language === lang
-                          ? 'bg-plum text-warm-ivory'
-                          : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
-                      )}
-                    >
-                      {languageNames[lang]}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <div className="p-6 pt-0">
-              <button
-                onClick={onClose}
-                className={cn(
-                  'w-full py-4 rounded-full font-medium',
-                  'bg-plum text-warm-ivory',
-                  'hover:bg-plum/90 transition-colors'
-                )}
-              >
-                Confirm Selection
-              </button>
-            </div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
-  )
+  return <AnimatePresence>{isOpen && <>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-charcoal/45 backdrop-blur-sm z-50" onClick={onClose} />
+    <motion.div initial={{ opacity: 0, y: 12, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.97 }} className="fixed left-1/2 top-1/2 z-50 w-[92%] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-rose-mauve/15 bg-warm-ivory shadow-elevated">
+      <div className="flex items-center justify-between border-b border-blush-pink/80 p-5">
+        <div className="flex items-center gap-3"><span className="grid h-8 w-8 place-items-center rounded-full bg-rose-mauve/10"><Globe className="h-4 w-4 text-plum" /></span><h2 className="text-lg font-serif text-charcoal">Region & Language</h2></div>
+        <button onClick={onClose} className="p-1.5 text-muted-foreground hover:text-charcoal"><X className="h-5 w-5" /></button>
+      </div>
+      <div className="space-y-5 p-5">
+        <div>
+          <h3 className="mb-2 text-xs uppercase tracking-[0.14em] text-charcoal/60">Region</h3>
+          <div className="space-y-2">{Object.values(regionConfigs).map((r) => <button key={r.code} onClick={() => setRegion(r.code as Region)} className={cn('w-full rounded-xl border px-4 py-3 text-left transition-all', region === r.code ? 'border-plum bg-plum text-warm-ivory' : 'border-blush-pink bg-white hover:border-rose-mauve')}><div className="flex items-center justify-between"><div><p className="font-medium">{r.name}</p><p className={cn('text-xs', region === r.code ? 'text-blush-pink' : 'text-charcoal/60')}>{r.currencySymbol}</p></div>{region === r.code && <Check className="h-4 w-4" />}</div></button>)}</div>
+        </div>
+        <div>
+          <h3 className="mb-2 text-xs uppercase tracking-[0.14em] text-charcoal/60">Language</h3>
+          <div className="space-y-2">{Object.entries(languageMeta).map(([code, meta]) => { const lang = code as Language; const allowed = currentConfig.languages.includes(lang); return <button key={lang} onClick={() => allowed && setLanguage(lang)} disabled={!allowed} className={cn('flex w-full items-center justify-between rounded-xl border px-4 py-2.5 text-sm transition-colors', language === lang ? 'border-plum bg-plum text-warm-ivory' : allowed ? 'border-blush-pink bg-white hover:border-rose-mauve' : 'cursor-not-allowed border-blush-pink/40 bg-white/65 text-charcoal/35')}><span className="flex items-center gap-3"><span>{meta.flag}</span><span>{meta.name}</span></span>{language === lang && <Check className="h-4 w-4" />}</button> })}</div>
+        </div>
+      </div>
+    </motion.div>
+  </>}</AnimatePresence>
 }
