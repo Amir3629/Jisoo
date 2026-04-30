@@ -77,10 +77,10 @@ function getMediaForConcept(id: string): HeroMedia {
   return conceptMediaMap[id] ?? { primary: pickAsset(0) }
 }
 
-export function HeroSection() {
+export function HeroSection({ forcedConceptId, showConceptPicker = true }: { forcedConceptId?: string; showConceptPicker?: boolean } = {}) {
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const renderId = locale === 'en' ? activeId : 'image-editorial'
+  const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId), [renderId])
   const isMistGlass = renderId === 'mist-glass'
 
@@ -110,7 +110,7 @@ export function HeroSection() {
           </motion.div>
         </AnimatePresence>
 
-        {locale === 'en' && (
+        {false && (
           <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
             {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
             <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
@@ -388,7 +388,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.14),rgba(26,22,25,0.04))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-white">
           <p className="text-kicker text-white/78">Glass Fade Direction</p>
@@ -497,7 +497,7 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
       />
 
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.34)_42%,rgba(33,24,30,0.5)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.26)_42%,rgba(33,24,30,0.36)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
 
       {/* Foreground content: centered logo, concise headline/subheading, and tappable CTA with motion. */}
       <div className="relative z-10 flex h-full items-center justify-center px-5 pb-10 pt-16 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:px-10 lg:pb-20">
