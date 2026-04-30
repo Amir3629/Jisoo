@@ -211,8 +211,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
   return (
     <section className="bg-[#fdf8f5]">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
-      <div className="relative h-[62vh] min-h-[520px] sm:h-[68vh] overflow-hidden">
-        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" imageClassName="object-[center_0%]" priority />
+      <div className="relative h-[58vh] min-h-[500px] sm:h-[62vh] overflow-hidden">
+        <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" imageClassName="object-cover object-top scale-[1.12] transform-gpu" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/38 via-charcoal/14 to-transparent" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
           <p className="text-kicker text-white/85">JISOO Editorial</p>
@@ -223,7 +223,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         </div>
       </div>
 
-      <div className="px-4 pb-8 pt-4 -mt-1 lg:px-14 lg:pb-10 lg:pt-5">
+      <div className="bg-[#fdf8f5] px-4 pb-8 pt-4 -mt-1 lg:px-14 lg:pb-10 lg:pt-5">
         <div className="mx-auto lg:-translate-y-4 flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
