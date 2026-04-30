@@ -388,7 +388,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.42),rgba(26,22,25,0.2))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.14),rgba(26,22,25,0.04))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-white">
           <p className="text-kicker text-white/78">Glass Fade Direction</p>

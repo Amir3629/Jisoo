@@ -17,7 +17,7 @@ const languageMeta: Record<Locale, { name: string; flag: string }> = {
   tr: { name: 'Turkish', flag: '🇹🇷' },
 }
 
-export function LocaleSwitcher() {
+export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }) {
   const pathname = usePathname()
   const { locale } = useLocale()
   const [open, setOpen] = useState(false)
@@ -45,23 +45,17 @@ export function LocaleSwitcher() {
         aria-expanded={open}
         aria-label={`Current language ${languageMeta[locale].name}`}
         onClick={() => setOpen((prev) => !prev)}
-        className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-rose-mauve/25 bg-white/80 text-base shadow-sm transition-colors hover:border-rose-mauve/50"
+        className={cn('inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-rose-mauve/20 bg-white/80 shadow-sm transition-colors hover:border-rose-mauve/45', buttonClassName)}
       >
-        <span aria-hidden>{languageMeta[locale].flag}</span>
+        <span aria-hidden className="grid h-full w-full place-items-center text-[1.15rem] leading-none">{languageMeta[locale].flag}</span>
       </button>
       <ChevronDown className={cn('pointer-events-none absolute -bottom-1 right-0 h-3 w-3 text-charcoal/70 transition-transform', open && 'rotate-180')} />
 
       {open && (
         <div role="menu" className="absolute right-0 z-[90] mt-2 w-52 rounded-2xl border border-rose-mauve/20 bg-white/95 p-2 shadow-editorial backdrop-blur-sm">
           {locales.map((l) => (
-            <Link
-              key={l}
-              role="menuitem"
-              href={localizeHref(normalizedPath, l)}
-              className={cn('flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors hover:bg-rose-mauve/10', locale === l && 'bg-rose-mauve/15 font-medium')}
-            >
-              <span aria-hidden>{languageMeta[l].flag}</span>
-              <span>{languageMeta[l].name}</span>
+            <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors hover:bg-rose-mauve/10', locale === l && 'bg-rose-mauve/15 font-medium')}>
+              <span aria-hidden>{languageMeta[l].flag}</span><span>{languageMeta[l].name}</span>
             </Link>
           ))}
         </div>
