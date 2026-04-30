@@ -64,7 +64,8 @@ export function RitualSection() {
     step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
   }
   return (
-    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32" withVeilTop>
+    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat py-24 lg:bg-fixed lg:py-32" withVeilTop>
+      <div className="pointer-events-none absolute inset-0 bg-warm-ivory/72" />
       <div className="relative">
         <motion.div
           initial={{ opacity: 0.35, scale: 0.98 }}
