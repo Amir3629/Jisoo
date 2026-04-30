@@ -24,8 +24,9 @@ export function ConcernsSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   return (
-    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
-      <div className="max-w-7xl mx-auto px-4 lg:px-6">
+    <AtmosphereSection atmosphere="blush" className="relative overflow-hidden bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat py-24 lg:bg-fixed lg:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-warm-ivory/68" />
+      <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker={t.targetedSolutions}
           title={t.shopByConcern}
