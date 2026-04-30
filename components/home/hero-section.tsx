@@ -153,7 +153,7 @@ function HeroImage({ src, alt, className, priority }: { src: string; alt: string
         // P0: provide responsive image sizing hints for better bandwidth/LCP behavior.
         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 60vw, 50vw"
         priority={priority}
-        className="object-cover"
+        className="object-cover object-[center_36%]"
         onError={() => setFailed(true)}
       />
     </div>
@@ -224,14 +224,14 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
       </div>
 
       <div className="px-4 pb-8 pt-6 lg:px-14 lg:pb-10 lg:pt-7">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-6 gap-y-4 py-1 sm:gap-x-8 sm:gap-y-5 lg:gap-x-10 lg:gap-y-4">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 py-2 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
               key={item.label}
               href={localizeHref(item.href, locale)}
-              className="group flex w-[122px] flex-col items-center text-center sm:w-[128px]"
+              className="group flex w-[134px] flex-col items-center text-center sm:w-[146px]"
             >
-              <div className="relative h-16 w-16 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-[4.5rem] lg:w-[4.5rem]">
+              <div className="relative h-20 w-20 overflow-hidden rounded-full ring-1 ring-rose-mauve/30 transition group-hover:ring-rose-mauve/55 lg:h-24 lg:w-24">
                 <Image src={item.image} alt={item.label} fill className="object-cover" />
               </div>
               <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-medium tracking-[0.08em] text-charcoal/80 transition-colors group-hover:text-charcoal">
