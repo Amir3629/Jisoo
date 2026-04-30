@@ -32,34 +32,26 @@ function AnimatedTopText({ text }: { text: string }) {
   const letters = Array.from(text)
 
   return (
-    <span className="relative inline-flex min-w-[24ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle">
+    <span className="relative inline-flex min-w-[26ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={text}
           className="inline-flex whitespace-nowrap"
-          initial="hidden"
-          animate="show"
-          exit="exit"
+          initial={{ opacity: 0, x: -18, filter: 'blur(5px)' }}
+          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, x: 70, filter: 'blur(7px)' }}
+          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
         >
           {letters.map((letter, index) => (
             <motion.span
               key={`${text}-${index}-${letter}`}
-              custom={index}
               className="inline-block"
-              variants={{
-                hidden: { opacity: 0, x: -10, filter: 'blur(4px)' },
-                show: (i: number) => ({
-                  opacity: 1,
-                  x: 0,
-                  filter: 'blur(0px)',
-                  transition: { delay: i * 0.025, duration: 0.42, ease: [0.22, 1, 0.36, 1] },
-                }),
-                exit: (i: number) => ({
-                  opacity: 0,
-                  x: 24,
-                  filter: 'blur(5px)',
-                  transition: { delay: i * 0.018, duration: 0.55, ease: [0.4, 0, 0.2, 1] },
-                }),
+              initial={{ opacity: 0, x: -8 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{
+                delay: 0.18 + index * 0.026,
+                duration: 0.36,
+                ease: [0.22, 1, 0.36, 1],
               }}
             >
               {letter === ' ' ? ' ' : letter}
@@ -94,7 +86,7 @@ export function Header() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
   useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
-  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 7200); return () => window.clearInterval(timer) }, [topBarMessages.length])
+  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 7600); return () => window.clearInterval(timer) }, [topBarMessages.length])
   useEffect(() => { const onOutside = (event: MouseEvent) => { if (!profileRef.current?.contains(event.target as Node)) setIsProfileOpen(false) }; document.addEventListener('mousedown', onOutside); return () => document.removeEventListener('mousedown', onOutside) }, [])
   const openMega = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); setIsMegaOpen(true) }
   const closeMega = () => { closeTimer.current = window.setTimeout(() => setIsMegaOpen(false), 150) }
