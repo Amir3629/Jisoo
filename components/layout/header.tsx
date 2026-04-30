@@ -29,37 +29,59 @@ const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon cla
 const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
 
 function AnimatedTopText({ text }: { text: string }) {
-  const letters = Array.from(text)
+  const [shownText, setShownText] = useState(text)
+  const [phase, setPhase] = useState<'enter' | 'idle' | 'exit'>('enter')
+
+  useEffect(() => {
+    if (text === shownText) return
+
+    setPhase('exit')
+
+    const exitTimer = window.setTimeout(() => {
+      setShownText(text)
+      setPhase('enter')
+    }, 950)
+
+    const idleTimer = window.setTimeout(() => {
+      setPhase('idle')
+    }, 1750)
+
+    return () => {
+      window.clearTimeout(exitTimer)
+      window.clearTimeout(idleTimer)
+    }
+  }, [text, shownText])
+
+  const letters = Array.from(shownText)
 
   return (
-    <span className="relative inline-flex min-w-[26ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle">
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.span
-          key={text}
-          className="inline-flex whitespace-nowrap"
-          initial={{ opacity: 0, x: -18, filter: 'blur(5px)' }}
-          animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          exit={{ opacity: 0, x: 70, filter: 'blur(7px)' }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {letters.map((letter, index) => (
-            <motion.span
-              key={`${text}-${index}-${letter}`}
-              className="inline-block"
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0.18 + index * 0.026,
-                duration: 0.36,
-                ease: [0.22, 1, 0.36, 1],
-              }}
-            >
-              {letter === ' ' ? ' ' : letter}
-            </motion.span>
-          ))}
-        </motion.span>
-      </AnimatePresence>
-    </span>
+    <motion.span
+      className="relative inline-flex min-w-[28ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle"
+      animate={
+        phase === 'exit'
+          ? { opacity: 0, x: 95, filter: 'blur(7px)' }
+          : { opacity: 1, x: 0, filter: 'blur(0px)' }
+      }
+      transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <span className="inline-flex whitespace-nowrap">
+        {letters.map((letter, index) => (
+          <motion.span
+            key={`${shownText}-${index}-${phase}`}
+            className="inline-block"
+            initial={phase === 'enter' ? { opacity: 0, x: -12, filter: 'blur(3px)' } : false}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            transition={{
+              delay: phase === 'enter' ? 0.12 + index * 0.032 : 0,
+              duration: 0.42,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {letter === ' ' ? ' ' : letter}
+          </motion.span>
+        ))}
+      </span>
+    </motion.span>
   )
 }
 
@@ -86,7 +108,7 @@ export function Header() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
   useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
-  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 7600); return () => window.clearInterval(timer) }, [topBarMessages.length])
+  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 8200); return () => window.clearInterval(timer) }, [topBarMessages.length])
   useEffect(() => { const onOutside = (event: MouseEvent) => { if (!profileRef.current?.contains(event.target as Node)) setIsProfileOpen(false) }; document.addEventListener('mousedown', onOutside); return () => document.removeEventListener('mousedown', onOutside) }, [])
   const openMega = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); setIsMegaOpen(true) }
   const closeMega = () => { closeTimer.current = window.setTimeout(() => setIsMegaOpen(false), 150) }
