@@ -30,10 +30,15 @@ export function HomePageShell() {
         <CategoriesSection />
         <FeaturedProducts />
         <div className="transition-veil" />
-        <RitualSection />
-        <AiAssistantTeaser />
-        <ConcernsSection />
-        <TestimonialsSection />
+        <section className="relative overflow-hidden bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat">
+          <div className="pointer-events-none absolute inset-0 bg-warm-ivory/75" />
+          <div className="relative">
+            <RitualSection />
+            <AiAssistantTeaser />
+            <ConcernsSection />
+            <TestimonialsSection />
+          </div>
+        </section>
         <SocialSection />
         <InstagramShowcase />
         <Footer />

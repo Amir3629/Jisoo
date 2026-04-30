@@ -199,7 +199,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const categoryNav = [
-    { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png', href: '/shop?category=face' },
+    { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/Icons/Face.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'الشفاه والخدود' : locale === 'fr' ? 'LÈVRES & JOUES' : locale === 'de' ? 'LIPPEN & WANGEN' : locale === 'ko' ? '립 & 치크' : locale === 'tr' ? 'DUDAK & YANAK' : 'LIPS & CHEEKS', image: '/lip.jpg', href: '/shop?category=lips-cheeks' },
     { label: locale === 'ar' ? 'العيون' : locale === 'fr' ? 'YEUX' : locale === 'de' ? 'AUGEN' : locale === 'ko' ? '아이' : locale === 'tr' ? 'GÖZLER' : 'EYES', image: '/stunning-blue-eye-stockcake.jpg.webp', href: '/shop?category=eyes' },
     { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/hero7/Untitled design (32).png', href: '/shop?category=bundles-sets' },
