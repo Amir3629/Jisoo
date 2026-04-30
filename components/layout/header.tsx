@@ -37,56 +37,42 @@ function AnimatedTopText({ text }: { text: string }) {
 
     setPrev(current)
 
-    const t = setTimeout(() => {
+    const timer = setTimeout(() => {
       setCurrent(text)
       setPrev(null)
-    }, 700)
+    }, 760)
 
-    return () => clearTimeout(t)
+    return () => clearTimeout(timer)
   }, [text, current])
 
+  const renderLetters = (value: string, mode: 'enter' | 'exit') =>
+    Array.from(value).map((letter, index) => (
+      <motion.span
+        key={`${mode}-${value}-${index}`}
+        className="inline-block"
+        initial={mode === 'enter' ? { opacity: 0, x: -8, y: 4, filter: 'blur(3px)' } : false}
+        animate={mode === 'enter' ? { opacity: 1, x: 0, y: 0, filter: 'blur(0px)' } : { opacity: 0, x: 16, y: -1, filter: 'blur(4px)' }}
+        transition={{
+          duration: mode === 'enter' ? 0.42 : 0.62,
+          delay: index * 0.026,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+      >
+        {letter === ' ' ? '\u00A0' : letter}
+      </motion.span>
+    ))
+
   return (
-    <span className="relative inline-flex min-w-[28ch] items-center justify-center overflow-hidden whitespace-nowrap">
+    <span className="relative inline-flex min-w-[34ch] items-center justify-center overflow-hidden whitespace-nowrap">
       {prev && (
-        <motion.span
-          key={`old-${prev}`}
-          className="absolute"
-          initial={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
-          animate={{ opacity: 0, x: 90, filter: 'blur(5px)' }}
-          transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-        >
-          {prev}
-        </motion.span>
+        <span className="absolute inline-flex">
+          {renderLetters(prev, 'exit')}
+        </span>
       )}
 
-      <motion.span
-        key={current}
-        className="inline-flex"
-        initial="hidden"
-        animate="show"
-      >
-        {Array.from(current).map((l, i) => (
-          <motion.span
-            key={`${current}-${i}`}
-            className="inline-block"
-            variants={{
-              hidden: { opacity: 0, y: 6, filter: 'blur(3px)' },
-              show: {
-                opacity: 1,
-                y: 0,
-                filter: 'blur(0px)',
-                transition: {
-                  delay: 0.12 + i * 0.032,
-                  duration: 0.38,
-                  ease: [0.22, 1, 0.36, 1],
-                },
-              },
-            }}
-          >
-            {l === ' ' ? ' ' : l}
-          </motion.span>
-        ))}
-      </motion.span>
+      <span className="inline-flex">
+        {renderLetters(current, 'enter')}
+      </span>
     </span>
   )
 }
@@ -126,7 +112,7 @@ export function Header() {
         <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
           <AnimatePresence mode="wait">
             <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
+              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
             </motion.div>
           </AnimatePresence>
         </div>
