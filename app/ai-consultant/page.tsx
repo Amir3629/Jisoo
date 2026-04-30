@@ -9,6 +9,8 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { useConciergeController } from '@/components/ai/use-concierge-controller'
+import { Header } from '@/components/layout/header'
+import { HeroSection } from '@/components/home/hero-section'
 
 const actionAccent: Record<string, string> = {
   product: 'border-plum/25 bg-plum/5',
@@ -45,7 +47,10 @@ export default function AIConsultantPage() {
   }, [messages, loading])
 
   return (
-    <div className="min-h-screen bg-background pt-24 pb-10 px-4">
+    <main className="min-h-screen bg-background">
+      <Header />
+      <HeroSection forcedConceptId="design-11-video-signature" showConceptPicker={false} />
+      <div className="pt-8 pb-10 px-4">
       <div className="max-w-5xl mx-auto rounded-3xl border border-rose-mauve/20 bg-card overflow-hidden shadow-editorial">
         <div className="p-4 border-b flex items-center justify-between bg-gradient-to-r from-plum to-rose-mauve text-white">
           <div className="flex items-center gap-3">
@@ -133,6 +138,7 @@ export default function AIConsultantPage() {
           This concierge is limited to JISOO support and beauty topics. Realtime mode is scaffolded and falls back to browser voice when unavailable.
         </div>
       </div>
-    </div>
+      </div>
+    </main>
   )
 }
