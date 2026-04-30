@@ -29,32 +29,45 @@ const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon cla
 const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
 
 function AnimatedTopText({ text }: { text: string }) {
-  const chars = text.split('')
+  const letters = Array.from(text)
+
   return (
-    <motion.span
-      initial="hidden"
-      animate="show"
-      exit="exit"
-      variants={{
-        hidden: {},
-        show: { transition: { staggerChildren: 0.018, delayChildren: 0.02 } },
-        exit: { transition: { staggerChildren: 0.014, staggerDirection: -1 } },
-      }}
-      className="inline-flex"
-    >
-      {chars.map((ch, i) => (
+    <span className="relative inline-flex min-w-[24ch] items-center justify-center overflow-hidden whitespace-nowrap align-middle">
+      <AnimatePresence mode="wait" initial={false}>
         <motion.span
-          key={`${ch}-${i}`}
-          variants={{
-            hidden: { opacity: 0, y: 4 },
-            show: { opacity: 1, y: 0, transition: { duration: 0.2 } },
-            exit: { opacity: 0, y: -4, transition: { duration: 0.16 } },
-          }}
+          key={text}
+          className="inline-flex whitespace-nowrap"
+          initial="hidden"
+          animate="show"
+          exit="exit"
         >
-          {ch === ' ' ? '\u00A0' : ch}
+          {letters.map((letter, index) => (
+            <motion.span
+              key={`${text}-${index}-${letter}`}
+              custom={index}
+              className="inline-block"
+              variants={{
+                hidden: { opacity: 0, x: -10, filter: 'blur(4px)' },
+                show: (i: number) => ({
+                  opacity: 1,
+                  x: 0,
+                  filter: 'blur(0px)',
+                  transition: { delay: i * 0.025, duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+                }),
+                exit: (i: number) => ({
+                  opacity: 0,
+                  x: 24,
+                  filter: 'blur(5px)',
+                  transition: { delay: i * 0.018, duration: 0.55, ease: [0.4, 0, 0.2, 1] },
+                }),
+              }}
+            >
+              {letter === ' ' ? ' ' : letter}
+            </motion.span>
+          ))}
         </motion.span>
-      ))}
-    </motion.span>
+      </AnimatePresence>
+    </span>
   )
 }
 
@@ -81,7 +94,7 @@ export function Header() {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
 
   useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
-  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 6200); return () => window.clearInterval(timer) }, [topBarMessages.length])
+  useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 7200); return () => window.clearInterval(timer) }, [topBarMessages.length])
   useEffect(() => { const onOutside = (event: MouseEvent) => { if (!profileRef.current?.contains(event.target as Node)) setIsProfileOpen(false) }; document.addEventListener('mousedown', onOutside); return () => document.removeEventListener('mousedown', onOutside) }, [])
   const openMega = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); setIsMegaOpen(true) }
   const closeMega = () => { closeTimer.current = window.setTimeout(() => setIsMegaOpen(false), 150) }
