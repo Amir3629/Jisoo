@@ -110,7 +110,7 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
           </motion.div>
         </AnimatePresence>
 
-        {locale === 'en' && showConceptPicker && !forcedConceptId && (
+        {false && (
           <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
             {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
             <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
