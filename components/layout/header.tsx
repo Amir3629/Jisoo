@@ -28,54 +28,70 @@ const FacebookBrand = ({ className }: { className?: string }) => <BrandIcon clas
 const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm8.9 1.85a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg></BrandIcon>
 const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
 
-function AnimatedTopText({ text }: { text: string }) {
-  const [current, setCurrent] = useState(text)
-  const [prev, setPrev] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (text === current) return
-
-    setPrev(current)
-
-    const timer = setTimeout(() => {
-      setCurrent(text)
-      setPrev(null)
-    }, 760)
-
-    return () => clearTimeout(timer)
-  }, [text, current])
-
-  const renderLetters = (value: string, mode: 'enter' | 'exit') =>
-    Array.from(value).map((letter, index) => (
-      <motion.span
-        key={`${mode}-${value}-${index}`}
-        className="inline-block"
-        initial={mode === 'enter' ? { opacity: 0, x: -8, y: 4, filter: 'blur(3px)' } : false}
-        animate={mode === 'enter' ? { opacity: 1, x: 0, y: 0, filter: 'blur(0px)' } : { opacity: 0, x: 16, y: -1, filter: 'blur(4px)' }}
-        transition={{
-          duration: mode === 'enter' ? 0.42 : 0.62,
-          delay: index * 0.026,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        {letter === ' ' ? '\u00A0' : letter}
-      </motion.span>
-    ))
-
-  return (
-    <span className="relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap">
-      {prev && (
-        <span className="absolute inline-flex">
-          {renderLetters(prev, 'exit')}
-        </span>
-      )}
-
+function AnimatedTopText({
+  item,
+}: {
+  item: { label: string; href?: string; icon?: ({ className }: { className?: string }) => ReactNode; className?: string }
+}) {
+  const letters = Array.from(item.label)
+  const Icon = item.icon
+  const content = (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+      {Icon ? <Icon className={cn('h-3.5 w-3.5', item.className)} /> : null}
       <span className="inline-flex">
-        {renderLetters(current, 'enter')}
+        {letters.map((letter, index) => (
+          <motion.span
+            key={`letter-${item.label}-${index}`}
+            className="inline-block"
+            variants={{
+              hidden: { opacity: 0, x: -10, filter: 'blur(3px)' },
+              show: { opacity: 1, x: 0, filter: 'blur(0px)' },
+            }}
+            transition={{
+              duration: 0.36,
+              delay: index * 0.024,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </motion.span>
+        ))}
       </span>
+      {Icon ? <Icon className={cn('h-3.5 w-3.5', item.className)} /> : null}
     </span>
   )
+
+  const wrapper = (
+    <motion.span
+      className="inline-flex items-center"
+      exit={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
+      transition={{ duration: 0.56, ease: [0.22, 1, 0.36, 1] }}
+      variants={{
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.024,
+          },
+        },
+      }}
+      initial="hidden"
+      animate="show"
+    >
+      {content}
+    </motion.span>
+  )
+
+  if (item.href) {
+    return (
+      <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center hover:opacity-85">
+        {wrapper}
+      </a>
+    )
+  }
+
+  return wrapper
 }
+
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -110,10 +126,8 @@ export function Header() {
     <motion.header initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-150', isScrolled ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-warm-ivory/72 backdrop-blur-md')}>
       <div className="hidden border-b border-rose-mauve/12 bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] lg:block">
         <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
-          <AnimatePresence mode="wait">
-            <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
-            </motion.div>
+          <AnimatePresence mode="wait" initial={false}>
+            <AnimatedTopText key={topBarIndex} item={topBarMessages[topBarIndex]} />
           </AnimatePresence>
         </div>
       </div>
@@ -125,7 +139,7 @@ export function Header() {
             {navLinks.map((link) => <Link key={link.href} href={localizeHref(link.href, locale)} className="text-sm tracking-[0.1em] text-charcoal hover:text-rose-mauve">{link.label}</Link>)}
             <div className="relative" onMouseEnter={openMega} onMouseLeave={closeMega}><button onClick={() => setIsMegaOpen((p) => !p)} aria-expanded={isMegaOpen} className="inline-flex items-center gap-1 text-sm tracking-[0.1em] text-charcoal hover:text-rose-mauve">Discover <ChevronDown className="h-4 w-4" /></button></div>
           </nav>
-          <div className="relative z-10 flex items-center gap-1.5 lg:gap-2"><div className="hidden lg:flex items-center gap-2"><LocaleSwitcher buttonClassName="h-9 w-9" /><button onClick={() => setIsRegionOpen(true)} aria-label="Select region" className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-rose-mauve/20 bg-white/80 shadow-sm hover:border-rose-mauve/45"><Globe className="h-4 w-4" /></button></div><button onClick={() => setIsSearchOpen(true)} className="p-2" aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button><div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className="p-2" aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button>{isProfileOpen && <div role="menu" className="absolute right-0 z-[90] mt-2 w-52 rounded-2xl border border-rose-mauve/20 bg-white/95 p-2 shadow-editorial backdrop-blur-sm"><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><User className="h-4 w-4" />Account / Login</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Heart className="h-4 w-4" />Wishlist</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><ShoppingBag className="h-4 w-4" />Cart {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Package className="h-4 w-4" />Orders</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Settings className="h-4 w-4" />Settings</Link></div>}</div></div>
+          <div className="relative z-10 flex items-center gap-1.5 lg:gap-2"><div className="hidden lg:flex items-center gap-2"><LocaleSwitcher buttonClassName="inline-flex h-10 w-10 items-center justify-center text-charcoal/80 transition hover:text-charcoal hover:opacity-80" /><button onClick={() => setIsRegionOpen(true)} aria-label="Select region" className="inline-flex h-10 w-10 items-center justify-center text-charcoal/80 transition hover:text-charcoal hover:opacity-80"><Globe className="h-4 w-4" /></button></div><button onClick={() => setIsSearchOpen(true)} className="p-2" aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button><div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className="p-2" aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button>{isProfileOpen && <div role="menu" className="absolute right-0 z-[90] mt-2 w-52 rounded-2xl border border-rose-mauve/20 bg-white/95 p-2 shadow-editorial backdrop-blur-sm"><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><User className="h-4 w-4" />Account / Login</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Heart className="h-4 w-4" />Wishlist</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><ShoppingBag className="h-4 w-4" />Cart {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Package className="h-4 w-4" />Orders</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-rose-mauve/10"><Settings className="h-4 w-4" />Settings</Link></div>}</div></div>
         </div>
       </div>
       <AnimatePresence mode="wait">{isMegaOpen && <motion.div onMouseEnter={openMega} onMouseLeave={closeMega} initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: 8, filter: 'blur(4px)' }} transition={{ duration: 0.344, ease: [0.22,1,0.36,1] }} className="hidden lg:block border-t border-rose-mauve/12 bg-warm-ivory/95 backdrop-blur-xl shadow-[0_12px_28px_rgba(188,143,157,0.12)]"><motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }} className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{megaGroups.map((group, gi) => <motion.div key={group.title} variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } }} className={cn('space-y-3', gi !== 3 && 'border-r border-rose-mauve/12 pr-6')}><p className="text-xs uppercase tracking-[0.14em] text-charcoal/55">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.label} href={localizeHref(item.href, locale)} className="block rounded-md px-1.5 py-1 text-sm text-charcoal/85 transition-all duration-200 hover:bg-rose-mauve/8 hover:text-rose-mauve">{item.label}</Link>)}</div></motion.div>)}</motion.div></motion.div>}</AnimatePresence>
