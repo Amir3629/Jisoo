@@ -9,11 +9,11 @@ import { cn } from '@/lib/utils'
 
 const languageMeta: Record<Locale, { name: string; flag: string }> = {
   en: { name: 'English', flag: '🇬🇧' },
-  ar: { name: 'Arabic', flag: '🇦🇪' },
-  fr: { name: 'French', flag: '🇫🇷' },
-  de: { name: 'German', flag: '🇩🇪' },
-  ko: { name: 'Korean', flag: '🇰🇷' },
-  tr: { name: 'Turkish', flag: '🇹🇷' },
+  ar: { name: 'العربية', flag: '🇦🇪' },
+  fr: { name: 'Français', flag: '🇫🇷' },
+  de: { name: 'Deutsch', flag: '🇩🇪' },
+  ko: { name: '한국어', flag: '🇰🇷' },
+  tr: { name: 'Türkçe', flag: '🇹🇷' },
 }
 
 export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }) {
@@ -38,12 +38,12 @@ export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }
 
   return (
     <div ref={wrapRef} className="relative">
-      <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={`Current language ${languageMeta[locale].name}`} onClick={() => setOpen((prev) => !prev)} className={cn('inline-flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-rose-mauve/20 bg-white/80 shadow-sm transition-colors hover:border-rose-mauve/45', buttonClassName)}>
-        <span aria-hidden className="grid h-full w-full place-items-center text-[1.15rem] leading-none">{languageMeta[locale].flag}</span>
+      <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={`Current language ${languageMeta[locale].name}`} onClick={() => setOpen((prev) => !prev)} className={cn('inline-flex h-10 w-10 items-center justify-center text-charcoal/80 transition hover:text-charcoal hover:opacity-80', buttonClassName)}>
+        <span aria-hidden className="text-[1.15rem] leading-none">{languageMeta[locale].flag}</span>
       </button>
       {open && (
         <div role="menu" className="absolute right-0 z-[90] mt-2 w-52 rounded-2xl border border-rose-mauve/20 bg-white/95 p-2 shadow-editorial backdrop-blur-sm">
-          {locales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center gap-3 rounded-xl px-3 py-2 text-sm transition-colors hover:bg-rose-mauve/10', locale === l && 'bg-rose-mauve/15 font-medium')}><span aria-hidden>{languageMeta[l].flag}</span><span>{languageMeta[l].name}</span></Link>)}
+          {locales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-rose-mauve/10', locale === l && 'bg-rose-mauve/15 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
         </div>
       )}
     </div>
