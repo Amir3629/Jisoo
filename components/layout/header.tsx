@@ -28,54 +28,70 @@ const FacebookBrand = ({ className }: { className?: string }) => <BrandIcon clas
 const InstagramBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5a4.25 4.25 0 0 0 4.25-4.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm8.9 1.85a1.1 1.1 0 1 1 0 2.2 1.1 1.1 0 0 1 0-2.2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7z"/></svg></BrandIcon>
 const TiktokBrand = ({ className }: { className?: string }) => <BrandIcon className={className}><svg viewBox="0 0 24 24" fill="currentColor" className="h-full w-full"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z"/></svg></BrandIcon>
 
-function AnimatedTopText({ text }: { text: string }) {
-  const [current, setCurrent] = useState(text)
-  const [prev, setPrev] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (text === current) return
-
-    setPrev(current)
-
-    const timer = setTimeout(() => {
-      setCurrent(text)
-      setPrev(null)
-    }, 760)
-
-    return () => clearTimeout(timer)
-  }, [text, current])
-
-  const renderLetters = (value: string, mode: 'enter' | 'exit') =>
-    Array.from(value).map((letter, index) => (
-      <motion.span
-        key={`${mode}-${value}-${index}`}
-        className="inline-block"
-        initial={mode === 'enter' ? { opacity: 0, x: -8, y: 4, filter: 'blur(3px)' } : false}
-        animate={mode === 'enter' ? { opacity: 1, x: 0, y: 0, filter: 'blur(0px)' } : { opacity: 0, x: 16, y: -1, filter: 'blur(4px)' }}
-        transition={{
-          duration: mode === 'enter' ? 0.42 : 0.62,
-          delay: index * 0.026,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-        {letter === ' ' ? '\u00A0' : letter}
-      </motion.span>
-    ))
-
-  return (
-    <span className="relative inline-flex items-center justify-center overflow-hidden whitespace-nowrap">
-      {prev && (
-        <span className="absolute inline-flex">
-          {renderLetters(prev, 'exit')}
-        </span>
-      )}
-
+function AnimatedTopText({
+  item,
+}: {
+  item: { label: string; href?: string; icon?: ({ className }: { className?: string }) => JSX.Element; className?: string }
+}) {
+  const letters = Array.from(item.label)
+  const Icon = item.icon
+  const content = (
+    <span className="inline-flex items-center gap-1.5 whitespace-nowrap">
+      {Icon ? <Icon className={cn('h-3.5 w-3.5', item.className)} /> : null}
       <span className="inline-flex">
-        {renderLetters(current, 'enter')}
+        {letters.map((letter, index) => (
+          <motion.span
+            key={`letter-${item.label}-${index}`}
+            className="inline-block"
+            variants={{
+              hidden: { opacity: 0, x: -10, filter: 'blur(3px)' },
+              show: { opacity: 1, x: 0, filter: 'blur(0px)' },
+            }}
+            transition={{
+              duration: 0.36,
+              delay: index * 0.024,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {letter === ' ' ? '\u00A0' : letter}
+          </motion.span>
+        ))}
       </span>
+      {Icon ? <Icon className={cn('h-3.5 w-3.5', item.className)} /> : null}
     </span>
   )
+
+  const wrapper = (
+    <motion.span
+      className="inline-flex items-center"
+      exit={{ opacity: 0, x: 20, filter: 'blur(4px)' }}
+      transition={{ duration: 0.56, ease: [0.22, 1, 0.36, 1] }}
+      variants={{
+        hidden: {},
+        show: {
+          transition: {
+            staggerChildren: 0.024,
+          },
+        },
+      }}
+      initial="hidden"
+      animate="show"
+    >
+      {content}
+    </motion.span>
+  )
+
+  if (item.href) {
+    return (
+      <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center hover:opacity-85">
+        {wrapper}
+      </a>
+    )
+  }
+
+  return wrapper
 }
+
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -110,10 +126,8 @@ export function Header() {
     <motion.header initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-150', isScrolled ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-warm-ivory/72 backdrop-blur-md')}>
       <div className="hidden border-b border-rose-mauve/12 bg-gradient-to-r from-[#fff7f2] via-[#fbeaf1] to-[#f8eee5] lg:block">
         <div className="mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] text-charcoal/85">
-          <AnimatePresence mode="wait">
-            <motion.div key={topBarIndex} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
-              {(() => { const item = topBarMessages[topBarIndex]; if (!item.href || !item.icon) return <AnimatedTopText text={item.label} />; const Icon = item.icon; return <a href={item.href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-85"><Icon className={cn('h-3.5 w-3.5', item.className)} /><AnimatedTopText text={item.label} /><Icon className={cn('h-3.5 w-3.5', item.className)} /></a> })()}
-            </motion.div>
+          <AnimatePresence mode="wait" initial={false}>
+            <AnimatedTopText key={topBarIndex} item={topBarMessages[topBarIndex]} />
           </AnimatePresence>
         </div>
       </div>
