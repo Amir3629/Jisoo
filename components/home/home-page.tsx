@@ -29,11 +29,17 @@ export function HomePageShell() {
         <PartnersSection />
         <CategoriesSection />
         <FeaturedProducts />
-        <div className="transition-veil" />
-        <RitualSection />
-        <AiAssistantTeaser />
-        <ConcernsSection />
-        <TestimonialsSection />
+        <section className="relative isolate overflow-hidden">
+          <div className="pointer-events-none absolute inset-0 bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat" />
+          <div className="pointer-events-none absolute inset-0 bg-warm-ivory/85" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-warm-ivory/90 via-warm-ivory/78 to-warm-ivory/90" />
+          <div className="relative z-10">
+            <RitualSection />
+            <AiAssistantTeaser />
+            <ConcernsSection />
+            <TestimonialsSection />
+          </div>
+        </section>
         <SocialSection />
         <InstagramShowcase />
         <Footer />
