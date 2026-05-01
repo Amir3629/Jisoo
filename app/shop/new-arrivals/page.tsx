@@ -1,10 +1,10 @@
 'use client'
 
+import Image from 'next/image'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { ProductCard } from '@/components/product/product-card'
 import { products } from '@/lib/data'
-import { HeroSection } from '@/components/home/hero-section'
 import { useLocale } from '@/components/providers/locale-provider'
 
 const copy = {
@@ -47,8 +47,29 @@ export default function NewArrivalsPage() {
 
   return (
     <main className="min-h-screen bg-warm-ivory">
-      <Header transparentOnTop logoSrc="/LOGO/Logonew.png" logoClassName="h-20 lg:h-[6.4rem]" />
-      <HeroSection forcedConceptId="mist-glass" showConceptPicker={false} />
+      <Header transparentOnTop logoSrc="/LOGO/Logonew.png" logoClassName="mt-6 h-20 lg:h-[6.4rem]" />
+
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0 bg-fixed" aria-hidden="true">
+          <Image
+            src="/hero7/Untitled design (32).png"
+            alt="Mist glass background"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 bg-white/20" aria-hidden="true" />
+        <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
+          <div className="max-w-2xl text-charcoal">
+            <p className="text-kicker text-charcoal/78">Glass Fade Direction</p>
+            <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
+            <p className="mt-4 max-w-xl text-charcoal/72">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+          </div>
+        </div>
+      </section>
+
       <section className="pb-8 pt-10 bg-gradient-to-b from-nude-beige/30 to-warm-ivory"><div className="max-w-7xl mx-auto px-4 lg:px-6"><h1 className="text-4xl lg:text-5xl font-serif text-plum">{t.title}</h1><p className="mt-3 text-charcoal/70">{t.body}</p></div></section>
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

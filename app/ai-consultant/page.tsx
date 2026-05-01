@@ -48,7 +48,7 @@ export default function AIConsultantPage() {
 
   return (
     <main className="min-h-screen bg-background">
-      <Header transparentOnTop />
+      <Header transparentOnTop lightOnTop />
       <HeroSection forcedConceptId="design-11-video-signature" showConceptPicker={false} />
       <div className="pt-8 pb-10 px-4">
       <div className="max-w-5xl mx-auto rounded-3xl border border-rose-mauve/20 bg-card overflow-hidden shadow-editorial">

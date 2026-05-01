@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { useLocale } from '@/components/providers/locale-provider'
@@ -24,5 +25,26 @@ for (const locale of ['ar', 'fr', 'de', 'ko', 'tr'] as const) {
 export default function TipsCategoryPage({ params }: { params: { category: string } }) {
   const { locale } = useLocale()
   const c = copy[locale][params.category] ?? copy[locale].skin
-  return <main className='min-h-screen bg-warm-ivory'><Header /><section className='pt-36 pb-16 px-4 max-w-4xl mx-auto'><Link href={localizeHref('/tips', locale)} className='text-rose-mauve text-sm'>{c.back}</Link><h1 className='mt-4 font-serif text-5xl text-charcoal'>{c.title}</h1><ul className='mt-8 space-y-4'>{c.tips.map(t=><li key={t} className='rounded-xl border border-rose-mauve/20 bg-white/80 p-4 text-charcoal/75'>{t}</li>)}</ul><div className='mt-10 rounded-2xl bg-gradient-to-r from-[#fbeff4] to-[#f8efe7] p-6 border border-rose-mauve/20'><h2 className='font-serif text-2xl'>{c.pairingTitle}</h2><p className='mt-2 text-charcoal/70'>{c.pairingBody}</p><Link href={localizeHref('/shop', locale)} className='mt-4 inline-block text-rose-mauve'>{c.pairingCta}</Link></div></section><Footer /></main>
+  return (
+    <main className="min-h-screen bg-warm-ivory">
+      <Header />
+      <section className="mx-auto max-w-5xl px-4 pb-16 pt-32 lg:px-6">
+        <Link href={localizeHref('/tips', locale)} className="text-sm text-rose-mauve">{c.back}</Link>
+        <div className="relative mt-5 h-64 overflow-hidden rounded-3xl lg:h-80">
+          <Image src="/first slide example/ChatGPT Image Apr 23, 2026, 08_29_09 PM.png" alt={`${c.title} banner`} fill sizes="(max-width: 1024px) 100vw, 960px" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-charcoal/50 via-charcoal/20 to-transparent" />
+          <h1 className="absolute bottom-8 left-6 font-serif text-4xl text-white lg:text-6xl">{c.title}</h1>
+        </div>
+        <ul className="mt-8 space-y-4">
+          {c.tips.map((t) => <li key={t} className="rounded-2xl border border-rose-mauve/20 bg-white/85 p-5 text-charcoal/75 shadow-sm">{t}</li>)}
+        </ul>
+        <div className="mt-10 rounded-3xl border border-rose-mauve/20 bg-gradient-to-r from-[#fbeff4] to-[#f8efe7] p-7">
+          <h2 className="font-serif text-3xl text-charcoal">{c.pairingTitle}</h2>
+          <p className="mt-2 text-charcoal/70">{c.pairingBody}</p>
+          <Link href={localizeHref('/shop', locale)} className="mt-4 inline-block text-rose-mauve">{c.pairingCta}</Link>
+        </div>
+      </section>
+      <Footer />
+    </main>
+  )
 }
