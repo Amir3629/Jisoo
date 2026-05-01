@@ -70,7 +70,7 @@ const conceptMediaMap: Record<string, HeroMedia> = {
   'mist-glass': { primary: pickAsset(3), secondary: pickAsset(2) },
   'magazine-grid': { primary: pickAsset(5), secondary: pickAsset(4), tertiary: pickAsset(1), quaternary: pickAsset(0) },
   'commerce-luxe': { primary: pickAsset(2), secondary: pickAsset(4) },
-  'design-11-video-signature': { primary: pickAsset(0), video: '/video.mp4' },
+  'design-11-video-signature': { primary: pickAsset(0), video: '/first slide example/Video first slide.mp4' },
 }
 
 function getMediaForConcept(id: string): HeroMedia {
@@ -113,7 +113,7 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
         {false && (
           <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
             {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
-            <div className="rounded-2xl border border-rose-mauve/22 bg-white/70 p-2 backdrop-blur-sm shadow-[0_18px_35px_rgba(197,153,166,0.22)]">
+            <div className="rounded-2xl border border-rose-mauve/22 bg-white/80 p-2 shadow-luxury">
               <div className="grid gap-1.5">
                 {heroConcepts.map((concept, index) => (
                   <button
@@ -327,7 +327,7 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
           <p className="text-kicker text-white/78">Campaign Cover / Vol.04</p>
           <h1 className="mt-4 font-serif text-6xl leading-[0.9] lg:text-8xl">THE GLOW ISSUE</h1>
           <p className="mt-5 max-w-xl text-white/80">Campaign-cover direction with open cinematic media and premium editorial hierarchy.</p>
-          <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/10 px-5 py-3 text-sm text-white backdrop-blur-sm"><PlayCircle className="h-4 w-4" />Consult</Link></div>
+          <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-5 py-3 text-sm text-white"><PlayCircle className="h-4 w-4" />Consult</Link></div>
         </div>
       </div>
       <div className="absolute bottom-6 right-6 hidden h-48 w-36 overflow-hidden rounded-2xl border border-white/45 shadow-xl lg:block">
@@ -363,6 +363,7 @@ function FloatingArchitectureHero({ locale }: { locale: Locale }) {
         src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Floating architecture background"
         fill
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover object-bottom"
         priority
       />
@@ -385,6 +386,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         src={FLOATING_ARCHITECTURE_BACKGROUND}
         alt="Mist glass background"
         fill
+        sizes="100vw"
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
@@ -410,13 +412,7 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
       <div className="col-span-1 lg:col-span-5 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[1]} alt="Magazine secondary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-2 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[2]} alt="Magazine tertiary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
-      <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.45 }}
-        transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
-        className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-[0_20px_50px_rgba(176,128,144,0.16)] backdrop-blur-[4px] lg:col-span-5 lg:row-span-3 lg:p-8"
-      >
+      <div className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-luxury lg:col-span-5 lg:row-span-3 lg:p-8">
         <div>
           <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO Editorial</p>
           <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">Editorial Layout Mosaic</h1>
@@ -432,7 +428,7 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
             </Link>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   )
 }

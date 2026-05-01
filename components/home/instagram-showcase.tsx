@@ -162,7 +162,7 @@ export function InstagramShowcase() {
               {INSTAGRAM_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
                   <div className="relative aspect-[4/5]">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
                     {post[3] === 'carousel' ? <Copy className="h-3.5 w-3.5" /> : <Clapperboard className="h-3.5 w-3.5" />}
@@ -198,7 +198,7 @@ export function InstagramShowcase() {
               {TIKTOK_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
                   <div className="relative aspect-[9/16]">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
                     <PlayCircle className="h-3.5 w-3.5" />
@@ -234,7 +234,7 @@ export function InstagramShowcase() {
               {FACEBOOK_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
                   <div className="relative aspect-[4/5]">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/10 to-transparent p-2 opacity-0 transition group-hover:opacity-100">
                     <div className="mb-1 flex flex-wrap items-center gap-2 text-[11px] font-medium text-white">
@@ -285,7 +285,7 @@ function SocialPanel({
       <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#eee1d8] pb-4">
         <a href={link} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-center gap-3">
           <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-rose-mauve/40 ring-offset-2 ring-offset-white">
-            <Image src="/hero7/Untitled design (32).png" alt={`${title} profile`} fill className="object-cover" />
+            <Image src="/hero7/Untitled design (32).png" alt={`${title} profile`} fill sizes="56px" className="object-cover" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
