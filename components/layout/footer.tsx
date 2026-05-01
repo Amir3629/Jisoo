@@ -58,6 +58,7 @@ const socialLinks = [
 export function Footer() {
   const [email, setEmail] = useState('')
   const [isSubscribed, setIsSubscribed] = useState(false)
+  const [openLegal, setOpenLegal] = useState<string | null>(null)
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   const brandBody = locale === 'ar' ? 'نقدم أفضل منتجات الجمال الكوري للعالم بعناية.' : locale === 'fr' ? 'Nous sélectionnons le meilleur de la beauté coréenne pour le monde.' : locale === 'de' ? 'Wir kuratieren die beste koreanische Beauty für die Welt.' : locale === 'ko' ? '프리미엄 K-뷰티를 전 세계에 전합니다.' : locale === 'tr' ? 'Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz.' : 'Curating the finest Korean beauty for the world. Premium skincare and makeup, delivered with care.'
@@ -81,6 +82,12 @@ export function Footer() {
       setIsSubscribed(true)
       setEmail('')
     }
+  }
+  const legalContent: Record<string, { title: string; body: string }> = {
+    'Privacy Policy': { title: localizedLink('Privacy Policy'), body: 'We collect only the information needed to process orders, support your account, and personalize your JISOO experience. We never sell your personal data.' },
+    'Terms of Service': { title: localizedLink('Terms of Service'), body: 'By using JISOO, you agree to use the site lawfully, provide accurate order details, and respect all intellectual property rights for our content and products.' },
+    'Cookie Policy': { title: localizedLink('Cookie Policy'), body: 'Cookies help us remember preferences, measure performance, and improve shopping flow. You can control cookies in browser settings at any time.' },
+    Accessibility: { title: localizedLink('Accessibility'), body: 'JISOO aims to provide an inclusive digital experience with keyboard support, semantic structure, readable contrast, and ongoing accessibility improvements.' },
   }
 
   return (
@@ -233,12 +240,13 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map(link => (
                 <li key={link.href}>
-                  <Link
-                    href={localizeHref(link.href, locale)}
-                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
+                  <button
+                    type="button"
+                    onClick={() => setOpenLegal(link.label)}
+                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors text-left"
                   >
                     {localizedLink(link.label)}
-                  </Link>
+                  </button>
                 </li>
               ))}
             </ul>
@@ -257,6 +265,17 @@ export function Footer() {
           </div>
         </div>
       </div>
+      {openLegal && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-charcoal/40 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={legalContent[openLegal].title}>
+          <div className="w-full max-w-2xl rounded-3xl border border-rose-mauve/25 bg-white p-6 shadow-2xl lg:p-8">
+            <div className="flex items-start justify-between gap-4">
+              <h5 className="font-serif text-3xl text-charcoal">{legalContent[openLegal].title}</h5>
+              <button type="button" onClick={() => setOpenLegal(null)} className="rounded-full border border-rose-mauve/25 px-3 py-1 text-sm text-charcoal/70 transition-colors hover:text-charcoal">Close</button>
+            </div>
+            <p className="mt-4 leading-relaxed text-charcoal/75">{legalContent[openLegal].body}</p>
+          </div>
+        </div>
+      )}
     </footer>
   )
 }
