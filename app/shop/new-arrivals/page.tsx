@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { ProductCard } from '@/components/product/product-card'
@@ -48,8 +49,18 @@ export default function NewArrivalsPage() {
     <main className="min-h-screen bg-warm-ivory">
       <Header transparentOnTop logoSrc="/LOGO/Logonew.png" logoClassName="mt-6 h-20 lg:h-[6.4rem]" />
 
-      <section className="relative h-screen w-full overflow-hidden bg-[#f8efe7] bg-[url('/hero7/Untitled design (32).png')] bg-cover bg-center bg-no-repeat bg-fixed">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.32),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.2),transparent_46%),linear-gradient(145deg,rgba(255,255,255,0.24),rgba(255,255,255,0.1))]" />
+      <section className="relative h-screen w-full overflow-hidden">
+        <div className="absolute inset-0 bg-fixed" aria-hidden="true">
+          <Image
+            src="/hero7/Untitled design (32).png"
+            alt="Mist glass background"
+            fill
+            sizes="100vw"
+            priority
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 bg-white/20" aria-hidden="true" />
         <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
           <div className="max-w-2xl text-charcoal">
             <p className="text-kicker text-charcoal/78">Glass Fade Direction</p>
