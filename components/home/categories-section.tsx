@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { categories } from '@/lib/data'
@@ -23,7 +22,6 @@ export function CategoriesSection() {
 
   return (
     <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
-      <div className="absolute inset-x-0 top-0 divider-luxury" />
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16">
           <div className="lg:sticky lg:top-28 self-start">
@@ -44,14 +42,7 @@ export function CategoriesSection() {
 
           <div className="space-y-5 lg:space-y-7">
             {displayCategories.map((category, index) => (
-              <motion.div
-                key={category.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-90px' }}
-                transition={{ duration: 0.9, delay: index * 0.08, ease: [0.22, 1, 0.36, 1] }}
-                className={index % 2 === 1 ? 'lg:ml-14' : ''}
-              >
+              <div key={category.id} className={index % 2 === 1 ? 'lg:ml-14' : ''}>
                 <Link href={localizeHref(`/shop/${category.slug}`, locale)} className="group block">
                   <div className="relative rounded-[2rem] overflow-hidden shadow-editorial">
                     <EditorialMedia
@@ -59,6 +50,7 @@ export function CategoriesSection() {
                       alt={category.name}
                       hint={`${category.productCount} Products`}
                       className={index === 0 ? 'aspect-[16/9]' : 'aspect-[14/8]'}
+                      sizes="(max-width: 1024px) 100vw, 58vw"
                       overlayClassName="bg-gradient-to-r from-charcoal/60 via-charcoal/20 to-transparent"
                     />
                     <div className="absolute inset-0 p-7 lg:p-9 flex flex-col justify-end">
@@ -72,7 +64,7 @@ export function CategoriesSection() {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

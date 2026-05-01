@@ -1,388 +1,202 @@
-"use client";
+'use client'
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import {
-  Heart,
-  Leaf,
-  Award,
-  Globe,
-  Users,
-  Sparkles,
-  ArrowRight,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useLocale } from "@/components/providers/locale-provider";
-import { localizeHref } from "@/lib/i18n";
+import { useCallback, useMemo, useRef, useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
+import { Header } from '@/components/layout/header'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref, type Locale } from '@/lib/i18n'
 
-const values = [
-  {
-    icon: Heart,
-    title: "Authenticity",
-    description:
-      "We source directly from Korea, ensuring every product is genuine and meets our strict quality standards.",
-  },
-  {
-    icon: Leaf,
-    title: "Clean Beauty",
-    description:
-      "We prioritize products with safe, effective ingredients and transparent formulations.",
-  },
-  {
-    icon: Award,
-    title: "Excellence",
-    description:
-      "We curate only the best, partnering with brands that share our commitment to quality and innovation.",
-  },
-  {
-    icon: Globe,
-    title: "Sustainability",
-    description:
-      "We support eco-conscious brands and minimize our environmental footprint in everything we do.",
-  },
-];
+const images = [
+  '/About/ChatGPT Image Apr 23, 2026, 04_44_02 PM.png',
+  '/About/ChatGPT Image Apr 23, 2026, 04_46_37 PM.png',
+  '/About/ChatGPT Image Apr 23, 2026, 07_28_56 PM.png',
+  '/About/ChatGPT Image Apr 23, 2026, 07_31_23 PM.png',
+]
 
-const team = [
-  {
-    name: "Ji-Yeon Park",
-    role: "Founder & CEO",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
-    bio: "Former beauty editor with 15+ years in the industry",
+const copy: Record<Locale, {
+  chapters: { kicker: string; title: string; body: string }[]
+  closeTitle: string
+  closeBody: string
+  cta: string
+}> = {
+  en: {
+    chapters: [
+      { kicker: 'Origin', title: 'A Korean family ritual, refined for today.', body: 'JISOO began with the quiet care of grandparents in Korea: rice water, botanical infusions, fermented extracts, and the belief that skin should be treated with patience before polish.' },
+      { kicker: 'Ritual', title: 'The kind of glow that does not need to shout.', body: 'Our formulas are built for daily return: soft layers, breathable textures, and ingredients chosen for comfort, clarity, and a luminous finish that feels lived-in.' },
+      { kicker: 'Texture', title: 'Editorial outside. Gentle inside.', body: 'The collection is composed with the eye of a campaign and the discipline of a skincare routine: precise, minimal, sensorial, and never careless.' },
+      { kicker: 'Promise', title: 'From Seoul memory to your morning mirror.', body: 'Every product carries the same idea: less noise, more care, and a small Korean ritual that makes ordinary days feel considered.' },
+    ],
+    closeTitle: 'Made from memory. Finished with modern Korean precision.',
+    closeBody: 'This is the JISOO standard: heritage held softly, formulas made carefully, and beauty that feels personal before it feels performative.',
+    cta: 'Shop the ritual',
   },
-  {
-    name: "Min-Jun Kim",
-    role: "Head of Curation",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400",
-    bio: "K-beauty expert and licensed esthetician",
+  ar: {
+    chapters: [
+      { kicker: 'الأصل', title: 'طقس عائلي كوري، بصياغة حديثة.', body: 'بدأت JISOO من عناية الأجداد الهادئة في كوريا: ماء الأرز، النباتات، المستخلصات المخمرة، والإيمان بأن البشرة تحتاج الصبر قبل اللمعان.' },
+      { kicker: 'الطقس', title: 'إشراقة لا تحتاج إلى ضجيج.', body: 'تركيباتنا مصممة للعودة اليومية: طبقات ناعمة، قوام مريح، ومكونات مختارة للراحة والصفاء واللمسة المضيئة.' },
+      { kicker: 'القوام', title: 'تحريري من الخارج. لطيف من الداخل.', body: 'المجموعة مصممة بعين حملة جمالية وانضباط روتين عناية: دقيقة، قليلة، حسية، ولا شيء فيها عشوائي.' },
+      { kicker: 'الوعد', title: 'من ذاكرة سيول إلى مرآتك الصباحية.', body: 'كل منتج يحمل الفكرة نفسها: ضجيج أقل، عناية أكثر، وطقس كوري صغير يجعل الأيام العادية أكثر جمالًا.' },
+    ],
+    closeTitle: 'مصنوعة من الذاكرة. مكتملة بدقة كورية حديثة.',
+    closeBody: 'هذا هو معيار JISOO: إرث ناعم، تركيبات دقيقة، وجمال يبدو شخصيًا قبل أن يبدو استعراضيًا.',
+    cta: 'تسوقي الطقس',
   },
-  {
-    name: "Soo-Yeon Lee",
-    role: "Brand Partnerships",
-    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400",
-    bio: "Connecting global customers with Korean brands",
+  fr: {
+    chapters: [
+      { kicker: 'Origine', title: 'Un rituel familial coréen, affiné pour aujourd’hui.', body: 'JISOO naît des gestes calmes des grands-parents en Corée: eau de riz, plantes, extraits fermentés et patience avant perfection.' },
+      { kicker: 'Rituel', title: 'Un éclat qui n’a pas besoin de bruit.', body: 'Des couches douces, des textures respirantes et des ingrédients choisis pour le confort, la clarté et une lumière naturelle.' },
+      { kicker: 'Texture', title: 'Éditorial dehors. Doux dedans.', body: 'La collection a l’œil d’une campagne et la discipline d’un rituel: précise, minimale, sensorielle.' },
+      { kicker: 'Promesse', title: 'De Séoul à votre miroir du matin.', body: 'Moins de bruit, plus de soin, et un petit rituel coréen pour rendre le quotidien plus intentionnel.' },
+    ],
+    closeTitle: 'Né de la mémoire. Fini avec précision coréenne.',
+    closeBody: 'Le standard JISOO: héritage doux, formules soignées, beauté personnelle.',
+    cta: 'Acheter le rituel',
   },
-  {
-    name: "Hye-Jin Choi",
-    role: "Customer Experience",
-    image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400",
-    bio: "Dedicated to your skincare journey",
+  de: {
+    chapters: [
+      { kicker: 'Ursprung', title: 'Ein koreanisches Familienritual, modern verfeinert.', body: 'JISOO entstand aus ruhiger Pflege koreanischer Großeltern: Reiswasser, Pflanzen, fermentierte Extrakte und Geduld vor Perfektion.' },
+      { kicker: 'Ritual', title: 'Glow, der nicht laut sein muss.', body: 'Sanfte Schichten, atmende Texturen und Inhaltsstoffe für Komfort, Klarheit und einen natürlichen Schimmer.' },
+      { kicker: 'Textur', title: 'Editorial außen. Sanft innen.', body: 'Die Kollektion verbindet Kampagnenblick mit Pflegeroutine: präzise, minimal und sinnlich.' },
+      { kicker: 'Versprechen', title: 'Von Seoul-Erinnerung zum Morgenspiegel.', body: 'Weniger Lärm, mehr Pflege und ein kleines koreanisches Ritual für den Alltag.' },
+    ],
+    closeTitle: 'Aus Erinnerung gemacht. Mit koreanischer Präzision vollendet.',
+    closeBody: 'Das ist der JISOO-Standard: sanftes Erbe, sorgfältige Formeln, persönliche Beauty.',
+    cta: 'Ritual shoppen',
   },
-];
+  ko: {
+    chapters: [
+      { kicker: '시작', title: '오늘에 맞게 다듬은 한국 가족의 리추얼.', body: 'JISOO는 쌀뜨물, 식물, 발효 추출물, 그리고 완성보다 먼저 정성을 믿던 한국의 조부모 세대의 돌봄에서 시작되었습니다.' },
+      { kicker: '리추얼', title: '큰 소리 내지 않는 광채.', body: '매일 돌아오고 싶은 부드러운 레이어, 숨 쉬는 텍스처, 편안함과 맑은 빛을 위한 성분을 담았습니다.' },
+      { kicker: '텍스처', title: '겉은 에디토리얼, 속은 순하게.', body: '캠페인의 감각과 스킨케어 루틴의 기준으로 정교하고 미니멀하며 감각적으로 구성했습니다.' },
+      { kicker: '약속', title: '서울의 기억에서 아침 거울까지.', body: '더 적은 소음, 더 많은 정성, 일상을 조금 더 특별하게 만드는 작은 한국 리추얼입니다.' },
+    ],
+    closeTitle: '기억에서 시작해 한국적 정밀함으로 완성했습니다.',
+    closeBody: 'JISOO의 기준은 부드러운 헤리티지, 세심한 포뮬러, 개인적인 아름다움입니다.',
+    cta: '리추얼 쇼핑',
+  },
+  tr: {
+    chapters: [
+      { kicker: 'Köken', title: 'Bugün için inceltilmiş Kore aile ritüeli.', body: 'JISOO, Koreli büyüklerin pirinç suyu, bitkiler, fermente özler ve sabırlı bakım anlayışından doğdu.' },
+      { kicker: 'Ritüel', title: 'Bağırmaya ihtiyaç duymayan ışıltı.', body: 'Yumuşak katmanlar, nefes alan dokular ve konfor ile berraklık için seçilmiş içerikler.' },
+      { kicker: 'Doku', title: 'Dışı editoryal. İçi nazik.', body: 'Koleksiyon kampanya gözüyle ve bakım disipliniyle kurgulandı: hassas, minimal, duyusal.' },
+      { kicker: 'Söz', title: 'Seul hafızasından sabah aynana.', body: 'Daha az gürültü, daha çok bakım ve sıradan günleri özenli hissettiren küçük bir Kore ritüeli.' },
+    ],
+    closeTitle: 'Hafızadan yapıldı. Modern Kore hassasiyetiyle tamamlandı.',
+    closeBody: 'JISOO standardı: yumuşak miras, özenli formüller, kişisel güzellik.',
+    cta: 'Ritüeli keşfet',
+  },
+}
 
-const milestones = [
-  { year: "2018", event: "JISOO founded in Seoul, South Korea" },
-  { year: "2019", event: "Launched international shipping to 50+ countries" },
-  { year: "2020", event: "Reached 100,000 happy customers" },
-  { year: "2021", event: "Introduced AI Skin Consultant" },
-  { year: "2022", event: "Partnership with 200+ premium brands" },
-  { year: "2023", event: "Opened flagship experience center in Seoul" },
-  { year: "2024", event: "1 million customers worldwide" },
-];
+type StorySlide =
+  | { kind: 'image'; image: string }
+  | { kind: 'story'; image: string; chapter: { kicker: string; title: string; body: string } }
+  | { kind: 'closing'; image: string; title: string; body: string; cta: string }
 
 export default function AboutPage() {
-  const { locale } = useLocale();
+  const { locale } = useLocale()
+  const t = copy[locale]
+  const lockUntil = useRef(0)
+  const touchStart = useRef<number | null>(null)
 
-  const { scrollYProgress } = useScroll();
+  const slides: StorySlide[] = useMemo(() => [
+    { kind: 'image', image: images[0] },
+    { kind: 'story', image: images[0], chapter: t.chapters[0] },
+    { kind: 'story', image: images[0], chapter: t.chapters[1] },
+    { kind: 'story', image: images[1], chapter: t.chapters[2] },
+    { kind: 'story', image: images[1], chapter: t.chapters[3] },
+    { kind: 'closing', image: images[3], title: t.closeTitle, body: t.closeBody, cta: t.cta },
+  ], [t])
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const [active, setActive] = useState(0)
+  const current = slides[active]
+
+  const go = useCallback((direction: number) => {
+    const now = Date.now()
+    if (now < lockUntil.current) return
+    lockUntil.current = now + 850
+    setActive((value) => Math.max(0, Math.min(slides.length - 1, value + direction)))
+  }, [slides.length])
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <section className="relative h-[80vh] overflow-hidden">
-        <motion.div style={{ y }} className="absolute inset-0">
-          <Image
-            src="/background/photo-1596755389378-c31d21fd1273.jpeg"
-            alt="Korean beauty heritage"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-charcoal/55 via-charcoal/35 to-background/95" />
-        </motion.div>
-        <motion.div
-          style={{ opacity }}
-          className="relative h-full flex items-center justify-center text-center px-4"
-        >
-          <div className="max-w-3xl">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-sm uppercase tracking-[0.3em] text-muted-foreground mb-6"
-            >
-              Our Story
-            </motion.p>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="font-serif text-5xl md:text-7xl mb-6"
-            >
-              Beauty Rooted in
-              <br />
-              <span className="text-primary">Korean Heritage</span>
-            </motion.h1>
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-muted-foreground max-w-xl mx-auto"
-            >
-              JISOO brings the best of Korean skincare to beauty lovers worldwide, 
-              curating premium products that honor tradition while embracing innovation.
-            </motion.p>
-          </div>
-        </motion.div>
-      </section>
+    <main
+      className="relative h-screen overflow-hidden bg-[#f8f4f0] text-charcoal"
+      onWheel={(event) => {
+        if (Math.abs(event.deltaY) < 18) return
+        go(event.deltaY > 0 ? 1 : -1)
+      }}
+      onTouchStart={(event) => {
+        touchStart.current = event.touches[0]?.clientY ?? null
+      }}
+      onTouchEnd={(event) => {
+        if (touchStart.current == null) return
+        const delta = touchStart.current - (event.changedTouches[0]?.clientY ?? touchStart.current)
+        if (Math.abs(delta) > 34) go(delta > 0 ? 1 : -1)
+        touchStart.current = null
+      }}
+    >
+      <Header transparentOnTop lightOnTop splitLightOnTop={active > 0} />
 
-      {/* Mission Section */}
-      <section className="py-24 px-4">
-        <div className="container max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="font-serif text-4xl md:text-5xl mb-6">
-                Our Mission
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-                At JISOO, we believe everyone deserves access to the transformative 
-                power of Korean skincare. Our mission is to bridge the gap between 
-                Korea&apos;s innovative beauty industry and skincare enthusiasts around 
-                the world.
-              </p>
-              <p className="text-muted-foreground leading-relaxed mb-6">
-                We meticulously curate each product in our collection, ensuring it 
-                meets our standards for quality, efficacy, and authenticity. From 
-                cult-favorite brands to hidden gems, we bring you the very best 
-                that K-beauty has to offer.
-              </p>
-              <p className="text-muted-foreground leading-relaxed">
-                More than just a store, JISOO is your guide to achieving healthy, 
-                radiant skin through the time-tested wisdom of Korean beauty rituals.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative aspect-[4/5]"
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=800"
-                alt="Korean skincare ritual"
-                fill
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
+      <motion.section
+        className="absolute inset-0"
+        animate={{ backgroundColor: active === 0 ? '#050405' : '#f8f4f0' }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      />
 
-      {/* Values Section */}
-      <section className="py-24 px-4 bg-muted/30">
-        <div className="container max-w-6xl mx-auto">
+      <motion.div
+        className="absolute left-0 top-0 z-10 overflow-hidden bg-charcoal shadow-[18px_0_70px_rgba(37,32,43,0.15)]"
+        animate={active === 0
+          ? { width: '100vw', height: '100vh', borderRadius: '0px' }
+          : { width: '52vw', height: '100vh', borderRadius: '0px 48px 48px 0px' }}
+        transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <AnimatePresence mode="sync">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+            key={current.image}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.02 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.015 }}
+            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="font-serif text-4xl md:text-5xl mb-4">Our Values</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              The principles that guide everything we do
-            </p>
+            <Image src={current.image} alt="" fill sizes={active === 0 ? '100vw' : '52vw'} priority={active < 2} className="object-cover object-center" />
           </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value, index) => (
-              <motion.div
-                key={value.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-primary/10 flex items-center justify-center">
-                  <value.icon className="w-7 h-7 text-primary" />
-                </div>
-                <h3 className="font-serif text-xl mb-3">{value.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {value.description}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </AnimatePresence>
+        <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/5" />
+      </motion.div>
 
-      {/* Timeline Section */}
-      <section className="py-24 px-4">
-        <div className="container max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
+      <AnimatePresence mode="wait">
+        {current.kind !== 'image' && (
+          <motion.section
+            key={`${current.kind}-${active}`}
+            className="absolute right-0 top-0 z-0 flex h-screen w-[48vw] items-center px-8 lg:px-16"
+            initial={{ opacity: 0, x: 64, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, x: -24, filter: 'blur(8px)' }}
+            transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h2 className="font-serif text-4xl md:text-5xl mb-4">Our Journey</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              From a small Seoul-based startup to a global K-beauty destination
-            </p>
-          </motion.div>
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
-            
-            <div className="space-y-12">
-              {milestones.map((milestone, index) => (
-                <motion.div
-                  key={milestone.year}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className={`relative flex items-center gap-8 ${
-                    index % 2 === 0 ? "md:flex-row-reverse" : ""
-                  }`}
-                >
-                  <div className="absolute left-4 md:left-1/2 w-3 h-3 rounded-full bg-primary md:-translate-x-1/2 z-10" />
-                  <div className={`flex-1 pl-12 md:pl-0 ${
-                    index % 2 === 0 ? "md:text-right md:pr-12" : "md:pl-12"
-                  }`}>
-                    <span className="text-primary font-serif text-2xl">
-                      {milestone.year}
-                    </span>
-                    <p className="text-muted-foreground mt-1">
-                      {milestone.event}
-                    </p>
-                  </div>
-                  <div className="hidden md:block flex-1" />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="py-24 px-4 bg-muted/30">
-        <div className="container max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="font-serif text-4xl md:text-5xl mb-4">Meet Our Team</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto">
-              Passionate experts dedicated to your skincare journey
-            </p>
-          </motion.div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
-              <motion.div
-                key={member.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <div className="relative w-40 h-40 mx-auto mb-6 rounded-full overflow-hidden">
-                  <Image
-                    src={member.image}
-                    alt={member.name}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <h3 className="font-serif text-xl mb-1">{member.name}</h3>
-                <p className="text-sm text-primary mb-2">{member.role}</p>
-                <p className="text-xs text-muted-foreground">{member.bio}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-24 px-4">
-        <div className="container max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: "1M+", label: "Happy Customers" },
-              { value: "200+", label: "Premium Brands" },
-              { value: "50+", label: "Countries Served" },
-              { value: "10K+", label: "Products Curated" },
-            ].map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="text-center"
-              >
-                <p className="font-serif text-4xl md:text-5xl text-primary mb-2">
-                  {stat.value}
-                </p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24 px-4 bg-primary text-primary-foreground">
-        <div className="container max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <Sparkles className="w-12 h-12 mx-auto mb-6 opacity-80" />
-            <h2 className="font-serif text-4xl md:text-5xl mb-6">
-              Begin Your K-Beauty Journey
-            </h2>
-            <p className="text-primary-foreground/80 max-w-xl mx-auto mb-8">
-              Discover the transformative power of Korean skincare with our 
-              AI-powered skin consultant and curated product collections.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                asChild
-                size="lg"
-                variant="secondary"
-                className="rounded-none"
-              >
-                <Link href={localizeHref('/ai-consultant', locale)}>
-                  Meet Your AI Consultant
-                  <Sparkles className="ml-2 w-4 h-4" />
+            {current.kind === 'story' ? (
+              <article>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-charcoal/42">{current.chapter.kicker}</p>
+                <h1 className="mt-5 max-w-[13ch] font-serif text-[clamp(2.4rem,5.4vw,6.8rem)] leading-[0.92] text-charcoal">{current.chapter.title}</h1>
+                <p className="mt-7 max-w-xl text-sm leading-7 text-charcoal/64 md:text-base md:leading-8">{current.chapter.body}</p>
+              </article>
+            ) : (
+              <article>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-charcoal/42">JISOO Standard</p>
+                <h1 className="mt-5 max-w-[12ch] font-serif text-[clamp(2.6rem,5.8vw,7rem)] leading-[0.9] text-charcoal">{current.title}</h1>
+                <p className="mt-7 max-w-xl text-base leading-8 text-charcoal/64">{current.body}</p>
+                <Link href={localizeHref('/shop', locale)} className="mt-9 inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-sm text-white transition hover:bg-rose-mauve">
+                  {current.cta}
+                  <ArrowRight className="h-4 w-4" />
                 </Link>
-              </Button>
-              <Button
-                asChild
-                size="lg"
-                variant="outline"
-                className="rounded-none border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
-              >
-                <Link href={localizeHref('/shop', locale)}>
-                  Shop Collection
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </Link>
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-    </div>
-  );
+              </article>
+            )}
+          </motion.section>
+        )}
+      </AnimatePresence>
+    </main>
+  )
 }

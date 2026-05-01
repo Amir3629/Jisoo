@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { ShoppingBag, Heart } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
@@ -31,12 +30,8 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
   }
 
   return (
-    <motion.article
-      initial={{ opacity: 0, y: 18 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.45, delay: index * 0.05 }}
-      className="group overflow-hidden rounded-[2rem] border border-rose-mauve/15 bg-white/95 shadow-[0_18px_50px_rgba(91,42,68,0.08)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_70px_rgba(176,106,136,0.14)]"
+    <article
+      className="group overflow-hidden rounded-[2rem] border border-rose-mauve/15 bg-white/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1"
     >
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
         <div className="relative aspect-[4/5] overflow-hidden bg-[#f7efe9]">
@@ -44,6 +39,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             src={resolveImageSrc(product.images?.[0]?.src)}
             alt={product.images?.[0]?.alt || product.name}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-cover transition-transform duration-700 group-hover:scale-105"
           />
 
@@ -63,7 +59,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <button
             type="button"
             aria-label={wishlistAria}
-            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/85 text-rose-mauve shadow-sm backdrop-blur transition hover:scale-105 hover:bg-white"
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-white"
           >
             <Heart className="h-4 w-4" />
           </button>
@@ -112,6 +108,6 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           </Button>
         </div>
       </div>
-    </motion.article>
+    </article>
   )
 }

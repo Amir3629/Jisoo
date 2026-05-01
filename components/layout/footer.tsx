@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Instagram, Facebook, Youtube, Send } from 'lucide-react'
+import { Instagram, Facebook, Send } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
@@ -40,10 +41,18 @@ const footerLinks = {
   ],
 }
 
+function TiktokFooterIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.35h-3.17v12.29a2.9 2.9 0 1 1-2-2.75V8.66a6.06 6.06 0 1 0 6.17 6.05V8.62a8.14 8.14 0 0 0 4.77 1.54V7.02a4.8 4.8 0 0 1-2-.33z" />
+    </svg>
+  )
+}
+
 const socialLinks = [
   { icon: Instagram, href: 'https://instagram.com', label: 'Instagram' },
   { icon: Facebook, href: 'https://facebook.com', label: 'Facebook' },
-  { icon: Youtube, href: 'https://youtube.com', label: 'YouTube' },
+  { icon: TiktokFooterIcon, href: 'https://tiktok.com', label: 'TikTok' },
 ]
 
 export function Footer() {
@@ -143,7 +152,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
             <Link href={localizeHref('/', locale)} className="inline-block">
-              <h2 className="text-3xl font-serif font-bold mb-4">JISOO</h2>
+              <Image src="/LOGO/Jisoo LOGO.png" alt="JISOO" width={168} height={48} className="mb-4 h-10 w-auto" />
             </Link>
             <p className="text-charcoal/65 text-sm leading-relaxed mb-6">{brandBody}</p>
             <div className="flex items-center gap-4">

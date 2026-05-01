@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Droplets, Heart, Sparkles, Circle, Sun, Shield, Clock, XCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -23,28 +22,25 @@ const concerns = [
 export function ConcernsSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const copy = {
+    description: locale === 'ar' ? 'اعثري على منتجات مصممة لاحتياجات بشرتك المحددة.' : locale === 'fr' ? 'Trouvez des produits formulés pour vos besoins cutanés précis.' : locale === 'de' ? 'Finde Formeln für deine konkreten Hautbedürfnisse.' : locale === 'ko' ? '피부 고민에 맞춘 제품을 찾아보세요.' : locale === 'tr' ? 'Cilt ihtiyacınıza özel formülleri bulun.' : 'Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs.',
+    products: locale === 'ar' ? 'منتج' : locale === 'fr' ? 'produits' : locale === 'de' ? 'Produkte' : locale === 'ko' ? '개 제품' : locale === 'tr' ? 'ürün' : 'products',
+  }
   return (
-    <AtmosphereSection atmosphere="blush" className="relative overflow-hidden bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat py-24 lg:bg-fixed lg:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-warm-ivory/68" />
+    <AtmosphereSection atmosphere="blush" withAtmosphereOverlay={false} className="relative overflow-hidden py-24 lg:py-32">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker={t.targetedSolutions}
           title={t.shopByConcern}
-          description="Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs."
+          description={copy.description}
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
         />
 
         {/* Concerns Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6">
-          {concerns.map((concern, index) => (
-            <motion.div
-              key={concern.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
-            >
+          {concerns.map((concern) => (
+            <div key={concern.id}>
               <Link
                 href={localizeHref(`/shop?concern=${concern.id}`, locale)}
                 className="group block"
@@ -55,22 +51,21 @@ export function ConcernsSection() {
                     'bg-gradient-to-br',
                     concern.color,
                     'transition-all duration-500',
-                    'hover:shadow-luxury hover:-translate-y-2'
+                    'hover:shadow-luxury hover:-translate-y-1'
                   )}
                 >
                   {/* Icon */}
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-4">
-                    <motion.div
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="p-4 rounded-full bg-white/50 backdrop-blur-sm mb-4 shadow-sm"
+                    <div
+                      className="p-4 rounded-full bg-white/60 mb-4 shadow-sm transition-transform duration-300 group-hover:scale-105"
                     >
                       <concern.icon className="w-8 h-8 text-charcoal/80" />
-                    </motion.div>
+                    </div>
                     <h3 className="font-medium text-charcoal text-center text-sm lg:text-base">
                       {concern.name}
                     </h3>
                     <p className="text-xs text-charcoal/60 mt-1">
-                      {concern.count} products
+                      {concern.count} {copy.products}
                     </p>
                   </div>
 
@@ -78,18 +73,12 @@ export function ConcernsSection() {
                   <div className="absolute inset-0 bg-white/0 group-hover:bg-white/20 transition-colors duration-300" />
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Region Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-plum/5 via-rose-mauve/5 to-champagne-gold/5 border border-blush-pink/30"
-        >
+        <div className="mt-16 p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-plum/5 via-rose-mauve/5 to-champagne-gold/5 border border-blush-pink/30">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
               <h3 className="font-serif font-semibold text-charcoal text-lg">
@@ -110,7 +99,7 @@ export function ConcernsSection() {
               {t.viewShippingInfo}
             </Link>
           </div>
-        </motion.div>
+        </div>
       </div>
     </AtmosphereSection>
   )

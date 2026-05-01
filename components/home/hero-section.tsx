@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -70,7 +70,7 @@ const conceptMediaMap: Record<string, HeroMedia> = {
   'mist-glass': { primary: pickAsset(3), secondary: pickAsset(2) },
   'magazine-grid': { primary: pickAsset(5), secondary: pickAsset(4), tertiary: pickAsset(1), quaternary: pickAsset(0) },
   'commerce-luxe': { primary: pickAsset(2), secondary: pickAsset(4) },
-  'design-11-video-signature': { primary: pickAsset(0), video: '/first slide example/Video first slide.mp4' },
+  'design-11-video-signature': { primary: pickAsset(0), video: '/video.mp4' },
 }
 
 function getMediaForConcept(id: string): HeroMedia {
@@ -83,10 +83,11 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId), [renderId])
   const isMistGlass = renderId === 'mist-glass'
+  const isFullBleed = isMistGlass || renderId === 'design-11-video-signature'
 
   return (
-    <section className={cn('relative w-full overflow-hidden', isMistGlass ? 'pt-0' : 'pt-[4.75rem] lg:pt-[5.5rem]')}>
-      <div className={cn('relative w-full', isMistGlass ? 'min-h-screen' : 'min-h-[calc(100vh-4.75rem)] lg:min-h-[calc(100vh-5.5rem)]')}>
+    <section className={cn('relative w-full overflow-hidden', isFullBleed ? 'pt-0' : 'pt-[4.75rem] lg:pt-[5.5rem]')}>
+      <div className={cn('relative w-full', isFullBleed ? 'min-h-screen' : 'min-h-[calc(100vh-4.75rem)] lg:min-h-[calc(100vh-5.5rem)]')}>
         <AnimatePresence mode="wait">
           <motion.div
             key={renderId}
@@ -197,6 +198,17 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
   )
 }
 
+function TrustpilotMiniPill({ className }: { className?: string }) {
+  return (
+    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-white/16 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_10px_26px_rgba(30,26,29,0.18)] backdrop-blur-md', className)}>
+      <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-[#00B67A]">
+        <path d="M12 1.5 14.54 9.32H23l-6.84 4.97 2.61 8.03L12 17.36l-6.77 4.96 2.61-8.03L1 9.32h8.46L12 1.5z" />
+      </svg>
+      Trustpilot Excellent
+    </span>
+  )
+}
+
 function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedia }) {
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/Icons/Face.png', href: '/shop?category=face' },
@@ -209,7 +221,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
   const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'A full-bleed image direction built for premium campaign storytelling.'
 
   return (
-    <section className="bg-[#fdf8f5]">
+    <section className="bg-transparent">
       {/* P0: safer mobile hero height to reduce copy crowding on short viewports. */}
       <div className="relative h-[66vh] min-h-[560px] sm:h-[70vh] overflow-hidden">
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" imageClassName="object-cover object-top scale-[1.08] transform-gpu" priority />
@@ -219,11 +231,14 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
           <h1 className="mt-3 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white">{heading}</h1>
           <p className="mt-4 text-white/82">{body}</p>
+          <a href="https://www.trustpilot.com" target="_blank" rel="noopener noreferrer" aria-label="Trustpilot reviews" className="mt-5 inline-flex transition hover:opacity-85">
+            <TrustpilotMiniPill />
+          </a>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
       </div>
 
-      <div className="bg-[#fdf8f5] px-4 pb-8 pt-4 -mt-1 lg:px-14 lg:pb-10 lg:pt-5">
+      <div className="px-4 pb-8 pt-4 -mt-1 lg:px-14 lg:pb-10 lg:pt-5">
         <div className="mx-auto translate-y-2 flex max-w-6xl flex-wrap items-start justify-center gap-x-8 gap-y-5 sm:gap-x-10 sm:gap-y-6 lg:gap-x-12 lg:gap-y-5">
           {categoryNav.map(item => (
             <Link
@@ -390,12 +405,12 @@ function MistGlassHero({ locale }: { locale: Locale }) {
         className="absolute inset-0 h-full w-full object-cover"
         priority
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.35),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.26),transparent_46%),linear-gradient(145deg,rgba(26,22,25,0.14),rgba(26,22,25,0.04))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.48),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.3),transparent_46%),linear-gradient(145deg,rgba(255,255,255,0.5),rgba(255,255,255,0.2))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
-        <div className="max-w-2xl text-white">
-          <p className="text-kicker text-white/78">Glass Fade Direction</p>
+        <div className="max-w-2xl text-charcoal">
+          <p className="text-kicker text-charcoal/78">Glass Fade Direction</p>
           <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
-          <p className="mt-4 max-w-xl text-white/82">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+          <p className="mt-4 max-w-xl text-charcoal/72">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
       </div>
@@ -459,59 +474,29 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
 }
 
 function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isLooping, setIsLooping] = useState(true)
-  const [isFrozen, setIsFrozen] = useState(false)
-
-  useEffect(() => {
-    // Design 11: run the intro animation window, then freeze the background to a static frame.
-    const timer = window.setTimeout(() => {
-      const video = videoRef.current
-      if (video) {
-        video.pause()
-      }
-      setIsLooping(false)
-      setIsFrozen(true)
-    }, 3200)
-
-    return () => window.clearTimeout(timer)
-  }, [])
-
   return (
-    <section className="relative h-[56vh] min-h-[460px] overflow-hidden sm:h-[64vh] sm:min-h-[500px] lg:h-[calc(100vh-8.5rem)] lg:min-h-[680px]">
-      {/* Background media: autoplay + muted + loop for intro phase, then pause to a static visual frame. */}
+    <section className="relative min-h-screen overflow-hidden">
+      {/* Background media plays once and naturally pauses on its final frame. */}
       <video
-        ref={videoRef}
         src={media.video}
         autoPlay
         muted
-        loop={isLooping}
         playsInline
-        preload="metadata"
-        poster={media.primary}
+        preload="auto"
         className="absolute inset-0 h-full w-full object-cover"
       />
 
       {/* Readability layer: soft blush/rose gradient that keeps copy legible across devices. */}
       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(33,24,30,0.2)_0%,rgba(33,24,30,0.26)_42%,rgba(33,24,30,0.36)_100%),radial-gradient(circle_at_50%_10%,rgba(255,226,233,0.2)_0%,rgba(255,226,233,0)_50%)]" />
 
-      {/* Foreground content: centered logo, concise headline/subheading, and tappable CTA with motion. */}
-      <div className="relative z-10 flex h-full items-center justify-center px-5 pb-10 pt-16 text-center sm:px-8 sm:pb-14 sm:pt-20 lg:px-10 lg:pb-20">
+      {/* Foreground content: concise headline/subheading and tappable CTA with motion. */}
+      <div className="relative z-10 flex min-h-screen items-center justify-center px-5 pb-10 pt-24 text-center sm:px-8 sm:pb-14 sm:pt-28 lg:px-10 lg:pb-20">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mx-auto flex w-full max-w-4xl flex-col items-center"
         >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="relative mb-6 h-9 w-36 sm:h-11 sm:w-44 lg:mb-7 lg:h-12 lg:w-52"
-          >
-            <Image src="/placeholder-logo.svg" alt="JISOO logo" fill sizes="220px" className="object-contain brightness-0 invert" />
-          </motion.div>
-
           <motion.h1
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -547,9 +532,6 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Static-state helper: keeps design deterministic after the intro animation window is finished. */}
-      {isFrozen && <span className="sr-only">Background animation complete</span>}
     </section>
   )
 }

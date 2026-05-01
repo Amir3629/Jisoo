@@ -179,6 +179,15 @@
       0 -1px 0 rgba(183, 110, 138, 0.22) inset;
   }
 
+  .home-continuous-surface {
+    background:
+      radial-gradient(38rem 52rem at -10rem 22rem, rgba(246, 226, 234, 0.32), transparent 68%),
+      radial-gradient(34rem 46rem at calc(100% + 8rem) 54rem, rgba(214, 168, 186, 0.14), transparent 70%),
+      radial-gradient(30rem 42rem at 8rem 118rem, rgba(246, 226, 234, 0.18), transparent 72%),
+      radial-gradient(32rem 44rem at calc(100% - 4rem) 176rem, rgba(246, 226, 234, 0.16), transparent 74%),
+      linear-gradient(180deg, #fffaf8 0%, #fffaf8 100%);
+  }
+
   .surface-velvet {
     background:
       linear-gradient(160deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 248, 244, 0.84) 40%, rgba(243, 231, 224, 0.76) 100%);
@@ -208,15 +217,20 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    background: linear-gradient(180deg, transparent 0%, rgba(30, 26, 29, 0.02) 100%);
-    opacity: 0.35;
+    background: radial-gradient(90% 60% at 100% 12%, rgba(246, 226, 234, 0.08), transparent 72%);
+    opacity: 0.18;
+  }
+
+  .chapter-shell.shared-background-section::after {
+    display: none;
   }
 
   .transition-veil {
     height: clamp(72px, 10vw, 140px);
     background:
-      radial-gradient(60% 120% at 50% 0%, rgba(183, 110, 138, 0.12), transparent 70%),
-      linear-gradient(180deg, rgba(255, 248, 244, 0.08), rgba(255, 248, 244, 0));
+      radial-gradient(60% 120% at 10% 0%, rgba(246, 226, 234, 0.14), transparent 72%),
+      radial-gradient(52% 120% at 90% 0%, rgba(246, 226, 234, 0.10), transparent 74%),
+      linear-gradient(180deg, rgba(255, 250, 248, 0.65), rgba(255, 250, 248, 0));
   }
 
   .editorial-display {

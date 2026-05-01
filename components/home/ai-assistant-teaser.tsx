@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Sparkles, MessageCircle, Search, Heart, ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -38,37 +37,16 @@ export function AiAssistantTeaser() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   return (
-    <AtmosphereSection atmosphere="champagne" className="py-24 lg:py-32 text-charcoal">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <motion.div
-          animate={{
-            scale: [1, 1.2, 1],
-            opacity: [0.1, 0.2, 0.1],
-          }}
-          transition={{ duration: 8, repeat: Infinity }}
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-rose-mauve/30 blur-3xl"
-        />
-        <motion.div
-          animate={{
-            scale: [1.2, 1, 1.2],
-            opacity: [0.1, 0.15, 0.1],
-          }}
-          transition={{ duration: 10, repeat: Infinity }}
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-champagne-gold/20 blur-3xl"
-        />
+    <AtmosphereSection atmosphere="champagne" withAtmosphereOverlay={false} className="py-24 lg:py-32 text-charcoal">
+      <div className="absolute inset-0 opacity-70">
+        <div className="absolute top-1/4 left-1/4 h-72 w-72 rounded-full bg-rose-mauve/18 blur-2xl" />
+        <div className="absolute bottom-1/4 right-1/4 h-64 w-64 rounded-full bg-champagne-gold/14 blur-2xl" />
       </div>
 
-      <div className="absolute inset-x-0 top-0 divider-luxury opacity-40" />
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
           {/* Content */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
+          <div>
             <ChapterHeading
               kicker="AI-Powered Beauty Guidance"
               title="The Concierge Beauty Advisor"
@@ -81,33 +59,20 @@ export function AiAssistantTeaser() {
 
             {/* Features */}
             <div className="mt-10 space-y-6">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="flex items-start gap-4"
-                >
-                  <div className="p-3 rounded-xl bg-white/70 backdrop-blur-sm border border-rose-mauve/20">
+              {features.map((feature) => (
+                <div key={feature.title} className="flex items-start gap-4">
+                  <div className="p-3 rounded-xl bg-white/80 border border-rose-mauve/20">
                     <feature.icon className="w-5 h-5 text-champagne-gold" />
                   </div>
                   <div>
                     <h3 className="font-medium text-charcoal">{feature.title}</h3>
                     <p className="text-sm text-charcoal/65 mt-1">{feature.description}</p>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="mt-10"
-            >
+            <div className="mt-10">
               <Link
                 href={localizeHref('/ai-consultant', locale)}
                 className={cn(
@@ -120,19 +85,13 @@ export function AiAssistantTeaser() {
                 {t.tryAiAssistant}
                 <ArrowRight className="w-4 h-4" />
               </Link>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
           {/* Interactive Preview */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="relative"
-          >
+          <div className="relative">
             {/* Chat Window Preview */}
-            <div className="relative bg-white/75 backdrop-blur-xl rounded-3xl p-6 border border-rose-mauve/20 shadow-editorial">
+            <div className="relative bg-white/85 rounded-3xl p-6 border border-rose-mauve/20 shadow-luxury">
               {/* Header */}
               <div className="flex items-center gap-3 pb-4 border-b border-white/10">
                 <div className="w-10 h-10 rounded-full bg-gradient-to-br from-champagne-gold to-rose-mauve flex items-center justify-center">
@@ -146,32 +105,20 @@ export function AiAssistantTeaser() {
 
               {/* Sample Messages */}
               <div className="py-6 space-y-4">
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.4 }}
-                  className="flex justify-end"
-                >
+                <div className="flex justify-end">
                   <div className="bg-rose-mauve/20 px-4 py-3 rounded-2xl rounded-br-md max-w-[80%]">
                     <p className="text-sm text-charcoal">What serum is best for dull skin?</p>
                   </div>
-                </motion.div>
+                </div>
 
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.6 }}
-                  className="flex justify-start"
-                >
+                <div className="flex justify-start">
                   <div className="bg-white/80 border border-rose-mauve/15 px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%]">
                     <p className="text-sm text-charcoal">
                       For dull skin, I recommend our <strong>Luminous Glow Serum</strong>. 
                       It contains 15% Vitamin C and fermented rice water for instant radiance!
                     </p>
                   </div>
-                </motion.div>
+                </div>
               </div>
 
               {/* Sample Questions */}
@@ -179,30 +126,22 @@ export function AiAssistantTeaser() {
                 <p className="text-xs text-rose-mauve/70 mb-3">Try asking:</p>
                 <div className="flex flex-wrap gap-2">
                   {sampleQuestions.slice(0, 2).map((q, i) => (
-                    <motion.button
+                    <button
                       key={i}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.8 + i * 0.1 }}
                       className="px-3 py-1.5 rounded-full bg-white text-xs text-rose-mauve border border-rose-mauve/20 hover:bg-rose-mauve/10 transition-colors truncate max-w-full"
                     >
                       {q}
-                    </motion.button>
+                    </button>
                   ))}
                 </div>
               </div>
             </div>
 
             {/* Floating Elements */}
-            <motion.div
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute -top-4 -right-4 p-3 rounded-xl bg-champagne-gold/20 backdrop-blur-sm"
-            >
+            <div className="absolute -top-4 -right-4 p-3 rounded-xl bg-champagne-gold/20">
               <Sparkles className="w-6 h-6 text-champagne-gold" />
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </AtmosphereSection>

@@ -49,8 +49,8 @@ export function LuxuryIntroSplash({ children }: { children: React.ReactNode }) {
           <motion.div
             key="intro"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, filter: 'blur(10px)' }}
-            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[90] overflow-hidden bg-gradient-to-br from-plum via-rose-mauve to-[#7f3d66]"
             aria-label="JISOO intro splash"
           >
@@ -60,21 +60,21 @@ export function LuxuryIntroSplash({ children }: { children: React.ReactNode }) {
                 initial={{ opacity: 0.35, scale: 0.95 }}
                 animate={{ opacity: 0.8, scale: 1.08 }}
                 transition={{ duration: 1.2, ease: 'easeOut' }}
-                className="absolute -top-20 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-champagne-gold/25 blur-3xl"
+                className="absolute -top-20 left-1/2 h-56 w-56 -translate-x-1/2 rounded-full bg-champagne-gold/20 blur-2xl"
               />
               <motion.div
                 initial={{ opacity: 0.2, y: 20 }}
                 animate={{ opacity: 0.45, y: -10 }}
                 transition={{ duration: 1.1, ease: 'easeOut' }}
-                className="absolute bottom-8 right-8 h-36 w-36 rounded-full bg-blush-pink/30 blur-2xl"
+                className="absolute bottom-8 right-8 h-32 w-32 rounded-full bg-blush-pink/24 blur-xl"
               />
             </div>
 
             <div className="relative flex h-full items-center justify-center px-6">
               <motion.div
-                initial={{ opacity: 0, y: 18, filter: 'blur(6px)', scale: 0.96 }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)', scale: 1 }}
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+                initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                 className="text-center"
               >
                 <motion.p

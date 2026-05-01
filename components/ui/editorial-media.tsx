@@ -10,6 +10,7 @@ interface EditorialMediaProps {
   alt: string
   className?: string
   priority?: boolean
+  sizes?: string
   hint?: string
   overlayClassName?: string
 }
@@ -19,6 +20,7 @@ export function EditorialMedia({
   alt,
   className,
   priority,
+  sizes = '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw',
   hint,
   overlayClassName,
 }: EditorialMediaProps) {
@@ -34,6 +36,7 @@ export function EditorialMedia({
           alt={alt}
           fill
           priority={priority}
+          sizes={sizes}
           onError={() => setImageError(true)}
           className="object-cover"
         />
@@ -44,7 +47,7 @@ export function EditorialMedia({
       <div className={cn('absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent', overlayClassName)} />
 
       {hint && (
-        <div className="absolute left-4 bottom-4 rounded-full border border-white/35 bg-white/25 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/90 backdrop-blur-sm">
+        <div className="absolute left-4 bottom-4 rounded-full border border-white/35 bg-white/35 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/90">
           {hint}
         </div>
       )}

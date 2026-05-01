@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import { useRef } from 'react'
 import { Star, Quote } from 'lucide-react'
 import { testimonials } from '@/lib/data'
@@ -13,15 +12,28 @@ export function TestimonialsSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   const containerRef = useRef<HTMLDivElement>(null)
+  const copy = {
+    description: locale === 'ar' ? 'انضمي إلى آلاف العملاء الذين اكتشفوا قوة الجمال الكوري.' : locale === 'fr' ? 'Rejoignez des milliers de clientes qui ont adopté la K-beauty.' : locale === 'de' ? 'Schließe dich Tausenden zufriedener Beauty-Fans an.' : locale === 'ko' ? 'K-뷰티의 변화를 경험한 고객들과 함께하세요.' : locale === 'tr' ? 'K-beauty etkisini keşfeden binlerce müşteriye katılın.' : 'Join thousands of satisfied customers who have discovered the transformative power of K-beauty.',
+    stats: locale === 'ar'
+      ? ['عملاء سعداء', 'متوسط التقييم', 'يوصون بنا', 'تقييم']
+      : locale === 'fr'
+        ? ['Clientes heureuses', 'Note moyenne', 'Recommandent', 'Avis']
+        : locale === 'de'
+          ? ['Glückliche Kunden', 'Durchschnitt', 'Empfehlen uns', 'Bewertungen']
+          : locale === 'ko'
+            ? ['만족 고객', '평균 평점', '추천 의향', '리뷰']
+            : locale === 'tr'
+              ? ['Mutlu müşteri', 'Ortalama puan', 'Tavsiye eder', 'Yorum']
+              : ['Happy Customers', 'Average Rating', 'Would Recommend', 'Reviews'],
+  }
 
   return (
-    <AtmosphereSection atmosphere="ivory" className="relative overflow-hidden bg-[url('/background/Dynamic.png')] bg-cover bg-center bg-no-repeat py-24 lg:bg-fixed lg:py-32">
-      <div className="pointer-events-none absolute inset-0 bg-warm-ivory/70" />
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden py-24 lg:py-32">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker={t.customerStories}
           title={t.lovedBy}
-          description="Join thousands of satisfied customers who have discovered the transformative power of K-beauty."
+          description={copy.description}
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
         />
@@ -31,13 +43,9 @@ export function TestimonialsSection() {
           ref={containerRef}
           className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide -mx-4 px-4"
         >
-          {testimonials.map((testimonial, index) => (
-            <motion.div
+          {testimonials.map((testimonial) => (
+            <div
               key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
               className="flex-shrink-0 w-[85%] sm:w-[400px] snap-center"
             >
               <div
@@ -96,7 +104,7 @@ export function TestimonialsSection() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
@@ -114,18 +122,12 @@ export function TestimonialsSection() {
         </div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
-        >
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
           {[
-            { value: '50K+', label: 'Happy Customers' },
-            { value: '4.8', label: 'Average Rating' },
-            { value: '98%', label: 'Would Recommend' },
-            { value: '25K+', label: 'Reviews' },
+            { value: '50K+', label: copy.stats[0] },
+            { value: '4.8', label: copy.stats[1] },
+            { value: '98%', label: copy.stats[2] },
+            { value: '25K+', label: copy.stats[3] },
           ].map((stat, index) => (
             <div key={index} className="text-center">
               <p className="text-3xl lg:text-4xl font-serif font-bold text-plum">
@@ -134,7 +136,7 @@ export function TestimonialsSection() {
               <p className="text-sm text-muted-foreground mt-2">{stat.label}</p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </AtmosphereSection>
   )

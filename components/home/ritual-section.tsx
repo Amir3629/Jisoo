@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -18,7 +17,7 @@ const ritualSteps = [
     description:
       'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
     color: 'from-blush-pink/30',
-    image: resolveImageSrc('/products/gentle-foam-cleanser-1.jpg'),
+    image: resolveImageSrc('/skincare-ingredients-featured.jpg'),
   },
   {
     number: '02',
@@ -42,7 +41,7 @@ const ritualSteps = [
     description:
       'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
     color: 'from-plum/10',
-    image: resolveImageSrc('/products/hydra-cloud-cream-1.jpg'),
+    image: resolveImageSrc('/black-skincare-expert-recommended-products-295961-1635525452337-square-1200-80.jpg'),
   },
   {
     number: '05',
@@ -50,7 +49,7 @@ const ritualSteps = [
     description:
       'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
     color: 'from-nude-beige/40',
-    image: resolveImageSrc('/products/tone-up-sun-cream-1.jpg'),
+    image: resolveImageSrc('/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png'),
   },
 ]
 
@@ -64,17 +63,12 @@ export function RitualSection() {
     step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
   }
   return (
-    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32">
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="py-24 lg:py-32">
       <div className="relative">
-        <motion.div
-          initial={{ opacity: 0.35, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, ease: 'easeOut' }}
-          className="pointer-events-none absolute inset-0"
-        >
-          <div className="absolute top-1/4 -left-40 h-80 w-80 rounded-full bg-blush-pink/16 blur-3xl" />
-          <div className="absolute bottom-1/4 -right-40 h-96 w-96 rounded-full bg-rose-mauve/10 blur-3xl" />
-        </motion.div>
+        <div className="pointer-events-none absolute inset-0 opacity-75">
+          <div className="absolute top-1/4 -left-32 h-64 w-64 rounded-full bg-blush-pink/14 blur-2xl" />
+          <div className="absolute bottom-1/4 -right-32 h-72 w-72 rounded-full bg-rose-mauve/8 blur-2xl" />
+        </div>
 
         <div className="relative mx-auto max-w-7xl px-4 lg:px-6">
           <ChapterHeading
@@ -91,12 +85,8 @@ export function RitualSection() {
 
             <div className="space-y-16 lg:space-y-24">
               {ritualSteps.map((step, index) => (
-                <motion.div
+                <div
                   key={step.number}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-100px' }}
-                  transition={{ duration: 0.7, delay: 0.1 }}
                   className={cn(
                     'relative grid items-center gap-8 lg:grid-cols-2 lg:gap-20',
                     index % 2 === 1 && 'lg:[direction:rtl]'
@@ -123,10 +113,7 @@ export function RitualSection() {
                   </div>
 
                   <div className={cn(index % 2 === 1 && 'lg:order-1')}>
-                    <motion.div
-                      whileInView={{ scale: [0.95, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.6 }}
+                    <div
                       className={cn(
                         'relative mx-auto aspect-square max-w-sm overflow-hidden rounded-3xl bg-gradient-to-br',
                         step.color,
@@ -137,27 +124,22 @@ export function RitualSection() {
                         src={step.image}
                         alt={step.title}
                         className="absolute inset-0"
+                        sizes="(max-width: 1024px) 100vw, 384px"
                         hint={`${copy.step} ${step.number}`}
                       />
 
                       <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />
                       <div className="absolute -left-5 -top-5 h-24 w-24 rounded-full bg-white/20" />
-                    </motion.div>
+                    </div>
                   </div>
 
                   <div className="absolute left-1/2 top-1/2 z-10 hidden h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-warm-ivory bg-rose-mauve lg:block" />
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="mt-20 text-center"
-          >
+          <div className="mt-20 text-center">
             <Link
               href={localizeHref('/shop', locale)}
               className={cn(
@@ -169,7 +151,7 @@ export function RitualSection() {
               {t.shopTheRitual}
               <ArrowRight className="h-4 w-4" />
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </AtmosphereSection>

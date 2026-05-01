@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { Instagram, Play, Heart, MessageCircle, ExternalLink } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -13,7 +12,7 @@ const socialPosts = [
   {
     id: 1,
     type: 'instagram',
-    image: '/placeholder.jpg',
+    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
     likes: '12.4K',
     comments: '234',
     caption: 'Glass skin goals achieved with our new essence',
@@ -21,14 +20,14 @@ const socialPosts = [
   {
     id: 2,
     type: 'tiktok',
-    image: '/products/glass-skin-essence-1.jpg',
+    image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
     views: '2.1M',
     caption: 'My 10-step K-beauty routine',
   },
   {
     id: 3,
     type: 'instagram',
-    image: '/products/luminous-glow-serum-1.jpg',
+    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
     likes: '8.9K',
     comments: '156',
     caption: 'Before & after using Luminous Glow Serum',
@@ -36,7 +35,7 @@ const socialPosts = [
   {
     id: 4,
     type: 'instagram',
-    image: '/placeholder.jpg',
+    image: '/hero7/Untitled design (32).png',
     likes: '15.2K',
     comments: '342',
     caption: 'Unboxing the new summer collection',
@@ -44,14 +43,14 @@ const socialPosts = [
   {
     id: 5,
     type: 'tiktok',
-    image: '/products/glass-skin-essence-1.jpg',
+    image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
     views: '890K',
     caption: 'POV: Your skin after K-beauty',
   },
   {
     id: 6,
     type: 'instagram',
-    image: '/products/luminous-glow-serum-1.jpg',
+    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_29_09 PM.png',
     likes: '11.1K',
     comments: '198',
     caption: 'Cica Repair Ampoule saved my skin',
@@ -74,19 +73,16 @@ export function SocialSection() {
 
         {/* Social Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 lg:gap-4">
-          {socialPosts.map((post, index) => (
-            <motion.div
+          {socialPosts.map((post) => (
+            <div
               key={post.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.05 }}
               className="group relative aspect-square rounded-2xl overflow-hidden cursor-pointer"
             >
               <EditorialMedia
                 src={post.image}
                 alt={post.caption}
                 className="absolute inset-0"
+                sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 overlayClassName="bg-gradient-to-t from-charcoal/60 to-charcoal/10"
               />
 
@@ -121,18 +117,12 @@ export function SocialSection() {
                   </div>
                 )}
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
 
         {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-12 flex flex-wrap items-center justify-center gap-4"
-        >
+        <div className="mt-12 flex flex-wrap items-center justify-center gap-4">
           <a
             href="https://instagram.com"
             target="_blank"
@@ -161,21 +151,15 @@ export function SocialSection() {
             <span>{t.followTiktok}</span>
             <ExternalLink className="w-4 h-4" />
           </a>
-        </motion.div>
+        </div>
 
         {/* UGC CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-16 text-center"
-        >
+        <div className="mt-16 text-center">
           <p className="text-muted-foreground">
             Tag <strong className="text-plum">@JISOOBeauty</strong> and use{' '}
             <strong className="text-plum">#JISOOGlow</strong> to be featured!
           </p>
-        </motion.div>
+        </div>
       </div>
     </AtmosphereSection>
   )
