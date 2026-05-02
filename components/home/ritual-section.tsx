@@ -76,7 +76,6 @@ export function RitualSection() {
             title={copy.title}
             description={copy.description}
             align="center"
-            ghostLabel="RITUAL"
             className="mx-auto mb-16 max-w-4xl lg:mb-24"
           />
 
