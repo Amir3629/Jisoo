@@ -29,7 +29,6 @@ export function CategoriesSection() {
               kicker={copy.kicker}
               title={copy.title}
               description={copy.description}
-              ghostLabel="EDIT"
             />
             <Link
               href={localizeHref('/shop', locale)}

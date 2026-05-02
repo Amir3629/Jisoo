@@ -51,7 +51,6 @@ export function AiAssistantTeaser() {
               kicker="AI-Powered Beauty Guidance"
               title="The Concierge Beauty Advisor"
               description="A refined conversational layer trained on JISOO routines, formulas, and ingredient logic—designed for personal luxury consultation."
-              ghostLabel="CONCIERGE"
               className="max-w-xl [&_h2]:text-charcoal [&_p]:text-charcoal/75 [&_.text-kicker]:text-rose-mauve"
             />
 
