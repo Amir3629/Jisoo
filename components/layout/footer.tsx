@@ -61,7 +61,7 @@ export function Footer() {
   const [openLegal, setOpenLegal] = useState<string | null>(null)
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
-  const brandBody = locale === 'ar' ? 'نقدم أفضل منتجات الجمال الكوري للعالم بعناية.' : locale === 'fr' ? 'Nous sélectionnons le meilleur de la beauté coréenne pour le monde.' : locale === 'de' ? 'Wir kuratieren die beste koreanische Beauty für die Welt.' : locale === 'ko' ? '프리미엄 K-뷰티를 전 세계에 전합니다.' : locale === 'tr' ? 'Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz.' : 'Curating the finest Korean beauty for the world. Premium skincare and makeup, delivered with care.'
+  const brandBody = locale === 'ar' ? 'نقدم أفضل منتجات الجمال الكوري للعالم بعناية.' : locale === 'fr' ? 'Nous sélectionnons le meilleur de la beauté coréenne pour le monde.' : locale === 'de' ? 'Wir kuratieren die beste koreanische Beauty für die Welt.' : locale === 'ko' ? '프리미엄 K-뷰티를 전 세계에 전합니다.' : locale === 'tr' ? 'Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz.' : 'Curated Korean skincare and makeup from trusted Seoul partners, localized for each region we serve.'
   const rights = locale === 'ar' ? 'جميع الحقوق محفوظة.' : locale === 'fr' ? 'Tous droits réservés.' : locale === 'de' ? 'Alle Rechte vorbehalten.' : locale === 'ko' ? '모든 권리 보유.' : locale === 'tr' ? 'Tüm hakları saklıdır.' : 'All rights reserved.'
   const madeWithCare = locale === 'ar' ? 'صُنع بعناية من سيول إلى العالم' : locale === 'fr' ? 'Conçu avec soin de Séoul au monde' : locale === 'de' ? 'Mit Sorgfalt von Seoul in die Welt' : locale === 'ko' ? '서울에서 세계로, 정성으로' : locale === 'tr' ? 'Seul’den dünyaya özenle' : 'Made with care from Seoul to the world'
   const localizedLink = (label: string) => locale === 'ar'
@@ -84,10 +84,10 @@ export function Footer() {
     }
   }
   const legalContent: Record<string, { title: string; body: string }> = {
-    'Privacy Policy': { title: localizedLink('Privacy Policy'), body: 'We collect only the information needed to process orders, support your account, and personalize your JISOO experience. We never sell your personal data.' },
-    'Terms of Service': { title: localizedLink('Terms of Service'), body: 'By using JISOO, you agree to use the site lawfully, provide accurate order details, and respect all intellectual property rights for our content and products.' },
-    'Cookie Policy': { title: localizedLink('Cookie Policy'), body: 'Cookies help us remember preferences, measure performance, and improve shopping flow. You can control cookies in browser settings at any time.' },
-    Accessibility: { title: localizedLink('Accessibility'), body: 'JISOO aims to provide an inclusive digital experience with keyboard support, semantic structure, readable contrast, and ongoing accessibility improvements.' },
+    'Privacy Policy': { title: localizedLink('Privacy Policy'), body: 'We collect only the information needed for orders, account support, and service quality. Please contact us for official policy details.' },
+    'Terms of Service': { title: localizedLink('Terms of Service'), body: 'By using JISOO, you agree to lawful use of the service and accurate order information. Please contact us for official policy details.' },
+    'Cookie Policy': { title: localizedLink('Cookie Policy'), body: 'Cookies help us remember preferences and improve site performance. Please contact us for official policy details.' },
+    Accessibility: { title: localizedLink('Accessibility'), body: 'JISOO is committed to an inclusive digital experience and continuous accessibility improvements. Please contact us for official policy details.' },
   }
 
   return (

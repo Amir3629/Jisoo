@@ -218,7 +218,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/Icons/all products.png', href: '/shop' },
   ]
   const heading = locale === 'ar' ? 'معيار توهج الورد' : locale === 'fr' ? 'Le Standard Rose Lumière' : locale === 'de' ? 'Der Rose-Light Standard' : locale === 'ko' ? '로즈 라이트 스탠다드' : locale === 'tr' ? 'Gül Işığı Standardı' : 'The Rose Light Standard'
-  const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'A full-bleed image direction built for premium campaign storytelling.'
+  const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'Curated Korean beauty, selected with care for your daily ritual.'
 
   return (
     <section className="bg-transparent">
@@ -408,9 +408,9 @@ function MistGlassHero({ locale }: { locale: Locale }) {
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_22%_22%,rgba(255,255,255,0.48),transparent_42%),radial-gradient(circle_at_78%_30%,rgba(248,228,238,0.3),transparent_46%),linear-gradient(145deg,rgba(255,255,255,0.5),rgba(255,255,255,0.2))]" />
       <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
         <div className="max-w-2xl text-charcoal">
-          <p className="text-kicker text-charcoal/78">Glass Fade Direction</p>
-          <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
-          <p className="mt-4 max-w-xl text-charcoal/72">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+          <p className="text-kicker text-charcoal/78">New from our Korean partners</p>
+          <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Seoul Editions, Just Arrived</h1>
+          <p className="mt-4 max-w-xl text-charcoal/72">Fresh skincare and skin-first color selected with care for your daily ritual.</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
         </div>
       </div>

@@ -28,13 +28,13 @@ export default function ShopCategoryPage() {
         <h1 className="font-serif text-4xl lg:text-5xl text-charcoal capitalize">{category.replace(/-/g, ' ')}</h1>
         <p className="mt-4 text-muted-foreground">
           {isKnownCategory
-            ? 'Curated products selected for this category.'
-            : 'This category is not yet part of our public collection. Explore our full catalog instead.'}
+            ? 'A focused edit selected for this category, with clear product information and region-aware availability.'
+            : 'This category is not currently available in the public edit. Explore our full collection for available products.'}
         </p>
       </section>
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 grid gap-6 lg:gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.length > 0 ? filtered.map((product, index) => <ProductCard key={product.id} product={product} index={index} />) : <div className="col-span-full text-center text-muted-foreground">No products available in this category yet.</div>}
+          {filtered.length > 0 ? filtered.map((product, index) => <ProductCard key={product.id} product={product} index={index} />) : <div className="col-span-full text-center text-muted-foreground">No products are currently available in this category.</div>}
         </div>
       </section>
       <Footer />
