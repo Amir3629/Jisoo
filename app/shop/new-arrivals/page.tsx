@@ -63,9 +63,9 @@ export default function NewArrivalsPage() {
         <div className="absolute inset-0 bg-white/20" aria-hidden="true" />
         <div className="relative z-10 flex h-full items-start px-8 pt-[7.5rem] lg:px-12 lg:pt-[8.5rem]">
           <div className="max-w-2xl text-charcoal">
-            <p className="text-kicker text-charcoal/78">Glass Fade Direction</p>
-            <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Mist, Glow, Precision</h1>
-            <p className="mt-4 max-w-xl text-charcoal/72">A cleaner premium mist concept with full-background depth, quiet gradients, and soft editorial typography.</p>
+            <p className="text-kicker text-charcoal/78">New from our Korean partners</p>
+            <h1 className="mt-3 font-serif text-4xl lg:text-6xl">Seoul Editions, Just Arrived</h1>
+            <p className="mt-4 max-w-xl text-charcoal/72">Fresh skincare and skin-first color selected with care for your daily ritual.</p>
           </div>
         </div>
       </section>

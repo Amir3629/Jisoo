@@ -59,7 +59,7 @@ export default function AIConsultantPage() {
             </div>
             <div>
               <h1 className="font-serif text-lg">JISOO Beauty Concierge</h1>
-              <p className="text-xs text-white/80">{region} · JISOO-only knowledge</p>
+              <p className="text-xs text-white/80">{region} · Catalog & region-aware guidance</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export default function AIConsultantPage() {
 
         <div className="px-4 py-2 border-b text-[11px] text-muted-foreground flex items-center gap-2">
           {listening ? <Radio className="h-3.5 w-3.5 text-rose-mauve animate-pulse" /> : speaking ? <Waves className="h-3.5 w-3.5 text-plum" /> : <Bot className="h-3.5 w-3.5" />}
-          <span>{listening ? 'Listening…' : speaking ? 'Speaking…' : 'Ready for your question'}</span>
+          <span>{listening ? 'Listening…' : speaking ? 'Speaking…' : 'Ready to help with your routine'}</span>
         </div>
 
         <div ref={scrollRef} className="p-4 space-y-4 max-h-[62vh] overflow-auto">
@@ -115,7 +115,7 @@ export default function AIConsultantPage() {
             </div>
           ))}
 
-          {loading && <p className="text-xs text-muted-foreground">Concierge is preparing your recommendation...</p>}
+          {loading && <p className="text-xs text-muted-foreground">Concierge is preparing guidance for you...</p>}
         </div>
 
         <div className="border-t p-3 flex gap-2">
@@ -128,14 +128,14 @@ export default function AIConsultantPage() {
             onKeyDown={(event) => {
               if (event.key === 'Enter') send()
             }}
-            placeholder="Ask about products, ingredients, routines, policies, or order support"
+            placeholder="Ask about skin concerns, product pairing, ingredients, or region availability"
             className="flex-1 rounded-full border px-4 py-2 bg-background"
           />
           <Button onClick={() => send()} className="rounded-full"><Send className="h-4 w-4" /></Button>
         </div>
 
         <div className="px-3 pb-3 text-[11px] text-muted-foreground">
-          This concierge is limited to JISOO support and beauty topics. Realtime mode is scaffolded and falls back to browser voice when unavailable.
+          Guidance is informational and does not replace professional medical advice. Availability and purchasing options may vary by region.
         </div>
       </div>
       </div>
