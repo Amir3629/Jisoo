@@ -1,5 +1,6 @@
 'use client'
 
+import { use } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Header } from '@/components/layout/header'
@@ -22,9 +23,10 @@ for (const locale of ['ar', 'fr', 'de', 'ko', 'tr'] as const) {
   }
 }
 
-export default function TipsCategoryPage({ params }: { params: { category: string } }) {
+export default function TipsCategoryPage({ params }: { params: Promise<{ category: string }> }) {
   const { locale } = useLocale()
-  const c = copy[locale][params.category] ?? copy[locale].skin
+  const { category } = use(params)
+  const c = copy[locale][category] ?? copy[locale].skin
   return (
     <main className="min-h-screen bg-warm-ivory">
       <Header />
