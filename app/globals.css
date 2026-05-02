@@ -8,20 +8,20 @@
   --plum: #9e7b8a;
   --rose-mauve: #d6a8ba;
   --blush-pink: #f6e2ea;
-  --warm-ivory: #fffaf6;
+  --warm-ivory: #fffaf8af6;
   --nude-beige: #f8efe7;
   --champagne-gold: #cfae84;
   --charcoal: #2C2528;
   
   /* Semantic tokens mapped to brand */
-  --background: #fffaf8;
+  --background: #fffaf8af8;
   --foreground: #2C2528;
-  --card: #fffaf8;
+  --card: #fffaf8af8;
   --card-foreground: #2C2528;
-  --popover: #fffaf8;
+  --popover: #fffaf8af8;
   --popover-foreground: #2C2528;
   --primary: #d6a8ba;
-  --primary-foreground: #ffffff;
+  --primary-foreground: #fffaf8af8;
   --secondary: #F8EDE6;
   --secondary-foreground: #8c6677;
   --muted: #F8EDE6;
@@ -116,7 +116,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: linear-gradient(160deg, #fffaf8 0%, #fef8f7 100%);
+    background: linear-gradient(160deg, #fffaf8af8 0%, #fef8f7 100%);
   }
   
   /* RTL Support */
@@ -185,7 +185,7 @@
       radial-gradient(34rem 46rem at calc(100% + 8rem) 54rem, rgba(214, 168, 186, 0.14), transparent 70%),
       radial-gradient(30rem 42rem at 8rem 118rem, rgba(246, 226, 234, 0.18), transparent 72%),
       radial-gradient(32rem 44rem at calc(100% - 4rem) 176rem, rgba(246, 226, 234, 0.16), transparent 74%),
-      linear-gradient(180deg, #fffaf8 0%, #fffaf8 100%);
+      linear-gradient(180deg, #fffaf8af8 0%, #fffaf8af8 100%);
   }
 
   .surface-velvet {
@@ -195,7 +195,7 @@
   }
 
   .surface-velvet-dropdown {
-    background: linear-gradient(160deg, #fffaf8 0%, #fff7f4 100%);
+    background: linear-gradient(160deg, #fffaf8af8 0%, #fffaf87f4 100%);
     border: 1px solid rgba(183, 110, 138, 0.2);
     backdrop-filter: blur(12px);
   }
@@ -266,7 +266,7 @@
 
   .home-canvas-base {
     background:
-      linear-gradient(164deg, #fff9f6 0%, #fbf3ee 42%, #fff8f4 100%);
+      linear-gradient(164deg, #fffaf89f6 0%, #fbf3ee 42%, #fffaf88f4 100%);
   }
 
   .home-canvas-grain {

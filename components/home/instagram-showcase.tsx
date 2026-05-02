@@ -124,10 +124,10 @@ export function InstagramShowcase() {
 
             const inactiveClass =
               tab.id === 'instagram'
-                ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
+                ? 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
                 : tab.id === 'tiktok'
-                  ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
-                  : 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
+                  ? 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
+                  : 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
 
             return (
               <button
@@ -316,7 +316,7 @@ function SocialPanel({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-[#eee1d8] bg-white px-2 py-2"
+            className="rounded-xl border border-[#eee1d8] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] px-2 py-2"
           >
             <p className="font-semibold text-charcoal">{stat.value}</p>
             <p className="text-charcoal/60">{stat.label}</p>
