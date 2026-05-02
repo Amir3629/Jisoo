@@ -15,7 +15,7 @@ export default function SetsPage() {
       <section className="pt-32 pb-16 bg-gradient-to-b from-blush-pink/20 to-warm-ivory">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <h1 className="text-4xl lg:text-5xl font-serif text-plum">Gift Sets</h1>
-          <p className="mt-3 text-charcoal/70">Curated pairings for radiant routines and thoughtful gifting.</p>
+          <p className="mt-3 text-charcoal/70">Curated sets for complete routines, thoughtful gifting, and easier daily consistency.</p>
           <p className="mt-2 text-sm text-charcoal/60">{fallback.length} set options available</p>
         </div>
       </section>
