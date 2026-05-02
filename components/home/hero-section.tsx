@@ -2,14 +2,13 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { heroImages } from "@/lib/data"
 
-export default function HeroSection() {
+export function HeroSection() {
   return (
-    <section className="relative h-screen flex items-center justify-center bg-warm-ivory">
-      <div className="absolute inset-0 z-0">
+    <section className="relative h-screen w-full flex items-center justify-center bg-warm-ivory overflow-hidden">
+      <div className="absolute inset-0">
         <Image
-          src={heroImages.main}
+          src="/images/hero/main.jpg"
           alt="Premium JISOO Cosmetic Hero"
           fill
           sizes="100vw"
