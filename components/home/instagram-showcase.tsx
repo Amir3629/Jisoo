@@ -119,15 +119,15 @@ export function InstagramShowcase() {
               tab.id === 'instagram'
                 ? 'border-transparent bg-gradient-to-r from-[#f56040] via-[#d62976] to-[#8a3ab9] text-white shadow-[0_8px_24px_rgba(214,41,118,0.35)]'
                 : tab.id === 'tiktok'
-                  ? 'border-transparent bg-[#111111] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_16px_rgba(37,244,238,0.25),0_0_18px_rgba(254,44,85,0.22)]'
+                  ? 'border-transparent bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] text-white shadow-[0_10px_24px_rgba(207,172,127,0.35)]'
                   : 'border-transparent bg-[#1877f2] text-white shadow-[0_10px_24px_rgba(24,119,242,0.35)]'
 
             const inactiveClass =
               tab.id === 'instagram'
-                ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
+                ? 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
                 : tab.id === 'tiktok'
-                  ? 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
-                  : 'border-[#e8d9cf] bg-white text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
+                  ? 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
+                  : 'border-[#e8d9cf] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
 
             return (
               <button
@@ -316,7 +316,7 @@ function SocialPanel({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-[#eee1d8] bg-white px-2 py-2"
+            className="rounded-xl border border-[#eee1d8] bg-gradient-to-r from-[#fffaf8] to-[#fef8f7] px-2 py-2"
           >
             <p className="font-semibold text-charcoal">{stat.value}</p>
             <p className="text-charcoal/60">{stat.label}</p>
