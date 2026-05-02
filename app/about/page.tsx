@@ -2,7 +2,6 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
@@ -198,5 +197,7 @@ export default function AboutPage() {
           </motion.section>
         )}
       </AnimatePresence>
+    </main>
   )
+}
 }

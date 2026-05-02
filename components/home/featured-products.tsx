@@ -27,7 +27,6 @@ export function FeaturedProducts() {
             kicker={copy.kicker}
             title={copy.title}
             description={copy.description}
-            ghostLabel="COLLECT"
           />
           <Link
             href={localizeHref('/shop', locale)}

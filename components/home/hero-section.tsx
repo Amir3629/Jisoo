@@ -114,7 +114,7 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
         {false && (
           <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
             {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
-            <div className="rounded-2xl border border-rose-mauve/22 bg-white/80 p-2 shadow-luxury">
+            <div className="rounded-2xl border border-rose-mauve/22 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/80 p-2 shadow-luxury">
               <div className="grid gap-1.5">
                 {heroConcepts.map((concept, index) => (
                   <button
@@ -124,7 +124,7 @@ export function HeroSection({ forcedConceptId, showConceptPicker = true }: { for
                       'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
                       activeId === concept.id
                         ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
-                        : 'border border-rose-mauve/20 bg-white/90 text-charcoal/75 hover:border-rose-mauve/45'
+                        : 'border border-rose-mauve/20 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/90 text-charcoal/75 hover:border-rose-mauve/45'
                     )}
                     aria-label={`Switch hero concept ${index + 1}`}
                     title={`${index + 1}. ${concept.name}`}
@@ -188,7 +188,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
       className={cn(
         'inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all',
         subtle
-          ? 'border border-rose-mauve/30 bg-white/80 text-charcoal hover:bg-white'
+          ? 'border border-rose-mauve/30 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/80 text-charcoal hover:bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]'
           : 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105'
       )}
     >
@@ -200,7 +200,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
 
 function TrustpilotMiniPill({ className }: { className?: string }) {
   return (
-    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-white/16 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_10px_26px_rgba(30,26,29,0.18)] backdrop-blur-md', className)}>
+    <span className={cn('inline-flex items-center gap-1.5 rounded-full border border-white/35 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/16 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-white shadow-[0_10px_26px_rgba(30,26,29,0.18)] backdrop-blur-md', className)}>
       <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-[#00B67A]">
         <path d="M12 1.5 14.54 9.32H23l-6.84 4.97 2.61 8.03L12 17.36l-6.77 4.96 2.61-8.03L1 9.32h8.46L12 1.5z" />
       </svg>
@@ -217,8 +217,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/Icons/set.png', href: '/shop?category=bundles-sets' },
     { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/Icons/all products.png', href: '/shop' },
   ]
-  const heading = 'Discover the Rose Light Experience'
-  const body = 'Expertly curated Korean beauty essentials, chosen to elevate your daily ritual and inspire confidence with every application.'
+  const heading = 'The Rose Light Standard'
+  const body = 'Curated Korean beauty, selected with care for your daily ritual.'
 
   return (
     <section className="bg-transparent">
@@ -275,7 +275,7 @@ function CinematicTypographyHero({ locale }: { locale: Locale }) {
         <div className="mt-7">
           <Link
             href={localizeHref('/shop', locale)}
-            className="inline-flex items-center gap-2 rounded-full border border-rose-mauve/30 bg-white/80 px-6 py-3 text-sm font-medium text-charcoal transition-all hover:bg-white"
+            className="inline-flex items-center gap-2 rounded-full border border-rose-mauve/30 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/80 px-6 py-3 text-sm font-medium text-charcoal transition-all hover:bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]"
           >
             Discover the Collection
             <ArrowRight className="h-4 w-4" />
@@ -342,7 +342,7 @@ function CampaignCoverHero({ locale, media }: { locale: Locale; media: HeroMedia
           <p className="text-kicker text-white/78">Campaign Cover / Vol.04</p>
           <h1 className="mt-4 font-serif text-6xl leading-[0.9] lg:text-8xl">THE GLOW ISSUE</h1>
           <p className="mt-5 max-w-xl text-white/80">Campaign-cover direction with open cinematic media and premium editorial hierarchy.</p>
-          <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-5 py-3 text-sm text-white"><PlayCircle className="h-4 w-4" />Consult</Link></div>
+          <div className="mt-7 flex flex-wrap gap-3"><PrimaryCta locale={locale} /><Link href={localizeHref('/ai-consultant', locale)} className="inline-flex items-center gap-2 rounded-full border border-white/40 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)]/15 px-5 py-3 text-sm text-white"><PlayCircle className="h-4 w-4" />Consult</Link></div>
         </div>
       </div>
       <div className="absolute bottom-6 right-6 hidden h-48 w-36 overflow-hidden rounded-2xl border border-white/45 shadow-xl lg:block">
@@ -457,7 +457,7 @@ function CommerceLuxeHero({ locale, media }: { locale: Locale; media: HeroMedia 
         <p className="mt-4 max-w-lg text-charcoal/65">Conversion-first direction blending premium styling with direct shopping pathways.</p>
         <div className="mt-7 space-y-3">
           {['Best Sellers', 'Starter Ritual', 'New Arrivals'].map(item => (
-            <Link key={item} href={localizeHref('/shop', locale)} className="flex items-center justify-between rounded-xl border border-rose-mauve/20 bg-white px-4 py-3 text-sm font-medium text-charcoal hover:border-rose-mauve/35">
+            <Link key={item} href={localizeHref('/shop', locale)} className="flex items-center justify-between rounded-xl border border-rose-mauve/20 bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] px-4 py-3 text-sm font-medium text-charcoal hover:border-rose-mauve/35">
               {item}
               <ArrowRight className="h-4 w-4 text-rose-mauve" />
             </Link>
