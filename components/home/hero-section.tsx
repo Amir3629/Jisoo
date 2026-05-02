@@ -17,12 +17,12 @@ export default function HeroSection() {
         />
         <div className="absolute inset-0 bg-white/20"></div>
       </div>
-      <div className="relative z-10 text-center">
+      <div className="relative z-10 text-center px-4">
         <p className="text-sm tracking-widest text-gray-600">JISOO EDITORIAL</p>
         <h1 className="text-5xl font-serif font-bold text-gray-900 mt-2">
           Discover the Rose Light Experience
         </h1>
-        <p clas text-lg text-gray-700">
+        <p className="mt-4 text-lg text-gray-700">
           Expertly curated Korean beauty essentials, chosen to elevate your daily ritual and inspire confidence with every application.
         </p>
         <Link
