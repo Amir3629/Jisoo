@@ -14,6 +14,9 @@ import {
 } from "lucide-react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { ArrowLeft } from "lucide-react";
 
 const navItems = [
   { href: "/account", label: "Overview", icon: User },
@@ -33,8 +36,10 @@ export default function AccountLayout({
   const { locale, dictionary } = useLocale();
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
+    <div className="min-h-screen bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] pt-32 pb-20">
+      <Header />
       <div className="container max-w-6xl mx-auto px-4">
+        <Link href={localizeHref("/", locale)} className="mb-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] px-4 py-2 text-sm text-white transition hover:brightness-105"><ArrowLeft className="h-4 w-4" />Back</Link>
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,6 +93,7 @@ export default function AccountLayout({
           </motion.main>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

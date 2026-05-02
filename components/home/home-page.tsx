@@ -35,9 +35,9 @@ function TrustpilotRatingStrip() {
 
       <span className="flex items-center gap-1" aria-label="4.4 out of 5 star rating on Trustpilot">
         {[0, 1, 2, 3, 4].map((star) => (
-          <span key={star} className="relative grid h-6 w-6 place-items-center overflow-hidden bg-[#00B67A] sm:h-7 sm:w-7">
+          <span key={star} className="relative grid h-6 w-6 place-items-center sm:h-7 sm:w-7">
             {star === 4 && <span className="absolute inset-y-0 right-0 w-[34%] bg-[#dcdce6]" />}
-            <svg viewBox="0 0 24 24" fill="currentColor" className="relative h-4 w-4 text-white sm:h-[18px] sm:w-[18px]">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 text-[#00B67A] sm:h-[18px] sm:w-[18px]">
               <path d="M12 2.75 14.18 9.45h7.05l-5.7 4.14 2.18 6.7L12 16.15l-5.71 4.14 2.18-6.7-5.7-4.14h7.05L12 2.75z" />
             </svg>
           </span>

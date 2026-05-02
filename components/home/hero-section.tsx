@@ -217,8 +217,8 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
     { label: locale === 'ar' ? 'الباقات والمجموعات' : locale === 'fr' ? 'COFFRETS & SETS' : locale === 'de' ? 'BUNDLES & SETS' : locale === 'ko' ? '번들 & 세트' : locale === 'tr' ? 'BUNDLE & SETLER' : 'BUNDLES & SETS', image: '/Icons/set.png', href: '/shop?category=bundles-sets' },
     { label: locale === 'ar' ? 'كل المنتجات' : locale === 'fr' ? 'TOUS LES PRODUITS' : locale === 'de' ? 'ALLE PRODUKTE' : locale === 'ko' ? '전체 제품' : locale === 'tr' ? 'TÜM ÜRÜNLER' : 'ALL PRODUCTS', image: '/Icons/all products.png', href: '/shop' },
   ]
-  const heading = locale === 'ar' ? 'معيار توهج الورد' : locale === 'fr' ? 'Le Standard Rose Lumière' : locale === 'de' ? 'Der Rose-Light Standard' : locale === 'ko' ? '로즈 라이트 스탠다드' : locale === 'tr' ? 'Gül Işığı Standardı' : 'The Rose Light Standard'
-  const body = locale === 'ar' ? 'اتجاه بصري كامل الشاشة لسرد حملات فاخرة.' : locale === 'fr' ? 'Une direction visuelle plein écran pour un récit de campagne premium.' : locale === 'de' ? 'Eine Full-Bleed-Bildrichtung für premium Kampagnen-Storytelling.' : locale === 'ko' ? '프리미엄 캠페인 스토리텔링을 위한 풀블리드 비주얼 방향.' : locale === 'tr' ? 'Premium kampanya anlatımı için tam ekran görsel yön.' : 'Curated Korean beauty, selected with care for your daily ritual.'
+  const heading = 'Discover the Rose Light Experience'
+  const body = 'Expertly curated Korean beauty essentials, chosen to elevate your daily ritual and inspire confidence with every application.'
 
   return (
     <section className="bg-transparent">
@@ -227,7 +227,7 @@ function ImageEditorialHero({ locale, media }: { locale: Locale; media: HeroMedi
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0" imageClassName="object-cover object-top scale-[1.08] transform-gpu" priority />
         <div className="absolute inset-0 bg-gradient-to-r from-charcoal/38 via-charcoal/14 to-transparent" />
         <div className="absolute left-8 top-10 max-w-2xl lg:left-14 lg:top-14">
-          <p className="text-kicker text-white/85">JISOO Editorial</p>
+          <p className="text-kicker text-white/85">JISOO EDITORIAL</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
           <h1 className="mt-3 font-serif text-[clamp(2rem,6vw,4.5rem)] leading-[1.05] tracking-[-0.02em] text-white">{heading}</h1>
           <p className="mt-4 text-white/82">{body}</p>
@@ -429,7 +429,7 @@ function MagazineGridHero({ locale }: { locale: Locale }) {
       <div className="col-span-1 lg:col-span-3 lg:row-span-3"><HeroImage src={MAGAZINE_GRID_IMAGES[3]} alt="Magazine quaternary" className="h-full min-h-[160px] rounded-[1.2rem]" /></div>
       <div className="col-span-2 flex items-center rounded-[2rem] border border-rose-mauve/18 bg-[linear-gradient(142deg,rgba(255,248,246,0.97),rgba(255,237,232,0.9))] p-6 shadow-luxury lg:col-span-5 lg:row-span-3 lg:p-8">
         <div>
-          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO Editorial</p>
+          <p className="text-kicker tracking-[0.19em] text-rose-mauve/72">JISOO EDITORIAL</p>
           <h1 className="mt-2 font-serif text-[2.1rem] leading-[1.01] tracking-[-0.022em] text-charcoal lg:text-[3.65rem]">Editorial Layout Mosaic</h1>
           <p className="mt-3 max-w-xl text-[0.96rem] font-light leading-[1.78] text-charcoal/56 lg:text-[1.04rem]">Magazine-inspired spatial rhythm with modular media storytelling in a refined, gallery-led composition.</p>
           <div className="mt-6">
@@ -535,3 +535,6 @@ function Design11Hero({ locale, media }: { locale: Locale; media: HeroMedia }) {
     </section>
   )
 }
+
+
+export default HeroSection

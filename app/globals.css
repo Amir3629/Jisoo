@@ -14,11 +14,11 @@
   --charcoal: #2C2528;
   
   /* Semantic tokens mapped to brand */
-  --background: #FFF9F5;
+  --background: #fffaf8;
   --foreground: #2C2528;
-  --card: #FFFFFF;
+  --card: #fffaf8;
   --card-foreground: #2C2528;
-  --popover: #FFFFFF;
+  --popover: #fffaf8;
   --popover-foreground: #2C2528;
   --primary: #d6a8ba;
   --primary-foreground: #ffffff;
@@ -66,8 +66,8 @@
 }
 
 @theme inline {
-  --font-sans: 'Playfair Display', 'Inter', 'Geist', sans-serif;
-  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Cormorant Garamond', 'Inter', 'Geist', sans-serif;
+  --font-serif: 'Cormorant Garamond', 'Playfair Display', serif;
   --font-mono: 'Geist Mono', monospace;
   
   /* Brand colors */
@@ -116,7 +116,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: #fff9f5;
+    background: linear-gradient(160deg, #fffaf8 0%, #fef8f7 100%);
   }
   
   /* RTL Support */

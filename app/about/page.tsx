@@ -1,8 +1,9 @@
 'use client'
 
 import { useCallback, useMemo, useRef, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import { ArrowLeft } from 'lucide-react'
+import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Header } from '@/components/layout/header'
@@ -141,7 +142,7 @@ export default function AboutPage() {
 
       <motion.section
         className="absolute inset-0"
-        animate={{ backgroundColor: active === 0 ? '#050405' : '#f8f4f0' }}
+        animate={{ backgroundColor: active === 0 ? '#050405' : '#d7c4a6' }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       />
 
@@ -197,6 +198,5 @@ export default function AboutPage() {
           </motion.section>
         )}
       </AnimatePresence>
-    </main>
   )
 }

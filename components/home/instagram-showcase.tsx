@@ -119,7 +119,7 @@ export function InstagramShowcase() {
               tab.id === 'instagram'
                 ? 'border-transparent bg-gradient-to-r from-[#f56040] via-[#d62976] to-[#8a3ab9] text-white shadow-[0_8px_24px_rgba(214,41,118,0.35)]'
                 : tab.id === 'tiktok'
-                  ? 'border-transparent bg-[#111111] text-white shadow-[0_0_0_1px_rgba(255,255,255,0.08),0_0_16px_rgba(37,244,238,0.25),0_0_18px_rgba(254,44,85,0.22)]'
+                  ? 'border-transparent bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] text-white shadow-[0_10px_24px_rgba(207,172,127,0.35)]'
                   : 'border-transparent bg-[#1877f2] text-white shadow-[0_10px_24px_rgba(24,119,242,0.35)]'
 
             const inactiveClass =
