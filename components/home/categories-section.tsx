@@ -117,22 +117,21 @@ export function CategoriesSection() {
         <div className="mb-6 border-b border-[#cfae83]/20 pb-4 lg:mb-8">
           <TrustpilotRatingStrip />
         </div>
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 rounded-full border border-[#cfae83]/20 bg-[color-mix(in_srgb,var(--card)_82%,transparent)] px-3 py-3 shadow-[0_16px_42px_rgba(44,37,40,0.08)] backdrop-blur-xl">
-          <p className="px-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-charcoal/62">Compare section styles</p>
-          <div className="flex flex-wrap gap-2">
+        <div className="mb-8 flex items-center justify-center">
+          <div className="flex w-full max-w-full items-center justify-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             {styleOptions.map((style) => (
               <button
                 key={style.id}
                 type="button"
                 onClick={() => setActiveStyle(style.id)}
-                className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-sm transition ${
+                aria-label={`View style ${style.label}`}
+                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-full border px-4 text-sm font-medium transition ${
                   activeStyle === style.id
                     ? 'border-[#4a4e51]/28 bg-[#4a4e51] text-white shadow-[0_10px_24px_rgba(44,37,40,0.18)]'
                     : 'border-[#cfae83]/24 bg-white/28 text-charcoal/76 hover:border-[#4a4e51]/24 hover:bg-white/48 hover:text-charcoal'
                 }`}
               >
-                <span className="grid h-6 w-6 place-items-center rounded-full bg-white/18 text-[11px]">{style.label}</span>
-                {style.name}
+                {style.label}
               </button>
             ))}
           </div>
