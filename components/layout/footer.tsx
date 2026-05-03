@@ -91,7 +91,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-gradient-to-br from-[#fff7f2] via-[#fceef2] to-[#f7ece3] text-charcoal">
+    <footer className="bg-warm-ivory text-charcoal">
       {/* Newsletter Section */}
       <div className="border-b border-[#e8d5de]">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 py-16">
@@ -159,7 +159,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
             <Link href={localizeHref('/', locale)} className="inline-block">
-              <Image src="/LOGO/Jisoo LOGO.png" alt="JISOO" width={168} height={48} className="mb-4 h-10 w-auto" />
+              <Image src="/assets/brand/jisoo-logo.png" alt="JISOO" width={260} height={92} className="mb-5 h-20 w-auto" />
             </Link>
             <p className="text-charcoal/65 text-sm leading-relaxed mb-6">{brandBody}</p>
             <div className="flex items-center gap-4">
@@ -169,7 +169,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-full bg-white/70 border border-[#ecd8ca] hover:bg-[#d9bd97] hover:text-white transition-all duration-300"
+                  className="p-2 rounded-full bg-white/70 border border-[#ecd8ca] text-charcoal transition-all duration-300 hover:scale-110 hover:bg-white/85 hover:text-charcoal"
                   aria-label={social.label}
                 >
                   <social.icon className="w-5 h-5" />
@@ -188,7 +188,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors"
                   >
                       {localizedLink(link.label)}
                   </Link>
@@ -206,7 +206,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors"
                   >
                     {localizedLink(link.label)}
                   </Link>
@@ -224,7 +224,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={localizeHref(link.href, locale)}
-                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors"
+                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors"
                   >
                     {link.label === 'Our Story' ? t.ourStory : localizedLink(link.label)}
                   </Link>
@@ -243,7 +243,7 @@ export function Footer() {
                   <button
                     type="button"
                     onClick={() => setOpenLegal(link.label)}
-                    className="text-sm text-charcoal/70 hover:text-rose-mauve transition-colors text-left"
+                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors text-left"
                   >
                     {localizedLink(link.label)}
                   </button>

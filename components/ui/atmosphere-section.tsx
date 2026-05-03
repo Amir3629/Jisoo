@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils'
 
-interface AtmosphereSectionProps {
+interface AtmosphereSectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   className?: string
   atmosphere?: 'ivory' | 'blush' | 'champagne'
@@ -16,6 +16,7 @@ export function AtmosphereSection({
   atmosphere = 'ivory',
   withVeilTop = false,
   withAtmosphereOverlay = true,
+  ...props
 }: AtmosphereSectionProps) {
   const overlayClass =
     atmosphere === 'blush'
@@ -25,7 +26,7 @@ export function AtmosphereSection({
         : 'bg-[radial-gradient(76%_86%_at_100%_12%,rgba(246,226,234,0.06),transparent_76%)]'
 
   return (
-    <section className={cn('chapter-shell bg-transparent', !withAtmosphereOverlay && 'shared-background-section', className)}>
+    <section {...props} className={cn('chapter-shell bg-transparent', !withAtmosphereOverlay && 'shared-background-section', className)}>
       {withAtmosphereOverlay && <div className={cn('absolute inset-0 pointer-events-none', overlayClass)} />}
       {withVeilTop && <div className="transition-veil absolute inset-x-0 top-0 z-10" />}
       <div className="relative z-10">{children}</div>

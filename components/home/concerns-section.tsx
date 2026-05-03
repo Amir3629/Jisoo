@@ -78,7 +78,7 @@ export function ConcernsSection() {
         </div>
 
         {/* Region Banner */}
-        <div className="mt-16 p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-plum/5 via-rose-mauve/5 to-champagne-gold/5 border border-blush-pink/30">
+        <div className="mt-16 rounded-2xl border border-warm-ivory/45 bg-warm-ivory/46 p-6 shadow-[0_18px_54px_rgba(44,37,40,0.08),inset_0_1px_0_rgba(255,255,255,0.42)] backdrop-blur-xl lg:p-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
             <div>
               <h3 className="font-serif font-semibold text-charcoal text-lg">

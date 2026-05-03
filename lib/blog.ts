@@ -19,7 +19,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Ritual',
     readTime: '6 min read',
     publishedAt: '2026-04-10',
-    coverImage: resolveImageSrc('/social/post-1.jpg'),
+    coverImage: resolveImageSrc('/assets/editorial/rose-layering.png'),
     content: [
       'Start with a gentle cleanse to remove sunscreen and makeup without disrupting your barrier.',
       'Layer hydrating essence and targeted serum while skin is still slightly damp.',
@@ -33,7 +33,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Education',
     readTime: '4 min read',
     publishedAt: '2026-04-18',
-    coverImage: resolveImageSrc('/social/post-3.jpg'),
+    coverImage: resolveImageSrc('/assets/editorial/eye-care.png'),
     content: [
       'Keep cleansing light in the morning and avoid over-stripping your skin barrier.',
       'Use one calming serum, then lock hydration with a moisturizer rich in barrier-supporting lipids.',
@@ -47,7 +47,7 @@ export const blogPosts: BlogPost[] = [
     category: 'Education',
     readTime: '5 min read',
     publishedAt: '2026-04-05',
-    coverImage: resolveImageSrc('/social/post-2.jpg'),
+    coverImage: resolveImageSrc('/assets/editorial/sun-care.png'),
     content: [
       'Introduce one active at a time and monitor skin response for at least a week.',
       'Pair potent ingredients with barrier-supporting hydrators to maintain comfort.',

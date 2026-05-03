@@ -47,7 +47,7 @@ export default function AccountPage() {
   return (
     <div className="space-y-8">
       {/* Welcome Section */}
-      <div className="bg-card border border-border p-6">
+      <div className="rounded-2xl border border-[#cfae83]/22 bg-[#f4e5dc]/78 p-6 shadow-luxury backdrop-blur-xl">
         <div className="flex items-start justify-between">
           <div>
           <h2 className="font-serif text-2xl mb-2">{copy.welcome}</h2>
@@ -71,7 +71,7 @@ export default function AccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-card border border-border p-6 text-center"
+          className="rounded-2xl border border-[#cfae83]/20 bg-[linear-gradient(155deg,#f4e5dc_0%,#f8efe7_100%)] p-6 text-center shadow-luxury"
         >
           <ShoppingBag className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">12</p>
@@ -81,7 +81,7 @@ export default function AccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-card border border-border p-6 text-center"
+          className="rounded-2xl border border-[#cfae83]/20 bg-[linear-gradient(155deg,#f4e5dc_0%,#f8efe7_100%)] p-6 text-center shadow-luxury"
         >
           <Heart className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">8</p>
@@ -91,7 +91,7 @@ export default function AccountPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="bg-card border border-border p-6 text-center"
+          className="rounded-2xl border border-[#cfae83]/20 bg-[linear-gradient(155deg,#f4e5dc_0%,#f8efe7_100%)] p-6 text-center shadow-luxury"
         >
           <Gift className="w-8 h-8 mx-auto mb-3 text-muted-foreground" />
           <p className="text-3xl font-serif mb-1">450</p>
@@ -100,7 +100,7 @@ export default function AccountPage() {
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-card border border-border p-6">
+      <div className="rounded-2xl border border-[#cfae83]/22 bg-[#f4e5dc]/78 p-6 shadow-luxury backdrop-blur-xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif text-xl">{c.recentOrders}</h3>
           <Link
@@ -125,7 +125,7 @@ export default function AccountPage() {
               </div>
               <div className="text-right">
                 <p className="font-medium">${order.total.toFixed(2)}</p>
-                <span className="inline-block px-2 py-0.5 text-xs bg-primary/10 text-primary">
+                <span className="inline-block rounded-full bg-[#cfae83]/14 px-2.5 py-1 text-xs text-[#9c7447]">
                   {copy.delivered}
                 </span>
               </div>
@@ -135,7 +135,7 @@ export default function AccountPage() {
       </div>
 
       {/* Wishlist Preview */}
-      <div className="bg-card border border-border p-6">
+      <div className="rounded-2xl border border-[#cfae83]/22 bg-[#f4e5dc]/78 p-6 shadow-luxury backdrop-blur-xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif text-xl">{c.wishlist}</h3>
           <Link
@@ -153,11 +153,12 @@ export default function AccountPage() {
               href={localizeHref(`/product/${product.slug}`, locale)}
               className="group"
             >
-              <div className="relative aspect-square bg-muted mb-3 overflow-hidden">
+              <div className="relative aspect-square bg-[#f3e2d6] mb-3 overflow-hidden rounded-xl">
                 <Image
                   src={resolveImageSrc(product.images[0]?.src)}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
@@ -176,7 +177,7 @@ export default function AccountPage() {
       </div>
 
       {/* Saved Addresses */}
-      <div className="bg-card border border-border p-6">
+      <div className="rounded-2xl border border-[#cfae83]/22 bg-[#f4e5dc]/78 p-6 shadow-luxury backdrop-blur-xl">
         <div className="flex items-center justify-between mb-6">
           <h3 className="font-serif text-xl">{c.savedAddresses}</h3>
           <Link
@@ -188,7 +189,7 @@ export default function AccountPage() {
           </Link>
         </div>
         <div className="grid sm:grid-cols-2 gap-4">
-          <div className="p-4 border border-primary bg-primary/5">
+          <div className="rounded-xl border border-[#cfae83]/35 bg-[#cfae83]/10 p-4">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="w-4 h-4" />
               <span className="font-medium">Default</span>
@@ -200,7 +201,7 @@ export default function AccountPage() {
               United States
             </p>
           </div>
-          <div className="p-4 border border-border">
+          <div className="rounded-xl border border-[#cfae83]/18 bg-[#f4e5dc]/70 p-4">
             <div className="flex items-center gap-2 mb-2">
               <MapPin className="w-4 h-4" />
               <span className="font-medium">{copy.work}</span>
@@ -216,13 +217,13 @@ export default function AccountPage() {
       </div>
 
       {/* Rewards Banner */}
-      <div className="bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-8 text-center">
+      <div className="rounded-2xl border border-[#cfae83]/24 bg-gradient-to-r from-[#cfae83]/15 via-[#f6e2ea]/32 to-[#d6a8ba]/16 p-8 text-center shadow-luxury">
         <Gift className="w-10 h-10 mx-auto mb-4 text-accent" />
         <h3 className="font-serif text-xl mb-2">{copy.rewardsTitle}</h3>
         <p className="text-muted-foreground mb-4 max-w-md mx-auto">
           {copy.rewardsBody}
         </p>
-        <Button asChild className="rounded-none">
+        <Button asChild className="rounded-full bg-[#cfae83] px-6 text-white hover:bg-[#b99467]">
           <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
         </Button>
       </div>

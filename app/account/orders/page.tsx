@@ -8,6 +8,7 @@ import { ChevronDown, Package, Truck, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
 
 const orders = [
   {
@@ -21,14 +22,14 @@ const orders = [
         brand: "Sulwhasoo",
         price: 89.00,
         quantity: 1,
-        image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400",
+        image: "/assets/products/luminous-glow-serum.jpg",
       },
       {
         name: "COSRX Advanced Snail 96 Mucin Power Essence",
         brand: "COSRX",
         price: 24.00,
         quantity: 2,
-        image: "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400",
+        image: "/assets/products/glass-skin-essence.jpg",
       },
     ],
     shippingAddress: "123 Beauty Lane, Los Angeles, CA 90001",
@@ -45,14 +46,14 @@ const orders = [
         brand: "Laneige",
         price: 32.00,
         quantity: 1,
-        image: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=400",
+        image: "/assets/editorial/skincare-ingredients.jpg",
       },
       {
         name: "Beauty of Joseon Glow Serum",
         brand: "Beauty of Joseon",
         price: 19.00,
         quantity: 3,
-        image: "https://images.unsplash.com/photo-1617897903246-719242758050?w=400",
+        image: "/assets/editorial/care-expert.jpg",
       },
     ],
     shippingAddress: "123 Beauty Lane, Los Angeles, CA 90001",
@@ -69,14 +70,14 @@ const orders = [
         brand: "SK-II",
         price: 185.00,
         quantity: 1,
-        image: "https://images.unsplash.com/photo-1570194065650-d99fb4d38123?w=400",
+        image: "/assets/backgrounds/cica-ampoule.jpeg",
       },
       {
         name: "Innisfree Green Tea Seed Serum",
         brand: "Innisfree",
         price: 49.00,
         quantity: 1,
-        image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400",
+        image: "/assets/editorial/lips-closeup.jpg",
       },
     ],
     shippingAddress: "456 Office Blvd, Suite 200, Los Angeles, CA 90010",
@@ -130,9 +131,10 @@ export default function OrdersPage() {
                       className="relative w-12 h-12 rounded-full border-2 border-background overflow-hidden"
                     >
                       <Image
-                        src={item.image}
+                        src={resolveImageSrc(item.image)}
                         alt={item.name}
                         fill
+                        sizes="48px"
                         className="object-cover"
                       />
                     </div>
@@ -221,9 +223,10 @@ export default function OrdersPage() {
                           <div key={i} className="flex gap-4">
                             <div className="relative w-16 h-16 bg-muted rounded-sm overflow-hidden flex-shrink-0">
                               <Image
-                                src={item.image}
+                                src={resolveImageSrc(item.image)}
                                 alt={item.name}
                                 fill
+                                sizes="64px"
                                 className="object-cover"
                               />
                             </div>

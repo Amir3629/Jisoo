@@ -16,14 +16,14 @@ const SOCIAL_LINKS: Record<SocialTab, string> = {
 }
 
 const LOCAL_SOCIAL_MEDIA = [
-  '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
-  '/skincare-ingredients-featured.jpg',
-  '/black-skincare-expert-recommended-products-295961-1635525452337-square-1200-80.jpg',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png',
-  '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
-  '/hero7/Untitled design (32).png',
-  '/first slide example/ChatGPT Image Apr 23, 2026, 08_23_22 PM.png',
-  '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
+  '/assets/editorial/rose-layering.png',
+  '/assets/editorial/skincare-ingredients.jpg',
+  '/assets/editorial/care-expert.jpg',
+  '/assets/editorial/tone-up-sun-cream.png',
+  '/assets/editorial/sun-care.png',
+  '/assets/editorial/product-table.png',
+  '/assets/editorial/night-routine.png',
+  '/assets/editorial/cream-ritual.png',
 ]
 
 const INSTAGRAM_POSTS = [
@@ -106,8 +106,8 @@ export function InstagramShowcase() {
 
   return (
     <section className="mx-auto w-full max-w-[1500px] px-4 py-16 lg:px-6">
-      <div className="relative overflow-hidden rounded-[2rem] border border-[#e8d9cf] bg-[#fffdfb] p-4 shadow-[0_20px_60px_rgba(42,32,35,0.08)] sm:p-5 lg:p-6">
-        <div className="mb-4 flex justify-center gap-2 border-b border-[#eee1d8] pb-4">
+      <div className="relative overflow-hidden rounded-[2rem] border border-[#cfae83]/24 bg-[linear-gradient(145deg,#f4e5dc_0%,#f4e5dc_48%,#f7ece3_100%)] p-4 shadow-[0_20px_60px_rgba(133,78,104,0.12)] sm:p-5 lg:p-6">
+        <div className="mb-4 flex justify-center gap-2 border-b border-[#cfae83]/18 pb-4">
           {[
             { id: 'instagram', label: 'Instagram', icon: Instagram },
             { id: 'tiktok', label: 'TikTok', icon: PlayCircle },
@@ -124,10 +124,10 @@ export function InstagramShowcase() {
 
             const inactiveClass =
               tab.id === 'instagram'
-                ? 'border-[#e8d9cf] bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[#fff6fa] hover:text-[#b54872]'
+                ? 'border-[#e4cfc6] bg-[linear-gradient(160deg,#f4e5dc_0%,#f8efe7_100%)] text-charcoal/70 hover:border-[#d8b0bf] hover:bg-[linear-gradient(160deg,#f4e5dc_0%,#f8e4ec_100%)] hover:text-[#b54872]'
                 : tab.id === 'tiktok'
-                  ? 'border-[#e8d9cf] bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] text-charcoal/70 hover:border-[#d7d7d7] hover:bg-[#fafafa] hover:text-charcoal'
-                  : 'border-[#e8d9cf] bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] text-charcoal/70 hover:border-[#b8cff7] hover:bg-[#f5f9ff] hover:text-[#1877f2]'
+                  ? 'border-[#e4cfc6] bg-[linear-gradient(160deg,#f4e5dc_0%,#f8efe7_100%)] text-charcoal/70 hover:border-[#cfae83]/60 hover:bg-[linear-gradient(160deg,#f8efe7_0%,#ead8cf_100%)] hover:text-charcoal'
+                  : 'border-[#e4cfc6] bg-[linear-gradient(160deg,#f4e5dc_0%,#f8efe7_100%)] text-charcoal/70 hover:border-[#cfae83]/55 hover:bg-[linear-gradient(160deg,#f4e5dc_0%,#ead8cf_100%)] hover:text-[#1877f2]'
 
             return (
               <button
@@ -160,7 +160,7 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {INSTAGRAM_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
+                <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
                   <div className="relative aspect-[4/5]">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
@@ -196,7 +196,7 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {TIKTOK_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
+                <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
                   <div className="relative aspect-[9/16]">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
@@ -232,7 +232,7 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {FACEBOOK_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f7f2ee]">
+                <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
                   <div className="relative aspect-[4/5]">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
@@ -282,10 +282,10 @@ function SocialPanel({
 
   return (
     <>
-      <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#eee1d8] pb-4">
+      <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#cfae83]/18 pb-4">
         <a href={link} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-center gap-3">
-          <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-rose-mauve/40 ring-offset-2 ring-offset-white">
-            <Image src="/hero7/Untitled design (32).png" alt={`${title} profile`} fill sizes="56px" className="object-cover" />
+          <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-rose-mauve/40 ring-offset-2 ring-offset-[#f4e5dc]">
+            <Image src="/assets/editorial/product-table.png" alt={`${title} profile`} fill sizes="56px" className="object-cover" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">
@@ -316,7 +316,7 @@ function SocialPanel({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-[#eee1d8] bg-[linear-gradient(160deg,#fffaf8_0%,#fef8f7_100%)] px-2 py-2"
+            className="rounded-xl border border-[#cfae83]/18 bg-[linear-gradient(160deg,#f4e5dc_0%,#f8efe7_100%)] px-2 py-2"
           >
             <p className="font-semibold text-charcoal">{stat.value}</p>
             <p className="text-charcoal/60">{stat.label}</p>

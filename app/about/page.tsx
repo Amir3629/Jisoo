@@ -10,10 +10,10 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
 
 const images = [
-  '/About/ChatGPT Image Apr 23, 2026, 04_44_02 PM.png',
-  '/About/ChatGPT Image Apr 23, 2026, 04_46_37 PM.png',
-  '/About/ChatGPT Image Apr 23, 2026, 07_28_56 PM.png',
-  '/About/ChatGPT Image Apr 23, 2026, 07_31_23 PM.png',
+  '/assets/about/ritual-lab.png',
+  '/assets/about/care-model.png',
+  '/assets/about/formula-detail.png',
+  '/assets/about/korean-heritage.png',
 ]
 
 const copy: Record<Locale, {
@@ -146,7 +146,7 @@ export default function AboutPage() {
       />
 
       <motion.div
-        className="absolute left-0 top-0 z-10 overflow-hidden bg-charcoal shadow-[18px_0_70px_rgba(37,32,43,0.15)]"
+        className="absolute left-0 top-0 z-10 h-screen w-screen overflow-hidden bg-charcoal shadow-[18px_0_70px_rgba(37,32,43,0.15)]"
         animate={active === 0
           ? { width: '100vw', height: '100vh', borderRadius: '0px' }
           : { width: '52vw', height: '100vh', borderRadius: '0px 48px 48px 0px' }}
@@ -161,7 +161,7 @@ export default function AboutPage() {
             exit={{ opacity: 0, scale: 1.015 }}
             transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Image src={current.image} alt="" fill sizes={active === 0 ? '100vw' : '52vw'} priority={active < 2} className="object-cover object-center" />
+            <Image src={current.image} alt="" fill sizes="(max-width: 768px) 100vw, 52vw" priority={active < 2} className="object-cover object-center" />
           </motion.div>
         </AnimatePresence>
         <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/5" />
@@ -199,5 +199,4 @@ export default function AboutPage() {
       </AnimatePresence>
     </main>
   )
-}
 }

@@ -9,17 +9,20 @@ import { cn } from '@/lib/utils'
 
 const languageMeta: Record<Locale, { name: string; flag: string }> = {
   en: { name: 'English', flag: '🇬🇧' },
-  ar: { name: 'العربية', flag: '🇦🇪' },
   fr: { name: 'Français', flag: '🇫🇷' },
   de: { name: 'Deutsch', flag: '🇩🇪' },
-  ko: { name: '한국어', flag: '🇰🇷' },
   tr: { name: 'Türkçe', flag: '🇹🇷' },
+  ar: { name: 'العربية', flag: '🇦🇪' },
+  ko: { name: '한국어', flag: '🇰🇷' },
 }
+
+const orderedLocales: Locale[] = ['en', 'fr', 'de', 'tr', 'ar', 'ko']
 
 export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }) {
   const pathname = usePathname()
   const { locale } = useLocale()
   const [open, setOpen] = useState(false)
+  const [isHeroHome, setIsHeroHome] = useState(false)
   const wrapRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -36,14 +39,29 @@ export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }
     return pathname
   })()
 
+  useEffect(() => {
+    const onScroll = () => setIsHeroHome(normalizedPath === '/' && window.scrollY < 14)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [normalizedPath])
+
   return (
     <div ref={wrapRef} className="relative">
       <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={`Current language ${languageMeta[locale].name}`} onClick={() => setOpen((prev) => !prev)} className={cn('inline-flex h-10 w-10 items-center justify-center text-charcoal/80 transition hover:text-charcoal hover:opacity-80', buttonClassName)}>
         <span aria-hidden className="grid h-5 w-5 place-items-center overflow-hidden rounded-full text-[1rem] leading-none">{languageMeta[locale].flag}</span>
       </button>
       {open && (
-        <div role="menu" className="absolute right-0 z-[90] mt-2 w-52 rounded-2xl border border-rose-mauve/20 bg-white/95 p-2 shadow-editorial backdrop-blur-sm">
-          {locales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-rose-mauve/10', locale === l && 'bg-rose-mauve/15 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
+        <div
+          role="menu"
+          className={cn(
+            'absolute right-0 z-[90] mt-2 w-52 rounded-2xl border p-2 text-charcoal',
+            isHeroHome
+              ? 'border-white/24 bg-transparent shadow-[0_18px_44px_rgba(44,37,40,0.14)] backdrop-blur-2xl'
+              : 'border-[#cfae83]/28 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
+          )}
+        >
+          {orderedLocales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-[#d5bc9b]/45 hover:text-charcoal', locale === l && 'bg-[#d5bc9b]/32 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
         </div>
       )}
     </div>

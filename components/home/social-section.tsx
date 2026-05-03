@@ -12,7 +12,7 @@ const socialPosts = [
   {
     id: 1,
     type: 'instagram',
-    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_14_40 PM.png',
+    image: '/assets/editorial/rose-layering.png',
     likes: '12.4K',
     comments: '234',
     caption: 'Glass skin goals achieved with our new essence',
@@ -20,14 +20,14 @@ const socialPosts = [
   {
     id: 2,
     type: 'tiktok',
-    image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_23_16 PM.png',
+    image: '/assets/editorial/cream-ritual.png',
     views: '2.1M',
     caption: 'My 10-step K-beauty routine',
   },
   {
     id: 3,
     type: 'instagram',
-    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_20_39 PM.png',
+    image: '/assets/editorial/sun-care.png',
     likes: '8.9K',
     comments: '156',
     caption: 'Before & after using Luminous Glow Serum',
@@ -35,7 +35,7 @@ const socialPosts = [
   {
     id: 4,
     type: 'instagram',
-    image: '/hero7/Untitled design (32).png',
+    image: '/assets/editorial/product-table.png',
     likes: '15.2K',
     comments: '342',
     caption: 'Unboxing the new summer collection',
@@ -43,14 +43,14 @@ const socialPosts = [
   {
     id: 5,
     type: 'tiktok',
-    image: '/desing hero 2/ChatGPT Image Apr 24, 2026, 12_30_22 PM.png',
+    image: '/assets/editorial/serum-dropper.png',
     views: '890K',
     caption: 'POV: Your skin after K-beauty',
   },
   {
     id: 6,
     type: 'instagram',
-    image: '/first slide example/ChatGPT Image Apr 23, 2026, 08_29_09 PM.png',
+    image: '/assets/editorial/soft-cheek-glow.png',
     likes: '11.1K',
     comments: '198',
     caption: 'Cica Repair Ampoule saved my skin',
@@ -61,7 +61,7 @@ export function SocialSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   return (
-    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32">
+    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32" data-snap-target="community">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"
@@ -143,8 +143,8 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-rose-mauve/90 text-white font-medium border border-rose-mauve/25',
-              'hover:bg-rose-mauve/80 transition-colors'
+              'bg-gradient-to-r from-[#cfac7f] to-[#d9bd97] text-white font-medium shadow-luxury',
+              'hover:brightness-105 transition-colors'
             )}
           >
             <Play className="w-5 h-5" />

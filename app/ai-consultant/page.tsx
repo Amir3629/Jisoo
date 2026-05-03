@@ -47,11 +47,11 @@ export default function AIConsultantPage() {
   }, [messages, loading])
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="snap-page-flow min-h-screen bg-background">
       <Header transparentOnTop lightOnTop />
       <HeroSection forcedConceptId="design-11-video-signature" showConceptPicker={false} />
-      <div className="pt-8 pb-10 px-4">
-      <div className="max-w-5xl mx-auto rounded-3xl border border-rose-mauve/20 bg-card overflow-hidden shadow-editorial">
+      <section className="flex min-h-screen items-center px-4 py-24">
+      <div className="mx-auto max-h-[calc(100vh-8rem)] w-full max-w-5xl overflow-hidden rounded-3xl border border-rose-mauve/20 bg-card shadow-editorial">
         <div className="p-4 border-b flex items-center justify-between bg-gradient-to-r from-plum to-rose-mauve text-white">
           <div className="flex items-center gap-3">
             <div className={cn('h-10 w-10 rounded-full bg-white/20 grid place-items-center', speaking && 'animate-pulse')}>
@@ -80,7 +80,7 @@ export default function AIConsultantPage() {
           <span>{listening ? 'Listening…' : speaking ? 'Speaking…' : 'Ready to help with your routine'}</span>
         </div>
 
-        <div ref={scrollRef} className="p-4 space-y-4 max-h-[62vh] overflow-auto">
+        <div ref={scrollRef} className="max-h-[42vh] space-y-4 overflow-auto p-4 lg:max-h-[48vh]">
           {partialTranscript && (
             <div className="rounded-xl border border-dashed border-rose-mauve/25 bg-rose-mauve/5 px-3 py-2 text-xs text-muted-foreground">
               Live transcript: {partialTranscript}
@@ -138,7 +138,7 @@ export default function AIConsultantPage() {
           Guidance is informational and does not replace professional medical advice. Availability and purchasing options may vary by region.
         </div>
       </div>
-      </div>
+      </section>
     </main>
   )
 }

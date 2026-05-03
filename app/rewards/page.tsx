@@ -18,5 +18,5 @@ const copy: Record<Locale, { title: string; bodyOne: string; bodyTwo: string; ct
 export default function RewardsPage() {
   const { locale } = useLocale()
   const t = copy[locale]
-  return <main className='min-h-screen bg-warm-ivory'><Header /><section className='pt-36 pb-16 px-4 max-w-4xl mx-auto'><h1 className='font-serif text-5xl'>{t.title}</h1><div className='mt-8 space-y-4'><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyOne}</div><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyTwo}</div></div><Link href={localizeHref('/account', locale)} className='mt-6 inline-block text-rose-mauve'>{t.cta}</Link></section><Footer /></main>
+  return <main className='min-h-screen bg-warm-ivory'><Header /><section className='pt-36 pb-16 px-4 max-w-4xl mx-auto'><h1 className='font-serif text-4xl leading-tight sm:text-5xl'>{t.title}</h1><div className='mt-8 space-y-4'><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyOne}</div><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyTwo}</div></div><Link href={localizeHref('/account', locale)} className='mt-6 inline-block text-rose-mauve'>{t.cta}</Link></section><Footer /></main>
 }

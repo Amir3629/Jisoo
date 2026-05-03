@@ -97,8 +97,8 @@ const mockOrders: Order[] = [
       email: "emma@example.com",
     },
     items: [
-      { id: "1", productName: "COSRX Snail Mucin Essence", variant: "100ml", quantity: 2, price: 25.00, image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=100&h=100&fit=crop" },
-      { id: "2", productName: "Beauty of Joseon Sunscreen", variant: "50ml", quantity: 1, price: 18.00, image: "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=100&h=100&fit=crop" },
+      { id: "1", productName: "COSRX Snail Mucin Essence", variant: "100ml", quantity: 2, price: 25.00, image: "/assets/products/glass-skin-essence.jpg" },
+      { id: "2", productName: "Beauty of Joseon Sunscreen", variant: "50ml", quantity: 1, price: 18.00, image: "/assets/editorial/skincare-ingredients.jpg" },
     ],
     total: 76.00,
     subtotal: 68.00,
@@ -126,7 +126,7 @@ const mockOrders: Order[] = [
       email: "sophie@example.com",
     },
     items: [
-      { id: "3", productName: "Sulwhasoo First Care Serum", variant: "90ml", quantity: 1, price: 120.00, image: "https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=100&h=100&fit=crop" },
+      { id: "3", productName: "Sulwhasoo First Care Serum", variant: "90ml", quantity: 1, price: 120.00, image: "/assets/products/luminous-glow-serum.jpg" },
     ],
     total: 138.00,
     subtotal: 120.00,
@@ -154,8 +154,8 @@ const mockOrders: Order[] = [
       email: "yuki@example.com",
     },
     items: [
-      { id: "4", productName: "Glow Recipe Watermelon Mask", variant: "80ml", quantity: 1, price: 35.00, image: "https://images.unsplash.com/photo-1570194065650-d99fb4b38b15?w=100&h=100&fit=crop" },
-      { id: "5", productName: "SKIN1004 Centella Ampoule", variant: "100ml", quantity: 2, price: 23.00, image: "https://images.unsplash.com/photo-1617897903246-719242758050?w=100&h=100&fit=crop" },
+      { id: "4", productName: "Glow Recipe Watermelon Mask", variant: "80ml", quantity: 1, price: 35.00, image: "/assets/editorial/care-expert.jpg" },
+      { id: "5", productName: "SKIN1004 Centella Ampoule", variant: "100ml", quantity: 2, price: 23.00, image: "/assets/backgrounds/cica-ampoule.jpeg" },
     ],
     total: 92.00,
     subtotal: 81.00,
@@ -183,7 +183,7 @@ const mockOrders: Order[] = [
       email: "anna@example.com",
     },
     items: [
-      { id: "6", productName: "Laneige Water Sleeping Mask", variant: "70ml", quantity: 1, price: 28.00, image: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=100&h=100&fit=crop" },
+      { id: "6", productName: "Laneige Water Sleeping Mask", variant: "70ml", quantity: 1, price: 28.00, image: "/assets/editorial/lips-closeup.jpg" },
     ],
     total: 39.50,
     subtotal: 28.00,
@@ -210,8 +210,8 @@ const mockOrders: Order[] = [
       email: "michael@example.com",
     },
     items: [
-      { id: "7", productName: "Innisfree Green Tea Serum", variant: "80ml", quantity: 1, price: 32.00, image: "https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?w=100&h=100&fit=crop" },
-      { id: "8", productName: "Etude House SoonJung Toner", variant: "180ml", quantity: 1, price: 15.00, image: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=100&h=100&fit=crop" },
+      { id: "7", productName: "Innisfree Green Tea Serum", variant: "80ml", quantity: 1, price: 32.00, image: "/assets/editorial/eye-closeup.webp" },
+      { id: "8", productName: "Etude House SoonJung Toner", variant: "180ml", quantity: 1, price: 15.00, image: "/assets/editorial/tone-up-sun-cream.png" },
     ],
     total: 52.00,
     subtotal: 47.00,

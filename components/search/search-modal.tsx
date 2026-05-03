@@ -26,9 +26,9 @@ const trendingSearches = [
 ]
 
 const popularCategories = [
-  { name: 'Serums', href: '/shop/serums', image: resolveImageSrc('/categories/serums.jpg') },
-  { name: 'Moisturizers', href: '/shop/moisturizers', image: resolveImageSrc('/categories/moisturizers.jpg') },
-  { name: 'Cleansers', href: '/shop/cleansers', image: resolveImageSrc('/categories/cleansers.jpg') },
+  { name: 'Serums', href: '/shop/serums', image: resolveImageSrc('/assets/products/luminous-glow-serum.jpg') },
+  { name: 'Moisturizers', href: '/shop/moisturizers', image: resolveImageSrc('/assets/editorial/care-expert.jpg') },
+  { name: 'Cleansers', href: '/shop/cleansers', image: resolveImageSrc('/assets/editorial/skincare-ingredients.jpg') },
 ]
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {

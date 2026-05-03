@@ -31,10 +31,10 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
 
   return (
     <article
-      className="group overflow-hidden rounded-[2rem] border border-rose-mauve/15 bg-white/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1"
+      className="group overflow-hidden rounded-[2rem] border border-[#d8c3b6]/45 bg-warm-ivory/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1"
     >
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#f7efe9]">
+        <div className="relative aspect-[4/5] overflow-hidden bg-warm-ivory">
           <Image
             src={resolveImageSrc(product.images?.[0]?.src)}
             alt={product.images?.[0]?.alt || product.name}
@@ -59,7 +59,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
           <button
             type="button"
             aria-label={wishlistAria}
-            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-white/70 bg-white/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-white"
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-warm-ivory/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-warm-ivory"
           >
             <Heart className="h-4 w-4" />
           </button>
@@ -72,7 +72,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             {product.category}
           </p>
           <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
-            <h3 className="text-lg font-medium leading-snug text-charcoal transition-colors group-hover:text-rose-mauve">
+            <h3 className="text-lg font-medium leading-snug text-charcoal transition-colors group-hover:text-plum">
               {product.name}
             </h3>
           </Link>

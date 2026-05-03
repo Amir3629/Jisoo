@@ -28,7 +28,7 @@ export function ChapterHeading({
         <p
           aria-hidden
           className={cn(
-            'pointer-events-none select-none font-serif text-6xl md:text-7xl lg:text-8xl text-plum/[0.06] absolute -top-10',
+            'pointer-events-none select-none font-serif text-4xl md:text-5xl lg:text-6xl text-plum/[0.06] absolute -top-8',
             align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0'
           )}
         >
@@ -36,7 +36,7 @@ export function ChapterHeading({
         </p>
       )}
       <p className="text-kicker text-rose-mauve">{kicker}</p>
-      <TitleTag className="mt-4 font-serif editorial-display text-4xl md:text-5xl lg:text-6xl text-charcoal">{title}</TitleTag>
+      <TitleTag className="mt-4 font-serif editorial-display text-3xl md:text-4xl lg:text-5xl text-charcoal">{title}</TitleTag>
       {description && (
         <p className={cn('mt-5 text-charcoal/72 leading-relaxed max-w-2xl', align === 'center' && 'mx-auto')}>
           {description}

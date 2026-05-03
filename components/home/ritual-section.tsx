@@ -17,7 +17,7 @@ const ritualSteps = [
     description:
       'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
     color: 'from-blush-pink/30',
-    image: resolveImageSrc('/skincare-ingredients-featured.jpg'),
+    image: resolveImageSrc('/assets/editorial/skincare-ingredients.jpg'),
   },
   {
     number: '02',
@@ -25,7 +25,7 @@ const ritualSteps = [
     description:
       'Our Glass Skin Essence preps your skin for optimal absorption. Fermented botanicals plump and hydrate.',
     color: 'from-rose-mauve/20',
-    image: resolveImageSrc('/products/glass-skin-essence-1.jpg'),
+    image: resolveImageSrc('/assets/products/glass-skin-essence.jpg'),
   },
   {
     number: '03',
@@ -33,7 +33,7 @@ const ritualSteps = [
     description:
       'Apply targeted treatments. Our serums address specific concerns from brightening to soothing.',
     color: 'from-champagne-gold/20',
-    image: resolveImageSrc('/products/luminous-glow-serum-1.jpg'),
+    image: resolveImageSrc('/assets/products/luminous-glow-serum.jpg'),
   },
   {
     number: '04',
@@ -41,7 +41,7 @@ const ritualSteps = [
     description:
       'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
     color: 'from-plum/10',
-    image: resolveImageSrc('/black-skincare-expert-recommended-products-295961-1635525452337-square-1200-80.jpg'),
+    image: resolveImageSrc('/assets/editorial/care-expert.jpg'),
   },
   {
     number: '05',
@@ -49,7 +49,7 @@ const ritualSteps = [
     description:
       'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
     color: 'from-nude-beige/40',
-    image: resolveImageSrc('/desing hero 2/ChatGPT Image Apr 24, 2026, 12_25_15 PM.png'),
+    image: resolveImageSrc('/assets/editorial/tone-up-sun-cream.png'),
   },
 ]
 

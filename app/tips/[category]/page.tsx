@@ -33,7 +33,7 @@ export default function TipsCategoryPage({ params }: { params: Promise<{ categor
       <section className="mx-auto max-w-5xl px-4 pb-16 pt-32 lg:px-6">
         <Link href={localizeHref('/tips', locale)} className="text-sm text-rose-mauve">{c.back}</Link>
         <div className="relative mt-5 h-64 overflow-hidden rounded-3xl lg:h-80">
-          <Image src="/first slide example/ChatGPT Image Apr 23, 2026, 08_29_09 PM.png" alt={`${c.title} banner`} fill sizes="(max-width: 1024px) 100vw, 960px" className="object-cover" />
+          <Image src="/assets/editorial/soft-cheek-glow.png" alt={`${c.title} banner`} fill sizes="(max-width: 1024px) 100vw, 960px" className="object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-charcoal/50 via-charcoal/20 to-transparent" />
           <h1 className="absolute bottom-8 left-6 font-serif text-4xl text-white lg:text-6xl">{c.title}</h1>
         </div>
