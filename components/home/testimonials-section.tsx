@@ -162,18 +162,6 @@ export function TestimonialsSection() {
           </div>
         </div>
 
-        {/* Scroll Indicators */}
-        <div className="flex items-center justify-center gap-2 mt-8">
-          {testimonials.map((_, index) => (
-            <div
-              key={index}
-              className={cn(
-                'w-2 h-2 rounded-full transition-colors',
-                index === 0 ? 'bg-plum' : 'bg-blush-pink'
-              )}
-            />
-          ))}
-        </div>
 
         {/* Stats */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8">
