@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -57,6 +57,19 @@ const MAGAZINE_GRID_IMAGES = [
   '/assets/editorial/eye-care.png',
   '/assets/editorial/sun-care.png',
 ]
+const HOMEPAGE_FONT_CHOICES = [
+  { id: 1, name: 'Playfair Display', stack: '"Playfair Display", Georgia, "Times New Roman", serif' },
+  { id: 2, name: 'Cormorant Garamond', stack: '"Cormorant Garamond", Georgia, serif' },
+  { id: 3, name: 'Lora', stack: '"Lora", Georgia, serif' },
+  { id: 4, name: 'Merriweather', stack: '"Merriweather", Georgia, serif' },
+  { id: 5, name: 'Baskerville', stack: 'Baskerville, "Times New Roman", serif' },
+  { id: 6, name: 'Avenir Next', stack: '"Avenir Next", Avenir, "Segoe UI", sans-serif' },
+  { id: 7, name: 'Montserrat', stack: '"Montserrat", "Helvetica Neue", Arial, sans-serif' },
+  { id: 8, name: 'Poppins', stack: '"Poppins", "Helvetica Neue", Arial, sans-serif' },
+  { id: 9, name: 'Inter', stack: 'Inter, "Helvetica Neue", Arial, sans-serif' },
+  { id: 10, name: 'Roboto', stack: 'Roboto, "Helvetica Neue", Arial, sans-serif' },
+] as const
+
 const selectedSurface = {
   base: '#ead6b8',
   card: '#f2e2c8',
@@ -126,6 +139,7 @@ export function HeroSection({
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const [surfaceTone, setSurfaceTone] = useState(0)
+  const [activeFontChoice, setActiveFontChoice] = useState(10)
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId, heroImageSrc ?? (renderId === 'image-editorial' ? HOME_EDITORIAL_IMAGE : undefined)), [renderId, heroImageSrc])
   const isMistGlass = renderId === 'mist-glass'
@@ -159,7 +173,7 @@ export function HeroSection({
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
           >
-            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} />}
+            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} activeFontChoice={activeFontChoice} onFontChoiceChange={setActiveFontChoice} />}
             {renderId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
             {renderId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
             {renderId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
@@ -282,7 +296,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
   )
 }
 
-function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale; media: HeroMedia; showCategoryNav: boolean }) {
+function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, onFontChoiceChange }: { locale: Locale; media: HeroMedia; showCategoryNav: boolean; activeFontChoice: number; onFontChoiceChange: (id: number) => void }) {
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/assets/icons/face.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'شفاه' : locale === 'fr' ? 'Lèvres' : locale === 'de' ? 'Lippen' : locale === 'ko' ? '립' : locale === 'tr' ? 'Dudak' : 'Lips', image: '/assets/icons/lips.png', href: '/shop?category=lips-cheeks' },
@@ -294,6 +308,8 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
   const body = 'Curated Korean beauty, selected with care for your daily ritual.'
   const lightText = showCategoryNav
   const mobileImage = showCategoryNav ? media.primary : HOME_EDITORIAL_MOBILE_IMAGE
+  const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[9]
+  const headingFontStyle: CSSProperties = { fontFamily: selectedFont.stack }
 
   return (
     <section className="bg-transparent">
@@ -304,9 +320,34 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
         <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]">
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
-          <h1 className={cn('mt-3 font-serif text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
+          <h1 style={headingFontStyle} className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
           <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
+          <div className="mt-5">
+            <p className={cn('mb-2 text-[11px] font-semibold uppercase tracking-[0.14em]', lightText ? 'text-white/80' : 'text-charcoal/70')}>Choose Font</p>
+            <div className="flex flex-wrap gap-2">
+              {HOMEPAGE_FONT_CHOICES.map((font) => (
+                <button
+                  key={font.id}
+                  type="button"
+                  onClick={() => onFontChoiceChange(font.id)}
+                  className={cn(
+                    'inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold transition-all',
+                    activeFontChoice === font.id
+                      ? 'border-charcoal/90 bg-charcoal text-white shadow-[0_10px_20px_rgba(44,37,40,0.35)]'
+                      : lightText
+                        ? 'border-white/45 bg-white/25 text-white hover:bg-white/35'
+                        : 'border-charcoal/25 bg-white/80 text-charcoal hover:border-charcoal/45'
+                  )}
+                  title={`${font.id}. ${font.name}`}
+                  aria-label={`Select homepage font ${font.id}: ${font.name}`}
+                >
+                  {font.id}
+                </button>
+              ))}
+            </div>
+            <p className={cn('mt-2 text-xs', lightText ? 'text-white/80' : 'text-charcoal/65')}>Current: {selectedFont.name}</p>
+          </div>
         </div>
 
         {showCategoryNav && <div className="absolute inset-x-0 bottom-7 z-10 px-4 lg:px-14">
@@ -483,6 +524,7 @@ function MistGlassHero({ locale }: { locale: Locale }) {
           <h1 className="mt-3 font-serif text-3xl lg:text-5xl">New Rituals, Softly Arrived</h1>
           <p className="mt-4 max-w-xl text-charcoal/72">Fresh skincare and skin-first color selected with care for your daily ritual.</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
+
         </div>
       </div>
     </section>
