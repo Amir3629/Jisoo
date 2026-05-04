@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { Playfair_Display, Cormorant_Garamond, Lora, Merriweather, Libre_Baskerville, Montserrat, Poppins, Inter, Roboto, Nunito_Sans } from 'next/font/google'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, PlayCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -57,17 +58,28 @@ const MAGAZINE_GRID_IMAGES = [
   '/assets/editorial/eye-care.png',
   '/assets/editorial/sun-care.png',
 ]
+const playfairDisplay = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] })
+const cormorantGaramond = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '600', '700'] })
+const lora = Lora({ subsets: ['latin'], weight: ['400', '600', '700'] })
+const merriweather = Merriweather({ subsets: ['latin'], weight: ['400', '700'], variable: '--hero-font-merriweather' })
+const libreBaskerville = Libre_Baskerville({ subsets: ['latin'], weight: ['400', '700'] })
+const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '600', '700'] })
+const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'] })
+const interFont = Inter({ subsets: ['latin'], weight: ['400', '600', '700'] })
+const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
+const nunitoSans = Nunito_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })
+
 const HOMEPAGE_FONT_CHOICES = [
-  { id: 1, name: 'Playfair Display', stack: '"Playfair Display", Georgia, "Times New Roman", serif' },
-  { id: 2, name: 'Cormorant Garamond', stack: '"Cormorant Garamond", Georgia, serif' },
-  { id: 3, name: 'Lora', stack: '"Lora", Georgia, serif' },
-  { id: 4, name: 'Merriweather', stack: '"Merriweather", Georgia, serif' },
-  { id: 5, name: 'Baskerville', stack: 'Baskerville, "Times New Roman", serif' },
-  { id: 6, name: 'Avenir Next', stack: '"Avenir Next", Avenir, "Segoe UI", sans-serif' },
-  { id: 7, name: 'Montserrat', stack: '"Montserrat", "Helvetica Neue", Arial, sans-serif' },
-  { id: 8, name: 'Poppins', stack: '"Poppins", "Helvetica Neue", Arial, sans-serif' },
-  { id: 9, name: 'Inter', stack: 'Inter, "Helvetica Neue", Arial, sans-serif' },
-  { id: 10, name: 'Roboto', stack: 'Roboto, "Helvetica Neue", Arial, sans-serif' },
+  { id: 1, name: 'Playfair Display', className: playfairDisplay.className },
+  { id: 2, name: 'Cormorant Garamond', className: cormorantGaramond.className },
+  { id: 3, name: 'Lora', className: lora.className },
+  { id: 4, name: 'Merriweather', className: merriweather.className },
+  { id: 5, name: 'Libre Baskerville', className: libreBaskerville.className },
+  { id: 6, name: 'Montserrat', className: montserrat.className },
+  { id: 7, name: 'Poppins', className: poppins.className },
+  { id: 8, name: 'Inter', className: interFont.className },
+  { id: 9, name: 'Nunito Sans', className: nunitoSans.className },
+  { id: 10, name: 'Roboto', className: roboto.className },
 ] as const
 
 const selectedSurface = {
@@ -309,7 +321,6 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
   const lightText = showCategoryNav
   const mobileImage = showCategoryNav ? media.primary : HOME_EDITORIAL_MOBILE_IMAGE
   const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[9]
-  const headingFontStyle: CSSProperties = { fontFamily: selectedFont.stack }
 
   return (
     <section className="bg-transparent">
@@ -320,7 +331,7 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
         <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]">
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
-          <h1 style={headingFontStyle} className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
+          <h1 className={cn(selectedFont.className, 'mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
           <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
           <div className="mt-5">
