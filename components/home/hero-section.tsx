@@ -70,16 +70,16 @@ const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
 const nunitoSans = Nunito_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })
 
 const HOMEPAGE_FONT_CHOICES = [
-  { id: 1, name: 'Playfair Display', className: playfairDisplay.className },
-  { id: 2, name: 'Cormorant Garamond', className: cormorantGaramond.className },
-  { id: 3, name: 'Lora', className: lora.className },
-  { id: 4, name: 'Merriweather', className: merriweather.className },
-  { id: 5, name: 'Libre Baskerville', className: libreBaskerville.className },
-  { id: 6, name: 'Montserrat', className: montserrat.className },
-  { id: 7, name: 'Poppins', className: poppins.className },
-  { id: 8, name: 'Inter', className: interFont.className },
-  { id: 9, name: 'Nunito Sans', className: nunitoSans.className },
-  { id: 10, name: 'Roboto', className: roboto.className },
+  { id: 1, name: 'Playfair Display', className: playfairDisplay.className, fontFamily: playfairDisplay.style.fontFamily },
+  { id: 2, name: 'Cormorant Garamond', className: cormorantGaramond.className, fontFamily: cormorantGaramond.style.fontFamily },
+  { id: 3, name: 'Lora', className: lora.className, fontFamily: lora.style.fontFamily },
+  { id: 4, name: 'Merriweather', className: merriweather.className, fontFamily: merriweather.style.fontFamily },
+  { id: 5, name: 'Libre Baskerville', className: libreBaskerville.className, fontFamily: libreBaskerville.style.fontFamily },
+  { id: 6, name: 'Montserrat', className: montserrat.className, fontFamily: montserrat.style.fontFamily },
+  { id: 7, name: 'Poppins', className: poppins.className, fontFamily: poppins.style.fontFamily },
+  { id: 8, name: 'Inter', className: interFont.className, fontFamily: interFont.style.fontFamily },
+  { id: 9, name: 'Nunito Sans', className: nunitoSans.className, fontFamily: nunitoSans.style.fontFamily },
+  { id: 10, name: 'Roboto', className: roboto.className, fontFamily: roboto.style.fontFamily },
 ] as const
 
 const selectedSurface = {
@@ -331,7 +331,7 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
         <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]">
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
-          <h1 className={cn(selectedFont.className, 'mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
+          <h1 key={selectedFont.id} style={{ fontFamily: selectedFont.fontFamily }} className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
           <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
           <div className="mt-5">
