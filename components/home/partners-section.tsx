@@ -19,30 +19,29 @@ export function PartnersSection() {
     <AtmosphereSection
       atmosphere="blush"
       withAtmosphereOverlay={false}
-      className="bg-[#4a4e51] py-0 shadow-[inset_0_22px_54px_rgba(255,255,255,0.08),inset_0_-24px_58px_rgba(8,10,11,0.14)]"
-      data-header-theme="story-gold"
+      className="bg-[var(--background)] py-0"
     >
       <div className="relative mx-auto max-w-none px-0">
-        <div className="grid min-h-screen items-stretch bg-transparent lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="grid min-h-screen items-stretch bg-transparent lg:grid-cols-[0.92fr_1.08fr]">
           <div className="flex items-center justify-center px-6 py-16 text-center lg:px-16">
             <div className="mx-auto max-w-xl">
-              <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-white/92">
+              <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
                 Cosmetics that inspire
               </p>
-              <h2 className="font-serif text-[clamp(2rem,3.6vw,3.8rem)] font-medium uppercase leading-none text-white">
+              <h2 className="font-serif text-[clamp(2rem,3.6vw,3.8rem)] font-medium uppercase leading-none text-charcoal">
                 Confidence
               </h2>
-              <p className="mx-auto mt-8 max-w-lg text-base leading-8 text-white/74">
+              <p className="mx-auto mt-8 max-w-lg text-base leading-8 text-charcoal/72">
                 JISOO blends Korean ritual memory with modern cosmetic precision, creating soft textures and polished glow for everyday confidence.
               </p>
-              <Link href={localizeHref('/about', locale)} className="mt-9 inline-flex items-center justify-center rounded-full border border-white/24 bg-white/14 px-9 py-4 text-sm font-medium uppercase tracking-[0.04em] text-white shadow-[0_14px_32px_rgba(8,10,11,0.22),inset_0_1px_0_rgba(255,255,255,0.24)] backdrop-blur-xl transition hover:bg-white/22">
+              <Link href={localizeHref('/about', locale)} className="mt-9 inline-flex items-center justify-center rounded-full border border-[#cfae83]/24 bg-[#4a4e51] px-9 py-4 text-sm font-medium uppercase tracking-[0.04em] text-white shadow-[0_14px_32px_rgba(44,37,40,0.18)] transition hover:bg-charcoal">
                 {copy.cta}
               </Link>
             </div>
           </div>
 
           <div className="relative min-h-screen overflow-hidden bg-transparent">
-            <div className="absolute inset-0 overflow-hidden lg:left-[3rem] lg:rounded-l-[999px]">
+            <div className="absolute inset-0 overflow-hidden">
               <Image
                 src="/assets/story/confidence.png"
                 alt="JISOO Korean beauty campaign"

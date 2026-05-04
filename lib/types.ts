@@ -36,14 +36,14 @@ export interface ProductImage {
 export interface ProductIngredient {
   name: string
   description: string
-  benefit: string
+  benefit?: string
   icon?: string
 }
 
 export interface ProductBenefit {
   title: string
-  description: string
-  icon: string
+  description?: string
+  icon?: string
 }
 
 export interface Product {
@@ -53,8 +53,10 @@ export interface Product {
   subtitle?: string
   brand: string
   partnerId: string
-  description: string
+  description?: string
   shortDescription: string
+  longDescription: string
+  keyBenefits: string[]
   price: number
   compareAtPrice?: number
   currency: Currency
@@ -62,19 +64,23 @@ export interface Product {
   category: string
   subcategory?: string
   tags: string[]
-  skinTypes: string[]
+  skinType: string[]
+  skinTypes?: string[]
   concerns: string[]
-  ingredients: ProductIngredient[]
-  benefits: ProductBenefit[]
-  howToUse: string
+  ingredients: string[]
+  benefits?: ProductBenefit[]
+  usageInstructions: string
+  howToUse?: string
   texture?: string
   finish?: string
   size: string
-  rating: number
-  reviewCount: number
+  rating?: number
+  reviewCount?: number
   isNew?: boolean
   isBestSeller?: boolean
   isLimitedEdition?: boolean
+  status?: 'draft' | 'ready_for_review' | 'published'
+  supplierNotes?: string
   regionAvailability: Partial<Record<Region, ProductAvailability>>
   variants?: ProductVariant[]
   relatedProducts?: string[]

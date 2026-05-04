@@ -57,16 +57,12 @@ const MAGAZINE_GRID_IMAGES = [
   '/assets/editorial/eye-care.png',
   '/assets/editorial/sun-care.png',
 ]
-const surfacePalettes = [
-  { name: 'Cream satin', base: '#ead9c3', card: '#f2e4d1', secondary: '#ddc8ae', border: '#cdb498', effect: false },
-  { name: 'Pearl cream', base: '#f1e2d1', card: '#f7eadb', secondary: '#e5cfb8', border: '#d2baa0', effect: false },
-  { name: 'Silk oatmeal', base: '#e8dccb', card: '#f0e5d6', secondary: '#dacbb8', border: '#c8b7a2', effect: false },
-  { name: 'Soft porcelain', base: '#f4ebe1', card: '#faf2e9', secondary: '#e9d9c9', border: '#d8c4b1', effect: true },
-  { name: 'Halo cream', base: '#efe0ca', card: '#f6eadb', secondary: '#e1ccb3', border: '#ceb69a', effect: true },
-  { name: 'Pale champagne', base: '#f3e4cd', card: '#f8ecd9', secondary: '#e6d0ad', border: '#d2b98e', effect: false },
-  { name: 'Warm champagne', base: '#e5cda7', card: '#eedbbd', secondary: '#d8bd91', border: '#c5a779', effect: true },
-  { name: 'Champagne veil', base: '#f7ead5', card: '#fbf1e2', secondary: '#e9d6b7', border: '#d6bd95', effect: true },
-]
+const selectedSurface = {
+  base: '#ead6b8',
+  card: '#f2e2c8',
+  secondary: '#dec49b',
+  border: '#cdae7d',
+}
 
 function pickAsset(index: number) {
   return HERO_ASSETS.images[index % HERO_ASSETS.images.length] ?? FALLBACK_IMAGES[index % FALLBACK_IMAGES.length]
@@ -100,18 +96,20 @@ function hexToRgb(hex: string) {
   }
 }
 
-function mixHex(hex: string, mixWith: '#ffffff' | '#000000', amount: number) {
+function mixHex(hex: string, mixWith: string, amount: number) {
   const base = hexToRgb(hex)
-  const target = mixWith === '#ffffff' ? { r: 255, g: 255, b: 255 } : { r: 0, g: 0, b: 0 }
+  const target = hexToRgb(mixWith)
   const channel = (value: number, targetValue: number) => Math.round(value + (targetValue - value) * amount)
   return `#${[channel(base.r, target.r), channel(base.g, target.g), channel(base.b, target.b)]
     .map((value) => value.toString(16).padStart(2, '0'))
     .join('')}`
 }
 
-function toneColor(base: string, tone: number, extra = 0) {
-  const normalized = Math.max(-28, Math.min(28, tone + extra)) / 100
-  return normalized >= 0 ? mixHex(base, '#ffffff', normalized) : mixHex(base, '#000000', Math.abs(normalized))
+function toneColor(base: string, strength: number, extra = 0) {
+  const normalized = Math.max(-42, Math.min(42, strength + extra)) / 100
+  const softAnchor = '#f5e6cf'
+  const strongAnchor = '#dec196'
+  return normalized >= 0 ? mixHex(base, strongAnchor, normalized) : mixHex(base, softAnchor, Math.abs(normalized))
 }
 
 export function HeroSection({
@@ -128,7 +126,6 @@ export function HeroSection({
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const [surfaceTone, setSurfaceTone] = useState(0)
-  const [surfacePaletteIndex, setSurfacePaletteIndex] = useState(0)
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId, heroImageSrc ?? (renderId === 'image-editorial' ? HOME_EDITORIAL_IMAGE : undefined)), [renderId, heroImageSrc])
   const isMistGlass = renderId === 'mist-glass'
@@ -136,22 +133,19 @@ export function HeroSection({
 
   useEffect(() => {
     const root = document.documentElement
-    const palette = surfacePalettes[surfacePaletteIndex] ?? surfacePalettes[0]
-    const overlayOpacity = Math.min(0.28, Math.abs(surfaceTone) / 100)
-    const overlayColor = surfaceTone >= 0 ? '255 255 255' : '0 0 0'
-    root.dataset.surfaceTheme = 'deep-cream'
-    root.dataset.surfaceEffect = palette.effect ? 'on' : 'off'
-    root.style.setProperty('--surface-tone-overlay-color', overlayColor)
-    root.style.setProperty('--surface-tone-overlay-opacity', overlayOpacity.toFixed(2))
-    root.style.setProperty('--warm-ivory', toneColor(palette.base, surfaceTone))
-    root.style.setProperty('--background', toneColor(palette.base, surfaceTone))
-    root.style.setProperty('--card', toneColor(palette.card, surfaceTone, 4))
-    root.style.setProperty('--popover', toneColor(palette.card, surfaceTone, 4))
-    root.style.setProperty('--secondary', toneColor(palette.secondary, surfaceTone, -1))
-    root.style.setProperty('--muted', toneColor(palette.secondary, surfaceTone, -1))
-    root.style.setProperty('--border', toneColor(palette.border, surfaceTone, -2))
-    root.style.setProperty('--input', toneColor(palette.border, surfaceTone, -2))
-  }, [surfacePaletteIndex, surfaceTone])
+    root.dataset.surfaceTheme = 'champagne-cream'
+    root.dataset.surfaceEffect = 'on'
+    root.style.setProperty('--surface-tone-overlay-color', '234 214 184')
+    root.style.setProperty('--surface-tone-overlay-opacity', '0')
+    root.style.setProperty('--warm-ivory', toneColor(selectedSurface.base, surfaceTone))
+    root.style.setProperty('--background', toneColor(selectedSurface.base, surfaceTone))
+    root.style.setProperty('--card', toneColor(selectedSurface.card, surfaceTone, -3))
+    root.style.setProperty('--popover', toneColor(selectedSurface.card, surfaceTone, -3))
+    root.style.setProperty('--secondary', toneColor(selectedSurface.secondary, surfaceTone, 2))
+    root.style.setProperty('--muted', toneColor(selectedSurface.secondary, surfaceTone, 2))
+    root.style.setProperty('--border', toneColor(selectedSurface.border, surfaceTone, 4))
+    root.style.setProperty('--input', toneColor(selectedSurface.border, surfaceTone, 4))
+  }, [surfaceTone])
 
   return (
     <section className={cn('relative w-full overflow-hidden', isFullBleed ? 'pt-0' : 'pt-[4.75rem] lg:pt-[5.5rem]')}>
@@ -207,38 +201,19 @@ export function HeroSection({
 
         {showConceptPicker && <div className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 rounded-[999px] border border-white/30 bg-white/30 px-3 py-4 shadow-luxury backdrop-blur-xl lg:block">
           <div className="flex flex-col items-center gap-3">
-            <div className="flex flex-col gap-1.5">
-              {surfacePalettes.map((palette, index) => (
-                <button
-                  key={palette.name}
-                  type="button"
-                  onClick={() => setSurfacePaletteIndex(index)}
-                  aria-label={`Preview ${palette.name}`}
-                  title={palette.name}
-                  className={cn(
-                    'grid h-7 w-7 place-items-center rounded-full border text-[10px] font-semibold text-charcoal transition',
-                    surfacePaletteIndex === index ? 'border-charcoal/35 shadow-[0_8px_18px_rgba(44,37,40,0.18)]' : 'border-white/40 hover:border-charcoal/25'
-                  )}
-                  style={{ backgroundColor: palette.base }}
-                >
-                  {index + 1}
-                </button>
-              ))}
-            </div>
-            <div className="h-px w-8 bg-charcoal/15" />
             <div className="flex h-52 flex-col items-center gap-3">
               <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/72">Tone</span>
               <input
                 type="range"
-                min={-18}
-                max={18}
+                min={-42}
+                max={42}
                 value={surfaceTone}
                 onChange={(event) => setSurfaceTone(Number(event.target.value))}
-                aria-label="Adjust cream background brightness"
+                aria-label="Adjust champagne cream strength"
                 className="h-36 w-2 cursor-pointer accent-[#9f7e56] [writing-mode:vertical-rl]"
               />
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-charcoal/15 text-[11px] font-semibold text-charcoal shadow-[0_8px_18px_rgba(44,37,40,0.16)]" style={{ backgroundColor: surfacePalettes[surfacePaletteIndex]?.base ?? '#ead9c3' }}>
-                {surfacePaletteIndex + 1}
+              <span className="grid h-8 w-8 place-items-center rounded-full border border-charcoal/15 text-[11px] font-semibold text-charcoal shadow-[0_8px_18px_rgba(44,37,40,0.16)]" style={{ backgroundColor: toneColor(selectedSurface.base, surfaceTone) }}>
+                {surfaceTone > 0 ? '+' : ''}{surfaceTone}
               </span>
             </div>
           </div>

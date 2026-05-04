@@ -12,7 +12,7 @@ import { localizeHref } from '@/lib/i18n'
 export function FeaturedProducts() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
-  const featuredProducts = products.filter(p => p.isBestSeller || p.isNew).slice(0, 8)
+  const featuredProducts = products.slice(0, 8)
   const copy = {
     kicker: locale === 'ar' ? 'اختيارات العناية' : locale === 'fr' ? 'La sélection soin' : locale === 'de' ? 'Die Pflege-Auswahl' : locale === 'ko' ? '케어 에디트' : locale === 'tr' ? 'Bakım Seçkisi' : 'The Care Edit',
     title: locale === 'ar' ? 'تركيبات عناية بأسلوب معرض' : locale === 'fr' ? 'Formules de soin, style galerie' : locale === 'de' ? 'Pflegeformeln im Galerie-Stil' : locale === 'ko' ? '갤러리처럼 구성한 케어 포뮬러' : locale === 'tr' ? 'Galeri stili bakım formülleri' : 'Care Formulas, Gallery Styled',

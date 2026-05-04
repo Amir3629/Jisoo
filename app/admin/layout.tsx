@@ -62,7 +62,7 @@ const navigation: Array<{ key: AdminNavKey; href: string; icon: any; badge?: num
 
 const notifications = [
   { id: 1, title: 'New supplier products', message: '3 products from Hanbang Lab pending review', time: '5 min ago', unread: true },
-  { id: 2, title: 'Compliance alert', message: 'Aura Tone-Up Sun Cream needs CA docs', time: '1 hour ago', unread: true },
+  { id: 2, title: 'Compliance alert', message: 'Azulene Toner Pad needs CA docs', time: '1 hour ago', unread: true },
   { id: 3, title: 'Translation complete', message: 'French translations approved', time: '3 hours ago', unread: false },
 ]
 

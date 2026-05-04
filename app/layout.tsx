@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { LocaleProvider } from '@/components/providers/locale-provider'
@@ -7,12 +6,6 @@ import { RegionProvider } from '@/components/providers/region-provider'
 import { CartProvider } from '@/components/providers/cart-provider'
 import { ScrollSnapController } from '@/components/layout/scroll-snap-controller'
 import { defaultLocale, dictionaries, getDirection } from '@/lib/i18n'
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-})
 
 export const metadata: Metadata = {
   title: 'JISOO | Korean Care Rituals',
@@ -45,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} bg-warm-ivory`}>
+    <html lang="en" className="bg-warm-ivory">
       <body className="font-sans antialiased">
         <LocaleProvider value={{ locale: defaultLocale, dictionary: dictionaries[defaultLocale], dir: getDirection(defaultLocale) }}>
           <RegionProvider initialLanguage={defaultLocale}>

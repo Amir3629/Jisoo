@@ -146,7 +146,7 @@ export function generateConciergeTurn({ query, region, history }: { query: strin
   const mentionedProduct = products.find(product => trimmed.toLowerCase().includes(product.slug) || trimmed.toLowerCase().includes(product.name.toLowerCase()))
   if (mentionedProduct) {
     return {
-      answer: `${mentionedProduct.name} is ideal for ${mentionedProduct.concerns.slice(0, 2).join(' and ')}. Key ingredients include ${mentionedProduct.ingredients.slice(0, 3).map(item => item.name).join(', ')}. In ${region}, this product is ${(mentionedProduct.regionAvailability[region] ?? 'visible_but_not_buyable').replaceAll('_', ' ')}. Application: ${mentionedProduct.howToUse}`,
+      answer: `${mentionedProduct.name} is a draft JISOO product record for ${mentionedProduct.category}. Ingredient review: ${mentionedProduct.ingredients.slice(0, 3).join(', ')}. In ${region}, this product is ${(mentionedProduct.regionAvailability[region] ?? 'visible_but_not_buyable').replaceAll('_', ' ')}. Usage: ${mentionedProduct.usageInstructions}`,
       actions: [
         {
           id: `product-${mentionedProduct.id}`,

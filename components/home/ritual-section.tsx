@@ -15,7 +15,7 @@ const ritualSteps = [
     number: '01',
     title: 'Cleanse',
     description:
-      'Begin with our gentle cloud foam cleanser. The pH-balanced formula removes impurities while preserving your skin barrier.',
+      'Start with a verified cleanser once supplier documentation is approved.',
     color: 'from-blush-pink/30',
     image: resolveImageSrc('/assets/editorial/skincare-ingredients.jpg'),
   },
@@ -23,7 +23,7 @@ const ritualSteps = [
     number: '02',
     title: 'Tone & Prep',
     description:
-      'Our Glass Skin Essence preps your skin for optimal absorption. Fermented botanicals plump and hydrate.',
+      'Use a toner or prep step only after final formula, usage, and INCI review.',
     color: 'from-rose-mauve/20',
     image: resolveImageSrc('/assets/products/glass-skin-essence.jpg'),
   },
@@ -31,7 +31,7 @@ const ritualSteps = [
     number: '03',
     title: 'Treat',
     description:
-      'Apply targeted treatments. Our serums address specific concerns from brightening to soothing.',
+      'Treatment steps will be organized by confirmed concerns and approved claims.',
     color: 'from-champagne-gold/20',
     image: resolveImageSrc('/assets/products/luminous-glow-serum.jpg'),
   },
@@ -39,7 +39,7 @@ const ritualSteps = [
     number: '04',
     title: 'Moisturize',
     description:
-      'Lock in hydration with our Hydra Cloud Cream. 72-hour moisture retention for plump, dewy skin.',
+      'Creams and oils will be described with neutral copy after supplier verification.',
     color: 'from-plum/10',
     image: resolveImageSrc('/assets/editorial/care-expert.jpg'),
   },
@@ -47,7 +47,7 @@ const ritualSteps = [
     number: '05',
     title: 'Protect',
     description:
-      'Finish with our Aura Tone-Up Sun Cream. SPF50+ protection with a natural glow effect.',
+      'Sun care guidance will be published only after compliant regional review.',
     color: 'from-nude-beige/40',
     image: resolveImageSrc('/assets/editorial/tone-up-sun-cream.png'),
   },
@@ -59,7 +59,7 @@ export function RitualSection() {
   const copy = {
     kicker: locale === 'ar' ? 'طريق الجمال الكوري' : locale === 'fr' ? 'La voie K-Beauty' : locale === 'de' ? 'Der K-Beauty Weg' : locale === 'ko' ? 'K-뷰티 방식' : locale === 'tr' ? 'K-Beauty Yolu' : 'The K-Beauty Way',
     title: locale === 'ar' ? 'طقس الجمال الكوري' : locale === 'fr' ? 'Le rituel de la beauté coréenne' : locale === 'de' ? 'Das Ritual koreanischer Schönheit' : locale === 'ko' ? '코리안 뷰티 리추얼' : locale === 'tr' ? 'Kore Güzellik Ritüeli' : 'The Ritual of Korean Beauty',
-    description: locale === 'ar' ? 'اكتشفي فن طبقات المنتجات لتحقيق أفضل النتائج.' : locale === 'fr' ? 'Découvrez l’art de superposer les soins pour une efficacité maximale.' : locale === 'de' ? 'Entdecke das Schichten von Produkten für maximale Wirksamkeit.' : locale === 'ko' ? '최대 효능을 위한 레이어링 루틴을 경험하세요.' : locale === 'tr' ? 'Maksimum etki için ürünleri katmanlama sanatını keşfedin.' : 'Discover the art of layering products for maximum efficacy. Each step builds upon the last for transformative results.',
+    description: locale === 'ar' ? 'سيتم نشر خطوات الروتين بعد مراجعة بيانات الموردين.' : locale === 'fr' ? 'Les étapes seront publiées après vérification des données fournisseurs.' : locale === 'de' ? 'Routineschritte erscheinen nach Prüfung der Lieferantendaten.' : locale === 'ko' ? '공급사 자료 검토 후 루틴 단계가 공개됩니다.' : locale === 'tr' ? 'Rutin adımları tedarikçi verileri doğrulandıktan sonra yayınlanacak.' : 'Routine steps will be published after supplier documentation and internal review.',
     step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
   }
   return (

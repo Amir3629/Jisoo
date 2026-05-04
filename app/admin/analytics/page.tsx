@@ -40,42 +40,42 @@ import {
 } from "recharts"
 
 const revenueData = [
-  { month: "Jan", revenue: 65000, orders: 420, customers: 380 },
-  { month: "Feb", revenue: 72000, orders: 480, customers: 420 },
-  { month: "Mar", revenue: 85000, orders: 550, customers: 490 },
-  { month: "Apr", revenue: 78000, orders: 510, customers: 460 },
-  { month: "May", revenue: 92000, orders: 620, customers: 540 },
-  { month: "Jun", revenue: 105000, orders: 710, customers: 620 },
-  { month: "Jul", revenue: 118000, orders: 780, customers: 690 },
-  { month: "Aug", revenue: 125000, orders: 820, customers: 740 },
-  { month: "Sep", revenue: 132000, orders: 870, customers: 780 },
-  { month: "Oct", revenue: 145000, orders: 950, customers: 850 },
-  { month: "Nov", revenue: 168000, orders: 1100, customers: 980 },
-  { month: "Dec", revenue: 195000, orders: 1280, customers: 1120 },
+  { month: "Jan", revenue: 0, orders: 420, customers: 380 },
+  { month: "Feb", revenue: 0, orders: 480, customers: 420 },
+  { month: "Mar", revenue: 0, orders: 550, customers: 490 },
+  { month: "Apr", revenue: 0, orders: 510, customers: 460 },
+  { month: "May", revenue: 0, orders: 620, customers: 540 },
+  { month: "Jun", revenue: 0, orders: 710, customers: 620 },
+  { month: "Jul", revenue: 0, orders: 780, customers: 690 },
+  { month: "Aug", revenue: 0, orders: 820, customers: 740 },
+  { month: "Sep", revenue: 0, orders: 870, customers: 780 },
+  { month: "Oct", revenue: 0, orders: 950, customers: 850 },
+  { month: "Nov", revenue: 0, orders: 1100, customers: 980 },
+  { month: "Dec", revenue: 0, orders: 1280, customers: 1120 },
 ]
 
 const categoryData = [
-  { name: "Serums", value: 35, revenue: 342500, color: "#E8B4B8" },
-  { name: "Moisturizers", value: 25, revenue: 245000, color: "#D4A574" },
-  { name: "Cleansers", value: 18, revenue: 176400, color: "#E9C7D1" },
-  { name: "Sunscreens", value: 12, revenue: 117600, color: "#F3E7E0" },
-  { name: "Masks", value: 10, revenue: 98000, color: "#B76E8A" },
+  { name: "Serums", value: 35, revenue: 0, color: "#E8B4B8" },
+  { name: "Moisturizers", value: 25, revenue: 0, color: "#D4A574" },
+  { name: "Cleansers", value: 18, revenue: 0, color: "#E9C7D1" },
+  { name: "Sunscreens", value: 12, revenue: 0, color: "#F3E7E0" },
+  { name: "Masks", value: 10, revenue: 0, color: "#B76E8A" },
 ]
 
 const regionalData = [
-  { region: "North America", revenue: 450000, growth: 15.2, orders: 2850 },
-  { region: "Europe", revenue: 380000, growth: 22.5, orders: 2400 },
-  { region: "Asia Pacific", revenue: 290000, growth: 18.7, orders: 1850 },
-  { region: "Middle East", revenue: 85000, growth: 35.2, orders: 520 },
-  { region: "Latin America", revenue: 45000, growth: 28.9, orders: 280 },
+  { region: "North America", revenue: 0, growth: 0, orders: 2850 },
+  { region: "Europe", revenue: 0, growth: 0, orders: 2400 },
+  { region: "Asia Pacific", revenue: 0, growth: 0, orders: 1850 },
+  { region: "Middle East", revenue: 0, growth: 0, orders: 520 },
+  { region: "Latin America", revenue: 0, growth: 0, orders: 280 },
 ]
 
 const topProducts = [
-  { name: "COSRX Snail Mucin Essence", sales: 2840, revenue: 85200, growth: 24.5 },
-  { name: "Beauty of Joseon Sunscreen", sales: 2650, revenue: 50350, growth: 32.1 },
-  { name: "Sulwhasoo First Care Serum", sales: 1890, revenue: 226800, growth: 18.2 },
-  { name: "Glow Recipe Watermelon Mask", sales: 1720, revenue: 60200, growth: 15.8 },
-  { name: "SKIN1004 Centella Ampoule", sales: 1580, revenue: 36340, growth: 21.3 },
+  { name: "Radiance Boost Vitamin C 23 Serum", sales: 0, revenue: 0, growth: 0 },
+  { name: "Pore Deep Clean Bubble Serum", sales: 0, revenue: 0, growth: 0 },
+  { name: "Azulene Toner Pad", sales: 0, revenue: 0, growth: 0 },
+  { name: "Daily UV Shield Sun Cream", sales: 0, revenue: 0, growth: 0 },
+  { name: "Pore Clear Vita-C Cleansing Foam", sales: 0, revenue: 0, growth: 0 },
 ]
 
 const trafficSources = [

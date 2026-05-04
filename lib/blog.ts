@@ -13,17 +13,17 @@ export interface BlogPost {
 
 export const blogPosts: BlogPost[] = [
   {
-    slug: 'glass-skin-night-ritual',
-    title: 'The 5-Step Glass Skin Night Ritual',
-    excerpt: 'A calming evening routine for bounce, hydration, and morning radiance.',
+    slug: 'verified-evening-care-framework',
+    title: 'The Verified Evening Care Framework',
+    excerpt: 'A neutral framework for care steps after product verification.',
     category: 'Ritual',
     readTime: '6 min read',
     publishedAt: '2026-04-10',
     coverImage: resolveImageSrc('/assets/editorial/rose-layering.png'),
     content: [
       'Start with a gentle cleanse to remove sunscreen and makeup without disrupting your barrier.',
-      'Layer hydrating essence and targeted serum while skin is still slightly damp.',
-      'Seal with a comforting cream and support overnight repair with a sleeping mask when needed.',
+      'Add verified treatment steps only after formula and usage review.',
+      'Complete the routine with approved cream or mask guidance when available.',
     ],
   },
   {

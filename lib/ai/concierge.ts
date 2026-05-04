@@ -87,10 +87,10 @@ function buildProductAnswer(input: string, region: Region): ConciergeReply | nul
   if (!product) return null
 
   const availability = product.regionAvailability[region] ?? 'visible_but_not_buyable'
-  const ingredientPreview = product.ingredients.slice(0, 3).map(ingredient => ingredient.name).join(', ')
+  const ingredientPreview = product.ingredients.slice(0, 3).join(', ')
 
   return {
-    answer: `${product.name} is designed for ${product.concerns.slice(0, 2).join(' and ')}. Key ingredients include ${ingredientPreview}. In ${region}, current availability is: ${availability.replaceAll('_', ' ')}. Usage: ${product.howToUse}`,
+    answer: `${product.name} is a draft JISOO product record for ${product.category}. Ingredient review: ${ingredientPreview}. In ${region}, current availability is: ${availability.replaceAll('_', ' ')}. Usage: ${product.usageInstructions}`,
     productSlugs: [product.slug],
     suggestions: ['Show an alternative in my region', 'How should I layer this in a routine?'],
     restricted: false,
@@ -154,11 +154,11 @@ export function generateConciergeReply({
     const top = products
       .filter(product => product.regionAvailability[region] !== 'hidden')
       .slice(0, 2)
-      .map(product => `${product.name}: ${product.ingredients.slice(0, 2).map(ingredient => ingredient.name).join(', ')}`)
+      .map(product => `${product.name}: ${product.ingredients.slice(0, 2).join(', ')}`)
       .join(' · ')
 
     return {
-      answer: `Here are ingredient highlights from popular formulas: ${top}. If you name a specific product, I can give a fuller ingredient and usage guide.`,
+      answer: `Here is the current ingredient review status: ${top}. Public ingredient copy should be completed only after verified supplier documentation and internal review.`,
       productSlugs: products.slice(0, 2).map(product => product.slug),
       suggestions: ['Is vitamin C good for sensitive skin?', 'Show me a gentle daily routine'],
       restricted: false,

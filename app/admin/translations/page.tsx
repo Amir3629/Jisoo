@@ -39,7 +39,7 @@ export default function TranslationsPage() {
     const productRows = products.slice(0, 6).flatMap((p) => [
       { id: `${p.id}-title`, entityType: 'product' as const, entityName: p.name, field: 'title' as const, sourceText: p.name, targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status },
       { id: `${p.id}-short`, entityType: 'product' as const, entityName: p.name, field: 'short_description' as const, sourceText: p.shortDescription, targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status },
-      { id: `${p.id}-long`, entityType: 'product' as const, entityName: p.name, field: 'long_description' as const, sourceText: p.description, targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status },
+      { id: `${p.id}-long`, entityType: 'product' as const, entityName: p.name, field: 'long_description' as const, sourceText: p.description ?? '', targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status },
       { id: `${p.id}-warn`, entityType: 'product' as const, entityName: p.name, field: 'warning' as const, sourceText: 'Availability varies by region', targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status },
     ])
     return [...productRows, ...uiFields.map((f) => ({ ...f, targetLang: 'ar' as Lang, targetText: '', status: 'draft' as Status }))]

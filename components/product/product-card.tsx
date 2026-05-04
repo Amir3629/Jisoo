@@ -77,7 +77,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             </h3>
           </Link>
           <p className="line-clamp-2 text-sm leading-6 text-charcoal/65">
-            {product.description}
+            {product.shortDescription}
           </p>
         </div>
 
@@ -85,7 +85,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-semibold text-charcoal">
-              €{product.price.toFixed(2)}
+              {product.price > 0 ? `€${product.price.toFixed(2)}` : 'Price pending'}
             </span>
             {product.compareAtPrice && product.compareAtPrice > product.price && (
               <span className="text-sm text-charcoal/40 line-through">

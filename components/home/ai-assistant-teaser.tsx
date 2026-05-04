@@ -106,15 +106,14 @@ export function AiAssistantTeaser() {
               <div className="py-6 space-y-4">
                 <div className="flex justify-end">
                   <div className="bg-rose-mauve/20 px-4 py-3 rounded-2xl rounded-br-md max-w-[80%]">
-                    <p className="text-sm text-charcoal">What serum is best for dull skin?</p>
+                    <p className="text-sm text-charcoal">Can you help compare draft care products?</p>
                   </div>
                 </div>
 
                 <div className="flex justify-start">
                   <div className="bg-white/80 border border-rose-mauve/15 px-4 py-3 rounded-2xl rounded-bl-md max-w-[80%]">
                     <p className="text-sm text-charcoal">
-                      For dull skin, I recommend our <strong>Luminous Glow Serum</strong>. 
-                      It contains 15% Vitamin C and fermented rice water for instant radiance!
+                      I can help organize draft records, but public claims should wait for verified supplier documentation.
                     </p>
                   </div>
                 </div>

@@ -1,5 +1,8 @@
 import type { Product, Category, Partner, Customer, Order, Review, Testimonial, RegionConfig, Coupon } from './types'
 import { resolveImageSrc } from './image-fallbacks'
+import { products, getProductBySlug, getProductById, getProductsByCategory, getRelatedProducts, formatPrice } from './products'
+
+export { products, getProductBySlug, getProductById, getProductsByCategory, getRelatedProducts, formatPrice }
 
 // Region Configurations
 export const regionConfigs: Record<string, RegionConfig> = {
@@ -74,493 +77,111 @@ export const categories: Category[] = [
   {
     id: 'cat-skincare',
     slug: 'skincare',
-    name: 'Skincare',
-    description: 'Curated Korean skincare for balanced daily routines',
+    name: 'Skin Care',
+    description: 'Daily care formats prepared for verified supplier data',
     image: '/assets/editorial/skincare-ingredients.jpg',
-    productCount: 156,
+    productCount: products.filter((product) => ['cream', 'oil', 'mask', 'cleanser', 'toner', 'sun care', 'serum', 'ampoule', 'essence', 'lotion', 'fluid', 'emulsion', 'eye care', 'mist', 'toner pad', 'cleansing oil', 'exfoliant', 'tone-up care', 'trial care'].includes(product.category)).length,
     subcategories: [
-      { id: 'cat-cleansers', slug: 'cleansers', name: 'Cleansers', description: 'Gentle yet effective cleansing', image: '/assets/products/glass-skin-essence.jpg', productCount: 24 },
-      { id: 'cat-toners', slug: 'toners', name: 'Toners', description: 'Prep and balance your skin', image: '/assets/backgrounds/cica-ampoule.jpeg', productCount: 18 },
-      { id: 'cat-serums', slug: 'serums', name: 'Serums', description: 'Concentrated active treatments', image: '/assets/products/luminous-glow-serum.jpg', productCount: 32 },
-      { id: 'cat-moisturizers', slug: 'moisturizers', name: 'Moisturizers', description: 'Deep hydration and nourishment', image: '/assets/editorial/care-expert.jpg', productCount: 28 },
-      { id: 'cat-suncare', slug: 'sun-care', name: 'Sun Care', description: 'Advanced UV protection', image: '/assets/editorial/tone-up-sun-cream.png', productCount: 16 },
-      { id: 'cat-masks', slug: 'masks', name: 'Masks', description: 'Weekly treatment rituals', image: '/assets/editorial/sun-care.png', productCount: 38 },
+      { id: 'cat-cleansers', slug: 'cleansers', name: 'Cleansers', description: 'Cleansing formats pending verified details', image: '/assets/products/glass-skin-essence.jpg', productCount: getProductsByCategory('cleansers').length },
+      { id: 'cat-cleansing-oils', slug: 'cleansing-oils', name: 'Cleansing Oils', description: 'Oil cleansing drafts pending review', image: '/assets/products/luminous-glow-serum.jpg', productCount: getProductsByCategory('cleansing-oils').length },
+      { id: 'cat-exfoliants', slug: 'exfoliants', name: 'Exfoliants', description: 'Exfoliating formats pending review', image: '/assets/editorial/skincare-ingredients.jpg', productCount: getProductsByCategory('exfoliants').length },
+      { id: 'cat-toners', slug: 'toners', name: 'Toners', description: 'Toner drafts pending verified details', image: '/assets/backgrounds/cica-ampoule.jpeg', productCount: getProductsByCategory('toners').length },
+      { id: 'cat-toner-pads', slug: 'toner-pads', name: 'Toner Pads', description: 'Pad formats pending review', image: '/assets/editorial/product-table.png', productCount: getProductsByCategory('toner-pads').length },
+      { id: 'cat-essences', slug: 'essences', name: 'Essences', description: 'Essence drafts pending documentation', image: '/assets/products/glass-skin-essence.jpg', productCount: getProductsByCategory('essences').length },
+      { id: 'cat-serums', slug: 'serums', name: 'Serums', description: 'Serum drafts pending documentation', image: '/assets/products/luminous-glow-serum.jpg', productCount: getProductsByCategory('serums').length },
+      { id: 'cat-ampoules', slug: 'ampoules', name: 'Ampoules', description: 'Ampoule drafts pending documentation', image: '/assets/backgrounds/cica-ampoule.jpeg', productCount: getProductsByCategory('ampoules').length },
+      { id: 'cat-moisturizers', slug: 'moisturizers', name: 'Creams', description: 'Cream drafts pending review', image: '/assets/editorial/care-expert.jpg', productCount: getProductsByCategory('moisturizers').length },
+      { id: 'cat-lotions', slug: 'lotions', name: 'Lotions', description: 'Lotion drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('lotions').length },
+      { id: 'cat-fluids', slug: 'fluids', name: 'Fluids', description: 'Fluid drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('fluids').length },
+      { id: 'cat-emulsions', slug: 'emulsions', name: 'Emulsions', description: 'Emulsion drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('emulsions').length },
+      { id: 'cat-eye-care', slug: 'eye-care', name: 'Eye Care', description: 'Eye care drafts pending review', image: '/assets/editorial/eye-care.png', productCount: getProductsByCategory('eye-care').length },
+      { id: 'cat-mists', slug: 'mists', name: 'Mists', description: 'Mist drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('mists').length },
+      { id: 'cat-suncare', slug: 'sun-care', name: 'Sun Care', description: 'Sun care drafts pending regulatory review', image: '/assets/editorial/tone-up-sun-cream.png', productCount: getProductsByCategory('sun-care').length },
+      { id: 'cat-base-care', slug: 'base-care', name: 'Tone-Up & Base', description: 'Base care drafts pending review', image: '/assets/editorial/rose-layering.png', productCount: getProductsByCategory('base-care').length },
+      { id: 'cat-trial-pouches', slug: 'trial-pouches', name: 'Trial Pouches', description: 'Trial format drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('trial-pouches').length },
+      { id: 'cat-masks', slug: 'masks', name: 'Masks', description: 'Mask formats pending verified details', image: '/assets/editorial/sun-care.png', productCount: getProductsByCategory('masks').length },
+      { id: 'cat-sheet-masks', slug: 'sheet-masks', name: 'Sheet Masks', description: 'Sheet mask drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('sheet-masks').length },
+      { id: 'cat-wash-off-packs', slug: 'wash-off-packs', name: 'Wash-Off Packs', description: 'Wash-off pack drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('wash-off-packs').length },
     ],
   },
   {
-    id: 'cat-makeup',
-    slug: 'makeup',
-    name: 'Makeup',
-    description: 'Skin-first color inspired by Korean beauty rituals',
-    image: '/assets/editorial/lips-closeup.jpg',
-    productCount: 89,
+    id: 'cat-body-care',
+    slug: 'body-care',
+    name: 'Body Care',
+    description: 'Body care formats prepared for verified supplier data',
+    image: '/assets/editorial/product-table.png',
+    productCount: getProductsByCategory('body care').length,
     subcategories: [
-      { id: 'cat-base', slug: 'base', name: 'Base Makeup', description: 'Flawless skin foundation', image: '/assets/editorial/rose-layering.png', productCount: 22 },
-      { id: 'cat-lips', slug: 'lips', name: 'Lips', description: 'Vibrant colors and care', image: '/assets/editorial/lips-closeup.jpg', productCount: 34 },
-      { id: 'cat-eyes', slug: 'eyes', name: 'Eyes', description: 'Define and enhance', image: '/assets/editorial/eye-closeup.webp', productCount: 28 },
-      { id: 'cat-cheeks', slug: 'cheeks', name: 'Cheeks', description: 'Natural flush and glow', image: '/assets/editorial/soft-cheek-glow.png', productCount: 15 },
+      { id: 'cat-body-wash', slug: 'body-wash', name: 'Body Wash', description: 'Body wash drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('body-wash').length },
+      { id: 'cat-body-lotion', slug: 'body-lotion', name: 'Body Lotion', description: 'Body lotion drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('body-lotion').length },
+      { id: 'cat-body-oil', slug: 'body-oil', name: 'Body Oil', description: 'Body oil drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('body-oil').length },
+      { id: 'cat-body-mist', slug: 'body-mist', name: 'Body Mist', description: 'Body mist drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('body-mist').length },
+      { id: 'cat-bath-care', slug: 'bath-care', name: 'Bath Care', description: 'Bath care drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('bath-care').length },
+      { id: 'cat-hand-care', slug: 'hand-care', name: 'Hand Care', description: 'Hand care drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('hand-care').length },
+      { id: 'cat-foot-care', slug: 'foot-care', name: 'Foot Care', description: 'Foot care drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('foot-care').length },
+    ],
+  },
+  {
+    id: 'cat-hair-care',
+    slug: 'hair-care',
+    name: 'Hair Care',
+    description: 'Hair care formats prepared for verified supplier data',
+    image: '/assets/placeholders/placeholder.svg',
+    productCount: getProductsByCategory('hair care').length,
+    subcategories: [
+      { id: 'cat-shampoo', slug: 'shampoo', name: 'Shampoo', description: 'Shampoo drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('shampoo').length },
+      { id: 'cat-rinse', slug: 'rinse', name: 'Rinse', description: 'Rinse drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('rinse').length },
+      { id: 'cat-hair-treatment', slug: 'hair-treatment', name: 'Treatments', description: 'Treatment drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('hair-treatment').length },
+      { id: 'cat-hair-essence', slug: 'hair-essence', name: 'Hair Essence', description: 'Hair essence drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('hair-essence').length },
+      { id: 'cat-hair-tonic', slug: 'hair-tonic', name: 'Hair Tonic', description: 'Hair tonic drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('hair-tonic').length },
+      { id: 'cat-hair-styling', slug: 'hair-styling', name: 'Styling', description: 'Styling drafts pending review', image: '/assets/placeholders/placeholder.svg', productCount: getProductsByCategory('hair-styling').length },
     ],
   },
   {
     id: 'cat-sets',
     slug: 'sets',
-    name: 'Gift Sets',
-    description: 'Curated beauty collections',
+    name: 'Care Sets',
+    description: 'Set drafts pending verified product selection',
     image: '/assets/editorial/eye-care.png',
-    productCount: 24,
+    productCount: getProductsByCategory('sets').length,
+  },
+  {
+    id: 'cat-fragrance',
+    slug: 'fragrance',
+    name: 'Fragrance',
+    description: 'Fragrance drafts pending positioning and compliance review',
+    image: '/assets/placeholders/placeholder.svg',
+    productCount: getProductsByCategory('fragrance').length,
   },
   {
     id: 'cat-bestsellers',
     slug: 'best-sellers',
-    name: 'Best Sellers',
-    description: 'Frequently repurchased customer favorites',
+    name: 'Reviewed Favorites',
+    description: 'Reserved for verified sales and review data',
     image: '/assets/editorial/serum-dropper.png',
-    productCount: 50,
+    productCount: 0,
   },
   {
     id: 'cat-new',
     slug: 'new-arrivals',
-    name: 'New Arrivals',
-    description: 'Newly selected from our Korean partners',
+    name: 'Supplier Review',
+    description: 'JISOO product records prepared from reviewed supplier references',
     image: '/assets/editorial/product-table.png',
-    productCount: 32,
+    productCount: products.length,
   },
 ]
 
-// Products
-export const products: Product[] = [
-  {
-    id: 'prod-1',
-    slug: 'luminous-glow-serum',
-    name: 'Luminous Glow Serum',
-    subtitle: 'Radiance-Boosting Vitamin C Complex',
-    brand: 'JISOO',
-    partnerId: 'partner-2',
-    description: 'A vitamin C serum designed to support visible radiance while remaining gentle on everyday routines. Formulated with 15% pure vitamin C, niacinamide, and fermented rice water for a luminous, glass-skin finish.',
-    shortDescription: 'Vitamin C brightening serum for radiant, glass-skin glow',
-    price: 78,
-    compareAtPrice: 95,
-    currency: 'EUR',
-    images: [
-      { id: 'img-1-1', src: '/assets/products/luminous-glow-serum.jpg', alt: 'Luminous Glow Serum front view', isMain: true },
-      { id: 'img-1-2', src: '/assets/products/glass-skin-essence.jpg', alt: 'Luminous Glow Serum texture' },
-      { id: 'img-1-3', src: '/assets/editorial/skincare-ingredients.jpg', alt: 'Luminous Glow Serum application' },
-    ],
-    category: 'skincare',
-    subcategory: 'serums',
-    tags: ['brightening', 'vitamin-c', 'anti-aging', 'glow'],
-    skinTypes: ['All Skin Types', 'Dull Skin', 'Uneven Tone'],
-    concerns: ['Dullness', 'Dark Spots', 'Uneven Skin Tone', 'Fine Lines'],
-    ingredients: [
-      { name: 'Vitamin C (15%)', description: 'L-Ascorbic Acid', benefit: 'Brightens and protects against free radicals' },
-      { name: 'Niacinamide', description: 'Vitamin B3', benefit: 'Minimizes pores and evens skin tone' },
-      { name: 'Fermented Rice Water', description: 'Traditional Korean ingredient', benefit: 'Hydrates and promotes radiance' },
-      { name: 'Hyaluronic Acid', description: 'Multi-weight complex', benefit: 'Deep hydration at every skin level' },
-    ],
-    benefits: [
-      { title: 'Instant Glow', description: 'Instantly fresh-looking glow', icon: 'sparkles' },
-      { title: 'Dark Spot Reduction', description: 'Helps improve the look of uneven tone with consistent use', icon: 'sun' },
-      { title: 'Smooth luminous finish', description: 'Smooth, luminous finish', icon: 'droplet' },
-    ],
-    howToUse: 'Apply 3-4 drops to clean, toned skin morning and evening. Follow with moisturizer. Use sunscreen during the day.',
-    texture: 'Lightweight, water-gel',
-    finish: 'Dewy, luminous',
-    size: '30ml',
-    rating: 4.8,
-    reviewCount: 324,
-    isNew: false,
-    isBestSeller: true,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_and_buyable',
-    },
-    relatedProducts: ['prod-2', 'prod-3', 'prod-4'],
-    createdAt: '2024-01-15',
-  },
-  {
-    id: 'prod-2',
-    slug: 'hydra-cloud-cream',
-    name: 'Hydra Cloud Cream',
-    subtitle: 'Weightless Deep Moisture',
-    brand: 'JISOO',
-    partnerId: 'partner-1',
-    description: 'A lightweight cream that cushions skin with comfortable hydration throughout the day. Powered by 7 types of hyaluronic acid and a proprietary ceramide complex for long-wear moisture support.',
-    shortDescription: 'Cloud-like moisturizer for lasting hydration',
-    price: 65,
-    currency: 'EUR',
-    images: [
-      { id: 'img-2-1', src: '/assets/editorial/care-expert.jpg', alt: 'Hydra Cloud Cream jar', isMain: true },
-      { id: 'img-2-2', src: '/assets/products/glass-skin-essence.jpg', alt: 'Hydra Cloud Cream texture' },
-    ],
-    category: 'skincare',
-    subcategory: 'moisturizers',
-    tags: ['hydrating', 'moisturizer', 'sensitive-skin', 'lightweight'],
-    skinTypes: ['All Skin Types', 'Dry Skin', 'Dehydrated Skin'],
-    concerns: ['Dryness', 'Dehydration', 'Sensitivity', 'Fine Lines'],
-    ingredients: [
-      { name: '7-HA Complex', description: '7 types of Hyaluronic Acid', benefit: 'Multi-level hydration' },
-      { name: 'Ceramide NP', description: 'Skin-identical lipid', benefit: 'Strengthens moisture barrier' },
-      { name: 'Centella Asiatica', description: 'Soothing botanical', benefit: 'Calms and repairs skin' },
-    ],
-    benefits: [
-      { title: '72-Hour Hydration', description: 'Long-lasting moisture lock', icon: 'droplet' },
-      { title: 'Barrier Repair', description: 'Strengthens skin defense', icon: 'shield' },
-      { title: 'Weightless Feel', description: 'No greasy residue', icon: 'feather' },
-    ],
-    howToUse: 'Apply generously as the last step of your skincare routine. Can be layered for extra hydration.',
-    texture: 'Whipped, cloud-like',
-    finish: 'Velvet matte',
-    size: '50ml',
-    rating: 4.9,
-    reviewCount: 567,
-    isBestSeller: true,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_but_not_buyable',
-    },
-    relatedProducts: ['prod-1', 'prod-3'],
-    createdAt: '2024-02-01',
-  },
-  {
-    id: 'prod-3',
-    slug: 'gentle-foam-cleanser',
-    name: 'Gentle Cloud Foam Cleanser',
-    subtitle: 'pH-Balanced Daily Cleanse',
-    brand: 'JISOO',
-    partnerId: 'partner-3',
-    description: 'A luxuriously creamy foam cleanser that removes impurities without stripping. Formulated at skin-optimal pH 5.5 with soothing tea tree and calming green tea.',
-    shortDescription: 'Gentle pH-balanced foam for daily cleansing',
-    price: 32,
-    currency: 'EUR',
-    images: [
-      { id: 'img-3-1', src: '/assets/editorial/skincare-ingredients.jpg', alt: 'Gentle Cloud Foam Cleanser', isMain: true },
-    ],
-    category: 'skincare',
-    subcategory: 'cleansers',
-    tags: ['cleanser', 'gentle', 'sensitive-skin', 'daily'],
-    skinTypes: ['All Skin Types', 'Sensitive Skin'],
-    concerns: ['Sensitivity', 'Cleansing'],
-    ingredients: [
-      { name: 'Green Tea Extract', description: 'Antioxidant-rich', benefit: 'Protects and soothes' },
-      { name: 'Tea Tree Oil', description: 'Natural purifier', benefit: 'Gently cleanses without irritation' },
-    ],
-    benefits: [
-      { title: 'pH 5.5 Formula', description: 'Respects skin barrier', icon: 'check' },
-      { title: 'Sulfate-Free', description: 'No harsh stripping', icon: 'leaf' },
-    ],
-    howToUse: 'Pump foam onto damp hands, massage onto wet face, rinse thoroughly.',
-    texture: 'Dense, creamy foam',
-    finish: 'Clean, refreshed',
-    size: '150ml',
-    rating: 4.7,
-    reviewCount: 289,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_and_buyable',
-    },
-    createdAt: '2024-01-20',
-  },
-  {
-    id: 'prod-4',
-    slug: 'tone-up-sun-cream',
-    name: 'Aura Tone-Up Sun Cream',
-    subtitle: 'SPF50+ PA++++ with Glow Effect',
-    brand: 'JISOO',
-    partnerId: 'partner-2',
-    description: 'A multitasking sunscreen that protects, tone-ups, and primes in one step. Micro-pearl technology creates an instant lit-from-within glow while providing superior UV protection.',
-    shortDescription: 'Glowing sunscreen with SPF50+ and tone-up effect',
-    price: 45,
-    currency: 'EUR',
-    images: [
-      { id: 'img-4-1', src: '/assets/editorial/tone-up-sun-cream.png', alt: 'Aura Tone-Up Sun Cream', isMain: true },
-      { id: 'img-4-2', src: '/assets/editorial/serum-dropper.png', alt: 'Aura Tone-Up Sun Cream swatch' },
-    ],
-    category: 'skincare',
-    subcategory: 'sun-care',
-    tags: ['sunscreen', 'tone-up', 'glow', 'spf50'],
-    skinTypes: ['All Skin Types'],
-    concerns: ['Sun Protection', 'Dullness', 'Uneven Tone'],
-    ingredients: [
-      { name: 'Micro-Pearl Complex', description: 'Light-reflecting pearls', benefit: 'Instant radiance boost' },
-      { name: 'Niacinamide', description: 'Brightening vitamin', benefit: 'Evens skin tone over time' },
-    ],
-    benefits: [
-      { title: 'SPF50+ PA++++', description: 'High daily UV protection', icon: 'sun' },
-      { title: 'Instant Tone-Up', description: 'Natural brightness', icon: 'sparkles' },
-      { title: 'Makeup Primer', description: 'Smooth base for makeup', icon: 'layers' },
-    ],
-    howToUse: 'Apply liberally as the last step of morning skincare. Reapply every 2 hours when exposed to sun.',
-    texture: 'Lightweight, silky',
-    finish: 'Radiant, natural',
-    size: '50ml',
-    rating: 4.6,
-    reviewCount: 412,
-    isNew: true,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'pending_review',
-    },
-    createdAt: '2024-03-01',
-  },
-  {
-    id: 'prod-5',
-    slug: 'velvet-lip-tint',
-    name: 'Velvet Matte Lip Tint',
-    subtitle: 'Long-Wear Color',
-    brand: 'JISOO',
-    partnerId: 'partner-2',
-    description: 'A weightless, transfer-proof lip tint that delivers rich color payoff with a soft velvet finish. Infused with hydrating oils to keep lips comfortable all day.',
-    shortDescription: 'Velvety lip color that lasts all day',
-    price: 28,
-    currency: 'EUR',
-    images: [
-      { id: 'img-5-1', src: '/assets/editorial/lips-closeup.jpg', alt: 'Velvet Matte Lip Tint', isMain: true },
-    ],
-    category: 'makeup',
-    subcategory: 'lips',
-    tags: ['lip-tint', 'matte', 'long-wear', 'hydrating'],
-    skinTypes: ['All Skin Types'],
-    concerns: ['Lip Color', 'Long-Wear'],
-    ingredients: [
-      { name: 'Jojoba Oil', description: 'Natural moisturizer', benefit: 'Keeps lips hydrated' },
-      { name: 'Vitamin E', description: 'Antioxidant protection', benefit: 'Nourishes and protects' },
-    ],
-    benefits: [
-      { title: '12-Hour Wear', description: 'Transfer-proof formula', icon: 'clock' },
-      { title: 'Hydrating', description: 'No drying or flaking', icon: 'droplet' },
-    ],
-    howToUse: 'Apply directly to lips. Build for more intensity. No need for lip liner.',
-    texture: 'Mousse-like',
-    finish: 'Velvet matte',
-    size: '4g',
-    rating: 4.5,
-    reviewCount: 178,
-    variants: [
-      { id: 'var-5-1', name: 'Rose Petal', sku: 'VLT-001', price: 28, inStock: true, stockQuantity: 45 },
-      { id: 'var-5-2', name: 'Coral Kiss', sku: 'VLT-002', price: 28, inStock: true, stockQuantity: 32 },
-      { id: 'var-5-3', name: 'Berry Crush', sku: 'VLT-003', price: 28, inStock: true, stockQuantity: 28 },
-      { id: 'var-5-4', name: 'Nude Blush', sku: 'VLT-004', price: 28, inStock: false, stockQuantity: 0 },
-    ],
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_and_buyable',
-    },
-    createdAt: '2024-02-15',
-  },
-  {
-    id: 'prod-6',
-    slug: 'cica-repair-ampoule',
-    name: 'Cica Repair Ampoule',
-    subtitle: 'Intensive Soothing Treatment',
-    brand: 'JISOO',
-    partnerId: 'partner-3',
-    description: 'A concentrated ampoule with 95% Centella Asiatica extract for intense skin repair. Calms irritation, reduces redness, and strengthens the skin barrier for sensitive, stressed skin.',
-    shortDescription: 'Intensive soothing ampoule for sensitive skin',
-    price: 58,
-    currency: 'EUR',
-    images: [
-      { id: 'img-6-1', src: '/assets/backgrounds/cica-ampoule.jpeg', alt: 'Cica Repair Ampoule', isMain: true },
-    ],
-    category: 'skincare',
-    subcategory: 'serums',
-    tags: ['cica', 'soothing', 'sensitive-skin', 'repair'],
-    skinTypes: ['Sensitive Skin', 'Irritated Skin', 'All Skin Types'],
-    concerns: ['Redness', 'Irritation', 'Sensitivity', 'Barrier Repair'],
-    ingredients: [
-      { name: 'Centella Asiatica (95%)', description: 'Healing herb', benefit: 'Soothes and repairs skin' },
-      { name: 'Madecassoside', description: 'Active compound', benefit: 'Reduces inflammation' },
-      { name: 'Panthenol', description: 'Vitamin B5', benefit: 'Hydrates and calms' },
-    ],
-    benefits: [
-      { title: 'Instant Calm', description: 'Reduces redness immediately', icon: 'heart' },
-      { title: 'Barrier Repair', description: 'Strengthens skin defense', icon: 'shield' },
-      { title: '95% Centella', description: 'Maximum concentration', icon: 'leaf' },
-    ],
-    howToUse: 'Apply 2-3 drops to irritated areas or all over face after toning. Follow with moisturizer.',
-    texture: 'Watery, lightweight',
-    finish: 'Dewy, comfortable',
-    size: '30ml',
-    rating: 4.9,
-    reviewCount: 523,
-    isBestSeller: true,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_and_buyable',
-    },
-    createdAt: '2024-01-10',
-  },
-  {
-    id: 'prod-7',
-    slug: 'glass-skin-essence',
-    name: 'Glass Skin Essence',
-    subtitle: 'The Korean Glass Skin Secret',
-    brand: 'JISOO',
-    partnerId: 'partner-1',
-    description: 'The iconic essence that delivers the famous Korean glass skin effect. Fermented botanical extracts plump and prep skin for maximum product absorption.',
-    shortDescription: 'Essence for the ultimate glass skin effect',
-    price: 52,
-    currency: 'EUR',
-    images: [
-      { id: 'img-7-1', src: '/assets/products/glass-skin-essence.jpg', alt: 'Glass Skin Essence', isMain: true },
-    ],
-    category: 'skincare',
-    subcategory: 'toners',
-    tags: ['essence', 'glass-skin', 'fermented', 'hydrating'],
-    skinTypes: ['All Skin Types'],
-    concerns: ['Dullness', 'Dehydration', 'Texture'],
-    ingredients: [
-      { name: 'Fermented Rice Extract', description: 'Traditional Korean ingredient', benefit: 'Brightens and plumps' },
-      { name: 'Galactomyces', description: 'Fermented yeast', benefit: 'Refines texture' },
-      { name: 'Bifida Ferment', description: 'Probiotic ingredient', benefit: 'Strengthens skin barrier' },
-    ],
-    benefits: [
-      { title: 'Smooth luminous finish', description: 'Instantly luminous', icon: 'sparkles' },
-      { title: 'Better Absorption', description: 'Preps skin for serums', icon: 'layers' },
-    ],
-    howToUse: 'Pat gently into skin after cleansing and toning. Use morning and night.',
-    texture: 'Watery, fluid',
-    finish: 'Glowy, plump',
-    size: '150ml',
-    rating: 4.8,
-    reviewCount: 634,
-    isBestSeller: true,
-    isNew: true,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_and_buyable',
-    },
-    createdAt: '2024-03-10',
-  },
-  {
-    id: 'prod-8',
-    slug: 'pore-minimizing-serum',
-    name: 'Pore Refining Serum',
-    subtitle: 'Visible Pore Minimizer',
-    brand: 'JISOO',
-    partnerId: 'partner-2',
-    description: 'A targeted serum that visibly minimizes pores and controls excess oil. BHA and PHA gently exfoliate while zinc regulates sebum for a refined, smooth complexion.',
-    shortDescription: 'Pore-minimizing serum for refined skin',
-    price: 48,
-    currency: 'EUR',
-    images: [
-      { id: 'img-8-1', src: '/assets/editorial/eye-closeup.webp', alt: 'Pore Refining Serum', isMain: true },
-    ],
-    category: 'skincare',
-    subcategory: 'serums',
-    tags: ['pores', 'oil-control', 'exfoliating', 'refining'],
-    skinTypes: ['Oily Skin', 'Combination Skin'],
-    concerns: ['Enlarged Pores', 'Excess Oil', 'Texture'],
-    ingredients: [
-      { name: 'BHA (Salicylic Acid)', description: 'Oil-soluble acid', benefit: 'Clears pores from within' },
-      { name: 'PHA', description: 'Gentle exfoliant', benefit: 'Smooths texture' },
-      { name: 'Zinc PCA', description: 'Sebum regulator', benefit: 'Controls oil production' },
-    ],
-    benefits: [
-      { title: 'Smaller Pores', description: 'Visibly refined appearance', icon: 'minimize' },
-      { title: 'Oil Control', description: '12-hour matte finish', icon: 'droplet' },
-    ],
-    howToUse: 'Apply to T-zone or all over face after cleansing. Use in the evening for best results.',
-    texture: 'Lightweight, fluid',
-    finish: 'Matte, smooth',
-    size: '30ml',
-    rating: 4.6,
-    reviewCount: 287,
-    regionAvailability: {
-      UAE: 'visible_and_buyable',
-      EU: 'visible_and_buyable',
-      CA: 'visible_but_not_buyable',
-    },
-    createdAt: '2024-02-20',
-  },
-]
+// Products are defined in ./products with neutral JISOO records ready for final verification.
 
 // Reviews
-export const reviews: Review[] = [
-  {
-    id: 'rev-1',
-    productId: 'prod-1',
-    customerId: 'cust-1',
-    customerName: 'Sarah M.',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    rating: 5,
-    title: 'Holy grail serum!',
-    content: 'I have been using this serum for 3 months and my skin has never looked better. The glow is real and my dark spots have faded significantly. Worth every penny!',
-    isVerified: true,
-    helpfulCount: 45,
-    createdAt: '2024-02-15',
-  },
-  {
-    id: 'rev-2',
-    productId: 'prod-1',
-    customerId: 'cust-2',
-    customerName: 'Fatima A.',
-    rating: 5,
-    title: 'Perfect for sensitive skin',
-    content: 'I was worried about vitamin C irritating my sensitive skin but this formula is so gentle. I use it every day and love the results.',
-    isVerified: true,
-    helpfulCount: 32,
-    createdAt: '2024-03-01',
-  },
-  {
-    id: 'rev-3',
-    productId: 'prod-2',
-    customerId: 'cust-3',
-    customerName: 'Emma L.',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    rating: 5,
-    title: 'Cloud-like hydration',
-    content: 'The texture is incredible - so light yet so hydrating. My dry skin drinks it up and stays plump all day. The 72-hour claim is not exaggerated!',
-    isVerified: true,
-    helpfulCount: 67,
-    createdAt: '2024-02-28',
-  },
-]
+export const reviews: Review[] = []
 
-// Testimonials
-export const testimonials: Testimonial[] = [
-  {
-    id: 'test-1',
-    customerName: 'Sophie Chen',
-    customerLocation: 'Dubai, UAE',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    content: 'JISOO has completely transformed my skincare routine. The products feel so luxurious and the results speak for themselves. My skin has never been this glowy!',
-    rating: 5,
-    productName: 'Luminous Glow Serum',
-  },
-  {
-    id: 'test-2',
-    customerName: 'Marie Dubois',
-    customerLocation: 'Paris, France',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    content: 'As a beauty editor, I have tried countless products. JISOO stands out for its quality and the authentic K-beauty experience. The Glass Skin Essence is now my holy grail.',
-    rating: 5,
-    productName: 'Glass Skin Essence',
-  },
-  {
-    id: 'test-3',
-    customerName: 'Aisha Rahman',
-    customerLocation: 'Toronto, Canada',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    content: 'Finally, a K-beauty brand that ships to Canada! The quality is exceptional and the customer service is amazing. My sensitive skin loves the Cica Repair Ampoule.',
-    rating: 5,
-    productName: 'Cica Repair Ampoule',
-  },
-  {
-    id: 'test-4',
-    customerName: 'Elena Schmidt',
-    customerLocation: 'Berlin, Germany',
-    customerAvatar: '/assets/placeholders/user.jpg',
-    content: 'The packaging is beautiful, the formulas are effective, and I love knowing that I am getting authentic Korean beauty products. JISOO is my new go-to!',
-    rating: 5,
-  },
-]
+export function getProductReviews(productId: string): Review[] {
+  return reviews.filter((review) => review.productId === productId)
+}
+
+// Verified testimonials will be imported only after real customer review approval.
+export const testimonials: Testimonial[] = []
 
 // Sample Customer
 export const sampleCustomer: Customer = {
@@ -586,8 +207,16 @@ export const sampleCustomer: Customer = {
   ],
   defaultShippingAddressId: 'addr-1',
   defaultBillingAddressId: 'addr-1',
-  wishlist: ['prod-2', 'prod-4', 'prod-7'],
-  recentlyViewed: ['prod-1', 'prod-3', 'prod-5', 'prod-6'],
+  wishlist: [
+    'prod-radiance-boost-vitamin-c-23-serum',
+    'prod-daily-uv-shield-sun-cream',
+    'prod-pore-clear-vita-c-cleansing-foam',
+  ],
+  recentlyViewed: [
+    'prod-pore-deep-clean-bubble-serum',
+    'prod-azulene-toner-pad',
+    'prod-daily-uv-shield-sun-cream',
+  ],
   points: 2450,
   tier: 'gold',
   createdAt: '2023-06-15',
@@ -622,7 +251,7 @@ export const sampleOrders: Order[] = [
     orderNumber: 'JISOO-2024-001567',
     status: 'shipped',
     items: [
-      { id: 'item-3', product: products[5], quantity: 1, price: 58 },
+      { id: 'item-3', product: products[4], quantity: 1, price: 0 },
     ],
     subtotal: 58,
     tax: 2.90,
@@ -688,49 +317,10 @@ for (const category of categories) {
   }
 }
 
-for (const product of products) {
-  product.images = product.images.map(image => ({ ...image, src: resolveImageSrc(image.src) }))
-}
-
-for (const review of reviews) {
-  review.customerAvatar = resolveImageSrc(review.customerAvatar)
-}
-
 for (const testimonial of testimonials) {
   testimonial.customerAvatar = resolveImageSrc(testimonial.customerAvatar)
 }
 
 sampleCustomer.avatar = resolveImageSrc(sampleCustomer.avatar)
 
-// Helper functions
-export function getProductBySlug(slug: string): Product | undefined {
-  return products.find(p => p.slug === slug)
-}
-
-export function getProductById(id: string): Product | undefined {
-  return products.find(p => p.id === id)
-}
-
-export function getProductsByCategory(categorySlug: string): Product[] {
-  return products.filter(p => p.category === categorySlug || p.subcategory === categorySlug)
-}
-
-export function getRelatedProducts(productId: string): Product[] {
-  const product = getProductById(productId)
-  if (!product?.relatedProducts) return []
-  return product.relatedProducts.map(id => getProductById(id)).filter(Boolean) as Product[]
-}
-
-export function getProductReviews(productId: string): Review[] {
-  return reviews.filter(r => r.productId === productId)
-}
-
-export function formatPrice(amount: number, currency: string = 'EUR'): string {
-  const symbols: Record<string, string> = {
-    EUR: '€',
-    AED: 'AED ',
-    CAD: 'CA$',
-    TRY: '₺',
-  }
-  return `${symbols[currency] || currency}${amount.toFixed(2)}`
-}
+// Product helper functions are re-exported from ./products.

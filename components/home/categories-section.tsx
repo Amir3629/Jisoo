@@ -1,10 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { EditorialMedia } from '@/components/ui/editorial-media'
-import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
@@ -50,144 +48,30 @@ function TrustpilotRatingStrip() {
 
 export function CategoriesSection() {
   const { locale } = useLocale()
-  const [activeStyle, setActiveStyle] = useState<'editorial' | 'ledger' | 'trust'>('editorial')
   const copy = {
     kicker: locale === 'ar' ? 'ثقة ونتائج' : locale === 'fr' ? 'Preuve & résultats' : locale === 'de' ? 'Vertrauen & Ergebnisse' : locale === 'ko' ? '신뢰와 결과' : locale === 'tr' ? 'Güven ve sonuçlar' : 'Proof-led care',
     title: locale === 'ar' ? 'نتائج هادئة يمكنك الوثوق بها' : locale === 'fr' ? 'Des résultats calmes, dignes de confiance' : locale === 'de' ? 'Ruhige Ergebnisse, denen man vertraut' : locale === 'ko' ? '신뢰할 수 있는 차분한 결과' : locale === 'tr' ? 'Güven veren sakin sonuçlar' : 'Quiet Results, Beautifully Proven',
     description: locale === 'ar' ? 'بدلاً من عرض طويل، نعرض العناية من خلال الدليل: يوم البداية، لحظة التحسن، والروتين المناسب.' : locale === 'fr' ? 'Au lieu d’un simple rayon, la sélection est guidée par la preuve: départ, progression, routine adaptée.' : locale === 'de' ? 'Statt nur Regalen zeigen wir Pflege über Belege: Ausgangspunkt, Fortschritt und passende Routine.' : locale === 'ko' ? '단순한 진열이 아니라 시작점, 변화, 맞춤 루틴으로 케어를 보여줍니다.' : locale === 'tr' ? 'Basit bir raf yerine bakımı kanıtla anlatıyoruz: başlangıç, ilerleme ve doğru rutin.' : 'A more reassuring way to shop care: see the starting point, understand the progress, and choose the routine with confidence.',
     cta: locale === 'ar' ? 'استكشاف العناية' : locale === 'fr' ? 'Explorer les soins' : locale === 'de' ? 'Pflege entdecken' : locale === 'ko' ? '케어 보기' : locale === 'tr' ? 'Bakımı keşfet' : 'Explore Care',
   }
-  const resultCards = [
-    {
-      label: '01 / Before & After',
-      title: 'Visible Care Journals',
-      description: 'Realistic skin stories framed around texture, comfort, and steady improvement.',
-      image: '/assets/editorial/care-expert.jpg',
-      href: '/shop?concern=anti-aging',
-      className: 'lg:col-span-7',
-      mediaClassName: 'aspect-[16/9] lg:aspect-[16/8]',
-    },
-    {
-      label: '02 / Community Proof',
-      title: 'Chosen With Trust',
-      description: 'Reviews, repeat rituals, and high-confidence formulas selected by real routines.',
-      image: '/assets/editorial/skincare-ingredients.jpg',
-      href: '/shop/best-sellers',
-      className: 'lg:col-span-5',
-      mediaClassName: 'aspect-[4/5]',
-    },
-    {
-      label: '03 / Routine Match',
-      title: 'Care By Concern',
-      description: 'Anti-aging, oils, masks, and creams organized by what your skin is asking for.',
-      image: '/assets/backgrounds/care-dynamic.png',
-      href: '/shop',
-      className: 'lg:col-span-12',
-      mediaClassName: 'aspect-[18/7]',
-    },
-  ]
-  const styleOptions = [
-    {
-      id: 'editorial' as const,
-      label: '1',
-      name: 'Editorial Proof',
-      title: 'Quiet Results, Beautifully Proven',
-      description: copy.description,
-    },
-    {
-      id: 'ledger' as const,
-      label: '2',
-      name: 'Before / After',
-      title: 'Progress You Can Read',
-      description: 'A refined before-after chapter that frames care by concern, time, texture, and visible comfort.',
-    },
-    {
-      id: 'trust' as const,
-      label: '3',
-      name: 'Trust Wall',
-      title: 'Chosen With Real Confidence',
-      description: 'A calmer social-proof direction built around reviews, repeat routines, and visible care stories.',
-    },
-  ]
-  const activeOption = styleOptions.find((style) => style.id === activeStyle) ?? styleOptions[0]
+  const activeOption = {
+    title: 'Progress You Can Read',
+    description: 'A refined before-after chapter that frames care by concern, time, texture, and visible comfort.',
+  }
 
   return (
     <AtmosphereSection atmosphere="blush" className="pb-16 pt-4 lg:pb-20 lg:pt-5" data-snap-target="care-campaign">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
-        <div className="mb-6 border-b border-[#cfae83]/20 pb-4 lg:mb-8">
+        <div className="mb-8 rounded-[2rem] border border-[#cfae83]/22 bg-[color-mix(in_srgb,var(--card)_72%,transparent)] px-3 py-2 shadow-[0_14px_38px_rgba(44,37,40,0.08)] backdrop-blur-xl">
           <TrustpilotRatingStrip />
         </div>
-        <div className="mb-8 flex items-center justify-center">
-          <div className="flex w-full max-w-full items-center justify-center gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-            {styleOptions.map((style) => (
-              <button
-                key={style.id}
-                type="button"
-                onClick={() => setActiveStyle(style.id)}
-                aria-label={`View style ${style.label}`}
-                className={`inline-flex h-10 min-w-10 items-center justify-center rounded-full border px-4 text-sm font-medium transition ${
-                  activeStyle === style.id
-                    ? 'border-[#4a4e51]/28 bg-[#4a4e51] text-white shadow-[0_10px_24px_rgba(44,37,40,0.18)]'
-                    : 'border-[#cfae83]/24 bg-white/28 text-charcoal/76 hover:border-[#4a4e51]/24 hover:bg-white/48 hover:text-charcoal'
-                }`}
-              >
-                {style.label}
-              </button>
-            ))}
-          </div>
-        </div>
 
-        {activeStyle === 'editorial' && <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
-          <div className="self-start lg:sticky lg:top-28">
-            <ChapterHeading
-              kicker={copy.kicker}
-              title={activeOption.title}
-              description={activeOption.description}
-            />
-            <Link
-              href={localizeHref('/shop', locale)}
-              className="mt-8 inline-flex items-center gap-2 rounded-full border border-[#4a4e51]/18 bg-[#4a4e51]/8 px-6 py-3 font-medium text-charcoal transition hover:bg-[#4a4e51]/14"
-            >
-              {copy.cta}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          <div className="grid gap-5 lg:grid-cols-12 lg:gap-6">
-            {resultCards.map((card) => (
-              <Link key={card.title} href={localizeHref(card.href, locale)} className={`group block ${card.className}`}>
-                <div className="relative h-full overflow-hidden rounded-[2rem] border border-[#cfae83]/22 bg-[color-mix(in_srgb,var(--card)_88%,transparent)] p-3 shadow-editorial backdrop-blur-xl transition duration-500 hover:-translate-y-1 hover:shadow-luxury">
-                  <div className="relative overflow-hidden rounded-[1.45rem]">
-                    <EditorialMedia
-                      src={card.image}
-                      alt={card.title}
-                      hint={card.label}
-                      className={card.mediaClassName}
-                      sizes="(max-width: 1024px) 100vw, 58vw"
-                      overlayClassName="bg-gradient-to-t from-charcoal/70 via-charcoal/18 to-transparent"
-                    />
-                    <div className="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
-                      <p className="text-[11px] uppercase tracking-[0.22em] text-white/74">{card.label}</p>
-                      <h3 className="mt-2 max-w-xl text-3xl text-white lg:text-4xl">{card.title}</h3>
-                      <p className="mt-3 max-w-xl text-white/78">{card.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between px-3 pb-2 pt-4 text-sm text-charcoal/76">
-                    <span>Learn the care path</span>
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>}
-
-        {activeStyle === 'ledger' && <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
+        <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
           <div className="overflow-hidden rounded-[2.2rem] border border-[#cfae83]/24 bg-[#4a4e51] text-white shadow-editorial">
             <div className="grid min-h-[560px] lg:grid-cols-2">
               <div className="relative min-h-[320px]">
                 <EditorialMedia
-                  src="/assets/editorial/care-expert.jpg"
+                  src="/assets/editorial/before-care.png"
                   alt="Before care journal"
                   hint="Before"
                   className="h-full min-h-[320px]"
@@ -198,7 +82,7 @@ export function CategoriesSection() {
               </div>
               <div className="relative min-h-[320px]">
                 <EditorialMedia
-                  src="/assets/editorial/skincare-ingredients.jpg"
+                  src="/assets/editorial/after-care.png"
                   alt="After care journal"
                   hint="After"
                   className="h-full min-h-[320px]"
@@ -226,45 +110,7 @@ export function CategoriesSection() {
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-        </div>}
-
-        {activeStyle === 'trust' && <div className="rounded-[2.4rem] border border-[#cfae83]/22 bg-[var(--card)] p-5 shadow-editorial lg:p-8">
-          <div className="grid gap-6 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
-            <div className="p-3 lg:p-5">
-              <p className="text-kicker text-charcoal/58">Community Proof</p>
-              <h2 className="mt-4 max-w-lg text-4xl text-charcoal lg:text-5xl">{activeOption.title}</h2>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-charcoal/68">{activeOption.description}</p>
-              <div className="mt-8 grid grid-cols-3 gap-3 text-center">
-                {[
-                  ['2,737', 'reviews'],
-                  ['94%', 'repeat'],
-                  ['4.8', 'rating'],
-                ].map(([value, label]) => (
-                  <div key={label} className="rounded-2xl border border-[#cfae83]/20 bg-white/28 px-3 py-4">
-                    <p className="text-2xl font-semibold text-charcoal">{value}</p>
-                    <p className="mt-1 text-xs uppercase tracking-[0.16em] text-charcoal/52">{label}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              {[
-                ['Anti-aging ritual', 'The cream and oil pairing made my evening care feel calmer and more consistent.'],
-                ['Mask night', 'A once-a-week routine that feels polished, not complicated.'],
-                ['Sensitive skin', 'The concern-led edit made it easier to choose without overbuying.'],
-                ['Daily glow', 'Subtle, steady, and elegant. That is exactly what I wanted.'],
-              ].map(([title, quote]) => (
-                <article key={title} className="rounded-[1.6rem] border border-[#cfae83]/20 bg-white/30 p-5 shadow-[0_14px_34px_rgba(44,37,40,0.08)] backdrop-blur-md">
-                  <div className="mb-5 flex gap-1 text-[#00B67A]">
-                    {[0, 1, 2, 3, 4].map((star) => <span key={star}>★</span>)}
-                  </div>
-                  <h3 className="text-xl text-charcoal">{title}</h3>
-                  <p className="mt-3 leading-7 text-charcoal/66">{quote}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </div>}
+        </div>
       </div>
     </AtmosphereSection>
   )

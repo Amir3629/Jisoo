@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
-import { ArrowLeft, Search, User, Menu, X, ChevronDown, Globe, Heart, ShoppingBag, Settings, Package } from 'lucide-react'
+import { ArrowLeft, Search, User, Menu, X, ChevronDown, Globe, Heart, ShoppingBag, Settings, Package, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/components/providers/cart-provider'
 import { useLocale } from '@/components/providers/locale-provider'
@@ -13,7 +13,9 @@ import { localizeHref } from '@/lib/i18n'
 import { LocaleSwitcher } from '@/components/i18n/locale-switcher'
 import { CartDrawer } from '@/components/cart/cart-drawer'
 import { SearchModal } from '@/components/search/search-modal'
-import { RegionSelector } from '@/components/layout/region-selector'
+import { useRegion } from '@/components/providers/region-provider'
+import { regionConfigs } from '@/lib/data'
+import type { Region } from '@/lib/types'
 
 const megaGroups = [
   { title: 'Shop by Person', items: [{ label: 'She', href: '/shop/women' }, { label: 'He', href: '/shop/men' }] },
@@ -118,11 +120,13 @@ export function Header({
   const [isProfileOpen, setIsProfileOpen] = useState(false)
   const [topBarIndex, setTopBarIndex] = useState(0)
   const profileRef = useRef<HTMLDivElement>(null)
+  const regionRef = useRef<HTMLDivElement>(null)
   const closeTimer = useRef<number | null>(null)
   const pathname = usePathname()
   const router = useRouter()
   const { itemCount, setIsCartOpen } = useCart()
   const { locale, dictionary } = useLocale()
+  const { region, setRegion } = useRegion()
   const isHomePath = pathname === '/' || pathname === `/${locale}`
   const navLinks = [
     { href: '/shop', label: dictionary.header.nav.shop },
@@ -181,7 +185,15 @@ export function Header({
 
   useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
   useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 8200); return () => window.clearInterval(timer) }, [topBarMessages.length])
-  useEffect(() => { const onOutside = (event: MouseEvent) => { if (!profileRef.current?.contains(event.target as Node)) setIsProfileOpen(false) }; document.addEventListener('mousedown', onOutside); return () => document.removeEventListener('mousedown', onOutside) }, [])
+  useEffect(() => {
+    const onOutside = (event: MouseEvent) => {
+      const target = event.target as Node
+      if (!profileRef.current?.contains(target)) setIsProfileOpen(false)
+      if (!regionRef.current?.contains(target)) setIsRegionOpen(false)
+    }
+    document.addEventListener('mousedown', onOutside)
+    return () => document.removeEventListener('mousedown', onOutside)
+  }, [])
   const openMega = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current); setIsMegaOpen(true) }
   const keepMega = () => { if (closeTimer.current) window.clearTimeout(closeTimer.current) }
   const closeMega = () => { closeTimer.current = window.setTimeout(() => setIsMegaOpen(false), 220) }
@@ -204,7 +216,56 @@ export function Header({
             {navLinks.map((link, index) => <Link key={link.href} href={localizeHref(link.href, locale)} className={cn('text-sm tracking-[0.1em] transition-colors', splitLightOnTop && index >= 4 ? rightTextClass : topTextClass)}>{link.label}</Link>)}
             <div className="relative" onMouseEnter={openMega}><button onClick={() => setIsMegaOpen((p) => !p)} aria-expanded={isMegaOpen} className={cn('inline-flex items-center gap-1 text-sm tracking-[0.1em] transition-colors', rightTextClass)}>{discoverLabel} <ChevronDown className="h-4 w-4" /></button></div>
           </nav>
-          <div className="relative z-10 flex items-center gap-1.5 lg:gap-2"><div className="hidden lg:flex items-center gap-2"><LocaleSwitcher buttonClassName={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} /><button onClick={() => setIsRegionOpen(true)} aria-label={dictionary.common.region} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)}><Globe className="h-4 w-4" /></button></div><button onClick={() => setIsSearchOpen(true)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button><div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button>{isProfileOpen && <div role="menu" className={cn('absolute right-0 z-[90] mt-2 w-52 rounded-2xl border p-2 text-charcoal', glassDropdownClass)}><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><User className="h-4 w-4" />{accountLoginLabel}</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Heart className="h-4 w-4" />{dictionary.common.wishlist}</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><ShoppingBag className="h-4 w-4" />{cartLabel} {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Package className="h-4 w-4" />{dictionary.common.orderHistory}</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Settings className="h-4 w-4" />{settingsLabel}</Link></div>}</div></div>
+          <div className="relative z-10 flex items-center gap-1.5 lg:gap-2">
+            <div className="hidden items-center gap-2 lg:flex">
+              <LocaleSwitcher buttonClassName={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} />
+              <div className="relative" ref={regionRef}>
+                <button
+                  onClick={() => setIsRegionOpen((open) => !open)}
+                  aria-label={dictionary.common.region}
+                  aria-haspopup="menu"
+                  aria-expanded={isRegionOpen}
+                  className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)}
+                >
+                  <Globe className="h-4 w-4" />
+                </button>
+                {isRegionOpen && (
+                  <div role="menu" className={cn('absolute right-0 z-[90] mt-2 w-56 rounded-2xl border p-2 text-charcoal', glassDropdownClass)}>
+                    <p className="px-3 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-charcoal/62">
+                      {dictionary.common.region}
+                    </p>
+                    {Object.values(regionConfigs).map((config) => {
+                      const code = config.code as Region
+                      const active = region === code
+                      return (
+                        <button
+                          key={code}
+                          role="menuitem"
+                          type="button"
+                          onClick={() => {
+                            setRegion(code)
+                            setIsRegionOpen(false)
+                          }}
+                          className={cn(
+                            'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition',
+                            active ? 'bg-[#4a4e51] text-white' : 'hover:bg-[#d5bc9b]/45 hover:text-charcoal'
+                          )}
+                        >
+                          <span>
+                            <span className="block font-medium">{config.name}</span>
+                            <span className={cn('text-xs', active ? 'text-white/70' : 'text-charcoal/56')}>{config.currencySymbol}</span>
+                          </span>
+                          {active && <Check className="h-4 w-4" />}
+                        </button>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+            <button onClick={() => setIsSearchOpen(true)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button>
+            <div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button>{isProfileOpen && <div role="menu" className={cn('absolute right-0 z-[90] mt-2 w-52 rounded-2xl border p-2 text-charcoal', glassDropdownClass)}><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><User className="h-4 w-4" />{accountLoginLabel}</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Heart className="h-4 w-4" />{dictionary.common.wishlist}</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><ShoppingBag className="h-4 w-4" />{cartLabel} {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Package className="h-4 w-4" />{dictionary.common.orderHistory}</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Settings className="h-4 w-4" />{settingsLabel}</Link></div>}</div>
+          </div>
         </div>
       </div>
       <AnimatePresence mode="wait">{isMegaOpen && <motion.div onMouseEnter={openMega} initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: 8, filter: 'blur(4px)' }} transition={{ duration: 0.344, ease: [0.22,1,0.36,1] }} className={cn('hidden border-t lg:block', glassDropdownClass)}><motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }} className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{localizedMegaGroups.map((group, gi) => <motion.div key={group.title} variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } }} className={cn('space-y-3', gi !== 3 && 'border-r border-[#cfae83]/18 pr-6')}><p className="text-xs font-semibold uppercase tracking-[0.14em] text-charcoal/84">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.href + item.label} href={localizeHref(item.href, locale)} className="block rounded-lg px-2 py-1 text-sm text-charcoal/85 transition-all duration-200 hover:bg-[#d5bc9b]/42 hover:text-charcoal">{item.label}</Link>)}</div></motion.div>)}</motion.div></motion.div>}</AnimatePresence>
@@ -230,6 +291,6 @@ export function Header({
       )}
     </AnimatePresence>
     <AnimatePresence mode="wait">{isMobileMenuOpen && <motion.div initial={{ x: '-104%', opacity: 0.94 }} animate={{ x: 0, opacity: 1 }} exit={{ x: '-104%', opacity: 0.94 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }} className="fixed top-0 left-0 bottom-0 z-50 w-[85%] max-w-sm overflow-y-auto bg-warm-ivory p-6 shadow-[18px_0_48px_rgba(44,37,40,0.18)] lg:hidden"><div className="mb-8 flex items-center justify-between"><div><p className="text-xs uppercase tracking-[0.18em] text-charcoal/55">JISOO</p><h2 className="mt-1 text-2xl font-semibold text-charcoal">Menu</h2></div><button onClick={() => setIsMobileMenuOpen(false)} className="rounded-full p-2 text-charcoal transition hover:bg-[#d5bc9b]/28"><X className="w-6 h-6" /></button></div><nav className="space-y-5">{[...navLinks, ...localizedMegaGroups.flatMap(g => g.items)].map((link) => <Link key={link.href + link.label} href={localizeHref(link.href, locale)} onClick={() => setIsMobileMenuOpen(false)} className="block text-lg">{link.label}</Link>)}</nav></motion.div>}</AnimatePresence>
-    <CartDrawer /><SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} /><RegionSelector isOpen={isRegionOpen} onClose={() => setIsRegionOpen(false)} />
+    <CartDrawer /><SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
   </>)
 }

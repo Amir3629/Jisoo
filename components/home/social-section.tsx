@@ -15,14 +15,14 @@ const socialPosts = [
     image: '/assets/editorial/rose-layering.png',
     likes: '12.4K',
     comments: '234',
-    caption: 'Glass skin goals achieved with our new essence',
+    caption: 'Editorial care moodboard',
   },
   {
     id: 2,
     type: 'tiktok',
     image: '/assets/editorial/cream-ritual.png',
     views: '2.1M',
-    caption: 'My 10-step K-beauty routine',
+    caption: 'Care routine planning',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const socialPosts = [
     image: '/assets/editorial/sun-care.png',
     likes: '8.9K',
     comments: '156',
-    caption: 'Before & after using Luminous Glow Serum',
+    caption: 'Verified results framework',
   },
   {
     id: 4,
@@ -38,14 +38,14 @@ const socialPosts = [
     image: '/assets/editorial/product-table.png',
     likes: '15.2K',
     comments: '342',
-    caption: 'Unboxing the new summer collection',
+    caption: 'Packaging direction study',
   },
   {
     id: 5,
     type: 'tiktok',
     image: '/assets/editorial/serum-dropper.png',
     views: '890K',
-    caption: 'POV: Your skin after K-beauty',
+    caption: 'Supplier review workflow',
   },
   {
     id: 6,
@@ -53,7 +53,7 @@ const socialPosts = [
     image: '/assets/editorial/soft-cheek-glow.png',
     likes: '11.1K',
     comments: '198',
-    caption: 'Cica Repair Ampoule saved my skin',
+    caption: 'Care texture reference',
   },
 ]
 
@@ -66,7 +66,7 @@ export function SocialSection() {
         <ChapterHeading
           kicker="@JISOOBeauty"
           title={t.joinCommunity}
-          description="Follow us for K-beauty inspiration, skincare tips, and exclusive content from our community."
+          description="Follow the JISOO care studio for sourcing notes, packaging direction, and verified product updates."
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
         />

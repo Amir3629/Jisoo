@@ -4,9 +4,9 @@ export function generateProductDescription(productSlug: string, tone: 'luxury' |
   const product = products.find((p) => p.slug === productSlug)
   if (!product) return 'Product not found.'
   if (tone === 'clinical') {
-    return `${product.name}: Formulated for ${product.concerns.join(', ')} with key actives including ${product.ingredients.slice(0, 3).map((i) => i.name).join(', ')}.`
+    return `${product.name}: Draft record for ${product.category}. Ingredient list and claims are pending verified supplier documentation.`
   }
-  return `${product.name} delivers a couture K-beauty experience with ${product.benefits.slice(0, 2).map((b) => b.title.toLowerCase()).join(' and ')}—crafted to elevate daily ritual into visible radiance.`
+  return `${product.name} is not ready for public marketing copy. Complete supplier review, INCI verification, and brand approval before publishing.`
 }
 
 export function generateTranslationDraft(text: string, locale: 'ar' | 'fr' | 'de') {
@@ -14,7 +14,7 @@ export function generateTranslationDraft(text: string, locale: 'ar' | 'fr' | 'de
 }
 
 export function improveMarketingCopy(text: string) {
-  return `Discover a more elevated expression: ${text.replace(/\.$/, '')}, refined for a premium luxury beauty voice.`
+  return `Rewrite neutrally after verification: ${text.replace(/\.$/, '')}. Avoid unverified claims and supplier wording.`
 }
 
 export function suggestTagsAndCategory(seed: string) {

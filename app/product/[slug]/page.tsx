@@ -13,26 +13,12 @@ import { useRegion } from '@/components/providers/region-provider'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import {
-  Heart, Share2, Star, Minus, Plus, Check, ChevronDown,
-  Droplets, Shield, Sparkles, Clock, Leaf, Info, MessageCircle
+  Heart, Share2, Star, Minus, Plus, Check,
+  Sparkles, Info, MessageCircle
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
-
-const iconMap: Record<string, React.ElementType> = {
-  droplet: Droplets,
-  shield: Shield,
-  sparkles: Sparkles,
-  clock: Clock,
-  leaf: Leaf,
-  heart: Heart,
-  sun: Sparkles,
-  feather: Leaf,
-  check: Check,
-  layers: Droplets,
-  minimize: Shield,
-}
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
@@ -67,7 +53,7 @@ export default function ProductPage({ params }: ProductPageProps) {
     keyBenefits: locale === 'ar' ? 'الفوائد الرئيسية' : locale === 'fr' ? 'Bénéfices clés' : locale === 'de' ? 'Hauptvorteile' : locale === 'ko' ? '핵심 효능' : locale === 'tr' ? 'Temel Faydalar' : 'Key Benefits',
     keyIngredients: locale === 'ar' ? 'المكونات الرئيسية' : locale === 'fr' ? 'Ingrédients clés' : locale === 'de' ? 'Hauptinhaltsstoffe' : locale === 'ko' ? '주요 성분' : locale === 'tr' ? 'Temel İçerikler' : 'Key Ingredients',
     verified: locale === 'ar' ? 'موثق' : locale === 'fr' ? 'Vérifié' : locale === 'de' ? 'Verifiziert' : locale === 'ko' ? '인증됨' : locale === 'tr' ? 'Doğrulandı' : 'Verified',
-    noReviews: locale === 'ar' ? 'لا توجد مراجعات بعد. كوني الأولى!' : locale === 'fr' ? 'Pas encore d’avis. Soyez la première !' : locale === 'de' ? 'Noch keine Bewertungen. Sei die Erste!' : locale === 'ko' ? '아직 리뷰가 없습니다. 첫 리뷰를 남겨보세요!' : locale === 'tr' ? 'Henüz yorum yok. İlk yorumu sen yap!' : 'No reviews yet. Be the first to review!',
+    noReviews: locale === 'ar' ? 'ستظهر المراجعات بعد التحقق.' : locale === 'fr' ? 'Les avis apparaîtront après validation.' : locale === 'de' ? 'Bewertungen erscheinen nach Prüfung.' : locale === 'ko' ? '검증 후 리뷰가 표시됩니다.' : locale === 'tr' ? 'Yorumlar doğrulamadan sonra gösterilecek.' : 'Verified reviews will appear after approval.',
     youMayAlsoLike: locale === 'ar' ? 'قد يعجبك أيضًا' : locale === 'fr' ? 'Vous aimerez aussi' : locale === 'de' ? 'Das könnte dir auch gefallen' : locale === 'ko' ? '함께 보면 좋은 제품' : locale === 'tr' ? 'Bunlar da İlginizi Çekebilir' : 'You May Also Like',
     ingredientsTab: locale === 'ar' ? 'المكونات' : locale === 'fr' ? 'Ingrédients' : locale === 'de' ? 'Inhaltsstoffe' : locale === 'ko' ? '성분' : locale === 'tr' ? 'İçerikler' : 'Ingredients',
     reviewsTab: locale === 'ar' ? 'المراجعات' : locale === 'fr' ? 'Avis' : locale === 'de' ? 'Bewertungen' : locale === 'ko' ? '리뷰' : locale === 'tr' ? 'Yorumlar' : 'Reviews',
@@ -213,30 +199,35 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <p className="mt-2 text-lg text-muted-foreground">{product.subtitle}</p>
               )}
 
-              {/* Rating */}
-              <div className="flex items-center gap-3 mt-4">
-                <div className="flex items-center gap-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className={cn(
-                        'w-5 h-5',
-                        i < Math.floor(product.rating)
-                          ? 'text-champagne-gold fill-current'
-                          : 'text-blush-pink'
-                      )}
-                    />
-                  ))}
+              {product.reviewCount ? (
+                <div className="flex items-center gap-3 mt-4">
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={cn(
+                          'w-5 h-5',
+                          i < Math.floor(product.rating ?? 0)
+                            ? 'text-champagne-gold fill-current'
+                            : 'text-blush-pink'
+                        )}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-sm text-muted-foreground">
+                    {product.rating} ({product.reviewCount} reviews)
+                  </span>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {product.rating} ({product.reviewCount} reviews)
-                </span>
-              </div>
+              ) : (
+                <p className="mt-4 text-sm text-muted-foreground">
+                  Product copy pending supplier verification.
+                </p>
+              )}
 
               {/* Price */}
               <div className="flex items-center gap-3 mt-6">
                 <span className="text-3xl font-bold text-plum">
-                  {formatPrice(selectedVariant?.price ?? product.price)}
+                  {formatPrice(selectedVariant?.price ?? product.price, product.currency)}
                 </span>
                 {product.compareAtPrice && (
                   <span className="text-xl text-muted-foreground line-through">
@@ -267,18 +258,15 @@ export default function ProductPage({ params }: ProductPageProps) {
 
               {/* Benefits Quick View */}
               <div className="mt-6 flex flex-wrap gap-3">
-                {product.benefits.slice(0, 3).map((benefit, index) => {
-                  const Icon = iconMap[benefit.icon] || Sparkles
-                  return (
-                    <div
-                      key={index}
-                      className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-blush-pink/50"
-                    >
-                      <Icon className="w-4 h-4 text-rose-mauve" />
-                      <span className="text-sm text-charcoal">{benefit.title}</span>
-                    </div>
-                  )
-                })}
+                {product.keyBenefits.slice(0, 3).map((benefit, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-blush-pink/50"
+                  >
+                    <Sparkles className="w-4 h-4 text-rose-mauve" />
+                    <span className="text-sm text-charcoal">{benefit}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Variants */}
@@ -388,7 +376,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 )}
                 <div>
                   <span className="text-muted-foreground">{copy.skinTypes}</span>
-                  <p className="font-medium text-charcoal">{product.skinTypes.slice(0, 2).join(', ')}</p>
+                  <p className="font-medium text-charcoal">{product.skinType.slice(0, 2).join(', ')}</p>
                 </div>
               </div>
             </div>
@@ -414,7 +402,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               >
                 {tab === 'details' && copy.detailsTab}
                 {tab === 'ingredients' && copy.ingredientsTab}
-                {tab === 'reviews' && `${copy.reviewsTab} (${product.reviewCount})`}
+                {tab === 'reviews' && `${copy.reviewsTab} (${product.reviewCount ?? 0})`}
                 {activeTab === tab && (
                   <motion.div
                     layoutId="activeTab"
@@ -441,14 +429,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                       {copy.about}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {product.description}
+                      {product.longDescription}
                     </p>
 
                     <h3 className="text-xl font-serif font-semibold text-charcoal mt-8 mb-4">
                       {copy.howToUse}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {product.howToUse}
+                      {product.usageInstructions}
                     </p>
                   </div>
 
@@ -457,22 +445,19 @@ export default function ProductPage({ params }: ProductPageProps) {
                       {copy.keyBenefits}
                     </h3>
                     <div className="space-y-4">
-                      {product.benefits.map((benefit, index) => {
-                        const Icon = iconMap[benefit.icon] || Sparkles
-                        return (
-                          <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-nude-beige/50">
-                            <div className="p-2 rounded-lg bg-white">
-                              <Icon className="w-5 h-5 text-rose-mauve" />
-                            </div>
-                            <div>
-                              <h4 className="font-medium text-charcoal">{benefit.title}</h4>
-                              <p className="text-sm text-muted-foreground mt-1">
-                                {benefit.description}
-                              </p>
-                            </div>
+                      {product.keyBenefits.map((benefit, index) => (
+                        <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-nude-beige/50">
+                          <div className="p-2 rounded-lg bg-white">
+                            <Sparkles className="w-5 h-5 text-rose-mauve" />
                           </div>
-                        )
-                      })}
+                          <div>
+                            <h4 className="font-medium text-charcoal">{benefit}</h4>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              Pending verified supplier documentation.
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </motion.div>
@@ -494,12 +479,9 @@ export default function ProductPage({ params }: ProductPageProps) {
                         key={index}
                         className="p-6 rounded-2xl bg-gradient-to-br from-blush-pink/10 to-nude-beige/30"
                       >
-                        <h4 className="font-semibold text-charcoal">{ingredient.name}</h4>
+                        <h4 className="font-semibold text-charcoal">{ingredient}</h4>
                         <p className="text-sm text-muted-foreground mt-1">
-                          {ingredient.description}
-                        </p>
-                        <p className="text-sm text-rose-mauve font-medium mt-3">
-                          {ingredient.benefit}
+                          Details pending verified INCI documentation.
                         </p>
                       </div>
                     ))}

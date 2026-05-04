@@ -18,11 +18,11 @@ interface SearchModalProps {
 }
 
 const trendingSearches = [
-  'Glass Skin',
-  'Vitamin C Serum',
-  'Sunscreen SPF50',
-  'Cica',
-  'Hydrating Cream',
+  'Cream',
+  'Facial Oil',
+  'Mask',
+  'Daily Cleanser',
+  'Care Set',
 ]
 
 const popularCategories = [
@@ -33,18 +33,15 @@ const popularCategories = [
 
 export function SearchModal({ isOpen, onClose }: SearchModalProps) {
   const { locale, dictionary } = useLocale()
+  const trendingTranslations: Record<string, Partial<Record<typeof locale, string>>> = {
+    Cream: { ar: 'كريم', fr: 'Crème', de: 'Creme', ko: '크림', tr: 'Krem' },
+    'Facial Oil': { ar: 'زيت للوجه', fr: 'Huile visage', de: 'Gesichtsoel', ko: '페이스 오일', tr: 'Yüz Yağı' },
+    Mask: { ar: 'قناع', fr: 'Masque', de: 'Maske', ko: '마스크', tr: 'Maske' },
+    'Daily Cleanser': { ar: 'منظف يومي', fr: 'Nettoyant quotidien', de: 'Taeglicher Reiniger', ko: '데일리 클렌저', tr: 'Günlük Temizleyici' },
+    'Care Set': { ar: 'مجموعة عناية', fr: 'Set de soin', de: 'Pflegeset', ko: '케어 세트', tr: 'Bakım Seti' },
+  }
   const trendingLocalized = trendingSearches.map(term =>
-    locale === 'ar'
-      ? term === 'Glass Skin' ? 'بشرة زجاجية' : term === 'Vitamin C Serum' ? 'سيروم فيتامين C' : term === 'Sunscreen SPF50' ? 'واقي شمس SPF50' : term === 'Hydrating Cream' ? 'كريم مرطب' : term
-      : locale === 'fr'
-        ? term === 'Glass Skin' ? 'Peau de verre' : term === 'Vitamin C Serum' ? 'Sérum Vitamine C' : term === 'Sunscreen SPF50' ? 'Solaire SPF50' : term === 'Hydrating Cream' ? 'Crème hydratante' : term
-        : locale === 'de'
-          ? term === 'Glass Skin' ? 'Glass Skin' : term === 'Vitamin C Serum' ? 'Vitamin C Serum' : term === 'Sunscreen SPF50' ? 'Sonnenschutz SPF50' : term === 'Hydrating Cream' ? 'Feuchtigkeitscreme' : term
-          : locale === 'ko'
-            ? term === 'Glass Skin' ? '글래스 스킨' : term === 'Vitamin C Serum' ? '비타민 C 세럼' : term === 'Sunscreen SPF50' ? '선크림 SPF50' : term === 'Hydrating Cream' ? '보습 크림' : term
-            : locale === 'tr'
-              ? term === 'Glass Skin' ? 'Glass Skin' : term === 'Vitamin C Serum' ? 'C Vitamini Serumu' : term === 'Sunscreen SPF50' ? 'Güneş Koruyucu SPF50' : term === 'Hydrating Cream' ? 'Nemlendirici Krem' : term
-              : term
+    trendingTranslations[term]?.[locale] ?? term
   )
   const categoriesLocalized = popularCategories.map(cat => ({
     ...cat,
