@@ -3,20 +3,20 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { 
-  User, 
-  ShoppingBag, 
-  Heart, 
-  MapPin, 
-  CreditCard, 
+import {
+  User,
+  ShoppingBag,
+  Heart,
+  MapPin,
+  CreditCard,
   Settings,
-  LogOut
+  LogOut,
+  ArrowLeft,
 } from "lucide-react";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { ArrowLeft } from "lucide-react";
 
 const navItems = [
   { href: "/account", label: "Overview", icon: User },
