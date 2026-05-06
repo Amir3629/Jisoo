@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Playfair_Display, Cormorant_Garamond, Lora, Merriweather, Libre_Baskerville, Montserrat, Poppins, Inter, Roboto, Nunito_Sans } from 'next/font/google'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ArrowRight, PlayCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -12,6 +11,7 @@ import { localizeHref, type Locale } from '@/lib/i18n'
 
 type HeroConcept = { id: string; name: string }
 type HeroMedia = { primary: string; secondary?: string; tertiary?: string; quaternary?: string; video?: string; preferVideo?: boolean }
+type HomepageFontChoice = { id: number; name: string; fontFamily: string }
 
 const heroConcepts: HeroConcept[] = [
   { id: 'image-editorial', name: 'Image Editorial' },
@@ -58,29 +58,18 @@ const MAGAZINE_GRID_IMAGES = [
   '/assets/editorial/eye-care.png',
   '/assets/editorial/sun-care.png',
 ]
-const playfairDisplay = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'] })
-const cormorantGaramond = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '600', '700'] })
-const lora = Lora({ subsets: ['latin'], weight: ['400', '600', '700'] })
-const merriweather = Merriweather({ subsets: ['latin'], weight: ['400', '700'], variable: '--hero-font-merriweather' })
-const libreBaskerville = Libre_Baskerville({ subsets: ['latin'], weight: ['400', '700'] })
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['400', '600', '700'] })
-const poppins = Poppins({ subsets: ['latin'], weight: ['400', '600', '700'] })
-const interFont = Inter({ subsets: ['latin'], weight: ['400', '600', '700'] })
-const roboto = Roboto({ subsets: ['latin'], weight: ['400', '500', '700'] })
-const nunitoSans = Nunito_Sans({ subsets: ['latin'], weight: ['400', '600', '700'] })
-
-const HOMEPAGE_FONT_CHOICES = [
-  { id: 1, name: 'Playfair Display', className: playfairDisplay.className, fontFamily: playfairDisplay.style.fontFamily },
-  { id: 2, name: 'Cormorant Garamond', className: cormorantGaramond.className, fontFamily: cormorantGaramond.style.fontFamily },
-  { id: 3, name: 'Lora', className: lora.className, fontFamily: lora.style.fontFamily },
-  { id: 4, name: 'Merriweather', className: merriweather.className, fontFamily: merriweather.style.fontFamily },
-  { id: 5, name: 'Libre Baskerville', className: libreBaskerville.className, fontFamily: libreBaskerville.style.fontFamily },
-  { id: 6, name: 'Montserrat', className: montserrat.className, fontFamily: montserrat.style.fontFamily },
-  { id: 7, name: 'Poppins', className: poppins.className, fontFamily: poppins.style.fontFamily },
-  { id: 8, name: 'Inter', className: interFont.className, fontFamily: interFont.style.fontFamily },
-  { id: 9, name: 'Nunito Sans', className: nunitoSans.className, fontFamily: nunitoSans.style.fontFamily },
-  { id: 10, name: 'Roboto', className: roboto.className, fontFamily: roboto.style.fontFamily },
-] as const
+const HOMEPAGE_FONT_CHOICES: readonly HomepageFontChoice[] = [
+  { id: 1, name: 'Georgia', fontFamily: 'Georgia, serif' },
+  { id: 2, name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
+  { id: 3, name: 'Garamond', fontFamily: 'Garamond, "Times New Roman", serif' },
+  { id: 4, name: 'Baskerville', fontFamily: 'Baskerville, Georgia, serif' },
+  { id: 5, name: 'Palatino', fontFamily: '"Palatino Linotype", Palatino, Georgia, serif' },
+  { id: 6, name: 'Arial', fontFamily: 'Arial, Helvetica, sans-serif' },
+  { id: 7, name: 'Verdana', fontFamily: 'Verdana, Geneva, sans-serif' },
+  { id: 8, name: 'Trebuchet MS', fontFamily: '"Trebuchet MS", Arial, sans-serif' },
+  { id: 9, name: 'Courier New', fontFamily: '"Courier New", Courier, monospace' },
+  { id: 10, name: 'System UI', fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
+]
 
 const selectedSurface = {
   base: '#ead6b8',
@@ -330,8 +319,16 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
         <div className={cn('absolute inset-0', lightText ? 'bg-gradient-to-r from-charcoal/30 via-charcoal/10 to-transparent' : 'bg-gradient-to-r from-warm-ivory/28 via-warm-ivory/8 to-transparent')} />
         <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]">
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
-          {/* P0: normalize headline scaling for mobile/tablet/desktop consistency. */}
-          <h1 key={selectedFont.id} style={{ fontFamily: selectedFont.fontFamily }} className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}>{heading}</h1>
+          {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
+          <h1
+            key={selectedFont.id}
+            style={{ fontFamily: selectedFont.fontFamily }}
+            data-hero-headline="homepage-image-editorial"
+            data-selected-font={selectedFont.name}
+            className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}
+          >
+            {heading}
+          </h1>
           <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
           <div className="mt-5">
