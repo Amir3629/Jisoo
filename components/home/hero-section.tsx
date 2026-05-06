@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -60,15 +60,15 @@ const MAGAZINE_GRID_IMAGES = [
 ]
 const HOMEPAGE_FONT_CHOICES: readonly HomepageFontChoice[] = [
   { id: 1, name: 'Georgia', fontFamily: 'Georgia, serif' },
-  { id: 2, name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
-  { id: 3, name: 'Garamond', fontFamily: 'Garamond, "Times New Roman", serif' },
-  { id: 4, name: 'Baskerville', fontFamily: 'Baskerville, Georgia, serif' },
-  { id: 5, name: 'Palatino', fontFamily: '"Palatino Linotype", Palatino, Georgia, serif' },
-  { id: 6, name: 'Arial', fontFamily: 'Arial, Helvetica, sans-serif' },
-  { id: 7, name: 'Verdana', fontFamily: 'Verdana, Geneva, sans-serif' },
-  { id: 8, name: 'Trebuchet MS', fontFamily: '"Trebuchet MS", Arial, sans-serif' },
-  { id: 9, name: 'Courier New', fontFamily: '"Courier New", Courier, monospace' },
-  { id: 10, name: 'System UI', fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' },
+  { id: 2, name: 'Arial Black', fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif' },
+  { id: 3, name: 'Courier New', fontFamily: '"Courier New", Courier, monospace' },
+  { id: 4, name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
+  { id: 5, name: 'Verdana', fontFamily: 'Verdana, Geneva, sans-serif' },
+  { id: 6, name: 'Impact', fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif' },
+  { id: 7, name: 'Trebuchet MS', fontFamily: '"Trebuchet MS", Arial, sans-serif' },
+  { id: 8, name: 'Palatino', fontFamily: '"Palatino Linotype", Palatino, Georgia, serif' },
+  { id: 9, name: 'Gill Sans', fontFamily: '"Gill Sans", "Gill Sans MT", Calibri, sans-serif' },
+  { id: 10, name: 'Monaco', fontFamily: 'Monaco, Consolas, "Lucida Console", monospace' },
 ]
 
 const selectedSurface = {
@@ -140,7 +140,6 @@ export function HeroSection({
   const { locale } = useLocale()
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
   const [surfaceTone, setSurfaceTone] = useState(0)
-  const [activeFontChoice, setActiveFontChoice] = useState(10)
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId, heroImageSrc ?? (renderId === 'image-editorial' ? HOME_EDITORIAL_IMAGE : undefined)), [renderId, heroImageSrc])
   const isMistGlass = renderId === 'mist-glass'
@@ -174,7 +173,7 @@ export function HeroSection({
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
           >
-            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} activeFontChoice={activeFontChoice} onFontChoiceChange={setActiveFontChoice} />}
+            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} />}
             {renderId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
             {renderId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
             {renderId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
@@ -297,7 +296,7 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
   )
 }
 
-function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, onFontChoiceChange }: { locale: Locale; media: HeroMedia; showCategoryNav: boolean; activeFontChoice: number; onFontChoiceChange: (id: number) => void }) {
+function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale; media: HeroMedia; showCategoryNav: boolean }) {
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/assets/icons/face.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'شفاه' : locale === 'fr' ? 'Lèvres' : locale === 'de' ? 'Lippen' : locale === 'ko' ? '립' : locale === 'tr' ? 'Dudak' : 'Lips', image: '/assets/icons/lips.png', href: '/shop?category=lips-cheeks' },
@@ -309,7 +308,12 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
   const body = 'Curated Korean beauty, selected with care for your daily ritual.'
   const lightText = showCategoryNav
   const mobileImage = showCategoryNav ? media.primary : HOME_EDITORIAL_MOBILE_IMAGE
-  const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[9]
+  const [activeFontChoice, setActiveFontChoice] = useState(1)
+  const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[0]
+  const headlineFontStyle = {
+    fontFamily: selectedFont.fontFamily,
+    '--homepage-hero-font-family': selectedFont.fontFamily,
+  } as CSSProperties
 
   return (
     <section className="bg-transparent">
@@ -322,7 +326,7 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
             key={selectedFont.id}
-            style={{ fontFamily: selectedFont.fontFamily }}
+            style={headlineFontStyle}
             data-hero-headline="homepage-image-editorial"
             data-selected-font={selectedFont.name}
             className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}
@@ -338,7 +342,7 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
                 <button
                   key={font.id}
                   type="button"
-                  onClick={() => onFontChoiceChange(font.id)}
+                  onClick={() => setActiveFontChoice(font.id)}
                   className={cn(
                     'inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold transition-all',
                     activeFontChoice === font.id
@@ -354,7 +358,10 @@ function ImageEditorialHero({ locale, media, showCategoryNav, activeFontChoice, 
                 </button>
               ))}
             </div>
-            <p className={cn('mt-2 text-xs', lightText ? 'text-white/80' : 'text-charcoal/65')}>Current: {selectedFont.name}</p>
+            <div className={cn('mt-2 space-y-1 text-xs', lightText ? 'text-white/85' : 'text-charcoal/70')}>
+              <p>Current font: {selectedFont.name}</p>
+              <p>Current fontFamily: {selectedFont.fontFamily}</p>
+            </div>
           </div>
         </div>
 
