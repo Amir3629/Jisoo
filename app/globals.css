@@ -419,6 +419,10 @@
     text-wrap: balance;
   }
 
+  h1[data-hero-headline='homepage-image-editorial'] {
+    font-family: var(--homepage-hero-font-family) !important;
+  }
+
   .text-kicker {
     @apply uppercase tracking-[0.24em] text-[12px] font-medium;
     letter-spacing: 0.24em;
