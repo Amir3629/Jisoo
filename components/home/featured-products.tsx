@@ -30,7 +30,7 @@ export function FeaturedProducts() {
           />
           <Link
             href={localizeHref('/shop', locale)}
-            className="inline-flex items-center gap-2 rounded-full border border-plum/20 bg-plum px-6 py-3 font-medium text-warm-ivory shadow-sm transition hover:bg-charcoal hover:text-warm-ivory"
+            className="inline-flex items-center gap-2 rounded-full border border-plum/20 bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] px-6 py-3 font-medium text-charcoal shadow-sm transition hover:brightness-105"
           >
             {t.viewEntireEdit}
             <ArrowRight className="w-4 h-4" />

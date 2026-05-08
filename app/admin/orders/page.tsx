@@ -98,7 +98,7 @@ const mockOrders: Order[] = [
     },
     items: [
       { id: "1", productName: "Radiance Boost Vitamin C 23 Serum", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/glass-skin-essence.jpg" },
-      { id: "2", productName: "Pore Deep Clean Bubble Serum", variant: "Size pending", quantity: 1, price: 0, image: "/assets/editorial/skincare-ingredients.jpg" },
+      { id: "2", productName: "Pore Deep Clean Bubble Serum", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/glass-skin-essence.jpg" },
     ],
     total: 0,
     subtotal: 0,
@@ -154,8 +154,8 @@ const mockOrders: Order[] = [
       email: "yuki@example.com",
     },
     items: [
-      { id: "4", productName: "Daily UV Shield Sun Cream", variant: "Size pending", quantity: 1, price: 0, image: "/assets/editorial/care-expert.jpg" },
-      { id: "5", productName: "Pore Clear Vita-C Cleansing Foam", variant: "Size pending", quantity: 2, price: 0, image: "/assets/backgrounds/cica-ampoule.jpeg" },
+      { id: "4", productName: "Daily UV Shield Sun Cream", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/jisoo-daily-uv-shield-sun-cream-1.jpg" },
+      { id: "5", productName: "Pore Clear Vita-C Cleansing Foam", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg" },
     ],
     total: 0,
     subtotal: 0,
@@ -183,7 +183,7 @@ const mockOrders: Order[] = [
       email: "anna@example.com",
     },
     items: [
-      { id: "6", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 0, image: "/assets/editorial/lips-closeup.jpg" },
+      { id: "6", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/jisoo-daily-uv-shield-sun-cream-3.jpg" },
     ],
     total: 39.50,
     subtotal: 28.00,
@@ -210,8 +210,8 @@ const mockOrders: Order[] = [
       email: "michael@example.com",
     },
     items: [
-      { id: "7", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 32.00, image: "/assets/editorial/eye-closeup.webp" },
-      { id: "8", productName: "Product Pending Review", variant: "180ml", quantity: 1, price: 15.00, image: "/assets/editorial/tone-up-sun-cream.png" },
+      { id: "7", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 32.00, image: "/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg" },
+      { id: "8", productName: "Product Pending Review", variant: "180ml", quantity: 1, price: 15.00, image: "/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg" },
     ],
     total: 52.00,
     subtotal: 47.00,

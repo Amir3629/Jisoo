@@ -138,8 +138,10 @@ export function HeroSection({
   showCategoryNav?: boolean
 } = {}) {
   const { locale } = useLocale()
+  // Keep the public option for existing callers, but the tone toolbar is intentionally removed.
+  void showConceptPicker
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const [surfaceTone, setSurfaceTone] = useState(0)
+  const surfaceTone = -42
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId, heroImageSrc ?? (renderId === 'image-editorial' ? HOME_EDITORIAL_IMAGE : undefined)), [renderId, heroImageSrc])
   const isMistGlass = renderId === 'mist-glass'
@@ -213,25 +215,6 @@ export function HeroSection({
           </div>
         )}
 
-        {showConceptPicker && <div className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 rounded-[999px] border border-white/30 bg-white/30 px-3 py-4 shadow-luxury backdrop-blur-xl lg:block">
-          <div className="flex flex-col items-center gap-3">
-            <div className="flex h-52 flex-col items-center gap-3">
-              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-charcoal/72">Tone</span>
-              <input
-                type="range"
-                min={-42}
-                max={42}
-                value={surfaceTone}
-                onChange={(event) => setSurfaceTone(Number(event.target.value))}
-                aria-label="Adjust champagne cream strength"
-                className="h-36 w-2 cursor-pointer accent-[#9f7e56] [writing-mode:vertical-rl]"
-              />
-              <span className="grid h-8 w-8 place-items-center rounded-full border border-charcoal/15 text-[11px] font-semibold text-charcoal shadow-[0_8px_18px_rgba(44,37,40,0.16)]" style={{ backgroundColor: toneColor(selectedSurface.base, surfaceTone) }}>
-                {surfaceTone > 0 ? '+' : ''}{surfaceTone}
-              </span>
-            </div>
-          </div>
-        </div>}
       </div>
     </section>
   )
@@ -321,12 +304,11 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 hidden md:block" imageClassName={cn('object-cover transform-gpu', showCategoryNav ? 'object-top scale-[1.08]' : 'object-center scale-[1.015]')} priority />
         <HeroImage src={mobileImage} alt="Editorial background mobile" className="absolute inset-0 block md:hidden" imageClassName={cn('transform-gpu', showCategoryNav ? 'object-cover object-top scale-[1.08]' : 'object-cover object-bottom')} priority />
         <div className={cn('absolute inset-0', lightText ? 'bg-gradient-to-r from-charcoal/30 via-charcoal/10 to-transparent' : 'bg-gradient-to-r from-warm-ivory/28 via-warm-ivory/8 to-transparent')} />
-        <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]">
+        <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
             key={selectedFont.id}
-            style={headlineFontStyle}
             data-hero-headline="homepage-image-editorial"
             data-selected-font={selectedFont.name}
             className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}
@@ -346,7 +328,7 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
                   className={cn(
                     'inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold transition-all',
                     activeFontChoice === font.id
-                      ? 'border-charcoal/90 bg-charcoal text-white shadow-[0_10px_20px_rgba(44,37,40,0.35)]'
+                      ? 'border-[#b9935f]/80 bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-charcoal shadow-[0_10px_20px_rgba(159,126,86,0.28)]'
                       : lightText
                         ? 'border-white/45 bg-white/25 text-white hover:bg-white/35'
                         : 'border-charcoal/25 bg-white/80 text-charcoal hover:border-charcoal/45'

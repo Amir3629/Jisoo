@@ -105,7 +105,7 @@ export function CategoriesSection() {
                 </div>
               ))}
             </div>
-            <Link href={localizeHref('/shop?concern=anti-aging', locale)} className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-[#4a4e51] px-6 py-3 font-medium text-white transition hover:bg-charcoal">
+            <Link href={localizeHref('/shop?concern=anti-aging', locale)} className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] px-6 py-3 font-medium text-charcoal shadow-[0_14px_30px_rgba(159,126,86,0.22)] transition hover:brightness-105">
               View Care Journals
               <ArrowRight className="h-4 w-4" />
             </Link>

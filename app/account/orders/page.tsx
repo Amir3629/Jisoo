@@ -29,7 +29,7 @@ const orders = [
         brand: "JISOO",
         price: 13.98,
         quantity: 2,
-        image: "/assets/editorial/skincare-ingredients.jpg",
+        image: "/assets/products/glass-skin-essence.jpg",
       },
     ],
     shippingAddress: "123 Beauty Lane, Los Angeles, CA 90001",
@@ -46,7 +46,7 @@ const orders = [
         brand: "JISOO",
         price: 0,
         quantity: 1,
-        image: "/assets/editorial/product-table.png",
+        image: "/assets/products/jisoo-daily-uv-shield-sun-cream-1.jpg",
       },
       {
         name: "Daily UV Shield Sun Cream",

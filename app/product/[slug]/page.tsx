@@ -320,8 +320,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                   className={cn(
                     'flex-1 py-4 px-8 rounded-full font-medium text-lg transition-all',
                     isBuyable
-                      ? 'bg-plum text-warm-ivory hover:bg-plum/90 shadow-lg shadow-plum/20'
-                      : 'bg-muted text-muted-foreground cursor-not-allowed'
+                      ? 'bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] text-charcoal hover:brightness-105 shadow-lg shadow-plum/20'
+                      : 'bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-charcoal cursor-not-allowed opacity-70'
                   )}
                 >
                   {isBuyable ? t.addToCart : dictionary.product.notAvailable}

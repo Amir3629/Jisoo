@@ -23,6 +23,11 @@ const AVAILABLE_ASSETS = new Set([
   '/assets/placeholders/placeholder.svg',
   '/assets/products/glass-skin-essence.jpg',
   '/assets/products/luminous-glow-serum.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-1.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-3.jpg',
+  '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg',
+  '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg',
   '/assets/editorial/skincare-ingredients.jpg',
   '/assets/editorial/eye-closeup.webp',
   '/assets/placeholders/logo.svg',
@@ -30,12 +35,13 @@ const AVAILABLE_ASSETS = new Set([
 ])
 
 const GLOBAL_MISSING_IMAGE_FALLBACKS = [
-  '/assets/editorial/skincare-ingredients.jpg',
-  '/assets/editorial/care-expert.jpg',
-  '/assets/backgrounds/cica-ampoule.jpeg',
   '/assets/products/glass-skin-essence.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-1.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg',
+  '/assets/products/jisoo-daily-uv-shield-sun-cream-3.jpg',
+  '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg',
+  '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg',
   '/assets/products/luminous-glow-serum.jpg',
-  '/assets/editorial/lips-closeup.jpg',
 ]
 
 function pickFallback(seed: string) {

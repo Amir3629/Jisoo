@@ -76,6 +76,7 @@ export const products: Product[] = [
     price: 19.57,
     images: [
       { id: 'radiance-boost-vitamin-c-23-serum-1', src: '/assets/products/luminous-glow-serum.jpg', alt: 'JISOO Radiance Boost Vitamin C 23 Serum', isMain: true },
+      { id: 'radiance-boost-vitamin-c-23-serum-2', src: '/assets/products/glass-skin-essence.jpg', alt: 'JISOO glass-skin essence product detail' },
     ],
     supplierNotes:
       'Reference file lists a high-content vitamin C serum with glow, even-looking tone, lightweight texture, panthenol, squalane, adenosine, niacinamide, allantoin, tocopherol, and sodium ascorbyl phosphate. Any numerical clinical percentages must be verified before publishing.',
@@ -116,7 +117,8 @@ export const products: Product[] = [
     size: '145 g / 5.11 oz.',
     price: 13.98,
     images: [
-      { id: 'pore-deep-clean-bubble-serum-1', src: '/assets/editorial/skincare-ingredients.jpg', alt: 'JISOO Pore Deep Clean Bubble Serum', isMain: true },
+      { id: 'pore-deep-clean-bubble-serum-1', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg', alt: 'JISOO Pore Deep Clean Bubble Serum product overview', isMain: true },
+      { id: 'pore-deep-clean-bubble-serum-2', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg', alt: 'JISOO Pore Deep Clean Bubble Serum care details' },
     ],
     supplierNotes:
       'Reference file mentions pore deep clean bubble, excess sebum, soft rich foam, acne-prone routines, salicylic acid, PHYTON5, and pH guidance. Use only after full INCI and claim checks.',
@@ -155,7 +157,8 @@ export const products: Product[] = [
     finish: 'Dewy, refreshed finish',
     size: '140 ml / 4.73 fl. oz.',
     images: [
-      { id: 'azulene-toner-pad-1', src: '/assets/editorial/product-table.png', alt: 'JISOO Azulene Toner Pad', isMain: true },
+      { id: 'azulene-toner-pad-1', src: '/assets/products/glass-skin-essence.jpg', alt: 'JISOO Azulene Toner Pad product visual', isMain: true },
+      { id: 'azulene-toner-pad-2', src: '/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg', alt: 'JISOO Azulene Toner Pad care detail visual' },
     ],
     supplierNotes:
       'Reference file lists skin-wrapping gel pad, dewy glow, azulene toner, 140 ml, hydration, antioxidant care, relief/defense, cooling/refining, vegan collagen, lactobacillus, PHA, and Calm-MDP. Verify final INCI.',
@@ -294,7 +297,8 @@ export function createProductDraftFromRaw(rawText: string, overrides: Partial<Pr
     tags: overrides.tags ?? ['supplier-review'],
     size: overrides.size ?? 'To be confirmed',
     images: overrides.images ?? [
-      { id: 'supplier-draft-image', src: '/assets/placeholders/placeholder.svg', alt: 'Draft product placeholder', isMain: true },
+      { id: 'supplier-draft-image', src: '/assets/products/glass-skin-essence.jpg', alt: 'Draft product product visual', isMain: true },
+      { id: 'supplier-draft-image-2', src: '/assets/products/luminous-glow-serum.jpg', alt: 'Draft product care detail visual' },
     ],
     supplierNotes: rawText,
     createdAt: overrides.createdAt ?? now,
