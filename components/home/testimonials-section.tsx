@@ -56,12 +56,15 @@ export function TestimonialsSection() {
     let targetSpeed = baseSpeed
     let lastScrollY = window.scrollY
     let lastInteraction = 0
+    let isDragging = false
+    let dragStartX = 0
+    let dragStartOffset = 0
 
     const getLoopWidth = () => track.scrollWidth / 3
 
     const animate = () => {
       const loopWidth = getLoopWidth()
-      const desiredSpeed = container.matches(':hover') || document.hidden ? 0 : targetSpeed
+      const desiredSpeed = isDragging || container.matches(':hover') || document.hidden ? 0 : targetSpeed
 
       speed += (desiredSpeed - speed) * 0.08
       offset += speed
@@ -89,11 +92,53 @@ export function TestimonialsSection() {
       lastInteraction = performance.now()
     }
 
+    const normalizeOffset = () => {
+      const loopWidth = getLoopWidth()
+      if (loopWidth <= 0) return
+      while (offset >= loopWidth) offset -= loopWidth
+      while (offset < 0) offset += loopWidth
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      isDragging = true
+      dragStartX = event.clientX
+      dragStartOffset = offset
+      targetSpeed = 0
+      lastInteraction = performance.now()
+      container.setPointerCapture(event.pointerId)
+      container.classList.add('cursor-grabbing')
+    }
+
+    const onPointerMove = (event: PointerEvent) => {
+      if (!isDragging) return
+      offset = dragStartOffset - (event.clientX - dragStartX)
+      normalizeOffset()
+      track.style.transform = `translate3d(${-offset}px, 0, 0)`
+      lastInteraction = performance.now()
+    }
+
+    const endDrag = (event: PointerEvent) => {
+      if (!isDragging) return
+      isDragging = false
+      container.releasePointerCapture(event.pointerId)
+      container.classList.remove('cursor-grabbing')
+      targetSpeed = baseSpeed
+      lastInteraction = performance.now()
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
+    container.addEventListener('pointerdown', onPointerDown)
+    container.addEventListener('pointermove', onPointerMove)
+    container.addEventListener('pointerup', endDrag)
+    container.addEventListener('pointercancel', endDrag)
     frame = window.requestAnimationFrame(animate)
 
     return () => {
       window.removeEventListener('scroll', onScroll)
+      container.removeEventListener('pointerdown', onPointerDown)
+      container.removeEventListener('pointermove', onPointerMove)
+      container.removeEventListener('pointerup', endDrag)
+      container.removeEventListener('pointercancel', endDrag)
       window.cancelAnimationFrame(frame)
     }
   }, [])
@@ -109,7 +154,7 @@ export function TestimonialsSection() {
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
         />
 
-        <div ref={containerRef} className="-mx-4 overflow-hidden px-4 pb-4">
+        <div ref={containerRef} className="-mx-4 cursor-grab touch-pan-y overflow-hidden px-4 pb-4">
           <div ref={trackRef} className="flex w-max gap-6 will-change-transform">
             {cards.map((card, index) => (
               <div key={`${card.id}-${index}`} className="w-[85vw] max-w-[400px] flex-shrink-0 sm:w-[400px]">

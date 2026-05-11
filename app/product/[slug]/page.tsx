@@ -282,7 +282,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                         className={cn(
                           'px-4 py-2 rounded-full text-sm font-medium transition-all',
                           selectedVariant?.id === variant.id
-                            ? 'bg-plum text-warm-ivory'
+                            ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
                             : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve',
                           !variant.inStock && 'opacity-50 cursor-not-allowed line-through'
                         )}
@@ -320,8 +320,8 @@ export default function ProductPage({ params }: ProductPageProps) {
                   className={cn(
                     'flex-1 py-4 px-8 rounded-full font-medium text-lg transition-all',
                     isBuyable
-                      ? 'bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] text-charcoal hover:brightness-105 shadow-lg shadow-plum/20'
-                      : 'bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-charcoal cursor-not-allowed opacity-70'
+                      ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105'
+                      : 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white cursor-not-allowed opacity-70'
                   )}
                 >
                   {isBuyable ? t.addToCart : dictionary.product.notAvailable}

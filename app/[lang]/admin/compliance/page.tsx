@@ -1,1 +1,3 @@
-export { default } from '@/app/admin/compliance/page'
+import RouteModule from '@/app/admin/compliance/page'
+
+export default RouteModule

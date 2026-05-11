@@ -27,14 +27,14 @@ export function ConcernsSection() {
     products: locale === 'ar' ? 'منتج' : locale === 'fr' ? 'produits' : locale === 'de' ? 'Produkte' : locale === 'ko' ? '개 제품' : locale === 'tr' ? 'ürün' : 'products',
   }
   return (
-    <AtmosphereSection atmosphere="blush" withAtmosphereOverlay={false} className="relative overflow-hidden py-24 lg:py-32">
+    <AtmosphereSection atmosphere="blush" withAtmosphereOverlay={false} className="relative overflow-hidden py-16 lg:py-24">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker={t.targetedSolutions}
           title={t.shopByConcern}
           description={copy.description}
           align="center"
-          className="mb-12 lg:mb-16 max-w-4xl mx-auto"
+          className="mb-8 max-w-4xl mx-auto lg:mb-10"
         />
 
         {/* Concerns Grid */}
@@ -92,8 +92,8 @@ export function ConcernsSection() {
               href={localizeHref('/help/shipping', locale)}
               className={cn(
                 'px-6 py-3 rounded-full whitespace-nowrap',
-                'bg-plum text-warm-ivory font-medium',
-                'hover:bg-plum/90 transition-colors'
+                'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white font-medium',
+                'hover:brightness-105 transition-colors'
               )}
             >
               {t.viewShippingInfo}

@@ -61,7 +61,7 @@ export function SocialSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   return (
-    <AtmosphereSection atmosphere="blush" className="py-24 lg:py-32" data-snap-target="community">
+    <AtmosphereSection atmosphere="blush" className="pb-20 pt-28 lg:pb-28 lg:pt-36" data-snap-target="community">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"
@@ -129,8 +129,8 @@ export function SocialSection() {
             rel="noopener noreferrer"
             className={cn(
               'flex items-center gap-2 px-6 py-3 rounded-full',
-              'bg-gradient-to-r from-plum via-rose-mauve to-champagne-gold text-white font-medium shadow-luxury',
-              'hover:opacity-90 transition-opacity'
+              'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white font-medium',
+              'hover:brightness-105 transition-all'
             )}
           >
             <Instagram className="w-5 h-5" />

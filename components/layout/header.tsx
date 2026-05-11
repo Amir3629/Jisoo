@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
-import { ArrowLeft, Search, User, Menu, X, ChevronDown, Globe, Heart, ShoppingBag, Settings, Package, Check } from 'lucide-react'
+import { ArrowLeft, Search, User, Menu, X, ChevronDown, Globe, Heart, ShoppingBag, Settings, Package, Check, Palette } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/components/providers/cart-provider'
 import { useLocale } from '@/components/providers/locale-provider'
@@ -118,6 +118,8 @@ export function Header({
   const [isRegionOpen, setIsRegionOpen] = useState(false)
   const [isMegaOpen, setIsMegaOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
+  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>('soft')
+  const [mobilePanel, setMobilePanel] = useState<'region' | 'search' | 'profile' | null>(null)
   const [topBarIndex, setTopBarIndex] = useState(0)
   const profileRef = useRef<HTMLDivElement>(null)
   const regionRef = useRef<HTMLDivElement>(null)
@@ -184,6 +186,27 @@ export function Header({
     : 'border-[#cfae83]/30 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
 
   useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
+  useEffect(() => {
+    const root = document.documentElement
+    root.dataset.siteMode = siteMode
+    const elegant = siteMode === 'elegant'
+    root.style.setProperty('--surface-tone-overlay-color', elegant ? '210 216 206' : '234 214 184')
+    root.style.setProperty('--surface-tone-overlay-opacity', elegant ? '0.24' : '0')
+    root.style.setProperty('--warm-ivory', elegant ? '#e8e1d4' : '#e4d0ad')
+    root.style.setProperty('--background', elegant ? '#e8e1d4' : '#e4d0ad')
+    root.style.setProperty('--card', elegant ? '#f7f2e9' : '#edddc3')
+    root.style.setProperty('--popover', elegant ? '#f7f2e9' : '#edddc3')
+    root.style.setProperty('--secondary', elegant ? '#cfd8cf' : '#f8ede6')
+    root.style.setProperty('--muted', elegant ? '#cfd8cf' : '#f8ede6')
+    root.style.setProperty('--border', elegant ? '#9d8f77' : '#f0d7e0')
+    root.style.setProperty('--input', elegant ? '#9d8f77' : '#f0d7e0')
+    root.style.setProperty('--plum', elegant ? '#42534a' : '#9e7b8a')
+    root.style.setProperty('--rose-mauve', elegant ? '#9c7f6d' : '#d6a8ba')
+    root.style.setProperty('--blush-pink', elegant ? '#e9dfd2' : '#f6e2ea')
+    root.style.setProperty('--champagne-gold', elegant ? '#b59a6d' : '#cfae84')
+    root.style.setProperty('--charcoal', elegant ? '#202826' : '#2c2528')
+    window.dispatchEvent(new CustomEvent('jisoo-site-mode', { detail: siteMode }))
+  }, [siteMode])
   useEffect(() => { const timer = window.setInterval(() => setTopBarIndex((prev) => (prev + 1) % topBarMessages.length), 8200); return () => window.clearInterval(timer) }, [topBarMessages.length])
   useEffect(() => {
     const onOutside = (event: MouseEvent) => {
@@ -199,7 +222,7 @@ export function Header({
   const closeMega = () => { closeTimer.current = window.setTimeout(() => setIsMegaOpen(false), 220) }
 
   return (<>
-    <motion.div className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#e8c8d4] via-champagne-gold to-[#f4dfcf]" style={{ scaleX: progress }} />
+    <motion.div className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#9e7b8a] via-[#d6a8ba] to-[#6f4f5d]" style={{ scaleX: progress }} />
     <motion.header onMouseEnter={keepMega} onMouseLeave={closeMega} initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300', hasHeaderFrame ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-transparent shadow-none backdrop-blur-0')}>
       <div className={cn('hidden border-b transition-[height,background-color,border-color] duration-300 lg:block', hasHeaderFrame ? 'h-8 border-rose-mauve/12 bg-warm-ivory' : 'h-0 overflow-hidden border-transparent bg-transparent')}>
         <div className={cn('mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] transition-colors', !hasHeaderFrame && lightOnTop ? 'text-white/88' : 'text-charcoal/85')}>
@@ -216,8 +239,17 @@ export function Header({
             {navLinks.map((link, index) => <Link key={link.href} href={localizeHref(link.href, locale)} className={cn('text-sm tracking-[0.1em] transition-colors', splitLightOnTop && index >= 4 ? rightTextClass : topTextClass)}>{link.label}</Link>)}
             <div className="relative" onMouseEnter={openMega}><button onClick={() => setIsMegaOpen((p) => !p)} aria-expanded={isMegaOpen} className={cn('inline-flex items-center gap-1 text-sm tracking-[0.1em] transition-colors', rightTextClass)}>{discoverLabel} <ChevronDown className="h-4 w-4" /></button></div>
           </nav>
-          <div className="relative z-10 flex items-center gap-1.5 lg:gap-2">
+          <div className="relative z-10 flex items-center gap-2">
             <div className="hidden items-center gap-2 lg:flex">
+              <button
+                type="button"
+                onClick={() => setSiteMode((mode) => (mode === 'soft' ? 'elegant' : 'soft'))}
+                className={cn('inline-flex h-10 w-10 items-center justify-center rounded-full transition hover:-translate-y-0.5', topIconClass)}
+                aria-label={`Design mode: ${siteMode}. Click to switch.`}
+                title={`Design mode: ${siteMode}`}
+              >
+                <Palette className="h-4 w-4" />
+              </button>
               <LocaleSwitcher buttonClassName={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} />
               <div className="relative" ref={regionRef}>
                 <button
@@ -229,8 +261,16 @@ export function Header({
                 >
                   <Globe className="h-4 w-4" />
                 </button>
+                <AnimatePresence>
                 {isRegionOpen && (
-                  <div role="menu" className={cn('absolute right-0 z-[90] mt-2 w-56 rounded-2xl border p-2 text-charcoal', glassDropdownClass)}>
+                  <motion.div
+                    role="menu"
+                    initial={{ opacity: 0, y: -10, scale: 0.965, filter: 'blur(10px)' }}
+                    animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                    exit={{ opacity: 0, y: -8, scale: 0.975, filter: 'blur(8px)' }}
+                    transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+                    className={cn('absolute right-0 z-[90] mt-2 w-56 origin-top-right rounded-2xl border p-2 text-charcoal', glassDropdownClass)}
+                  >
                     <p className="px-3 pb-2 pt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-charcoal/62">
                       {dictionary.common.region}
                     </p>
@@ -248,7 +288,7 @@ export function Header({
                           }}
                           className={cn(
                             'flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition',
-                            active ? 'bg-[#4a4e51] text-white' : 'hover:bg-[#d5bc9b]/45 hover:text-charcoal'
+                            active ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_10px_20px_rgba(159,126,86,0.22)]' : 'hover:bg-[#d5bc9b]/45 hover:text-charcoal'
                           )}
                         >
                           <span>
@@ -259,16 +299,18 @@ export function Header({
                         </button>
                       )
                     })}
-                  </div>
+                  </motion.div>
                 )}
+                </AnimatePresence>
               </div>
+              <button onClick={() => setIsSearchOpen(true)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button>
+              <div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button><AnimatePresence>{isProfileOpen && <motion.div role="menu" initial={{ opacity: 0, y: -10, scale: 0.965, filter: 'blur(10px)' }} animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -8, scale: 0.975, filter: 'blur(8px)' }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }} className={cn('absolute right-0 z-[90] mt-2 w-52 origin-top-right rounded-2xl border p-2 text-charcoal', glassDropdownClass)}><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><User className="h-4 w-4" />{accountLoginLabel}</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Heart className="h-4 w-4" />{dictionary.common.wishlist}</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><ShoppingBag className="h-4 w-4" />{cartLabel} {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Package className="h-4 w-4" />{dictionary.common.orderHistory}</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Settings className="h-4 w-4" />{settingsLabel}</Link></motion.div>}</AnimatePresence></div>
             </div>
-            <button onClick={() => setIsSearchOpen(true)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.search}><Search className="w-5 h-5" /></button>
-            <div className="relative" ref={profileRef}><button onClick={() => setIsProfileOpen((p) => !p)} className={cn('inline-flex h-10 w-10 items-center justify-center', topIconClass)} aria-label={dictionary.header.actions.account} aria-haspopup="menu" aria-expanded={isProfileOpen}><User className="w-5 h-5" /></button>{isProfileOpen && <div role="menu" className={cn('absolute right-0 z-[90] mt-2 w-52 rounded-2xl border p-2 text-charcoal', glassDropdownClass)}><Link role="menuitem" href={localizeHref('/account', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><User className="h-4 w-4" />{accountLoginLabel}</Link><Link role="menuitem" href={localizeHref('/account/wishlist', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Heart className="h-4 w-4" />{dictionary.common.wishlist}</Link><button role="menuitem" onClick={() => { setIsProfileOpen(false); setIsCartOpen(true) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><ShoppingBag className="h-4 w-4" />{cartLabel} {itemCount > 0 ? `(${itemCount})` : ''}</button><Link role="menuitem" href={localizeHref('/account/orders', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Package className="h-4 w-4" />{dictionary.common.orderHistory}</Link><Link role="menuitem" href={localizeHref('/account/settings', locale)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/45 hover:text-charcoal"><Settings className="h-4 w-4" />{settingsLabel}</Link></div>}</div>
+            <LocaleSwitcher buttonClassName={cn('inline-flex h-10 w-10 items-center justify-center lg:hidden', topIconClass)} />
           </div>
         </div>
       </div>
-      <AnimatePresence mode="wait">{isMegaOpen && <motion.div onMouseEnter={openMega} initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }} animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, y: 8, filter: 'blur(4px)' }} transition={{ duration: 0.344, ease: [0.22,1,0.36,1] }} className={cn('hidden border-t lg:block', glassDropdownClass)}><motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }} className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{localizedMegaGroups.map((group, gi) => <motion.div key={group.title} variants={{ hidden: { opacity: 0, x: -8 }, show: { opacity: 1, x: 0 } }} className={cn('space-y-3', gi !== 3 && 'border-r border-[#cfae83]/18 pr-6')}><p className="text-xs font-semibold uppercase tracking-[0.14em] text-charcoal/84">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.href + item.label} href={localizeHref(item.href, locale)} className="block rounded-lg px-2 py-1 text-sm text-charcoal/85 transition-all duration-200 hover:bg-[#d5bc9b]/42 hover:text-charcoal">{item.label}</Link>)}</div></motion.div>)}</motion.div></motion.div>}</AnimatePresence>
+      <AnimatePresence mode="wait">{isMegaOpen && <motion.div onMouseEnter={openMega} initial={{ opacity: 0, y: -14, scale: 0.985, filter: 'blur(14px)' }} animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }} exit={{ opacity: 0, y: -14, scale: 0.99, filter: 'blur(10px)' }} transition={{ duration: 0.68, ease: [0.16,1,0.3,1] }} className={cn(glassDropdownClass, 'hidden origin-top border-t-0 lg:block')}><motion.div initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.105, delayChildren: 0.08 } } }} className="mx-auto grid max-w-7xl grid-cols-4 gap-8 px-8 py-7">{localizedMegaGroups.map((group, gi) => <motion.div key={group.title} variants={{ hidden: { opacity: 0, x: -10, filter: 'blur(4px)' }, show: { opacity: 1, x: 0, filter: 'blur(0px)' } }} transition={{ duration: 0.48, ease: [0.22,1,0.36,1] }} className={cn('space-y-3', gi !== 3 && 'border-r border-[#cfae83]/18 pr-6')}><p className="text-xs font-semibold uppercase tracking-[0.14em] text-charcoal/84">{group.title}</p><div className="space-y-2">{group.items.map((item) => <Link key={item.href + item.label} href={localizeHref(item.href, locale)} className="block rounded-lg px-2 py-1 text-sm text-charcoal/85 transition-all duration-300 hover:bg-[#d5bc9b]/42 hover:text-charcoal">{item.label}</Link>)}</div></motion.div>)}</motion.div></motion.div>}</AnimatePresence>
     </motion.header>
     <AnimatePresence>
       {showBackButton && !isHomePath && (
@@ -290,7 +332,7 @@ export function Header({
         </motion.button>
       )}
     </AnimatePresence>
-    <AnimatePresence mode="wait">{isMobileMenuOpen && <motion.div initial={{ x: '-104%', opacity: 0.94 }} animate={{ x: 0, opacity: 1 }} exit={{ x: '-104%', opacity: 0.94 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }} className="fixed top-0 left-0 bottom-0 z-50 w-[85%] max-w-sm overflow-y-auto bg-warm-ivory p-6 shadow-[18px_0_48px_rgba(44,37,40,0.18)] lg:hidden"><div className="mb-8 flex items-center justify-between"><div><p className="text-xs uppercase tracking-[0.18em] text-charcoal/55">JISOO</p><h2 className="mt-1 text-2xl font-semibold text-charcoal">Menu</h2></div><button onClick={() => setIsMobileMenuOpen(false)} className="rounded-full p-2 text-charcoal transition hover:bg-[#d5bc9b]/28"><X className="w-6 h-6" /></button></div><nav className="space-y-5">{[...navLinks, ...localizedMegaGroups.flatMap(g => g.items)].map((link) => <Link key={link.href + link.label} href={localizeHref(link.href, locale)} onClick={() => setIsMobileMenuOpen(false)} className="block text-lg">{link.label}</Link>)}</nav></motion.div>}</AnimatePresence>
+    <AnimatePresence mode="wait">{isMobileMenuOpen && <motion.div initial={{ x: '-104%', opacity: 0.94 }} animate={{ x: 0, opacity: 1 }} exit={{ x: '-104%', opacity: 0.94 }} transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }} className="fixed top-0 left-0 bottom-0 z-50 w-[86%] max-w-sm overflow-y-auto bg-warm-ivory p-5 shadow-[18px_0_48px_rgba(44,37,40,0.18)] lg:hidden"><div className="mb-5 flex items-center justify-between"><div><p className="text-xs uppercase tracking-[0.18em] text-charcoal/55">JISOO</p><h2 className="mt-1 text-2xl font-semibold text-charcoal">Menu</h2></div><button onClick={() => { setIsMobileMenuOpen(false); setMobilePanel(null) }} className="rounded-full p-2 text-charcoal transition hover:bg-[#d5bc9b]/28"><X className="w-6 h-6" /></button></div><div className="mb-5 grid grid-cols-3 gap-2"><button type="button" onClick={() => setMobilePanel((p) => p === 'region' ? null : 'region')} className={cn('grid h-11 place-items-center rounded-full border border-[#cfae83]/28 bg-white/24 text-charcoal transition', mobilePanel === 'region' && 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white')} aria-label={dictionary.common.region}><Globe className="h-4 w-4" /></button><button type="button" onClick={() => setMobilePanel((p) => p === 'search' ? null : 'search')} className={cn('grid h-11 place-items-center rounded-full border border-[#cfae83]/28 bg-white/24 text-charcoal transition', mobilePanel === 'search' && 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white')} aria-label={dictionary.header.actions.search}><Search className="h-4 w-4" /></button><button type="button" onClick={() => setMobilePanel((p) => p === 'profile' ? null : 'profile')} className={cn('grid h-11 place-items-center rounded-full border border-[#cfae83]/28 bg-white/24 text-charcoal transition', mobilePanel === 'profile' && 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white')} aria-label={dictionary.header.actions.account}><User className="h-4 w-4" /></button></div><AnimatePresence mode="wait">{mobilePanel && <motion.div key={mobilePanel} initial={{ opacity: 0, height: 0, y: -8, filter: 'blur(8px)' }} animate={{ opacity: 1, height: 'auto', y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, height: 0, y: -8, filter: 'blur(8px)' }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }} className="mb-5 overflow-hidden rounded-2xl border border-[#cfae83]/24 bg-white/20 p-2 text-charcoal shadow-[0_12px_28px_rgba(44,37,40,0.08)]">{mobilePanel === 'region' && Object.values(regionConfigs).map((config) => { const code = config.code as Region; const active = region === code; return <button key={code} type="button" onClick={() => setRegion(code)} className={cn('flex w-full items-center justify-between rounded-xl px-3 py-2 text-left text-sm transition', active ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'hover:bg-[#d5bc9b]/35')}><span>{config.name}</span><span>{config.currencySymbol}</span></button> })}{mobilePanel === 'search' && <button type="button" onClick={() => { setIsSearchOpen(true); setIsMobileMenuOpen(false); setMobilePanel(null) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-sm transition hover:bg-[#d5bc9b]/35"><Search className="h-4 w-4" />{dictionary.header.actions.search}</button>}{mobilePanel === 'profile' && <div className="space-y-1"><Link href={localizeHref('/account', locale)} onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-[#d5bc9b]/35"><User className="h-4 w-4" />{accountLoginLabel}</Link><Link href={localizeHref('/account/wishlist', locale)} onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm hover:bg-[#d5bc9b]/35"><Heart className="h-4 w-4" />{dictionary.common.wishlist}</Link><button type="button" onClick={() => { setIsCartOpen(true); setIsMobileMenuOpen(false) }} className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-left text-sm hover:bg-[#d5bc9b]/35"><ShoppingBag className="h-4 w-4" />{cartLabel} {itemCount > 0 ? `(${itemCount})` : ''}</button></div>}</motion.div>}</AnimatePresence><nav className="space-y-5">{[...navLinks, ...localizedMegaGroups.flatMap(g => g.items)].map((link) => <Link key={link.href + link.label} href={localizeHref(link.href, locale)} onClick={() => setIsMobileMenuOpen(false)} className="block text-lg">{link.label}</Link>)}</nav></motion.div>}</AnimatePresence>
     <CartDrawer /><SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
   </>)
 }

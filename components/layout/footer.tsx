@@ -8,6 +8,7 @@ import { useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
+import { getLegalDocument, type LegalSlug } from '@/lib/legal-content'
 
 const footerLinks = {
   shop: [
@@ -83,12 +84,13 @@ export function Footer() {
       setEmail('')
     }
   }
-  const legalContent: Record<string, { title: string; body: string }> = {
-    'Privacy Policy': { title: localizedLink('Privacy Policy'), body: 'We collect only the information needed for orders, account support, and service quality. Please contact us for official policy details.' },
-    'Terms of Service': { title: localizedLink('Terms of Service'), body: 'By using JISOO, you agree to lawful use of the service and accurate order information. Please contact us for official policy details.' },
-    'Cookie Policy': { title: localizedLink('Cookie Policy'), body: 'Cookies help us remember preferences and improve site performance. Please contact us for official policy details.' },
-    Accessibility: { title: localizedLink('Accessibility'), body: 'JISOO is committed to an inclusive digital experience and continuous accessibility improvements. Please contact us for official policy details.' },
+  const legalSlugByLabel: Record<string, LegalSlug> = {
+    'Privacy Policy': 'privacy',
+    'Terms of Service': 'terms',
+    'Cookie Policy': 'cookies',
+    Accessibility: 'accessibility',
   }
+  const openLegalDocument = openLegal ? getLegalDocument(legalSlugByLabel[openLegal] ?? 'privacy', locale).document : null
 
   return (
     <footer className="bg-warm-ivory text-charcoal">
@@ -265,14 +267,25 @@ export function Footer() {
           </div>
         </div>
       </div>
-      {openLegal && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-charcoal/40 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={legalContent[openLegal].title}>
-          <div className="w-full max-w-2xl rounded-3xl border border-rose-mauve/25 bg-white p-6 shadow-2xl lg:p-8">
+      {openLegal && openLegalDocument && (
+        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-charcoal/40 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={openLegalDocument.title}>
+          <div className="max-h-[86vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-rose-mauve/25 bg-white p-6 shadow-2xl lg:p-8">
             <div className="flex items-start justify-between gap-4">
-              <h5 className="font-serif text-3xl text-charcoal">{legalContent[openLegal].title}</h5>
+              <h5 className="font-serif text-3xl text-charcoal">{openLegalDocument.title}</h5>
               <button type="button" onClick={() => setOpenLegal(null)} className="rounded-full border border-rose-mauve/25 px-3 py-1 text-sm text-charcoal/70 transition-colors hover:text-charcoal">Close</button>
             </div>
-            <p className="mt-4 leading-relaxed text-charcoal/75">{legalContent[openLegal].body}</p>
+            <p className="mt-4 leading-relaxed text-charcoal/75">{openLegalDocument.summary}</p>
+            <div className="mt-5 space-y-4">
+              {openLegalDocument.sections.slice(0, 4).map((section) => (
+                <section key={section.title}>
+                  <h6 className="font-semibold text-charcoal">{section.title}</h6>
+                  <p className="mt-1 text-sm leading-6 text-charcoal/70">{section.body[0]}</p>
+                </section>
+              ))}
+            </div>
+            <Link href={localizeHref(footerLinks.legal.find((link) => link.label === openLegal)?.href ?? '/legal/privacy', locale)} className="mt-6 inline-flex rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-5 py-2.5 text-sm font-medium text-white">
+              Read full policy
+            </Link>
           </div>
         </div>
       )}

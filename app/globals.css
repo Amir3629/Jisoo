@@ -8,17 +8,17 @@
   --plum: #9e7b8a;
   --rose-mauve: #d6a8ba;
   --blush-pink: #f6e2ea;
-  --warm-ivory: #ead9c3;
-  --nude-beige: #f8efe7;
+  --warm-ivory: #e4d0ad;
+  --nude-beige: #f1e1ca;
   --champagne-gold: #cfae84;
   --charcoal: #2c2528;
   
   /* Semantic tokens mapped to brand */
-  --background: #ead9c3;
+  --background: #e4d0ad;
   --foreground: #2C2528;
-  --card: #f2e4d1;
+  --card: #edddc3;
   --card-foreground: #2C2528;
-  --popover: #f2e4d1;
+  --popover: #edddc3;
   --popover-foreground: #2C2528;
   --primary: #d6a8ba;
   --primary-foreground: #ead9c3;
@@ -42,6 +42,12 @@
   --chart-3: #F0D7E0;
   --chart-4: #D3B07A;
   --chart-5: #F8EDE6;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 .dark {
@@ -358,6 +364,7 @@
     background:
       linear-gradient(rgb(var(--surface-tone-overlay-color, 255 255 255) / var(--surface-tone-overlay-opacity, 0)), rgb(var(--surface-tone-overlay-color, 255 255 255) / var(--surface-tone-overlay-opacity, 0))),
       var(--background);
+    transition: background 420ms ease, color 420ms ease;
   }
 
   :root[data-surface-effect='on'] .home-continuous-surface,
@@ -366,6 +373,44 @@
       radial-gradient(42rem 34rem at -8rem 22rem, color-mix(in srgb, var(--card) 78%, white), transparent 72%),
       radial-gradient(38rem 32rem at calc(100% + 10rem) 44rem, color-mix(in srgb, var(--secondary) 70%, white), transparent 74%),
       var(--background);
+  }
+
+  :root[data-site-mode='elegant'] .home-continuous-surface,
+  :root[data-site-mode='elegant'] body {
+    background:
+      radial-gradient(48rem 38rem at -10rem 18rem, rgba(210, 218, 207, 0.72), transparent 72%),
+      radial-gradient(42rem 34rem at calc(100% + 9rem) 38rem, rgba(157, 143, 119, 0.30), transparent 74%),
+      linear-gradient(180deg, rgba(247, 242, 233, 0.44), rgba(207, 216, 207, 0.24)),
+      var(--background);
+  }
+
+  :root[data-site-mode='elegant'] header {
+    border-color: rgba(66, 83, 74, 0.18) !important;
+    background-color: rgba(232, 225, 212, 0.92) !important;
+    box-shadow: 0 12px 34px rgba(32, 40, 38, 0.10) !important;
+  }
+
+  :root[data-site-mode='elegant'] a.bg-gradient-to-r,
+  :root[data-site-mode='elegant'] button.bg-gradient-to-r,
+  :root[data-site-mode='elegant'] [data-slot='button'].bg-gradient-to-r {
+    background-image: linear-gradient(135deg, #42534a 0%, #9c7f6d 100%) !important;
+    color: #fff8ee !important;
+  }
+
+  :root[data-site-mode='elegant'] .bg-warm-ivory,
+  :root[data-site-mode='elegant'] .bg-white {
+    background-color: color-mix(in srgb, var(--background) 92%, white) !important;
+  }
+
+  :root[data-site-mode='elegant'] .shadow-editorial {
+    box-shadow:
+      0 22px 58px rgba(32, 40, 38, 0.14),
+      0 2px 0 rgba(255, 255, 255, 0.48) inset,
+      0 -1px 0 rgba(157, 143, 119, 0.28) inset;
+  }
+
+  .scroll-reveal {
+    will-change: opacity, transform, filter;
   }
 
   .surface-velvet {
@@ -516,8 +561,8 @@
   }
 
   .site-scroll-snap {
-    scroll-behavior: smooth;
-    scroll-snap-type: y proximity;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
     scroll-padding-top: 0;
   }
 
@@ -532,7 +577,8 @@
     scroll-margin-top: 0;
   }
 
-  .site-scroll-snap .snap-page-flow > section {
+  .site-scroll-snap .snap-page-flow > section,
+  .site-scroll-snap .snap-page-flow > .snap-section {
     min-height: 100vh;
   }
 
@@ -589,11 +635,11 @@
   }
 
   .site-scroll-snap [data-snap-target='care-campaign'] {
-    scroll-margin-top: 8.5rem;
+    scroll-margin-top: -8rem;
   }
 
   .site-scroll-snap [data-snap-target='community'] {
-    scroll-margin-top: 4rem;
+    scroll-margin-top: -4rem;
   }
 
   .testimonial-marquee-track {

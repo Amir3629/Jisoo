@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { AnimatePresence, motion } from 'framer-motion'
 import { locales, localizeHref, type Locale } from '@/lib/i18n'
 import { useLocale } from '@/components/providers/locale-provider'
 import { cn } from '@/lib/utils'
@@ -51,19 +52,25 @@ export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }
       <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={`Current language ${languageMeta[locale].name}`} onClick={() => setOpen((prev) => !prev)} className={cn('inline-flex h-10 w-10 items-center justify-center text-charcoal/80 transition hover:text-charcoal hover:opacity-80', buttonClassName)}>
         <span aria-hidden className="grid h-5 w-5 place-items-center overflow-hidden rounded-full text-[1rem] leading-none">{languageMeta[locale].flag}</span>
       </button>
+      <AnimatePresence>
       {open && (
-        <div
+        <motion.div
           role="menu"
+          initial={{ opacity: 0, y: -10, scale: 0.965, filter: 'blur(10px)' }}
+          animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -8, scale: 0.975, filter: 'blur(8px)' }}
+          transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
           className={cn(
-            'absolute right-0 z-[90] mt-2 w-52 rounded-2xl border p-2 text-charcoal',
+            'absolute right-0 z-[90] mt-2 w-52 origin-top-right rounded-2xl border p-2 text-charcoal',
             isHeroHome
               ? 'border-white/24 bg-transparent shadow-[0_18px_44px_rgba(44,37,40,0.14)] backdrop-blur-2xl'
               : 'border-[#cfae83]/28 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
           )}
         >
           {orderedLocales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-[#d5bc9b]/45 hover:text-charcoal', locale === l && 'bg-[#d5bc9b]/32 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   )
 }

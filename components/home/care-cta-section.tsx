@@ -25,7 +25,7 @@ export function CareCtaSection() {
             <h2 className="mt-4 font-serif text-3xl leading-tight text-charcoal lg:text-5xl">{copy.title}</h2>
             <p className="mt-5 max-w-2xl text-charcoal/72">{copy.body}</p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link href={localizeHref('/shop', locale)} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d2ab82] px-6 py-3 text-sm font-medium text-charcoal shadow-[0_14px_30px_rgba(159,126,86,0.20)] transition hover:brightness-105">
+              <Link href={localizeHref('/shop', locale)} className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white transition-all hover:brightness-105">
                 {copy.primary}
                 <ArrowRight className="h-4 w-4" />
               </Link>

@@ -1,1 +1,3 @@
-export { default } from '@/app/account/wishlist/page'
+import RouteModule from '@/app/account/wishlist/page'
+
+export default RouteModule

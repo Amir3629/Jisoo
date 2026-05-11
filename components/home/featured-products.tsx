@@ -20,9 +20,9 @@ export function FeaturedProducts() {
   }
 
   return (
-    <AtmosphereSection atmosphere="ivory" className="py-24 lg:py-32">
+    <AtmosphereSection atmosphere="ivory" className="py-14 sm:py-20 lg:py-32">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
-        <div className="grid lg:grid-cols-[1fr_auto] gap-6 items-end mb-12 lg:mb-16">
+        <div className="mb-8 grid gap-4 sm:mb-10 lg:mb-16 lg:grid-cols-[1fr_auto] lg:items-end">
           <ChapterHeading
             kicker={copy.kicker}
             title={copy.title}
@@ -30,14 +30,14 @@ export function FeaturedProducts() {
           />
           <Link
             href={localizeHref('/shop', locale)}
-            className="inline-flex items-center gap-2 rounded-full border border-plum/20 bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] px-6 py-3 font-medium text-charcoal shadow-sm transition hover:brightness-105"
+            className="inline-flex w-fit max-w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white transition-all hover:brightness-105"
           >
             {t.viewEntireEdit}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-1 gap-5 min-[420px]:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {featuredProducts.map((product, index) => (
             <ProductCard key={product.id} product={product} index={index} />
           ))}

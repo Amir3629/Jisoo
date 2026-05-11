@@ -1,1 +1,3 @@
-export { default } from '@/app/about/sustainability/page'
+import RouteModule from '@/app/about/sustainability/page'
+
+export default RouteModule

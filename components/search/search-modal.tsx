@@ -276,8 +276,8 @@ export function SearchModal({ isOpen, onClose }: SearchModalProps) {
                           onClick={onClose}
                           className={cn(
                             'flex items-center justify-center gap-2 mt-6 py-3 rounded-full',
-                            'bg-plum text-warm-ivory font-medium',
-                            'hover:bg-plum/90 transition-colors'
+                            'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white font-medium',
+                            'hover:brightness-105 transition-colors'
                           )}
                         >
                           {dictionary.search.viewAllResults}

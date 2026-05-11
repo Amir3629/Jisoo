@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, PlayCircle } from 'lucide-react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowRight, PlayCircle, SlidersHorizontal, Type } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
@@ -41,8 +41,8 @@ const HERO_ASSETS = {
 
 const FALLBACK_IMAGES = ['/assets/products/luminous-glow-serum.jpg', '/assets/products/glass-skin-essence.jpg']
 const HERO_ONE_EDITORIAL_IMAGE = '/assets/hero/tips.png'
-const HOME_EDITORIAL_IMAGE = '/assets/hero/home-desktop.png'
-const HOME_EDITORIAL_MOBILE_IMAGE = '/assets/hero/home-mobile.png?v=20260503-2358'
+const HOME_EDITORIAL_IMAGE = '/assets/hero/home-desktop.png?v=20260509-1453'
+const HOME_EDITORIAL_MOBILE_IMAGE = '/assets/hero/home-mobile.png?v=20260509-1453'
 const CINEMATIC_HERO_GALLERY_IMAGES = [
   '/assets/editorial/serum-dropper.png',
   '/assets/editorial/cream-ritual.png',
@@ -60,15 +60,34 @@ const MAGAZINE_GRID_IMAGES = [
 ]
 const HOMEPAGE_FONT_CHOICES: readonly HomepageFontChoice[] = [
   { id: 1, name: 'Georgia', fontFamily: 'Georgia, serif' },
-  { id: 2, name: 'Arial Black', fontFamily: '"Arial Black", "Arial Bold", Gadget, sans-serif' },
-  { id: 3, name: 'Courier New', fontFamily: '"Courier New", Courier, monospace' },
-  { id: 4, name: 'Times New Roman', fontFamily: '"Times New Roman", Times, serif' },
-  { id: 5, name: 'Verdana', fontFamily: 'Verdana, Geneva, sans-serif' },
-  { id: 6, name: 'Impact', fontFamily: 'Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif' },
-  { id: 7, name: 'Trebuchet MS', fontFamily: '"Trebuchet MS", Arial, sans-serif' },
+  { id: 2, name: 'Baskerville', fontFamily: 'Baskerville, "Libre Baskerville", Georgia, serif' },
+  { id: 3, name: 'Didot', fontFamily: 'Didot, "Bodoni 72", "Times New Roman", serif' },
+  { id: 4, name: 'Bodoni', fontFamily: '"Bodoni 72", Didot, Georgia, serif' },
+  { id: 5, name: 'Avenir', fontFamily: '"Avenir Next", Avenir, Helvetica, Arial, sans-serif' },
+  { id: 6, name: 'Optima', fontFamily: 'Optima, Candara, "Noto Sans", sans-serif' },
+  { id: 7, name: 'Futura', fontFamily: 'Futura, "Trebuchet MS", Arial, sans-serif' },
   { id: 8, name: 'Palatino', fontFamily: '"Palatino Linotype", Palatino, Georgia, serif' },
   { id: 9, name: 'Gill Sans', fontFamily: '"Gill Sans", "Gill Sans MT", Calibri, sans-serif' },
-  { id: 10, name: 'Monaco', fontFamily: 'Monaco, Consolas, "Lucida Console", monospace' },
+  { id: 10, name: 'Helvetica', fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' },
+  { id: 11, name: 'Times', fontFamily: '"Times New Roman", Times, serif' },
+  { id: 12, name: 'Garamond', fontFamily: 'Garamond, "EB Garamond", Georgia, serif' },
+  { id: 13, name: 'Cormorant', fontFamily: '"Cormorant Garamond", Garamond, Georgia, serif' },
+  { id: 14, name: 'Playfair', fontFamily: '"Playfair Display", Didot, Georgia, serif' },
+  { id: 15, name: 'Libre', fontFamily: '"Libre Baskerville", Baskerville, Georgia, serif' },
+  { id: 16, name: 'Canela', fontFamily: 'Canela, Didot, Georgia, serif' },
+  { id: 17, name: 'Neue Haas', fontFamily: '"Neue Haas Grotesk Text Pro", "Helvetica Neue", Arial, sans-serif' },
+  { id: 18, name: 'Inter', fontFamily: 'Inter, "Avenir Next", Arial, sans-serif' },
+  { id: 19, name: 'Seravek', fontFamily: 'Seravek, Optima, Arial, sans-serif' },
+  { id: 20, name: 'Iowan', fontFamily: '"Iowan Old Style", Palatino, Georgia, serif' },
+  { id: 21, name: 'Roboto', fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif' },
+]
+
+const heroProductHotspots = [
+  { label: 'Cream ritual', href: '/shop?category=creams', className: 'left-[2%] bottom-0 h-[30%] w-[23%] md:left-[4%] md:h-[34%] md:w-[18%]' },
+  { label: 'Serum ritual', href: '/shop?category=oils', className: 'left-[25%] bottom-0 h-[47%] w-[18%] md:left-[27%] md:h-[50%] md:w-[13%]' },
+  { label: 'Daily lotion', href: '/shop?category=face', className: 'left-[43%] bottom-0 h-[56%] w-[18%] md:left-[43%] md:h-[58%] md:w-[15%]' },
+  { label: 'Moisture cream', href: '/shop?category=creams', className: 'left-[62%] bottom-0 h-[42%] w-[20%] md:left-[63%] md:h-[44%] md:w-[17%]' },
+  { label: 'Barrier cream', href: '/shop/best-sellers', className: 'right-[2%] bottom-0 h-[37%] w-[23%] md:right-[3%] md:h-[40%] md:w-[18%]' },
 ]
 
 const selectedSurface = {
@@ -76,6 +95,18 @@ const selectedSurface = {
   card: '#f2e2c8',
   secondary: '#dec49b',
   border: '#cdae7d',
+}
+
+const elegantSurface = {
+  base: '#e8e1d4',
+  card: '#f7f2e9',
+  secondary: '#cfd8cf',
+  border: '#9d8f77',
+  plum: '#42534a',
+  rose: '#9c7f6d',
+  blush: '#e9dfd2',
+  gold: '#b59a6d',
+  charcoal: '#202826',
 }
 
 function pickAsset(index: number) {
@@ -120,10 +151,10 @@ function mixHex(hex: string, mixWith: string, amount: number) {
 }
 
 function toneColor(base: string, strength: number, extra = 0) {
-  const normalized = Math.max(-42, Math.min(42, strength + extra)) / 100
-  const softAnchor = '#f5e6cf'
-  const strongAnchor = '#dec196'
-  return normalized >= 0 ? mixHex(base, strongAnchor, normalized) : mixHex(base, softAnchor, Math.abs(normalized))
+  const normalized = Math.max(-72, Math.min(72, strength + extra)) / 100
+  const brightAnchor = '#fff4df'
+  const deepAnchor = '#d5b27b'
+  return normalized >= 0 ? mixHex(base, brightAnchor, normalized) : mixHex(base, deepAnchor, Math.abs(normalized))
 }
 
 export function HeroSection({
@@ -138,10 +169,15 @@ export function HeroSection({
   showCategoryNav?: boolean
 } = {}) {
   const { locale } = useLocale()
-  // Keep the public option for existing callers, but the tone toolbar is intentionally removed.
   void showConceptPicker
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const surfaceTone = -42
+  const [surfaceTone, setSurfaceTone] = useState(22)
+  const [heroTone, setHeroTone] = useState(12)
+  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>('soft')
+  const [activeFontChoice, setActiveFontChoice] = useState(1)
+  const [heroStyle, setHeroStyle] = useState<1 | 2>(1)
+  const [isToolOpen, setIsToolOpen] = useState(false)
+  const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[0]
   const renderId = forcedConceptId ?? (locale === 'en' ? activeId : 'image-editorial')
   const media = useMemo(() => getMediaForConcept(renderId, heroImageSrc ?? (renderId === 'image-editorial' ? HOME_EDITORIAL_IMAGE : undefined)), [renderId, heroImageSrc])
   const isMistGlass = renderId === 'mist-glass'
@@ -149,19 +185,40 @@ export function HeroSection({
 
   useEffect(() => {
     const root = document.documentElement
-    root.dataset.surfaceTheme = 'champagne-cream'
+    const palette = siteMode === 'elegant' ? elegantSurface : selectedSurface
+    root.dataset.surfaceTheme = siteMode === 'elegant' ? 'elegant-sage' : 'champagne-cream'
     root.dataset.surfaceEffect = 'on'
-    root.style.setProperty('--surface-tone-overlay-color', '234 214 184')
-    root.style.setProperty('--surface-tone-overlay-opacity', '0')
-    root.style.setProperty('--warm-ivory', toneColor(selectedSurface.base, surfaceTone))
-    root.style.setProperty('--background', toneColor(selectedSurface.base, surfaceTone))
-    root.style.setProperty('--card', toneColor(selectedSurface.card, surfaceTone, -3))
-    root.style.setProperty('--popover', toneColor(selectedSurface.card, surfaceTone, -3))
-    root.style.setProperty('--secondary', toneColor(selectedSurface.secondary, surfaceTone, 2))
-    root.style.setProperty('--muted', toneColor(selectedSurface.secondary, surfaceTone, 2))
-    root.style.setProperty('--border', toneColor(selectedSurface.border, surfaceTone, 4))
-    root.style.setProperty('--input', toneColor(selectedSurface.border, surfaceTone, 4))
-  }, [surfaceTone])
+    root.dataset.siteMode = siteMode
+    root.style.setProperty('--surface-tone-overlay-color', siteMode === 'elegant' ? '210 216 206' : '234 214 184')
+    root.style.setProperty('--surface-tone-overlay-opacity', siteMode === 'elegant' ? '0.24' : '0')
+    root.style.setProperty('--warm-ivory', toneColor(palette.base, surfaceTone))
+    root.style.setProperty('--background', toneColor(palette.base, surfaceTone))
+    root.style.setProperty('--card', toneColor(palette.card, surfaceTone, -2))
+    root.style.setProperty('--popover', toneColor(palette.card, surfaceTone, -2))
+    root.style.setProperty('--secondary', toneColor(palette.secondary, surfaceTone, 4))
+    root.style.setProperty('--muted', toneColor(palette.secondary, surfaceTone, 4))
+    root.style.setProperty('--border', toneColor(palette.border, surfaceTone, 6))
+    root.style.setProperty('--input', toneColor(palette.border, surfaceTone, 6))
+    root.style.setProperty('--plum', siteMode === 'elegant' ? elegantSurface.plum : '#9e7b8a')
+    root.style.setProperty('--rose-mauve', siteMode === 'elegant' ? elegantSurface.rose : '#d6a8ba')
+    root.style.setProperty('--blush-pink', siteMode === 'elegant' ? elegantSurface.blush : '#f6e2ea')
+    root.style.setProperty('--champagne-gold', siteMode === 'elegant' ? elegantSurface.gold : '#cfae84')
+    root.style.setProperty('--charcoal', siteMode === 'elegant' ? elegantSurface.charcoal : '#2c2528')
+  }, [surfaceTone, siteMode])
+
+  useEffect(() => {
+    const onModeChange = (event: Event) => {
+      const mode = (event as CustomEvent<'soft' | 'elegant'>).detail
+      if (mode === 'soft' || mode === 'elegant') setSiteMode(mode)
+    }
+
+    window.addEventListener('jisoo-site-mode', onModeChange)
+    return () => window.removeEventListener('jisoo-site-mode', onModeChange)
+  }, [])
+
+  useEffect(() => {
+    document.documentElement.style.setProperty('--jisoo-preview-font', selectedFont.fontFamily)
+  }, [selectedFont.fontFamily])
 
   return (
     <section className={cn('relative w-full overflow-hidden', isFullBleed ? 'pt-0' : 'pt-[4.75rem] lg:pt-[5.5rem]')}>
@@ -175,7 +232,7 @@ export function HeroSection({
             transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="h-full w-full"
           >
-            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} />}
+            {renderId === 'image-editorial' && <ImageEditorialHero locale={locale} media={media} showCategoryNav={showCategoryNav} heroTone={heroTone} selectedFont={selectedFont} heroStyle={heroStyle} />}
             {renderId === 'cinematic-type' && <CinematicTypographyHero locale={locale} />}
             {renderId === 'split-stack' && <SplitStackHero locale={locale} media={media} />}
             {renderId === 'minimal-white' && <MinimalWhiteHero locale={locale} media={media} />}
@@ -189,31 +246,84 @@ export function HeroSection({
           </motion.div>
         </AnimatePresence>
 
-        {false && (
-          <div className="hidden sm:block absolute md:right-2 lg:right-3 top-1/2 z-40 -translate-y-1/2">
-            {/* P0: hide selector on extra-small screens and nudge tablet placement to avoid overlap with hero copy. */}
-            <div className="rounded-2xl border border-rose-mauve/22 bg-[linear-gradient(160deg,#f4e5dc_0%,#f4e5dc_100%)]/80 p-2 shadow-luxury">
-              <div className="grid gap-1.5">
-                {heroConcepts.map((concept, index) => (
-                  <button
-                    key={concept.id}
-                    onClick={() => setActiveId(concept.id)}
-                    className={cn(
-                      'h-8 w-8 rounded-full text-[11px] font-semibold transition-all',
-                      activeId === concept.id
-                        ? 'bg-gradient-to-r from-rose-mauve to-[#d8b894] text-white shadow-sm'
-                        : 'border border-rose-mauve/20 bg-[linear-gradient(160deg,#f4e5dc_0%,#f4e5dc_100%)]/90 text-charcoal/75 hover:border-rose-mauve/45'
-                    )}
-                    aria-label={`Switch hero concept ${index + 1}`}
-                    title={`${index + 1}. ${concept.name}`}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
+        <div className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 sm:block lg:right-5">
+          <button
+            type="button"
+            onClick={() => setIsToolOpen((open) => !open)}
+            className="grid h-11 w-11 place-items-center rounded-full border border-[#cfae83]/32 bg-warm-ivory/78 text-charcoal shadow-editorial backdrop-blur-xl transition hover:-translate-x-0.5 hover:bg-warm-ivory"
+            aria-label="Open design testing tools"
+            aria-expanded={isToolOpen}
+          >
+            <SlidersHorizontal className="h-4 w-4" />
+          </button>
+          <AnimatePresence>
+            {isToolOpen && (
+              <motion.div
+                initial={{ opacity: 0, x: 18, scale: 0.96, filter: 'blur(8px)' }}
+                animate={{ opacity: 1, x: 0, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, x: 14, scale: 0.98, filter: 'blur(6px)' }}
+                transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                className="absolute right-14 top-1/2 w-64 -translate-y-1/2 rounded-xl border border-[#cfae83]/28 bg-warm-ivory/82 p-2.5 text-charcoal shadow-editorial backdrop-blur-xl"
+              >
+                <div className="space-y-2">
+                  <label className="block">
+                    <span className="flex items-center gap-2 text-[10px] text-charcoal/72">
+                      <span className="grid h-6 w-6 place-items-center rounded-full bg-white/30">C</span>
+                      <span>Background</span>
+                      <span className="ml-auto w-7 text-right">{surfaceTone}</span>
+                    </span>
+                    <input type="range" min="-72" max="72" value={surfaceTone} onChange={(event) => setSurfaceTone(Number(event.target.value))} className="mt-0.5 w-full accent-[#cfae83]" />
+                  </label>
+                  <label className="block">
+                    <span className="flex items-center gap-2 text-[10px] text-charcoal/72">
+                      <span className="grid h-6 w-6 place-items-center rounded-full bg-white/30">H</span>
+                      <span>Hero gold</span>
+                      <span className="ml-auto w-7 text-right">{heroTone}</span>
+                    </span>
+                    <input type="range" min="0" max="58" value={heroTone} onChange={(event) => setHeroTone(Number(event.target.value))} className="mt-0.5 w-full accent-[#cfae83]" />
+                  </label>
+                  <div>
+                    <span className="mb-1 flex items-center gap-2 text-[10px] text-charcoal/64"><Type className="h-3 w-3" /> Fonts</span>
+                    <div className="grid max-h-40 grid-cols-1 gap-1 overflow-y-auto pr-1">
+                      {HOMEPAGE_FONT_CHOICES.map((font) => (
+                        <button
+                          key={font.id}
+                          type="button"
+                          onClick={() => setActiveFontChoice(font.id)}
+                          className={cn(
+                            'flex min-h-7 items-center gap-2 rounded-full border px-2 text-left text-[10px] font-semibold transition',
+                            activeFontChoice === font.id ? 'border-[#b9935f]/80 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'border-charcoal/20 bg-white/40 text-charcoal/74 hover:bg-white/70'
+                          )}
+                          title={`${font.id}. ${font.name}`}
+                          style={{ fontFamily: font.fontFamily }}
+                        >
+                          <span className="grid h-4 w-4 flex-none place-items-center rounded-full bg-white/24 text-[8px]">{font.id}</span>
+                          <span className="truncate">{font.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    {[1, 2].map((style) => (
+                      <button
+                        key={style}
+                        type="button"
+                        onClick={() => setHeroStyle(style as 1 | 2)}
+                        className={cn('rounded-full border px-2 py-0.5 text-[10px] transition', heroStyle === style ? 'border-[#b9935f]/80 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'border-[#cfae83]/30 bg-warm-ivory/70 text-charcoal')}
+                      >
+                        Hero {style}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="grid grid-cols-2 gap-1">
+                    <button type="button" onClick={() => { setSurfaceTone(22); setHeroTone(12); setSiteMode('soft'); setActiveFontChoice(1); setHeroStyle(1) }} className="rounded-full border border-[#cfae83]/30 bg-warm-ivory/70 px-2 py-0.5 text-[10px] transition hover:bg-[#d5bc9b]/35">Reset</button>
+                    <button type="button" onClick={() => { setSurfaceTone(22); setHeroTone(12) }} className="rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-2 py-0.5 text-[10px] font-medium text-white transition hover:brightness-105">Clear</button>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
       </div>
     </section>
@@ -279,7 +389,21 @@ function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
   )
 }
 
-function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale; media: HeroMedia; showCategoryNav: boolean }) {
+function ImageEditorialHero({
+  locale,
+  media,
+  showCategoryNav,
+  heroTone,
+  selectedFont,
+  heroStyle,
+}: {
+  locale: Locale
+  media: HeroMedia
+  showCategoryNav: boolean
+  heroTone: number
+  selectedFont: HomepageFontChoice
+  heroStyle: 1 | 2
+}) {
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/assets/icons/face.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'شفاه' : locale === 'fr' ? 'Lèvres' : locale === 'de' ? 'Lippen' : locale === 'ko' ? '립' : locale === 'tr' ? 'Dudak' : 'Lips', image: '/assets/icons/lips.png', href: '/shop?category=lips-cheeks' },
@@ -291,19 +415,57 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
   const body = 'Curated Korean beauty, selected with care for your daily ritual.'
   const lightText = showCategoryNav
   const mobileImage = showCategoryNav ? media.primary : HOME_EDITORIAL_MOBILE_IMAGE
-  const [activeFontChoice, setActiveFontChoice] = useState(1)
-  const selectedFont = HOMEPAGE_FONT_CHOICES.find((font) => font.id === activeFontChoice) ?? HOMEPAGE_FONT_CHOICES[0]
   const headlineFontStyle = {
     fontFamily: selectedFont.fontFamily,
     '--homepage-hero-font-family': selectedFont.fontFamily,
   } as CSSProperties
+  const heroToneOpacity = Math.max(0, Math.min(58, heroTone)) / 100
+  const heroToneWashOpacity = Math.max(0, Math.min(44, heroTone - 4)) / 100
+  const { scrollYProgress } = useScroll()
+  const logoScale = useTransform(scrollYProgress, [0, 0.08], [1, 0.24])
+  const logoX = useTransform(scrollYProgress, [0, 0.08], ['0%', '-156%'])
+  const logoY = useTransform(scrollYProgress, [0, 0.08], ['0%', '-42%'])
+  const logoOpacity = useTransform(scrollYProgress, [0, 0.09], [0.84, 0])
 
   return (
     <section className="bg-transparent">
       <div className="relative h-screen min-h-[680px] overflow-hidden">
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 hidden md:block" imageClassName={cn('object-cover transform-gpu', showCategoryNav ? 'object-top scale-[1.08]' : 'object-center scale-[1.015]')} priority />
         <HeroImage src={mobileImage} alt="Editorial background mobile" className="absolute inset-0 block md:hidden" imageClassName={cn('transform-gpu', showCategoryNav ? 'object-cover object-top scale-[1.08]' : 'object-cover object-bottom')} priority />
-        <div className={cn('absolute inset-0', lightText ? 'bg-gradient-to-r from-charcoal/30 via-charcoal/10 to-transparent' : 'bg-gradient-to-r from-warm-ivory/28 via-warm-ivory/8 to-transparent')} />
+        <div className="absolute inset-0 bg-[#d9bb83] mix-blend-multiply" style={{ opacity: heroToneOpacity }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f1dfbd] via-transparent to-[#d7b372]" style={{ opacity: heroToneWashOpacity }} />
+        <div className={cn('absolute inset-0', lightText ? 'bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent' : 'bg-gradient-to-r from-warm-ivory/42 via-warm-ivory/14 to-transparent')} />
+        {!showCategoryNav && (
+          <div className="absolute inset-0 z-[2]" aria-label="Shop hero products">
+            {heroProductHotspots.map((hotspot) => (
+              <Link
+                key={hotspot.label}
+                href={localizeHref(hotspot.href, locale)}
+                aria-label={`Shop ${hotspot.label}`}
+                title={`Shop ${hotspot.label}`}
+                className={cn('absolute rounded-[2rem] transition hover:bg-white/5 focus-visible:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cfae83]/70', hotspot.className)}
+              />
+            ))}
+          </div>
+        )}
+        {heroStyle === 2 && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 18, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+            style={{ scale: logoScale, x: logoX, y: logoY, opacity: logoOpacity }}
+            className="pointer-events-none absolute right-[10vw] top-[12vh] hidden w-[min(25vw,330px)] origin-top-right lg:block"
+          >
+            <Image
+              src="/assets/brand/jisoo-logo.png"
+              alt=""
+              width={680}
+              height={340}
+              priority
+              className="h-auto w-full opacity-80 brightness-0 drop-shadow-[0_20px_34px_rgba(44,37,40,0.12)]"
+            />
+          </motion.div>
+        )}
         <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
@@ -317,34 +479,6 @@ function ImageEditorialHero({ locale, media, showCategoryNav }: { locale: Locale
           </h1>
           <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
           <div className="mt-7"><PrimaryCta locale={locale} /></div>
-          <div className="mt-5">
-            <p className={cn('mb-2 text-[11px] font-semibold uppercase tracking-[0.14em]', lightText ? 'text-white/80' : 'text-charcoal/70')}>Choose Font</p>
-            <div className="flex flex-wrap gap-2">
-              {HOMEPAGE_FONT_CHOICES.map((font) => (
-                <button
-                  key={font.id}
-                  type="button"
-                  onClick={() => setActiveFontChoice(font.id)}
-                  className={cn(
-                    'inline-flex h-8 w-8 items-center justify-center rounded-full border text-xs font-semibold transition-all',
-                    activeFontChoice === font.id
-                      ? 'border-[#b9935f]/80 bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-charcoal shadow-[0_10px_20px_rgba(159,126,86,0.28)]'
-                      : lightText
-                        ? 'border-white/45 bg-white/25 text-white hover:bg-white/35'
-                        : 'border-charcoal/25 bg-white/80 text-charcoal hover:border-charcoal/45'
-                  )}
-                  title={`${font.id}. ${font.name}`}
-                  aria-label={`Select homepage font ${font.id}: ${font.name}`}
-                >
-                  {font.id}
-                </button>
-              ))}
-            </div>
-            <div className={cn('mt-2 space-y-1 text-xs', lightText ? 'text-white/85' : 'text-charcoal/70')}>
-              <p>Current font: {selectedFont.name}</p>
-              <p>Current fontFamily: {selectedFont.fontFamily}</p>
-            </div>
-          </div>
         </div>
 
         {showCategoryNav && <div className="absolute inset-x-0 bottom-7 z-10 px-4 lg:px-14">

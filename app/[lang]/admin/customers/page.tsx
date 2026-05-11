@@ -1,1 +1,3 @@
-export { default } from '@/app/admin/customers/page'
+import RouteModule from '@/app/admin/customers/page'
+
+export default RouteModule

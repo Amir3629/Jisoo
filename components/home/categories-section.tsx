@@ -60,12 +60,11 @@ export function CategoriesSection() {
   }
 
   return (
-    <AtmosphereSection atmosphere="blush" className="pb-16 pt-4 lg:pb-20 lg:pt-5" data-snap-target="care-campaign">
+    <AtmosphereSection atmosphere="blush" className="pb-12 pt-24 sm:pt-28 lg:pb-16 lg:pt-32" data-snap-target="care-campaign">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
-        <div className="mb-8 rounded-[2rem] border border-[#cfae83]/22 bg-[color-mix(in_srgb,var(--card)_72%,transparent)] px-3 py-2 shadow-[0_14px_38px_rgba(44,37,40,0.08)] backdrop-blur-xl">
+        <div className="mb-5 rounded-[2rem] border border-[#cfae83]/22 bg-[color-mix(in_srgb,var(--card)_72%,transparent)] px-3 py-2 shadow-[0_14px_38px_rgba(44,37,40,0.08)] backdrop-blur-xl lg:mb-6">
           <TrustpilotRatingStrip />
         </div>
-
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
           <div className="overflow-hidden rounded-[2.2rem] border border-[#cfae83]/24 bg-[#4a4e51] text-white shadow-editorial">
             <div className="grid min-h-[560px] lg:grid-cols-2">
@@ -105,7 +104,7 @@ export function CategoriesSection() {
                 </div>
               ))}
             </div>
-            <Link href={localizeHref('/shop?concern=anti-aging', locale)} className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r from-plum via-rose-mauve to-[#d2ab82] px-6 py-3 font-medium text-charcoal shadow-[0_14px_30px_rgba(159,126,86,0.22)] transition hover:brightness-105">
+            <Link href={localizeHref('/shop?concern=anti-aging', locale)} className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white transition-all hover:brightness-105">
               View Care Journals
               <ArrowRight className="h-4 w-4" />
             </Link>

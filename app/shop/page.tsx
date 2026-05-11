@@ -80,7 +80,7 @@ export default function ShopPage() {
               className={cn(
                 'flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all',
                 isFilterOpen
-                  ? 'bg-plum text-warm-ivory'
+                  ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
                   : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
               )}
             >
@@ -105,7 +105,7 @@ export default function ShopPage() {
                   onClick={() => setGridView('grid')}
                   className={cn(
                     'p-2 rounded-full transition-colors',
-                    gridView === 'grid' ? 'bg-plum text-white' : 'text-charcoal hover:bg-blush-pink/20'
+                    gridView === 'grid' ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'text-charcoal hover:bg-blush-pink/20'
                   )}
                 >
                   <Grid3X3 className="w-4 h-4" />
@@ -114,7 +114,7 @@ export default function ShopPage() {
                   onClick={() => setGridView('large')}
                   className={cn(
                     'p-2 rounded-full transition-colors',
-                    gridView === 'large' ? 'bg-plum text-white' : 'text-charcoal hover:bg-blush-pink/20'
+                    gridView === 'large' ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'text-charcoal hover:bg-blush-pink/20'
                   )}
                 >
                   <LayoutGrid className="w-4 h-4" />
@@ -196,7 +196,7 @@ export default function ShopPage() {
                             className={cn(
                               'px-3 py-1.5 rounded-full text-sm transition-all',
                               selectedFilters.includes(type)
-                                ? 'bg-plum text-warm-ivory'
+                                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
                                 : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
                             )}
                           >
@@ -217,7 +217,7 @@ export default function ShopPage() {
                             className={cn(
                               'px-3 py-1.5 rounded-full text-sm transition-all',
                               selectedFilters.includes(concern)
-                                ? 'bg-plum text-warm-ivory'
+                                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
                                 : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
                             )}
                           >
@@ -238,7 +238,7 @@ export default function ShopPage() {
                             className={cn(
                               'px-3 py-1.5 rounded-full text-sm transition-all',
                               selectedFilters.includes(range)
-                                ? 'bg-plum text-warm-ivory'
+                                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
                                 : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
                             )}
                           >
@@ -258,7 +258,7 @@ export default function ShopPage() {
                           <button
                             key={filter}
                             onClick={() => toggleFilter(filter)}
-                            className="flex items-center gap-1 px-3 py-1 rounded-full bg-plum/10 text-plum text-sm"
+                            className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#d3af84]/18 text-charcoal text-sm"
                           >
                             {filter}
                             <X className="w-3 h-3" />
@@ -297,8 +297,8 @@ export default function ShopPage() {
             <button
               className={cn(
                 'px-8 py-4 rounded-full font-medium',
-                'border-2 border-plum text-plum',
-                'hover:bg-plum hover:text-warm-ivory transition-all duration-300'
+                'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white',
+                'hover:brightness-105 transition-all duration-300'
               )}
             >
               Load More Products

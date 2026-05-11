@@ -1,1 +1,3 @@
-export { default } from '@/app/ai-consultant/page'
+import RouteModule from '@/app/ai-consultant/page'
+
+export default RouteModule

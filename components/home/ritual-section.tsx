@@ -9,6 +9,7 @@ import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
+import { jisooProductImages } from '@/lib/products'
 
 const ritualSteps = [
   {
@@ -17,7 +18,7 @@ const ritualSteps = [
     description:
       'Start with a verified cleanser once supplier documentation is approved.',
     color: 'from-blush-pink/30',
-    image: resolveImageSrc('/assets/editorial/skincare-ingredients.jpg'),
+    image: resolveImageSrc(jisooProductImages[0]),
   },
   {
     number: '02',
@@ -25,7 +26,7 @@ const ritualSteps = [
     description:
       'Use a toner or prep step only after final formula, usage, and INCI review.',
     color: 'from-rose-mauve/20',
-    image: resolveImageSrc('/assets/products/glass-skin-essence.jpg'),
+    image: resolveImageSrc(jisooProductImages[1]),
   },
   {
     number: '03',
@@ -33,7 +34,7 @@ const ritualSteps = [
     description:
       'Treatment steps will be organized by confirmed concerns and approved claims.',
     color: 'from-champagne-gold/20',
-    image: resolveImageSrc('/assets/products/luminous-glow-serum.jpg'),
+    image: resolveImageSrc(jisooProductImages[2]),
   },
   {
     number: '04',
@@ -41,7 +42,7 @@ const ritualSteps = [
     description:
       'Creams and oils will be described with neutral copy after supplier verification.',
     color: 'from-plum/10',
-    image: resolveImageSrc('/assets/editorial/care-expert.jpg'),
+    image: resolveImageSrc(jisooProductImages[3]),
   },
   {
     number: '05',
@@ -49,7 +50,7 @@ const ritualSteps = [
     description:
       'Sun care guidance will be published only after compliant regional review.',
     color: 'from-nude-beige/40',
-    image: resolveImageSrc('/assets/editorial/tone-up-sun-cream.png'),
+    image: resolveImageSrc(jisooProductImages[4]),
   },
 ]
 
@@ -143,7 +144,7 @@ export function RitualSection() {
               href={localizeHref('/shop', locale)}
               className={cn(
                 'inline-flex items-center gap-2 rounded-full px-8 py-4',
-                'bg-gradient-to-r from-rose-mauve to-champagne-gold font-medium text-white transition-all duration-300 hover:brightness-105',
+                'bg-gradient-to-r from-rose-mauve to-[#d3af84] font-medium text-white transition-all duration-300 hover:brightness-105',
                 'shadow-lg shadow-rose-mauve/20'
               )}
             >

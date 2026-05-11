@@ -1,5 +1,6 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { HeroSection } from '@/components/home/hero-section'
@@ -16,30 +17,58 @@ import { InstagramShowcase } from '@/components/home/instagram-showcase'
 import { FloatingAssistant } from '@/components/ai/floating-assistant'
 import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
 
+function ScrollReveal({ children, direction = 'up' }: { children: React.ReactNode; direction?: 'up' | 'left' | 'right' }) {
+  const offset = direction === 'left' ? { x: -38, y: 0 } : direction === 'right' ? { x: 38, y: 0 } : { x: 0, y: 38 }
+
+  return (
+    <motion.div
+      className="snap-section scroll-reveal"
+      initial={{ opacity: 0, ...offset, filter: 'blur(10px)' }}
+      whileInView={{ opacity: 1, x: 0, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.18, margin: '0px 0px -12% 0px' }}
+      transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.div>
+  )
+}
+
+function BackgroundBreathSlide() {
+  return <div className="snap-section min-h-[50vh]" aria-hidden="true" />
+}
+
 export function HomePageShell() {
   return (
     <LuxuryIntroSplash>
       <main className="home-continuous-surface snap-page-flow min-h-screen relative">
         <Header transparentOnTop />
         <HeroSection />
-        <CategoriesSection />
-        <FeaturedProducts />
+        <ScrollReveal><CategoriesSection /></ScrollReveal>
+        <ScrollReveal direction="right"><FeaturedProducts /></ScrollReveal>
         <section className="relative isolate">
           <div className="pointer-events-none sticky top-0 h-screen overflow-hidden">
-            <div className="absolute inset-0 bg-[url('/assets/hero/dynamic-surface.png')] bg-cover bg-center bg-no-repeat" />
+            <div
+              className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
+              style={{ backgroundImage: "url('/assets/hero/dynamic-surface.png?v=20260509-1')" }}
+            />
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
+              style={{ backgroundImage: "url('/assets/hero/dynamic-surface%20mobile.png?v=20260509-1')" }}
+            />
             <div className="absolute inset-0 bg-warm-ivory/80" />
           </div>
           <div className="relative z-10 -mt-[100vh]">
-            <RitualSection />
-            <AiAssistantTeaser />
-            <ConcernsSection />
-            <CareCtaSection />
-            <TestimonialsSection />
+            <ScrollReveal><RitualSection /></ScrollReveal>
+            <ScrollReveal direction="left"><AiAssistantTeaser /></ScrollReveal>
+            <ScrollReveal direction="right"><ConcernsSection /></ScrollReveal>
+            <ScrollReveal><CareCtaSection /></ScrollReveal>
+            <ScrollReveal direction="left"><TestimonialsSection /></ScrollReveal>
+            <BackgroundBreathSlide />
           </div>
         </section>
-        <PartnersSection />
-        <SocialSection />
-        <InstagramShowcase />
+        <ScrollReveal><PartnersSection /></ScrollReveal>
+        <ScrollReveal direction="right"><SocialSection /></ScrollReveal>
+        <ScrollReveal><InstagramShowcase /></ScrollReveal>
         <Footer />
         <FloatingAssistant />
       </main>

@@ -100,7 +100,7 @@ export function ProductCard({ product, index = 0 }: ProductCardProps) {
             disabled={!access.isBuyable}
             className={cn(
               'rounded-full px-4',
-              'bg-gradient-to-r from-rose-mauve to-[#d2ab82] text-charcoal hover:brightness-105'
+              'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-charcoal/85 hover:brightness-105'
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />

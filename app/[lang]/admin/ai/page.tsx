@@ -1,1 +1,3 @@
-export { default } from '@/app/admin/ai-copilot/page'
+import RouteModule from '@/app/admin/ai-copilot/page'
+
+export default RouteModule

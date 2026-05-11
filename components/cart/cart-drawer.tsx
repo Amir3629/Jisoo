@@ -70,8 +70,8 @@ export function CartDrawer() {
                     onClick={() => setIsCartOpen(false)}
                     className={cn(
                       'px-6 py-3 rounded-full',
-                      'bg-plum text-warm-ivory font-medium',
-                      'hover:bg-plum/90 transition-colors'
+                      'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white font-medium',
+                      'hover:brightness-105 transition-colors'
                     )}
                   >
                     {dictionary.common.shopNow}
@@ -195,8 +195,8 @@ export function CartDrawer() {
                     onClick={() => setIsCartOpen(false)}
                     className={cn(
                       'block w-full py-4 rounded-full text-center font-medium',
-                      'bg-plum text-warm-ivory',
-                      'hover:bg-plum/90 transition-colors'
+                      'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white',
+                      'hover:brightness-105 transition-colors'
                     )}
                   >
                     {dictionary.cart.proceedToCheckout}

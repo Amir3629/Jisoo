@@ -1,1 +1,3 @@
-export { default } from '@/app/legal/accessibility/page'
+import RouteModule from '@/app/legal/accessibility/page'
+
+export default RouteModule

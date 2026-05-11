@@ -1,1 +1,3 @@
-export { default } from '@/app/account/addresses/page'
+import RouteModule from '@/app/account/addresses/page'
+
+export default RouteModule

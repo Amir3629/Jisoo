@@ -1,1 +1,3 @@
-export { default } from '@/app/gift-cards/page'
+import RouteModule from '@/app/gift-cards/page'
+
+export default RouteModule

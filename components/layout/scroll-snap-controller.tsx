@@ -33,19 +33,25 @@ function getCurrentSectionIndex(sections: HTMLElement[]) {
   }, 0)
 }
 
-function animateScrollTo(target: number, duration = 980) {
+function animateScrollTo(target: number, onDone: () => void, duration = 1180) {
   const start = window.scrollY
   const distance = target - start
   const startedAt = window.performance.now()
-  const ease = (time: number) => 1 - Math.pow(1 - time, 3)
+  let frameId = 0
+  const ease = (time: number) => 1 - Math.pow(1 - time, 4)
 
   const frame = (now: number) => {
     const progress = Math.min(1, (now - startedAt) / duration)
-    window.scrollTo(0, start + distance * ease(progress))
-    if (progress < 1) window.requestAnimationFrame(frame)
+    window.scrollTo({ top: start + distance * ease(progress), behavior: 'auto' })
+    if (progress < 1) {
+      frameId = window.requestAnimationFrame(frame)
+      return
+    }
+    onDone()
   }
 
-  window.requestAnimationFrame(frame)
+  frameId = window.requestAnimationFrame(frame)
+  return () => window.cancelAnimationFrame(frameId)
 }
 
 export function ScrollSnapController() {
@@ -73,19 +79,30 @@ export function ScrollSnapController() {
     updateHeaderTheme()
 
     let isAnimating = false
+    let cancelAnimation: (() => void) | undefined
+    let releaseTimer = 0
 
     const snapTo = (target: number) => {
+      cancelAnimation?.()
+      window.clearTimeout(releaseTimer)
       isAnimating = true
-      animateScrollTo(target)
-      window.setTimeout(() => {
+      cancelAnimation = animateScrollTo(target, () => {
         isAnimating = false
-      }, 1050)
+        cancelAnimation = undefined
+      })
+      releaseTimer = window.setTimeout(() => {
+        isAnimating = false
+        cancelAnimation = undefined
+      }, 1300)
     }
 
     const onWheel = (event: WheelEvent) => {
-      if (!shouldUseGentleSnap || event.defaultPrevented || Math.abs(event.deltaY) < 8) return
+      if (!shouldUseGentleSnap || event.defaultPrevented || event.ctrlKey || Math.abs(event.deltaY) < 12) return
       if (isAnimating) {
-        event.preventDefault()
+        cancelAnimation?.()
+        window.clearTimeout(releaseTimer)
+        isAnimating = false
+        cancelAnimation = undefined
         return
       }
 
@@ -96,19 +113,20 @@ export function ScrollSnapController() {
       const currentIndex = getCurrentSectionIndex(sections)
       const current = sections[currentIndex]
       const rect = current.getBoundingClientRect()
-      const atSectionTop = rect.top >= -24 && rect.top <= viewportHeight * 0.22
-      const atSectionBottom = rect.bottom <= viewportHeight * 1.08
+      const atSectionTop = rect.top >= -34 && rect.top <= viewportHeight * 0.18
+      const atSectionBottom = rect.bottom <= viewportHeight * 1.04
 
       if (event.deltaY < 0 && currentIndex > 0 && atSectionTop) {
+        const previous = sections[currentIndex - 1]
         event.preventDefault()
-        snapTo(0)
+        snapTo(Math.max(0, window.scrollY + previous.getBoundingClientRect().top - getScrollMarginTop(previous)))
         return
       }
 
       if (event.deltaY > 0 && currentIndex >= 0 && currentIndex < sections.length - 1 && atSectionBottom) {
         const next = sections[currentIndex + 1]
         event.preventDefault()
-        snapTo(window.scrollY + next.getBoundingClientRect().top - getScrollMarginTop(next))
+        snapTo(Math.max(0, window.scrollY + next.getBoundingClientRect().top - getScrollMarginTop(next)))
       }
     }
 
@@ -117,6 +135,8 @@ export function ScrollSnapController() {
     return () => {
       document.documentElement.classList.remove('site-scroll-snap')
       document.documentElement.classList.remove('story-gold-header')
+      cancelAnimation?.()
+      window.clearTimeout(releaseTimer)
       window.removeEventListener('scroll', updateHeaderTheme)
       window.removeEventListener('wheel', onWheel)
     }

@@ -20,6 +20,17 @@ const pendingAvailability: Partial<Record<Region, ProductAvailability>> = {
 const pendingLongDescription =
   'Draft product record reserved for a JISOO-packaged item. Public copy, INCI list, claims, usage, and regional compliance must be completed after supplier documentation and internal review.'
 
+export const jisooProductImages = [
+  '/Product images/Jisoo 6.png',
+  '/Product images/jisoo 99.png',
+  '/Product images/jisoo4.png',
+  '/Product images/jisoo7.png',
+  '/Product images/jisoo8.png',
+  '/Product images/jisoo9.png',
+  '/Product images/jisoo99.png',
+  '/Product images/jisooo77.png',
+] as const
+
 function createProductDraft(input: ProductDraftInput): Product {
   return {
     brand: 'JISOO',
@@ -75,8 +86,8 @@ export const products: Product[] = [
     size: '12 ml / 0.40 fl. oz.',
     price: 19.57,
     images: [
-      { id: 'radiance-boost-vitamin-c-23-serum-1', src: '/assets/products/luminous-glow-serum.jpg', alt: 'JISOO Radiance Boost Vitamin C 23 Serum', isMain: true },
-      { id: 'radiance-boost-vitamin-c-23-serum-2', src: '/assets/products/glass-skin-essence.jpg', alt: 'JISOO glass-skin essence product detail' },
+      { id: 'radiance-boost-vitamin-c-23-serum-1', src: jisooProductImages[0], alt: 'JISOO Radiance Boost Vitamin C 23 Serum', isMain: true },
+      { id: 'radiance-boost-vitamin-c-23-serum-2', src: jisooProductImages[1], alt: 'JISOO Radiance Boost Vitamin C 23 Serum product detail' },
     ],
     supplierNotes:
       'Reference file lists a high-content vitamin C serum with glow, even-looking tone, lightweight texture, panthenol, squalane, adenosine, niacinamide, allantoin, tocopherol, and sodium ascorbyl phosphate. Any numerical clinical percentages must be verified before publishing.',
@@ -117,8 +128,8 @@ export const products: Product[] = [
     size: '145 g / 5.11 oz.',
     price: 13.98,
     images: [
-      { id: 'pore-deep-clean-bubble-serum-1', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg', alt: 'JISOO Pore Deep Clean Bubble Serum product overview', isMain: true },
-      { id: 'pore-deep-clean-bubble-serum-2', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg', alt: 'JISOO Pore Deep Clean Bubble Serum care details' },
+      { id: 'pore-deep-clean-bubble-serum-1', src: jisooProductImages[2], alt: 'JISOO Pore Deep Clean Bubble Serum product overview', isMain: true },
+      { id: 'pore-deep-clean-bubble-serum-2', src: jisooProductImages[3], alt: 'JISOO Pore Deep Clean Bubble Serum care details' },
     ],
     supplierNotes:
       'Reference file mentions pore deep clean bubble, excess sebum, soft rich foam, acne-prone routines, salicylic acid, PHYTON5, and pH guidance. Use only after full INCI and claim checks.',
@@ -157,8 +168,8 @@ export const products: Product[] = [
     finish: 'Dewy, refreshed finish',
     size: '140 ml / 4.73 fl. oz.',
     images: [
-      { id: 'azulene-toner-pad-1', src: '/assets/products/glass-skin-essence.jpg', alt: 'JISOO Azulene Toner Pad product visual', isMain: true },
-      { id: 'azulene-toner-pad-2', src: '/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg', alt: 'JISOO Azulene Toner Pad care detail visual' },
+      { id: 'azulene-toner-pad-1', src: jisooProductImages[4], alt: 'JISOO Azulene Toner Pad product visual', isMain: true },
+      { id: 'azulene-toner-pad-2', src: jisooProductImages[5], alt: 'JISOO Azulene Toner Pad care detail visual' },
     ],
     supplierNotes:
       'Reference file lists skin-wrapping gel pad, dewy glow, azulene toner, 140 ml, hydration, antioxidant care, relief/defense, cooling/refining, vegan collagen, lactobacillus, PHA, and Calm-MDP. Verify final INCI.',
@@ -195,9 +206,9 @@ export const products: Product[] = [
     finish: 'Moisturised, transparent-looking finish',
     size: '50 ml / 1.69 fl. oz.',
     images: [
-      { id: 'daily-uv-shield-sun-cream-1', src: '/assets/products/jisoo-daily-uv-shield-sun-cream-1.jpg', alt: 'JISOO Daily UV Shield Sun Cream product overview', isMain: true },
-      { id: 'daily-uv-shield-sun-cream-2', src: '/assets/products/jisoo-daily-uv-shield-sun-cream-2.jpg', alt: 'JISOO Daily UV Shield Sun Cream review and UV care details' },
-      { id: 'daily-uv-shield-sun-cream-3', src: '/assets/products/jisoo-daily-uv-shield-sun-cream-3.jpg', alt: 'JISOO Daily UV Shield Sun Cream ingredients and texture details' },
+      { id: 'daily-uv-shield-sun-cream-1', src: jisooProductImages[6], alt: 'JISOO Daily UV Shield Sun Cream product overview', isMain: true },
+      { id: 'daily-uv-shield-sun-cream-2', src: jisooProductImages[7], alt: 'JISOO Daily UV Shield Sun Cream review and UV care details' },
+      { id: 'daily-uv-shield-sun-cream-3', src: jisooProductImages[0], alt: 'JISOO Daily UV Shield Sun Cream ingredients and texture details' },
     ],
     supplierNotes:
       'Reference images list SPF50+ PA++++, UVA/UVB care, chamomile flower water, centella extract, blue agave extract, tocopherol, reduced white cast, calming and moisturising positioning. SPF/regulatory claims require regional review before publishing.',
@@ -234,8 +245,8 @@ export const products: Product[] = [
     finish: 'Fresh, clean finish',
     size: 'To be confirmed',
     images: [
-      { id: 'pore-clear-vita-c-cleansing-foam-1', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-1.jpg', alt: 'JISOO Pore Clear Vita-C Cleansing Foam overview', isMain: true },
-      { id: 'pore-clear-vita-c-cleansing-foam-2', src: '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg', alt: 'JISOO Pore Clear Vita-C Cleansing Foam detail information' },
+      { id: 'pore-clear-vita-c-cleansing-foam-1', src: jisooProductImages[1], alt: 'JISOO Pore Clear Vita-C Cleansing Foam overview', isMain: true },
+      { id: 'pore-clear-vita-c-cleansing-foam-2', src: jisooProductImages[2], alt: 'JISOO Pore Clear Vita-C Cleansing Foam detail information' },
     ],
     supplierNotes:
       'Reference images describe pore-clear vita-c cleansing foam, low-irritation cleansing, micro-bubbles, pore cleansing, sebum and impurity care, and vita-c positioning. Full INCI pending.',
