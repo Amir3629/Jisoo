@@ -207,13 +207,11 @@ export function ScrollSnapController() {
     let unlockTimer = 0
     let wheelGestureTimer = 0
     let wheelDelta = 0
-    let allowLongSectionWheelGesture = false
     let previousOverscrollBehavior = ''
     let lastScrollY = window.scrollY
     let scrollDirection: SnapDirection = 1
     let scrollSettleTimer = 0
     let touchStartY: number | null = null
-    let touchMovedNaturally = false
 
     const releaseInputLock = () => {
       unlockTimer = window.setTimeout(() => {
@@ -248,7 +246,6 @@ export function ScrollSnapController() {
 
     const resetWheelGesture = () => {
       wheelDelta = 0
-      allowLongSectionWheelGesture = false
     }
 
     const maybeSnapFreeScrollBoundary = () => {
@@ -306,8 +303,7 @@ export function ScrollSnapController() {
         return
       }
 
-      if (target.blockedByLongSection || allowLongSectionWheelGesture) {
-        allowLongSectionWheelGesture = true
+      if (target.blockedByLongSection) {
         logSnap('natural long-section scroll', target)
         return
       }
@@ -324,7 +320,6 @@ export function ScrollSnapController() {
 
     const onTouchStart = (event: TouchEvent) => {
       touchStartY = event.touches[0]?.clientY ?? null
-      touchMovedNaturally = false
     }
 
     const onTouchMove = (event: TouchEvent) => {
@@ -349,8 +344,7 @@ export function ScrollSnapController() {
       const target = getSnapTargetForDirection(sections, direction)
       if (!target) return
 
-      if (target.blockedByLongSection || touchMovedNaturally) {
-        touchMovedNaturally = true
+      if (target.blockedByLongSection) {
         logSnap('natural long-section touch scroll', target)
         return
       }
@@ -363,7 +357,6 @@ export function ScrollSnapController() {
 
     const onTouchEnd = () => {
       touchStartY = null
-      touchMovedNaturally = false
     }
 
     window.addEventListener('wheel', onWheel, { passive: false })
