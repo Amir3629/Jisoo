@@ -133,9 +133,6 @@ export function RitualSection() {
                         sizes="(max-width: 1024px) 100vw, 384px"
                         hint={`${copy.step} ${step.number}`}
                       />
-
-                      <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />
-                      <div className="absolute -left-5 -top-5 h-24 w-24 rounded-full bg-white/20" />
                     </div>
                   </div>
 

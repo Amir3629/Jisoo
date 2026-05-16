@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 const snapExcludedSegments = ['/account', '/admin', '/checkout', '/cart', '/about', '/our-story']
 const snapEnabledPaths = ['/', '/tips', '/shop/new-arrivals', '/ai-consultant']
 const DEBUG_SNAP = false
-const SNAP_ANIMATION_DURATION = 860
+const SNAP_ANIMATION_DURATION = 1180
 const SNAP_DELTA_THRESHOLD = 14
 const LONG_SECTION_TOLERANCE = 12
 const WHEEL_GESTURE_RESET_MS = 180

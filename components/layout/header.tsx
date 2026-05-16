@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, type ReactNode } from 'react'
+import { useState, useEffect, useRef, type MouseEvent as ReactMouseEvent, type ReactNode } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
@@ -182,11 +182,26 @@ export function Header({
   const topTextClass = isLightHeader ? 'text-white hover:text-white/75' : 'text-charcoal hover:text-[#8f6f46]'
   const rightTextClass = isLightHeader && splitLightOnTop ? 'text-charcoal hover:text-[#8f6f46]' : topTextClass
   const topIconClass = isLightHeader && !splitLightOnTop ? 'text-white/90 transition hover:text-white hover:opacity-80' : 'text-charcoal/80 transition hover:text-charcoal hover:opacity-80'
-  const glassDropdownClass = isHeroOverlay
+  const glassDropdownClass = isHeroOverlay && !isMegaOpen
     ? 'border-white/22 bg-transparent shadow-[0_18px_44px_rgba(44,37,40,0.14)] backdrop-blur-2xl'
     : 'border-[#cfae83]/30 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
 
-  useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); return () => window.removeEventListener('scroll', on) }, [])
+  const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    setIsMegaOpen(false)
+
+    if (typeof window === 'undefined') return
+
+    window.sessionStorage.setItem('jisoo-logo-target', 'home-hero')
+
+    if (!isHomePath) return
+
+    event.preventDefault()
+    window.sessionStorage.removeItem('jisoo-logo-target')
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+    window.dispatchEvent(new CustomEvent('jisoo-logo-home'))
+  }
+
+  useEffect(() => { const on = () => setIsScrolled(window.scrollY > 12); window.addEventListener('scroll', on); on(); return () => window.removeEventListener('scroll', on) }, [])
   useEffect(() => {
     const root = document.documentElement
     root.dataset.siteMode = siteMode
@@ -235,7 +250,7 @@ export function Header({
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <div className="relative flex h-16 items-center justify-between lg:h-[4.6rem]">
           <button onClick={() => setIsMobileMenuOpen(true)} className={cn('lg:hidden p-2 -ml-2', topIconClass)} aria-label={dictionary.header.actions.openMenu}><Menu className="w-6 h-6" /></button>
-          <Link href={localizeHref('/', locale)} className="absolute left-1/2 z-10 -translate-x-1/2 flex-shrink-0 lg:relative lg:left-auto lg:translate-x-0"><Image src={logoSrc} alt="JISOO" width={280} height={140} priority className={cn('h-12 w-auto transition-[filter] lg:h-[3.85rem]', isLightHeader && 'brightness-0 invert', logoClassName)} /></Link>
+          <Link href={localizeHref('/', locale)} onClick={handleLogoClick} scroll className="absolute left-1/2 z-10 -translate-x-1/2 flex-shrink-0 lg:relative lg:left-auto lg:translate-x-0"><Image src={logoSrc} alt="JISOO" width={280} height={140} priority className={cn('h-12 w-auto transition-[filter] lg:h-[3.85rem]', isLightHeader && 'brightness-0 invert', logoClassName)} /></Link>
           <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-5 xl:gap-7" aria-label="Primary navigation">
             {navLinks.map((link, index) => <Link key={link.href} href={localizeHref(link.href, locale)} className={cn('text-sm tracking-[0.1em] transition-colors', splitLightOnTop && index >= 4 ? rightTextClass : topTextClass)}>{link.label}</Link>)}
             <div className="relative" onMouseEnter={openMega}><button onClick={() => setIsMegaOpen((p) => !p)} aria-expanded={isMegaOpen} className={cn('inline-flex items-center gap-1 text-sm tracking-[0.1em] transition-colors', rightTextClass)}>{discoverLabel} <ChevronDown className="h-4 w-4" /></button></div>

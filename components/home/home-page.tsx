@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
@@ -39,6 +40,20 @@ function BackgroundBreathSlide() {
 }
 
 export function HomePageShell() {
+  useEffect(() => {
+    const scrollToFirstHero = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    if (window.sessionStorage.getItem('jisoo-logo-target') === 'home-hero') {
+      window.sessionStorage.removeItem('jisoo-logo-target')
+      window.requestAnimationFrame(scrollToFirstHero)
+    }
+
+    window.addEventListener('jisoo-logo-home', scrollToFirstHero)
+    return () => window.removeEventListener('jisoo-logo-home', scrollToFirstHero)
+  }, [])
+
   return (
     <LuxuryIntroSplash>
       <main className="home-continuous-surface snap-page-flow min-h-screen relative">
