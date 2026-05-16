@@ -16,7 +16,7 @@ const ritualSteps = [
     description:
       'Start with a verified cleanser once supplier documentation is approved.',
     color: 'from-blush-pink/30',
-    image: '/assets/ritual/ritual-oil-drop.svg',
+    image: '/assets/ritual/01.png',
   },
   {
     number: '02',
@@ -24,7 +24,7 @@ const ritualSteps = [
     description:
       'Use a toner or prep step only after final formula, usage, and INCI review.',
     color: 'from-rose-mauve/20',
-    image: '/assets/ritual/ritual-rice-water.svg',
+    image: '/assets/ritual/02.png',
   },
   {
     number: '03',
@@ -32,7 +32,7 @@ const ritualSteps = [
     description:
       'Treatment steps will be organized by confirmed concerns and approved claims.',
     color: 'from-champagne-gold/20',
-    image: '/assets/ritual/ritual-silk-folds.svg',
+    image: '/assets/ritual/03.png',
   },
   {
     number: '04',
@@ -40,7 +40,7 @@ const ritualSteps = [
     description:
       'Creams and oils will be described with neutral copy after supplier verification.',
     color: 'from-plum/10',
-    image: '/assets/ritual/ritual-cream-pearl.svg',
+    image: '/assets/ritual/04.png',
   },
   {
     number: '05',
@@ -48,7 +48,7 @@ const ritualSteps = [
     description:
       'Sun care guidance will be published only after compliant regional review.',
     color: 'from-nude-beige/40',
-    image: '/assets/ritual/ritual-botanical-shadow.svg',
+    image: '/assets/ritual/05.png',
   },
   {
     number: '06',
@@ -56,7 +56,7 @@ const ritualSteps = [
     description:
       'Finish with a composed ritual moment: calm texture, soft light, and everyday confidence.',
     color: 'from-rose-mauve/15',
-    image: '/assets/ritual/ritual-gold-mist.svg',
+    image: '/assets/ritual/06.png',
   },
 ]
 

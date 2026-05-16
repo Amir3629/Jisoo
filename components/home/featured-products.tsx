@@ -153,8 +153,8 @@ export function FeaturedProducts() {
             )}
           </>
         ) : (
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-[var(--background)] via-[var(--background)]/72 to-transparent backdrop-blur-[1px]" />
+          <div className="relative overflow-hidden">
+            <div className="pointer-events-none absolute inset-y-0 -right-8 z-10 w-16 bg-gradient-to-l from-[var(--background)] via-[var(--background)]/45 to-transparent backdrop-blur-[0.5px]" />
             <div className="space-y-5 lg:space-y-8">
               {swipeRows.map((row, rowIndex) => (
                 <div key={rowIndex} className="overflow-x-auto pb-2 [scrollbar-width:thin]" aria-label={`Product row ${rowIndex + 1}`}>
