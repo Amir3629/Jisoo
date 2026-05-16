@@ -464,19 +464,31 @@ function ImageEditorialHero({
             />
           </motion.div>
         )}
-        <div className="absolute left-6 top-[7.2rem] max-w-2xl sm:left-8 lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
+        <div className="absolute left-6 top-[9.35rem] max-w-2xl sm:left-8 md:top-[7.2rem] lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
-            key={selectedFont.id}
+            key={`desktop-${selectedFont.id}`}
             data-hero-headline="homepage-image-editorial"
             data-selected-font={selectedFont.name}
-            className={cn('mt-3 text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08]', lightText ? 'text-white' : 'text-charcoal')}
+            className={cn('mt-3 hidden text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08] md:block', lightText ? 'text-white' : 'text-charcoal')}
           >
             {heading}
           </h1>
-          <p className={cn('mt-4 max-w-xl text-base sm:text-lg', lightText ? 'text-white/84' : 'text-charcoal/72')}>{body}</p>
-          <div className="mt-7"><PrimaryCta locale={locale} /></div>
+          <h1
+            key={`mobile-${selectedFont.id}`}
+            data-hero-headline="homepage-image-editorial-mobile"
+            data-selected-font={selectedFont.name}
+            className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', lightText ? 'text-white' : 'text-charcoal')}
+          >
+            <span className="block">Beauty, Carefully</span>
+            <span className="block text-[2.7rem] leading-[0.96]">Chosen</span>
+          </h1>
+          <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', lightText ? 'text-white/84' : 'text-charcoal/72')}>
+            <span className="md:hidden">Curated Korean beauty, selected with<br />care for your daily ritual.</span>
+            <span className="hidden md:inline">{body}</span>
+          </p>
+          <div className="mt-10 md:mt-7"><PrimaryCta locale={locale} /></div>
         </div>
 
         {showCategoryNav && <div className="absolute inset-x-0 bottom-7 z-10 px-4 lg:px-14">
