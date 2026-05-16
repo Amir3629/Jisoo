@@ -104,6 +104,7 @@ export function Header({
   logoSrc = '/assets/brand/jisoo-logo.png',
   logoClassName,
   showBackButton = false,
+  forceDark = false,
 }: {
   transparentOnTop?: boolean
   lightOnTop?: boolean
@@ -111,6 +112,7 @@ export function Header({
   logoSrc?: string
   logoClassName?: string
   showBackButton?: boolean
+  forceDark?: boolean
 } = {}) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -180,7 +182,7 @@ export function Header({
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
   const hasHeaderFrame = isScrolled || !transparentOnTop || isMegaOpen
-  const isLightHeader = !hasHeaderFrame && lightOnTop
+  const isLightHeader = !forceDark && !hasHeaderFrame && lightOnTop
   const isHeroOverlay = transparentOnTop && !isScrolled
   const topTextClass = isLightHeader ? 'text-white hover:text-white/75' : 'text-charcoal hover:text-[#8f6f46]'
   const rightTextClass = isLightHeader && splitLightOnTop ? 'text-charcoal hover:text-[#8f6f46]' : topTextClass
@@ -229,7 +231,7 @@ export function Header({
     <motion.div className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#9e7b8a] via-[#d6a8ba] to-[#6f4f5d]" style={{ scaleX: progress }} />
     <motion.header onMouseEnter={keepMega} onMouseLeave={closeMega} initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300', hasHeaderFrame ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-transparent shadow-none backdrop-blur-0')}>
       <div className={cn('hidden border-b transition-[height,background-color,border-color] duration-300 lg:block', hasHeaderFrame ? 'h-8 border-rose-mauve/12 bg-warm-ivory' : 'h-0 overflow-hidden border-transparent bg-transparent')}>
-        <div className={cn('mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] transition-colors', !hasHeaderFrame && lightOnTop ? 'text-white/88' : 'text-charcoal/85')}>
+        <div className={cn('mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] transition-colors', !forceDark && !hasHeaderFrame && lightOnTop ? 'text-white/88' : 'text-charcoal/85')}>
           <AnimatePresence mode="wait" initial={false}>
             <AnimatedTopText key={topBarIndex} item={topBarMessages[topBarIndex]} />
           </AnimatePresence>

@@ -469,7 +469,7 @@ function ImageEditorialHero({
             />
           </motion.div>
         )}
-        <div className="absolute left-6 top-[9.35rem] max-w-2xl sm:left-8 md:top-[7.2rem] lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
+        <div className="absolute left-6 top-[9.35rem] z-20 max-w-2xl sm:left-8 md:top-[7.2rem] lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>{kicker}</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1

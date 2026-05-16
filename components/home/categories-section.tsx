@@ -13,7 +13,6 @@ function TrustpilotRatingStrip() {
     excellent: locale === 'ar' ? 'ممتاز' : locale === 'fr' ? 'Excellent' : locale === 'de' ? 'Ausgezeichnet' : locale === 'ko' ? '훌륭함' : locale === 'tr' ? 'Mükemmel' : 'Excellent',
     reviewsOn: locale === 'ar' ? 'تقييم على' : locale === 'fr' ? 'avis sur' : locale === 'de' ? 'Bewertungen auf' : locale === 'ko' ? '개의 리뷰' : locale === 'tr' ? 'yorum' : 'reviews on',
   }
-
   return (
     <a
       href="https://www.trustpilot.com"
@@ -67,6 +66,8 @@ export function CategoriesSection() {
     description: locale === 'ar' ? 'بدلاً من عرض طويل، نعرض العناية من خلال الدليل: يوم البداية، لحظة التحسن، والروتين المناسب.' : locale === 'fr' ? 'Au lieu d’un simple rayon, la sélection est guidée par la preuve: départ, progression, routine adaptée.' : locale === 'de' ? 'Statt nur Regalen zeigen wir Pflege über Belege: Ausgangspunkt, Fortschritt und passende Routine.' : locale === 'ko' ? '단순한 진열이 아니라 시작점, 변화, 맞춤 루틴으로 케어를 보여줍니다.' : locale === 'tr' ? 'Basit bir raf yerine bakımı kanıtla anlatıyoruz: başlangıç, ilerleme ve doğru rutin.' : 'A more reassuring way to shop care: see the starting point, understand the progress, and choose the routine with confidence.',
     cta: locale === 'ar' ? 'استكشاف العناية' : locale === 'fr' ? 'Explorer les soins' : locale === 'de' ? 'Pflege entdecken' : locale === 'ko' ? '케어 보기' : locale === 'tr' ? 'Bakımı keşfet' : 'Explore Care',
   }
+  const journalsCta = copy.journalsCta
+
   return (
     <AtmosphereSection atmosphere="blush" className="pb-12 pt-24 sm:pt-28 lg:pb-16 lg:pt-32" data-snap-target="care-campaign">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
@@ -113,7 +114,7 @@ export function CategoriesSection() {
               ))}
             </div>
             <Link href={localizeHref('/shop?concern=anti-aging', locale)} className="mt-8 inline-flex w-fit items-center gap-2 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white transition-all hover:brightness-105">
-              {copy.journalsCta}
+              {journalsCta}
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

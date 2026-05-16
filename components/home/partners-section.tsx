@@ -18,6 +18,7 @@ export function PartnersSection() {
     campaignAlt: locale === 'ar' ? 'حملة جمال كورية من JISOO' : locale === 'fr' ? 'Campagne beauté coréenne JISOO' : locale === 'de' ? 'JISOO Korean-Beauty-Kampagne' : locale === 'ko' ? 'JISOO 코리안 뷰티 캠페인' : locale === 'tr' ? 'JISOO Kore güzellik kampanyası' : 'JISOO Korean beauty campaign',
     confidenceBody: locale === 'ar' ? 'تمزج JISOO ذاكرة الطقس الكوري بالدقة التجميلية الحديثة لابتكار ملمس ناعم وتوهّج مصقول وثقة يومية.' : locale === 'fr' ? 'JISOO associe la mémoire du rituel coréen à la précision cosmétique moderne pour créer des textures douces, un éclat poli et une confiance quotidienne.' : locale === 'de' ? 'JISOO verbindet koreanische Ritualtradition mit moderner kosmetischer Präzision – für sanfte Texturen, polierten Glow und tägliches Vertrauen.' : locale === 'ko' ? 'JISOO는 한국적 리추얼의 기억과 현대적인 코스메틱 정밀함을 결합해 부드러운 텍스처와 세련된 광채, 일상의 자신감을 만듭니다.' : locale === 'tr' ? 'JISOO, Kore ritüel hafızasını modern kozmetik hassasiyetle birleştirerek yumuşak dokular, zarif ışıltı ve günlük güven yaratır.' : 'JISOO blends Korean ritual memory with modern cosmetic precision, creating soft textures and polished glow for everyday confidence.',
   }
+  const { lead, confidence, confidenceBody } = copy
 
   return (
     <AtmosphereSection
@@ -30,13 +31,13 @@ export function PartnersSection() {
           <div className="flex items-center justify-center px-6 pb-8 pt-12 text-center lg:px-16 lg:py-16">
             <div className="mx-auto max-w-xl">
               <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
-                {copy.lead}
+                {lead}
               </p>
               <h2 className="font-serif text-[clamp(2rem,3.6vw,3.8rem)] font-medium uppercase leading-none text-charcoal">
-                {copy.confidence}
+                {confidence}
               </h2>
               <p className="mx-auto mt-8 max-w-lg text-base leading-8 text-charcoal/72">
-                {copy.confidenceBody}
+                {confidenceBody}
               </p>
               <Link href={localizeHref('/about', locale)} className="mt-9 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-9 py-4 text-sm font-medium uppercase tracking-[0.04em] text-white transition-all hover:brightness-105">
                 {copy.cta}

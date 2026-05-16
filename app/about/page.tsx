@@ -137,7 +137,7 @@ export default function AboutPage() {
         touchStart.current = null
       }}
     >
-      <Header />
+      <Header forceDark />
 
       <motion.section
         className="absolute inset-0"
