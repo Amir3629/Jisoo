@@ -23,7 +23,7 @@ export function PartnersSection() {
     >
       <div className="relative mx-auto max-w-none px-0">
         <div className="grid min-h-screen items-stretch bg-transparent lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="flex items-center justify-center px-6 py-16 text-center lg:px-16">
+          <div className="flex items-center justify-center px-6 pb-8 pt-12 text-center lg:px-16 lg:py-16">
             <div className="mx-auto max-w-xl">
               <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
                 Cosmetics that inspire
@@ -40,14 +40,21 @@ export function PartnersSection() {
             </div>
           </div>
 
-          <div className="relative min-h-screen overflow-hidden bg-transparent p-4 lg:p-8">
-            <div className="absolute bottom-4 left-4 right-4 top-28 overflow-hidden rounded-[2rem] lg:bottom-8 lg:left-8 lg:right-8 lg:top-36 lg:rounded-[2.5rem]">
+          <div className="relative min-h-[58vh] overflow-hidden bg-transparent px-4 pb-8 pt-0 lg:min-h-screen lg:p-8">
+            <div className="absolute bottom-8 left-4 right-4 top-0 overflow-hidden rounded-[2rem] lg:bottom-8 lg:left-8 lg:right-8 lg:top-36 lg:rounded-[2.5rem]">
+              <Image
+                src="/assets/story/grandparents mobile.png"
+                alt="JISOO Korean beauty campaign"
+                fill
+                sizes="(max-width: 1024px) 100vw, 54vw"
+                className="object-cover object-center lg:hidden"
+              />
               <Image
                 src="/assets/story/grandparents.png"
                 alt="JISOO Korean beauty campaign"
                 fill
-                sizes="(max-width: 1024px) 100vw, 54vw"
-                className="object-cover object-center"
+                sizes="54vw"
+                className="hidden object-cover object-center lg:block"
               />
             </div>
           </div>
