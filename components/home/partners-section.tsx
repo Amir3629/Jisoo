@@ -28,7 +28,7 @@ export function PartnersSection() {
     >
       <div className="relative mx-auto max-w-none px-0">
         <div className="grid min-h-screen items-stretch bg-transparent lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="flex items-center justify-center px-6 pb-8 pt-12 text-center lg:px-16 lg:py-16">
+          <div className="flex items-center justify-center px-6 pb-8 pt-24 text-center sm:pt-28 lg:px-16 lg:py-16">
             <div className="mx-auto max-w-xl">
               <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
                 {lead}

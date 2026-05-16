@@ -105,6 +105,7 @@ export function Header({
   logoClassName,
   showBackButton = false,
   forceDark = false,
+  frameless = false,
 }: {
   transparentOnTop?: boolean
   lightOnTop?: boolean
@@ -113,6 +114,7 @@ export function Header({
   logoClassName?: string
   showBackButton?: boolean
   forceDark?: boolean
+  frameless?: boolean
 } = {}) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -181,7 +183,7 @@ export function Header({
   ]
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
-  const hasHeaderFrame = isScrolled || !transparentOnTop || isMegaOpen
+  const hasHeaderFrame = !frameless && (isScrolled || !transparentOnTop || isMegaOpen)
   const isLightHeader = !forceDark && !hasHeaderFrame && lightOnTop
   const isHeroOverlay = transparentOnTop && !isScrolled
   const topTextClass = isLightHeader ? 'text-white hover:text-white/75' : 'text-charcoal hover:text-[#8f6f46]'
