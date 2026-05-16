@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200">
+  <defs>
+    <radialGradient id="water" cx="48%" cy="48%" r="72%">
+      <stop offset="0%" stop-color="#fffdf8"/>
+      <stop offset="48%" stop-color="#f0e0d3"/>
+      <stop offset="100%" stop-color="#d3b087"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="1200" fill="url(#water)"/>
+  <g fill="none" stroke-linecap="round">
+    <ellipse cx="600" cy="610" rx="370" ry="178" stroke="#fff9f0" stroke-width="34" opacity=".72"/>
+    <ellipse cx="600" cy="610" rx="260" ry="124" stroke="#caa988" stroke-width="18" opacity=".34"/>
+    <ellipse cx="600" cy="610" rx="148" ry="70" stroke="#8f766c" stroke-width="10" opacity=".18"/>
+  </g>
+  <g fill="#fffaf4" opacity=".72">
+    <ellipse cx="430" cy="545" rx="22" ry="13"/>
+    <ellipse cx="505" cy="666" rx="18" ry="11"/>
+    <ellipse cx="703" cy="558" rx="20" ry="12"/>
+    <ellipse cx="790" cy="657" rx="16" ry="10"/>
+  </g>
+  <circle cx="940" cy="250" r="132" fill="#d7aebc" opacity=".16"/>
+</svg>

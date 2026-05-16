@@ -8,8 +8,6 @@ import { ChapterHeading } from '@/components/ui/chapter-heading'
 import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
-import { resolveImageSrc } from '@/lib/image-fallbacks'
-import { jisooProductImages } from '@/lib/products'
 
 const ritualSteps = [
   {
@@ -18,7 +16,7 @@ const ritualSteps = [
     description:
       'Start with a verified cleanser once supplier documentation is approved.',
     color: 'from-blush-pink/30',
-    image: resolveImageSrc(jisooProductImages[0]),
+    image: '/assets/ritual/ritual-oil-drop.svg',
   },
   {
     number: '02',
@@ -26,7 +24,7 @@ const ritualSteps = [
     description:
       'Use a toner or prep step only after final formula, usage, and INCI review.',
     color: 'from-rose-mauve/20',
-    image: resolveImageSrc(jisooProductImages[1]),
+    image: '/assets/ritual/ritual-rice-water.svg',
   },
   {
     number: '03',
@@ -34,7 +32,7 @@ const ritualSteps = [
     description:
       'Treatment steps will be organized by confirmed concerns and approved claims.',
     color: 'from-champagne-gold/20',
-    image: resolveImageSrc(jisooProductImages[2]),
+    image: '/assets/ritual/ritual-silk-folds.svg',
   },
   {
     number: '04',
@@ -42,7 +40,7 @@ const ritualSteps = [
     description:
       'Creams and oils will be described with neutral copy after supplier verification.',
     color: 'from-plum/10',
-    image: resolveImageSrc(jisooProductImages[3]),
+    image: '/assets/ritual/ritual-cream-pearl.svg',
   },
   {
     number: '05',
@@ -50,7 +48,15 @@ const ritualSteps = [
     description:
       'Sun care guidance will be published only after compliant regional review.',
     color: 'from-nude-beige/40',
-    image: resolveImageSrc(jisooProductImages[4]),
+    image: '/assets/ritual/ritual-botanical-shadow.svg',
+  },
+  {
+    number: '06',
+    title: 'Glow',
+    description:
+      'Finish with a composed ritual moment: calm texture, soft light, and everyday confidence.',
+    color: 'from-rose-mauve/15',
+    image: '/assets/ritual/ritual-gold-mist.svg',
   },
 ]
 

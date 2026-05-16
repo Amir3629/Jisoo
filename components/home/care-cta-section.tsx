@@ -17,7 +17,7 @@ export function CareCtaSection() {
   }
 
   return (
-    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="py-20 lg:py-28">
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="py-12 lg:py-16">
       <div className="mx-auto max-w-6xl px-4 lg:px-6">
         <div className="relative overflow-hidden rounded-[2rem] border border-[#cfae83]/24 bg-warm-ivory/62 p-8 shadow-[0_22px_60px_rgba(70,49,32,0.10),inset_0_1px_0_rgba(255,255,255,0.34)] backdrop-blur-xl lg:p-12">
           <div className="max-w-3xl">

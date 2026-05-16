@@ -385,7 +385,7 @@ export default function ProductPage({ params }: ProductPageProps) {
       </section>
 
       {/* Tabs Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           {/* Tab Headers */}
           <div className="flex items-center gap-8 border-b border-blush-pink/30">

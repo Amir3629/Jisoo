@@ -40,6 +40,13 @@ const AVAILABLE_ASSETS = new Set([
   '/assets/products/jisoo-pore-clear-vita-c-cleansing-foam-2.jpg',
   '/assets/editorial/skincare-ingredients.jpg',
   '/assets/editorial/eye-closeup.webp',
+  '/assets/ritual/ritual-oil-drop.svg',
+  '/assets/ritual/ritual-silk-folds.svg',
+  '/assets/ritual/ritual-rice-water.svg',
+  '/assets/ritual/ritual-cream-pearl.svg',
+  '/assets/ritual/ritual-botanical-shadow.svg',
+  '/assets/ritual/ritual-gold-mist.svg',
+  '/assets/story/grandparents.png',
   '/assets/placeholders/logo.svg',
   '/assets/placeholders/logo.png',
 ])
@@ -72,6 +79,7 @@ function pickFallback(seed: string) {
 
 export function resolveImageSrc(src?: string | null): string {
   if (!src) return GLOBAL_MISSING_IMAGE_FALLBACKS[0]
+  if (src.startsWith('https://') || src.startsWith('http://')) return src
   if (AVAILABLE_ASSETS.has(src)) return src
 
   if (src.startsWith('/avatars/') || src.startsWith('/testimonials/')) {

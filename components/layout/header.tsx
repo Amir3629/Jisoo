@@ -168,6 +168,7 @@ export function Header({
   }))
   const topBarMessages = [
     { label: dictionary.header.freeShipping.replace('{{amount}}', '€100') },
+    { label: '지수의 빛, 매일의 아름다운 리추얼' },
     { label: 'Facebook', href: 'https://www.facebook.com', icon: FacebookBrand, className: 'text-[#1877F2]' },
     { label: 'TikTok', href: 'https://www.tiktok.com', icon: TiktokBrand, className: 'text-black drop-shadow-[1px_0_0_#22d3ee] [text-shadow:-1px_0_0_#ec4899]' },
     { label: 'Excellent on Trustpilot', href: 'https://www.trustpilot.com', icon: TrustpilotBrand, className: 'text-[#00B67A]' },

@@ -35,7 +35,7 @@ export default function AccountLayout({
   const { locale, dictionary } = useLocale();
 
   return (
-    <div className="min-h-screen bg-[linear-gradient(164deg,#f4e5dc_0%,#f4e5dc_48%,#f7e7df_100%)] pt-36 pb-20 text-charcoal">
+    <div className="min-h-screen bg-background pt-36 pb-20 text-charcoal">
       <Header />
       <div className="container max-w-6xl mx-auto px-4">
         <motion.h1
@@ -54,7 +54,7 @@ export default function AccountLayout({
             transition={{ delay: 0.1 }}
             className="lg:col-span-1"
           >
-            <nav className="space-y-2 rounded-2xl border border-[#cfae83]/20 bg-[#f4e5dc]/72 p-3 shadow-luxury backdrop-blur-xl">
+            <nav className="space-y-2 rounded-2xl border border-[#cfae83]/20 bg-warm-ivory/72 p-3 shadow-luxury backdrop-blur-xl">
               {navItems.map((item) => {
                 const localized = localizeHref(item.href, locale);
                 const isActive = pathname === localized;
@@ -65,7 +65,7 @@ export default function AccountLayout({
                     className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
                       isActive
                         ? "bg-[#cfae83] text-white shadow-sm"
-                        : "text-charcoal/68 hover:bg-[#f3e2d6] hover:text-charcoal"
+                        : "text-charcoal/68 hover:bg-[#d5bc9b]/24 hover:text-charcoal"
                     }`}
                   >
                     <item.icon className="w-4 h-4" />
@@ -73,7 +73,7 @@ export default function AccountLayout({
                   </Link>
                 );
               })}
-              <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm text-charcoal/60 transition-colors hover:bg-[#f3e2d6] hover:text-charcoal">
+              <button className="flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm text-charcoal/60 transition-colors hover:bg-[#d5bc9b]/24 hover:text-charcoal">
                 <LogOut className="w-4 h-4" />
                 {dictionary.common.signOut}
               </button>

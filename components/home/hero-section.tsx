@@ -171,7 +171,7 @@ export function HeroSection({
   const { locale } = useLocale()
   void showConceptPicker
   const [activeId, setActiveId] = useState(heroConcepts[0].id)
-  const [surfaceTone, setSurfaceTone] = useState(22)
+  const [surfaceTone, setSurfaceTone] = useState(50)
   const [heroTone, setHeroTone] = useState(12)
   const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>('soft')
   const [activeFontChoice, setActiveFontChoice] = useState(1)
@@ -316,8 +316,8 @@ export function HeroSection({
                     ))}
                   </div>
                   <div className="grid grid-cols-2 gap-1">
-                    <button type="button" onClick={() => { setSurfaceTone(22); setHeroTone(12); setSiteMode('soft'); setActiveFontChoice(1); setHeroStyle(1) }} className="rounded-full border border-[#cfae83]/30 bg-warm-ivory/70 px-2 py-0.5 text-[10px] transition hover:bg-[#d5bc9b]/35">Reset</button>
-                    <button type="button" onClick={() => { setSurfaceTone(22); setHeroTone(12) }} className="rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-2 py-0.5 text-[10px] font-medium text-white transition hover:brightness-105">Clear</button>
+                    <button type="button" onClick={() => { setSurfaceTone(50); setHeroTone(12); setSiteMode('soft'); setActiveFontChoice(1); setHeroStyle(1) }} className="rounded-full border border-[#cfae83]/30 bg-warm-ivory/70 px-2 py-0.5 text-[10px] transition hover:bg-[#d5bc9b]/35">Reset</button>
+                    <button type="button" onClick={() => { setSurfaceTone(50); setHeroTone(12) }} className="rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-2 py-0.5 text-[10px] font-medium text-white transition hover:brightness-105">Clear</button>
                   </div>
                 </div>
               </motion.div>
@@ -420,7 +420,6 @@ function ImageEditorialHero({
     '--homepage-hero-font-family': selectedFont.fontFamily,
   } as CSSProperties
   const heroToneOpacity = Math.max(0, Math.min(58, heroTone)) / 100
-  const heroToneWashOpacity = Math.max(0, Math.min(44, heroTone - 4)) / 100
   const { scrollYProgress } = useScroll()
   const logoScale = useTransform(scrollYProgress, [0, 0.08], [1, 0.24])
   const logoX = useTransform(scrollYProgress, [0, 0.08], ['0%', '-156%'])
@@ -433,8 +432,7 @@ function ImageEditorialHero({
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 hidden md:block" imageClassName={cn('object-cover transform-gpu', showCategoryNav ? 'object-top scale-[1.08]' : 'object-center scale-[1.015]')} priority />
         <HeroImage src={mobileImage} alt="Editorial background mobile" className="absolute inset-0 block md:hidden" imageClassName={cn('transform-gpu', showCategoryNav ? 'object-cover object-top scale-[1.08]' : 'object-cover object-bottom')} priority />
         <div className="absolute inset-0 bg-[#d9bb83] mix-blend-multiply" style={{ opacity: heroToneOpacity }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#f1dfbd] via-transparent to-[#d7b372]" style={{ opacity: heroToneWashOpacity }} />
-        <div className={cn('absolute inset-0', lightText ? 'bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent' : 'bg-gradient-to-r from-warm-ivory/42 via-warm-ivory/14 to-transparent')} />
+        {lightText && <div className="absolute inset-0 bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent" />}
         {!showCategoryNav && (
           <div className="absolute inset-0 z-[2]" aria-label="Shop hero products">
             {heroProductHotspots.map((hotspot) => (

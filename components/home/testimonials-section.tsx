@@ -83,20 +83,20 @@ export function TestimonialsSection() {
       frame = window.requestAnimationFrame(animate)
     }
 
-    const onScroll = () => {
-      const delta = window.scrollY - lastScrollY
-      lastScrollY = window.scrollY
-      if (Math.abs(delta) < 1) return
-
-      targetSpeed = delta > 0 ? 1.25 : -0.9
-      lastInteraction = performance.now()
-    }
-
     const normalizeOffset = () => {
       const loopWidth = getLoopWidth()
       if (loopWidth <= 0) return
       while (offset >= loopWidth) offset -= loopWidth
       while (offset < 0) offset += loopWidth
+    }
+
+    const onScroll = () => {
+      const delta = window.scrollY - lastScrollY
+      lastScrollY = window.scrollY
+      if (Math.abs(delta) < 1 || isDragging) return
+
+      targetSpeed = delta > 0 ? 0.42 : -0.28
+      lastInteraction = performance.now()
     }
 
     const onPointerDown = (event: PointerEvent) => {
@@ -144,17 +144,19 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden py-24 lg:py-32">
-      <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
-        <ChapterHeading
-          kicker={t.customerStories}
-          title={t.lovedBy}
-          description={copy.description}
-          align="center"
-          className="mb-12 lg:mb-16 max-w-4xl mx-auto"
-        />
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden pb-36 pt-14 lg:pb-48 lg:pt-20">
+      <div className="relative">
+        <div className="mx-auto max-w-7xl px-4 lg:px-6">
+          <ChapterHeading
+            kicker={t.customerStories}
+            title={t.lovedBy}
+            description={copy.description}
+            align="center"
+            className="mb-8 lg:mb-10 max-w-4xl mx-auto"
+          />
+        </div>
 
-        <div ref={containerRef} className="-mx-4 cursor-grab touch-pan-y overflow-hidden px-4 pb-4">
+        <div ref={containerRef} className="relative left-1/2 w-[100dvw] -translate-x-1/2 cursor-grab touch-pan-y overflow-hidden pb-4 select-none">
           <div ref={trackRef} className="flex w-max gap-6 will-change-transform">
             {cards.map((card, index) => (
               <div key={`${card.id}-${index}`} className="w-[85vw] max-w-[400px] flex-shrink-0 sm:w-[400px]">

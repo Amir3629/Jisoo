@@ -124,7 +124,16 @@ body {
   body {
     @apply bg-background text-foreground;
     background: var(--background);
+    min-height: 100vh;
     font-family: var(--jisoo-preview-font) !important;
+  }
+
+  html,
+  body,
+  body > main,
+  body > div.min-h-screen,
+  .snap-page-flow {
+    background-color: var(--background);
   }
 
   h1,
@@ -399,7 +408,7 @@ body {
 
   :root[data-site-mode='elegant'] .bg-warm-ivory,
   :root[data-site-mode='elegant'] .bg-white {
-    background-color: color-mix(in srgb, var(--background) 92%, white) !important;
+    background-color: var(--background) !important;
   }
 
   :root[data-site-mode='elegant'] .shadow-editorial {
@@ -568,6 +577,7 @@ body {
 
   .site-scroll-snap .snap-page-flow > section,
   .site-scroll-snap .snap-page-flow > .snap-section,
+  .site-scroll-snap .snap-page-flow > section .snap-section,
   .site-scroll-snap .snap-page-flow > footer,
   .site-scroll-snap body > main > section,
   .site-scroll-snap body > main > .snap-section,
@@ -578,8 +588,22 @@ body {
   }
 
   .site-scroll-snap .snap-page-flow > section,
-  .site-scroll-snap .snap-page-flow > .snap-section {
+  .site-scroll-snap .snap-page-flow > .snap-section,
+  .site-scroll-snap .snap-page-flow > section .snap-section {
     min-height: 100vh;
+  }
+
+  .site-scroll-snap .snap-page-flow > section[data-snap-free-scroll='true'] .snap-section {
+    min-height: auto;
+    scroll-snap-align: none;
+  }
+
+  .site-scroll-snap .scroll-reveal,
+  .site-scroll-snapping .scroll-reveal {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   .story-gold-header header {

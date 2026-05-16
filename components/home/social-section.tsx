@@ -61,7 +61,7 @@ export function SocialSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   return (
-    <AtmosphereSection atmosphere="blush" className="pb-20 pt-28 lg:pb-28 lg:pt-36" data-snap-target="community">
+    <AtmosphereSection atmosphere="blush" className="pb-10 pt-32 lg:pb-12 lg:pt-44" data-snap-target="community">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"

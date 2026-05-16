@@ -12,6 +12,7 @@ interface EditorialMediaProps {
   priority?: boolean
   sizes?: string
   hint?: string
+  imageClassName?: string
   overlayClassName?: string
 }
 
@@ -22,6 +23,7 @@ export function EditorialMedia({
   priority,
   sizes = '(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw',
   hint,
+  imageClassName,
   overlayClassName,
 }: EditorialMediaProps) {
   const [imageError, setImageError] = useState(false)
@@ -38,13 +40,15 @@ export function EditorialMedia({
           priority={priority}
           sizes={sizes}
           onError={() => setImageError(true)}
-          className="object-cover"
+          className={cn('object-cover', imageClassName)}
         />
       ) : (
         <div className="absolute inset-0 mesh-luxury" />
       )}
 
-      <div className={cn('absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent', overlayClassName)} />
+      {overlayClassName !== 'none' && (
+        <div className={cn('absolute inset-0 bg-gradient-to-t from-charcoal/50 via-charcoal/10 to-transparent', overlayClassName)} />
+      )}
 
       {hint && (
         <div className="absolute left-4 bottom-4 rounded-full border border-white/35 bg-white/35 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/90">

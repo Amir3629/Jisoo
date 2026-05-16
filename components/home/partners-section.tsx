@@ -40,10 +40,10 @@ export function PartnersSection() {
             </div>
           </div>
 
-          <div className="relative min-h-screen overflow-hidden bg-transparent">
-            <div className="absolute inset-0 overflow-hidden">
+          <div className="relative min-h-screen overflow-hidden bg-transparent p-4 lg:p-8">
+            <div className="absolute bottom-4 left-4 right-4 top-28 overflow-hidden rounded-[2rem] lg:bottom-8 lg:left-8 lg:right-8 lg:top-36 lg:rounded-[2.5rem]">
               <Image
-                src="/assets/story/confidence.png"
+                src="/assets/story/grandparents.png"
                 alt="JISOO Korean beauty campaign"
                 fill
                 sizes="(max-width: 1024px) 100vw, 54vw"

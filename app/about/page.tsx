@@ -122,7 +122,7 @@ export default function AboutPage() {
 
   return (
     <main
-      className="relative h-screen overflow-hidden bg-[#f8f4f0] text-charcoal"
+      className="relative h-screen overflow-hidden bg-background text-charcoal"
       onWheel={(event) => {
         if (Math.abs(event.deltaY) < 18) return
         go(event.deltaY > 0 ? 1 : -1)

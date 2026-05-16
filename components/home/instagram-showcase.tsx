@@ -105,8 +105,8 @@ export function InstagramShowcase() {
   const copy = SOCIAL_COPY[locale]
 
   return (
-    <section className="mx-auto w-full max-w-[1500px] px-4 py-16 lg:px-6">
-      <div className="relative overflow-hidden rounded-[2rem] border border-[#cfae83]/24 bg-[linear-gradient(145deg,#f4e5dc_0%,#f4e5dc_48%,#f7ece3_100%)] p-4 shadow-[0_20px_60px_rgba(133,78,104,0.12)] sm:p-5 lg:p-6">
+    <section className="mx-auto w-full max-w-[1500px] px-4 pb-16 pt-16 lg:px-6 lg:pt-24">
+      <div className="relative overflow-hidden border border-[#cfae83]/18 bg-warm-ivory/62 p-4 shadow-[0_18px_48px_rgba(70,49,32,0.08)] sm:p-5 lg:p-6">
         <div className="mb-4 flex justify-center gap-2 border-b border-[#cfae83]/18 pb-4">
           {[
             { id: 'instagram', label: 'Instagram', icon: Instagram },
@@ -160,8 +160,8 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {INSTAGRAM_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
-                  <div className="relative aspect-[4/5]">
+                <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
+                  <div className="relative aspect-square">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
@@ -196,8 +196,8 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {TIKTOK_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
-                  <div className="relative aspect-[9/16]">
+                <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
+                  <div className="relative aspect-square">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
@@ -232,8 +232,8 @@ export function InstagramShowcase() {
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {FACEBOOK_POSTS.map((post, index) => (
-                <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden rounded-lg bg-[#f8efe7]">
-                  <div className="relative aspect-[4/5]">
+                <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
+                  <div className="relative aspect-square">
                     <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/10 to-transparent p-2 opacity-0 transition group-hover:opacity-100">
@@ -316,7 +316,7 @@ function SocialPanel({
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-xl border border-[#cfae83]/18 bg-[linear-gradient(160deg,#f4e5dc_0%,#f8efe7_100%)] px-2 py-2"
+            className="border border-[#cfae83]/18 bg-warm-ivory/72 px-2 py-2"
           >
             <p className="font-semibold text-charcoal">{stat.value}</p>
             <p className="text-charcoal/60">{stat.label}</p>

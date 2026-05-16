@@ -66,29 +66,29 @@ export function CategoriesSection() {
           <TrustpilotRatingStrip />
         </div>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-          <div className="overflow-hidden rounded-[2.2rem] border border-[#cfae83]/24 bg-[#4a4e51] text-white shadow-editorial">
-            <div className="grid min-h-[560px] lg:grid-cols-2">
-              <div className="relative min-h-[320px]">
+          <div className="relative left-1/2 w-[100dvw] -translate-x-1/2 overflow-hidden border-y border-[#cfae83]/18 bg-transparent text-white shadow-[0_18px_44px_rgba(133,78,104,0.16)] lg:left-auto lg:w-auto lg:translate-x-0 lg:rounded-[2.2rem] lg:border">
+            <div className="grid overflow-hidden lg:min-h-[560px] lg:grid-cols-2">
+              <div className="relative h-[100svh] min-h-[560px] bg-transparent lg:h-full lg:min-h-[560px]">
                 <EditorialMedia
                   src="/assets/editorial/before-care.png"
                   alt="Before care journal"
                   hint="Before"
-                  className="h-full min-h-[320px]"
+                  className="h-full"
+                  imageClassName="scale-[1.14] object-[center_38%]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
-                  overlayClassName="bg-gradient-to-t from-charcoal/62 via-charcoal/10 to-transparent"
+                  overlayClassName="none"
                 />
-                <span className="absolute left-5 top-5 rounded-full bg-white/18 px-4 py-2 text-xs uppercase tracking-[0.16em] backdrop-blur-md">Before</span>
               </div>
-              <div className="relative min-h-[320px]">
+              <div className="relative h-[100svh] min-h-[560px] bg-transparent lg:h-full lg:min-h-[560px]">
                 <EditorialMedia
                   src="/assets/editorial/after-care.png"
                   alt="After care journal"
                   hint="After"
-                  className="h-full min-h-[320px]"
+                  className="h-full"
+                  imageClassName="scale-[1.14] object-[center_38%]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
-                  overlayClassName="bg-gradient-to-t from-charcoal/62 via-charcoal/10 to-transparent"
+                  overlayClassName="none"
                 />
-                <span className="absolute left-5 top-5 rounded-full bg-white/18 px-4 py-2 text-xs uppercase tracking-[0.16em] backdrop-blur-md">After</span>
               </div>
             </div>
           </div>

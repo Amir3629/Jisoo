@@ -17,12 +17,13 @@ import { InstagramShowcase } from '@/components/home/instagram-showcase'
 import { FloatingAssistant } from '@/components/ai/floating-assistant'
 import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
 
-function ScrollReveal({ children, direction = 'up' }: { children: React.ReactNode; direction?: 'up' | 'left' | 'right' }) {
+function ScrollReveal({ children, direction = 'up', snapLabel }: { children: React.ReactNode; direction?: 'up' | 'left' | 'right'; snapLabel?: string }) {
   const offset = direction === 'left' ? { x: -38, y: 0 } : direction === 'right' ? { x: 38, y: 0 } : { x: 0, y: 38 }
 
   return (
     <motion.div
       className="snap-section scroll-reveal"
+      data-snap-label={snapLabel}
       initial={{ opacity: 0, ...offset, filter: 'blur(10px)' }}
       whileInView={{ opacity: 1, x: 0, y: 0, filter: 'blur(0px)' }}
       viewport={{ once: true, amount: 0.18, margin: '0px 0px -12% 0px' }}
@@ -34,7 +35,7 @@ function ScrollReveal({ children, direction = 'up' }: { children: React.ReactNod
 }
 
 function BackgroundBreathSlide() {
-  return <div className="snap-section min-h-[50vh]" aria-hidden="true" />
+  return null
 }
 
 export function HomePageShell() {
@@ -45,7 +46,7 @@ export function HomePageShell() {
         <HeroSection />
         <ScrollReveal><CategoriesSection /></ScrollReveal>
         <ScrollReveal direction="right"><FeaturedProducts /></ScrollReveal>
-        <section className="relative isolate">
+        <section className="relative isolate" data-snap-free-scroll="true" data-snap-label="JISOO dynamic care story">
           <div className="pointer-events-none sticky top-0 h-screen overflow-hidden">
             <div
               className="absolute inset-0 hidden bg-cover bg-center bg-no-repeat md:block"
@@ -58,10 +59,10 @@ export function HomePageShell() {
             <div className="absolute inset-0 bg-warm-ivory/80" />
           </div>
           <div className="relative z-10 -mt-[100vh]">
-            <ScrollReveal><RitualSection /></ScrollReveal>
-            <ScrollReveal direction="left"><AiAssistantTeaser /></ScrollReveal>
+            <ScrollReveal snapLabel="The Ritual of Korean Beauty"><RitualSection /></ScrollReveal>
+            <ScrollReveal direction="left" snapLabel="The Concierge Beauty Advisor"><AiAssistantTeaser /></ScrollReveal>
             <ScrollReveal direction="right"><ConcernsSection /></ScrollReveal>
-            <ScrollReveal><CareCtaSection /></ScrollReveal>
+            <ScrollReveal snapLabel="Start with what your skin actually needs"><CareCtaSection /></ScrollReveal>
             <ScrollReveal direction="left"><TestimonialsSection /></ScrollReveal>
             <BackgroundBreathSlide />
           </div>
