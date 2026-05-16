@@ -2,7 +2,11 @@ import { CartProvider } from '@/components/providers/cart-provider'
 import { RegionProvider } from '@/components/providers/region-provider'
 import { LocaleProvider } from '@/components/providers/locale-provider'
 import { LocaleHtmlSync } from '@/components/i18n/locale-html-sync'
-import { assertLocale, getDictionary, getDirection } from '@/lib/i18n'
+import { assertLocale, getDictionary, getDirection, locales } from '@/lib/i18n'
+
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }))
+}
 
 export default async function LocaleLayout({
   children,

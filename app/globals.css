@@ -368,14 +368,14 @@ body {
       0 2px 0 rgba(255, 255, 255, 0.35) inset,
       0 -1px 0 rgba(183, 110, 138, 0.22) inset;
   }
-
+  .site-continuous-surface,
   .home-continuous-surface {
     background:
       linear-gradient(rgb(var(--surface-tone-overlay-color, 255 255 255) / var(--surface-tone-overlay-opacity, 0)), rgb(var(--surface-tone-overlay-color, 255 255 255) / var(--surface-tone-overlay-opacity, 0))),
       var(--background);
     transition: background 420ms ease, color 420ms ease;
   }
-
+  :root[data-surface-effect='on'] .site-continuous-surface,
   :root[data-surface-effect='on'] .home-continuous-surface,
   :root[data-surface-effect='on'] body {
     background:
@@ -383,7 +383,7 @@ body {
       radial-gradient(38rem 32rem at calc(100% + 10rem) 44rem, color-mix(in srgb, var(--secondary) 70%, white), transparent 74%),
       var(--background);
   }
-
+  :root[data-site-mode='elegant'] .site-continuous-surface,
   :root[data-site-mode='elegant'] .home-continuous-surface,
   :root[data-site-mode='elegant'] body {
     background:

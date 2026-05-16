@@ -39,7 +39,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-warm-ivory">
-      <body className="font-sans antialiased">
+      <body className="site-continuous-surface bg-background font-sans text-foreground antialiased">
         <LocaleProvider value={{ locale: defaultLocale, dictionary: dictionaries[defaultLocale], dir: getDirection(defaultLocale) }}>
           <RegionProvider initialLanguage={defaultLocale}>
             <CartProvider>
