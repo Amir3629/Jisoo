@@ -41,8 +41,35 @@ export function TestimonialsSection() {
   const trackRef = useRef<HTMLDivElement>(null)
   const copy = {
     description: locale === 'ar' ? 'ستظهر قصص العملاء بعد التحقق من المراجعات الحقيقية.' : locale === 'fr' ? 'Les témoignages apparaîtront après validation de vrais avis clients.' : locale === 'de' ? 'Kundenstimmen erscheinen nach Prüfung echter Bewertungen.' : locale === 'ko' ? '검증된 고객 리뷰가 승인된 후 이곳에 표시됩니다.' : locale === 'tr' ? 'Gerçek müşteri yorumları onaylandıktan sonra burada gösterilecek.' : 'Verified customer stories will appear here after real review approval.',
+    pending: locale === 'ar' ? 'استيراد المراجعات قيد الانتظار' : locale === 'fr' ? 'Import des avis en attente' : locale === 'de' ? 'Bewertungsimport ausstehend' : locale === 'ko' ? '리뷰 가져오기 대기 중' : locale === 'tr' ? 'Yorum aktarımı beklemede' : 'Review import pending',
   }
-  const cards = [...reviewPlaceholders, ...reviewPlaceholders, ...reviewPlaceholders]
+  const localizedReviews = reviewPlaceholders.map((card) => {
+    const translations = {
+      'review-framework-1': {
+        label: locale === 'ar' ? 'استيراد مراجعة موثقة' : locale === 'fr' ? 'Import d’avis vérifié' : locale === 'de' ? 'Verifizierter Bewertungsimport' : locale === 'ko' ? '검증 리뷰 가져오기' : locale === 'tr' ? 'Doğrulanmış yorum aktarımı' : card.label,
+        title: locale === 'ar' ? 'ملاحظات القوام' : locale === 'fr' ? 'Retour sur la texture' : locale === 'de' ? 'Texturfeedback' : locale === 'ko' ? '텍스처 피드백' : locale === 'tr' ? 'Doku geri bildirimi' : card.title,
+        body: locale === 'ar' ? 'ستظهر ملاحظة العميل هنا بعد التحقق من الطلب وموافقة المراجعة.' : locale === 'fr' ? 'La note client apparaîtra ici après vérification de la commande et modération.' : locale === 'de' ? 'Kundenhinweise erscheinen hier nach Bestellprüfung und Moderationsfreigabe.' : locale === 'ko' ? '주문 확인과 검수 승인 후 고객 메모가 여기에 표시됩니다.' : locale === 'tr' ? 'Müşteri notu sipariş doğrulaması ve moderasyon onayından sonra burada görünecek.' : card.body,
+      },
+      'review-framework-2': {
+        label: locale === 'ar' ? 'استيراد مراجعة موثقة' : locale === 'fr' ? 'Import d’avis vérifié' : locale === 'de' ? 'Verifizierter Bewertungsimport' : locale === 'ko' ? '검증 리뷰 가져오기' : locale === 'tr' ? 'Doğrulanmış yorum aktarımı' : card.label,
+        title: locale === 'ar' ? 'تجربة الروتين' : locale === 'fr' ? 'Expérience routine' : locale === 'de' ? 'Routine-Erlebnis' : locale === 'ko' ? '루틴 경험' : locale === 'tr' ? 'Rutin deneyimi' : card.title,
+        body: locale === 'ar' ? 'ستركّز التعليقات المعتمدة على الاستخدام والراحة وملاءمة الروتين دون ادعاءات غير موثقة.' : locale === 'fr' ? 'Les commentaires validés porteront sur l’usage, le confort et l’adéquation à la routine sans allégations non vérifiées.' : locale === 'de' ? 'Freigegebene Kommentare fokussieren Nutzung, Komfort und Routine-Fit ohne ungeprüfte Claims.' : locale === 'ko' ? '승인된 댓글은 확인되지 않은 주장 없이 사용감, 편안함, 루틴 적합성에 집중합니다.' : locale === 'tr' ? 'Onaylanan yorumlar doğrulanmamış iddialar olmadan kullanım, konfor ve rutin uyumuna odaklanacak.' : card.body,
+      },
+      'review-framework-3': {
+        label: locale === 'ar' ? 'استيراد مراجعة موثقة' : locale === 'fr' ? 'Import d’avis vérifié' : locale === 'de' ? 'Verifizierter Bewertungsimport' : locale === 'ko' ? '검증 리뷰 가져오기' : locale === 'tr' ? 'Doğrulanmış yorum aktarımı' : card.label,
+        title: locale === 'ar' ? 'ملاحظة عناية متكررة' : locale === 'fr' ? 'Note de soin répété' : locale === 'de' ? 'Wiederholte Pflegenotiz' : locale === 'ko' ? '반복 케어 메모' : locale === 'tr' ? 'Tekrarlanan bakım notu' : card.title,
+        body: locale === 'ar' ? 'لن تُنشر هنا إلا ملاحظات عملاء حقيقية مرتبطة بمشتريات موثقة.' : locale === 'fr' ? 'Seuls de vrais retours clients liés à des achats vérifiés seront publiés ici.' : locale === 'de' ? 'Hier werden nur echte Kundenstimmen aus verifizierten Käufen veröffentlicht.' : locale === 'ko' ? '검증된 구매와 연결된 실제 고객 피드백만 여기에 게시됩니다.' : locale === 'tr' ? 'Burada yalnızca doğrulanmış satın alımlara bağlı gerçek müşteri geri bildirimleri yayımlanacak.' : card.body,
+      },
+      'review-framework-4': {
+        label: locale === 'ar' ? 'استيراد مراجعة موثقة' : locale === 'fr' ? 'Import d’avis vérifié' : locale === 'de' ? 'Verifizierter Bewertungsimport' : locale === 'ko' ? '검증 리뷰 가져오기' : locale === 'tr' ? 'Doğrulanmış yorum aktarımı' : card.label,
+        title: locale === 'ar' ? 'ملاحظات إقليمية' : locale === 'fr' ? 'Retour régional' : locale === 'de' ? 'Regionales Feedback' : locale === 'ko' ? '지역별 피드백' : locale === 'tr' ? 'Bölgesel geri bildirim' : card.title,
+        body: locale === 'ar' ? 'يمكن إضافة ملاحظات خاصة بالمنطقة بعد الترجمة ومراجعة الامتثال.' : locale === 'fr' ? 'Des notes propres à la région peuvent être ajoutées après traduction et vérification conformité.' : locale === 'de' ? 'Regionsspezifische Hinweise können nach Übersetzung und Compliance-Prüfung ergänzt werden.' : locale === 'ko' ? '지역별 메모는 번역과 컴플라이언스 검토 후 추가할 수 있습니다.' : locale === 'tr' ? 'Bölgeye özel notlar çeviri ve uygunluk incelemesinden sonra eklenebilir.' : card.body,
+      },
+    } as const
+
+    return { ...card, ...(translations[card.id as keyof typeof translations] ?? {}) }
+  })
+  const cards = [...localizedReviews, ...localizedReviews, ...localizedReviews]
 
   useEffect(() => {
     const container = containerRef.current
@@ -144,7 +171,7 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden pb-48 pt-14 lg:pb-72 lg:pt-20">
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden pb-64 pt-14 lg:pb-96 lg:pt-20">
       <div className="relative">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <ChapterHeading
@@ -180,7 +207,7 @@ export function TestimonialsSection() {
                   <h3 className="mt-3 text-xl text-charcoal">{card.title}</h3>
                   <p className="mt-4 leading-7 text-charcoal/70">{card.body}</p>
                   <div className="mt-6 border-t border-[#cfae83]/24 pt-5">
-                    <p className="text-sm font-medium text-[#838999]">Review import pending</p>
+                    <p className="text-sm font-medium text-[#838999]">{copy.pending}</p>
                   </div>
                 </div>
               </div>

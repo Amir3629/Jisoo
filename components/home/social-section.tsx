@@ -60,13 +60,24 @@ const socialPosts = [
 export function SocialSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
+  const socialDescription = locale === 'ar'
+    ? 'تابعي استوديو عناية JISOO لملاحظات التوريد واتجاهات التغليف وتحديثات المنتجات الموثقة.'
+    : locale === 'fr'
+      ? 'Suivez le studio de soin JISOO pour les notes de sourcing, les orientations packaging et les mises à jour produits vérifiées.'
+      : locale === 'de'
+        ? 'Folge dem JISOO Care Studio für Sourcing-Notizen, Packaging-Richtung und verifizierte Produktupdates.'
+        : locale === 'ko'
+          ? '소싱 노트, 패키징 방향, 검증된 제품 업데이트를 JISOO 케어 스튜디오에서 확인하세요.'
+          : locale === 'tr'
+            ? 'Tedarik notları, ambalaj yönü ve doğrulanmış ürün güncellemeleri için JISOO bakım stüdyosunu takip edin.'
+            : 'Follow the JISOO care studio for sourcing notes, packaging direction, and verified product updates.'
   return (
     <AtmosphereSection atmosphere="blush" className="pb-10 pt-32 lg:pb-12 lg:pt-44" data-snap-target="community">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <ChapterHeading
           kicker="@JISOOBeauty"
           title={t.joinCommunity}
-          description="Follow the JISOO care studio for sourcing notes, packaging direction, and verified product updates."
+          description={socialDescription}
           align="center"
           className="mb-12 lg:mb-16 max-w-4xl mx-auto"
         />
