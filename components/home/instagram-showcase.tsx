@@ -24,6 +24,7 @@ const LOCAL_SOCIAL_MEDIA = [
   '/assets/editorial/product-table.png',
   '/assets/editorial/night-routine.png',
   '/assets/editorial/cream-ritual.png',
+  '/assets/editorial/eye-care.png',
 ]
 
 const INSTAGRAM_POSTS = [
@@ -35,6 +36,7 @@ const INSTAGRAM_POSTS = [
   ['Dropper precision and glow.', '2,241', '72', 'reel'],
   ['Night barrier support routine.', '1,492', '30', 'carousel'],
   ['JISOO cream ritual moment.', '2,011', '58', 'reel'],
+  ['Eye care texture close-up.', '1,764', '42', 'carousel'],
 ] as const
 
 const TIKTOK_POSTS = [
@@ -105,8 +107,8 @@ export function InstagramShowcase() {
   const copy = SOCIAL_COPY[locale]
 
   return (
-    <section className="mx-auto w-full max-w-[1500px] px-4 pb-16 pt-16 lg:px-6 lg:pt-24">
-      <div className="relative overflow-hidden border border-[#cfae83]/18 bg-warm-ivory/62 p-4 shadow-[0_18px_48px_rgba(70,49,32,0.08)] sm:p-5 lg:p-6">
+    <section className="mx-auto w-full max-w-[1500px] px-0 pb-16 pt-16 sm:px-4 lg:px-6 lg:pt-24">
+      <div className="relative overflow-hidden border border-transparent bg-transparent p-0 shadow-none sm:border-[#cfae83]/18 sm:bg-warm-ivory/62 sm:p-5 sm:shadow-[0_18px_48px_rgba(70,49,32,0.08)] lg:p-6">
         <div className="mb-4 flex justify-center gap-2 border-b border-[#cfae83]/18 pb-4">
           {[
             { id: 'instagram', label: 'Instagram', icon: Instagram },
@@ -158,11 +160,11 @@ export function InstagramShowcase() {
             link={SOCIAL_LINKS.instagram}
             viewProfileLabel={copy.viewProfile}
           >
-            <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+            <div className="grid grid-cols-3 gap-[2px] md:grid-cols-4 md:gap-2">
               {INSTAGRAM_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
                   <div className="relative aspect-square">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 33vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
                     {post[3] === 'carousel' ? <Copy className="h-3.5 w-3.5" /> : <Clapperboard className="h-3.5 w-3.5" />}

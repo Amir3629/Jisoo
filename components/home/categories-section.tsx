@@ -66,26 +66,26 @@ export function CategoriesSection() {
           <TrustpilotRatingStrip />
         </div>
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-stretch">
-          <div className="relative left-1/2 w-[100dvw] -translate-x-1/2 overflow-hidden border-y border-[#cfae83]/18 bg-transparent text-white shadow-[0_18px_44px_rgba(133,78,104,0.16)] lg:left-auto lg:w-auto lg:translate-x-0 lg:rounded-[2.2rem] lg:border">
-            <div className="grid overflow-hidden lg:min-h-[560px] lg:grid-cols-2">
-              <div className="relative h-[100svh] min-h-[560px] bg-transparent lg:h-full lg:min-h-[560px]">
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#cfae83]/18 bg-transparent text-white shadow-[0_18px_44px_rgba(133,78,104,0.16)] lg:rounded-[2.2rem]">
+            <div className="grid gap-3 overflow-hidden p-3 sm:p-4 lg:min-h-[560px] lg:grid-cols-2 lg:gap-0 lg:p-0">
+              <div className="relative h-[52svh] min-h-[340px] overflow-hidden rounded-[1.6rem] bg-transparent lg:h-full lg:min-h-[560px] lg:rounded-none">
                 <EditorialMedia
                   src="/assets/editorial/before-care.png"
                   alt="Before care journal"
                   hint="Before"
                   className="h-full"
-                  imageClassName="scale-[1.14] object-[center_38%]"
+                  imageClassName="object-[center_38%] lg:scale-[1.14]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
                   overlayClassName="none"
                 />
               </div>
-              <div className="relative h-[100svh] min-h-[560px] bg-transparent lg:h-full lg:min-h-[560px]">
+              <div className="relative h-[52svh] min-h-[340px] overflow-hidden rounded-[1.6rem] bg-transparent lg:h-full lg:min-h-[560px] lg:rounded-none">
                 <EditorialMedia
                   src="/assets/editorial/after-care.png"
                   alt="After care journal"
                   hint="After"
                   className="h-full"
-                  imageClassName="scale-[1.14] object-[center_38%]"
+                  imageClassName="object-[center_38%] lg:scale-[1.14]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
                   overlayClassName="none"
                 />
