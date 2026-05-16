@@ -86,12 +86,18 @@ export function TestimonialsSection() {
     let isDragging = false
     let dragStartX = 0
     let dragStartOffset = 0
+    let lastDragOffset = 0
+    let lastDragTime = 0
+    let dragVelocity = 0
+    let glideUntil = 0
 
     const getLoopWidth = () => track.scrollWidth / 3
 
     const animate = () => {
       const loopWidth = getLoopWidth()
-      const desiredSpeed = isDragging || container.matches(':hover') || document.hidden ? 0 : targetSpeed
+      const now = performance.now()
+      const isGliding = now < glideUntil
+      const desiredSpeed = isDragging || (container.matches(':hover') && !isGliding) || document.hidden ? 0 : targetSpeed
 
       speed += (desiredSpeed - speed) * 0.08
       offset += speed
@@ -103,7 +109,7 @@ export function TestimonialsSection() {
 
       track.style.transform = `translate3d(${-offset}px, 0, 0)`
 
-      if (performance.now() - lastInteraction > 520) {
+      if (now - lastInteraction > 520) {
         targetSpeed += (baseSpeed - targetSpeed) * 0.12
       }
 
@@ -131,26 +137,40 @@ export function TestimonialsSection() {
       dragStartX = event.clientX
       dragStartOffset = offset
       targetSpeed = 0
-      lastInteraction = performance.now()
+      dragVelocity = 0
+      lastDragOffset = offset
+      lastDragTime = performance.now()
+      glideUntil = 0
+      lastInteraction = lastDragTime
       container.setPointerCapture(event.pointerId)
       container.classList.add('cursor-grabbing')
     }
 
     const onPointerMove = (event: PointerEvent) => {
       if (!isDragging) return
-      offset = dragStartOffset - (event.clientX - dragStartX)
+      const now = performance.now()
+      const nextOffset = dragStartOffset - (event.clientX - dragStartX)
+      const elapsed = Math.max(1, now - lastDragTime)
+      dragVelocity = ((nextOffset - lastDragOffset) / elapsed) * 16.67
+      offset = nextOffset
+      lastDragOffset = nextOffset
+      lastDragTime = now
       normalizeOffset()
       track.style.transform = `translate3d(${-offset}px, 0, 0)`
-      lastInteraction = performance.now()
+      lastInteraction = now
     }
 
     const endDrag = (event: PointerEvent) => {
       if (!isDragging) return
       isDragging = false
-      container.releasePointerCapture(event.pointerId)
+      if (container.hasPointerCapture(event.pointerId)) container.releasePointerCapture(event.pointerId)
       container.classList.remove('cursor-grabbing')
-      targetSpeed = baseSpeed
-      lastInteraction = performance.now()
+      const now = performance.now()
+      const momentum = Math.max(-1.35, Math.min(1.35, dragVelocity))
+      targetSpeed = Math.abs(momentum) > 0.08 ? momentum : baseSpeed
+      speed = targetSpeed * 0.86
+      glideUntil = now + 1350
+      lastInteraction = now
     }
 
     window.addEventListener('scroll', onScroll, { passive: true })
