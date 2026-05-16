@@ -35,7 +35,7 @@ function ScrollReveal({ children, direction = 'up', snapLabel }: { children: Rea
 }
 
 function BackgroundBreathSlide() {
-  return null
+  return <div aria-hidden="true" className="h-48 lg:h-72" />
 }
 
 export function HomePageShell() {

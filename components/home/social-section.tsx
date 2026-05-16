@@ -71,6 +71,21 @@ export function SocialSection() {
           : locale === 'tr'
             ? 'Tedarik notları, ambalaj yönü ve doğrulanmış ürün güncellemeleri için JISOO bakım stüdyosunu takip edin.'
             : 'Follow the JISOO care studio for sourcing notes, packaging direction, and verified product updates.'
+  const viewsLabel = locale === 'ar' ? 'مشاهدة' : locale === 'fr' ? 'vues' : locale === 'de' ? 'Aufrufe' : locale === 'ko' ? '조회' : locale === 'tr' ? 'görüntüleme' : 'views'
+  const ugcCopy = locale === 'ar' ? 'اذكري' : locale === 'fr' ? 'Mentionnez' : locale === 'de' ? 'Markiere' : locale === 'ko' ? '태그하고' : locale === 'tr' ? 'Etiketleyin' : 'Tag'
+  const ugcAndUse = locale === 'ar' ? 'واستخدمي' : locale === 'fr' ? 'et utilisez' : locale === 'de' ? 'und nutze' : locale === 'ko' ? '사용해 소개될 기회를 얻으세요' : locale === 'tr' ? 've kullanın' : 'and use'
+  const ugcFeatured = locale === 'ar' ? 'ليتم عرضك!' : locale === 'fr' ? 'pour être mis en avant !' : locale === 'de' ? 'um vorgestellt zu werden!' : locale === 'ko' ? '' : locale === 'tr' ? 'öne çıkmak için!' : 'to be featured!'
+  const localizedCaption = (caption: string) => {
+    const translations: Record<string, Partial<Record<typeof locale, string>>> = {
+      'Editorial care moodboard': { ar: 'لوحة مزاجية للعناية التحريرية', fr: 'Moodboard soin éditorial', de: 'Editoriales Pflege-Moodboard', ko: '에디토리얼 케어 무드보드', tr: 'Editoryal bakım panosu' },
+      'Care routine planning': { ar: 'تخطيط روتين العناية', fr: 'Planification de routine soin', de: 'Planung der Pflegeroutine', ko: '케어 루틴 플래닝', tr: 'Bakım rutini planlama' },
+      'Verified results framework': { ar: 'إطار النتائج الموثقة', fr: 'Cadre de résultats vérifiés', de: 'Rahmen für verifizierte Ergebnisse', ko: '검증 결과 프레임워크', tr: 'Doğrulanmış sonuç çerçevesi' },
+      'Packaging direction study': { ar: 'دراسة اتجاه التغليف', fr: 'Étude direction packaging', de: 'Studie zur Packaging-Richtung', ko: '패키징 방향 연구', tr: 'Ambalaj yönü çalışması' },
+      'Supplier review workflow': { ar: 'سير مراجعة الموردين', fr: 'Flux de revue fournisseur', de: 'Workflow zur Lieferantenprüfung', ko: '공급사 검토 워크플로', tr: 'Tedarikçi inceleme akışı' },
+      'Care texture reference': { ar: 'مرجع ملمس العناية', fr: 'Référence texture soin', de: 'Referenz für Pflegetextur', ko: '케어 텍스처 레퍼런스', tr: 'Bakım dokusu referansı' },
+    }
+    return translations[caption]?.[locale] ?? caption
+  }
   return (
     <AtmosphereSection atmosphere="blush" className="pb-10 pt-32 lg:pb-12 lg:pt-44" data-snap-target="community">
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
@@ -91,7 +106,7 @@ export function SocialSection() {
             >
               <EditorialMedia
                 src={post.image}
-                alt={post.caption}
+                alt={localizedCaption(post.caption)}
                 className="absolute inset-0"
                 sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 16vw"
                 overlayClassName="bg-gradient-to-t from-charcoal/60 to-charcoal/10"
@@ -114,7 +129,7 @@ export function SocialSection() {
                   ) : (
                     <div className="flex items-center justify-center gap-2">
                       <Play className="w-5 h-5" />
-                      <span className="text-sm">{post.views} views</span>
+                      <span className="text-sm">{post.views} {viewsLabel}</span>
                     </div>
                   )}
                 </div>
@@ -167,8 +182,8 @@ export function SocialSection() {
         {/* UGC CTA */}
         <div className="mt-16 text-center">
           <p className="text-muted-foreground">
-            Tag <strong className="text-plum">@JISOOBeauty</strong> and use{' '}
-            <strong className="text-plum">#JISOOGlow</strong> to be featured!
+            {ugcCopy} <strong className="text-plum">@JISOOBeauty</strong> {ugcAndUse}{' '}
+            <strong className="text-plum">#JISOOGlow</strong> {ugcFeatured}
           </p>
         </div>
       </div>

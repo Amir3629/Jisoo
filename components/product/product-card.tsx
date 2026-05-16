@@ -27,6 +27,20 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
   const { locale, dictionary } = useLocale()
   const access = evaluateRegionAccess(product, region)
   const cardName = displayName ?? product.name
+  const localizedCategory = (() => {
+    const value = product.category.trim().toLowerCase()
+    const labels: Record<string, Record<typeof locale, string>> = {
+      serum: { ar: 'سيروم', fr: 'Sérum', de: 'Serum', ko: '세럼', tr: 'Serum', en: 'Serum' },
+      cleanser: { ar: 'منظف', fr: 'Nettoyant', de: 'Reiniger', ko: '클렌저', tr: 'Temizleyici', en: 'Cleanser' },
+      'toner pad': { ar: 'باد تونر', fr: 'Pads tonifiants', de: 'Toner-Pads', ko: '토너 패드', tr: 'Tonik pedi', en: 'Toner Pad' },
+      'sun care': { ar: 'عناية شمسية', fr: 'Soin solaire', de: 'Sonnenpflege', ko: '선 케어', tr: 'Güneş bakımı', en: 'Sun Care' },
+      cream: { ar: 'كريم', fr: 'Crème', de: 'Creme', ko: '크림', tr: 'Krem', en: 'Cream' },
+      toner: { ar: 'تونر', fr: 'Tonique', de: 'Toner', ko: '토너', tr: 'Tonik', en: 'Toner' },
+      mask: { ar: 'قناع', fr: 'Masque', de: 'Maske', ko: '마스크', tr: 'Maske', en: 'Mask' },
+      oil: { ar: 'زيت', fr: 'Huile', de: 'Öl', ko: '오일', tr: 'Yağ', en: 'Oil' },
+    }
+    return labels[value]?.[locale] ?? product.category
+  })()
   const wishlistAria = locale === 'ar' ? `أضف ${cardName} إلى المفضلة` : locale === 'fr' ? `Ajouter ${cardName} à la liste d’envies` : locale === 'de' ? `${cardName} zur Wunschliste hinzufügen` : locale === 'ko' ? `${cardName} 위시리스트에 추가` : locale === 'tr' ? `${cardName} favorilere ekle` : `Add ${cardName} to wishlist`
 
   if (!access.isVisible) {
@@ -71,7 +85,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
       <div className={cn('space-y-4 p-5', compact && 'p-4')}>
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-charcoal/72">
-            {product.category}
+            {localizedCategory}
           </p>
           <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
             <h3 className="text-lg font-medium leading-snug text-charcoal">

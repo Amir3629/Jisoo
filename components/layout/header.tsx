@@ -174,7 +174,7 @@ export function Header({
     { label: locale === 'ar' ? 'إشراقة JISOO لطقس جمال يومي' : locale === 'fr' ? 'L’éclat JISOO, un rituel beauté quotidien' : locale === 'de' ? 'JISOO Glow für dein tägliches Schönheitsritual' : locale === 'ko' ? '지수의 빛, 매일의 아름다운 리추얼' : locale === 'tr' ? 'JISOO ışıltısı, günlük güzellik ritüeli' : 'JISOO glow for every daily beauty ritual' },
     { label: 'Facebook', href: 'https://www.facebook.com', icon: FacebookBrand, className: 'text-[#1877F2]' },
     { label: 'TikTok', href: 'https://www.tiktok.com', icon: TiktokBrand, className: 'text-black drop-shadow-[1px_0_0_#22d3ee] [text-shadow:-1px_0_0_#ec4899]' },
-    { label: 'Excellent on Trustpilot', href: 'https://www.trustpilot.com', icon: TrustpilotBrand, className: 'text-[#00B67A]' },
+    { label: locale === 'ar' ? 'ممتاز على Trustpilot' : locale === 'fr' ? 'Excellent sur Trustpilot' : locale === 'de' ? 'Ausgezeichnet auf Trustpilot' : locale === 'ko' ? 'Trustpilot 우수 평가' : locale === 'tr' ? 'Trustpilot’ta mükemmel' : 'Excellent on Trustpilot', href: 'https://www.trustpilot.com', icon: TrustpilotBrand, className: 'text-[#00B67A]' },
     { label: 'Instagram', href: 'https://www.instagram.com', icon: InstagramBrand, className: 'text-[#E4405F]' },
   ]
   const { scrollYProgress } = useScroll()

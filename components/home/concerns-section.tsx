@@ -26,6 +26,19 @@ export function ConcernsSection() {
     description: locale === 'ar' ? 'اعثري على منتجات مصممة لاحتياجات بشرتك المحددة.' : locale === 'fr' ? 'Trouvez des produits formulés pour vos besoins cutanés précis.' : locale === 'de' ? 'Finde Formeln für deine konkreten Hautbedürfnisse.' : locale === 'ko' ? '피부 고민에 맞춘 제품을 찾아보세요.' : locale === 'tr' ? 'Cilt ihtiyacınıza özel formülleri bulun.' : 'Find products formulated to address your specific skin concerns. Korean beauty expertise meets your unique needs.',
     products: locale === 'ar' ? 'منتج' : locale === 'fr' ? 'produits' : locale === 'de' ? 'Produkte' : locale === 'ko' ? '개 제품' : locale === 'tr' ? 'ürün' : 'products',
   }
+  const localizedConcernName = (name: string) => {
+    const translations: Record<string, Partial<Record<typeof locale, string>>> = {
+      Hydration: { ar: 'الترطيب', fr: 'Hydratation', de: 'Feuchtigkeit', ko: '수분', tr: 'Nem' },
+      Soothing: { ar: 'التهدئة', fr: 'Apaisement', de: 'Beruhigung', ko: '진정', tr: 'Yatıştırma' },
+      'Glow & Radiance': { ar: 'التوهّج والإشراق', fr: 'Éclat & lumière', de: 'Glow & Strahlkraft', ko: '광채', tr: 'Işıltı ve parlaklık' },
+      Pores: { ar: 'المسام', fr: 'Pores', de: 'Poren', ko: '모공', tr: 'Gözenekler' },
+      'Tone-Up': { ar: 'توحيد اللون', fr: 'Correction du teint', de: 'Tone-Up', ko: '톤업', tr: 'Ton eşitleme' },
+      'Sensitive Skin': { ar: 'البشرة الحساسة', fr: 'Peau sensible', de: 'Empfindliche Haut', ko: '민감성 피부', tr: 'Hassas cilt' },
+      'Anti-Aging': { ar: 'مقاومة علامات التقدم', fr: 'Anti-âge', de: 'Anti-Aging', ko: '안티에이징', tr: 'Yaşlanma karşıtı' },
+      'Acne & Blemishes': { ar: 'الحبوب والشوائب', fr: 'Acné & imperfections', de: 'Akne & Unreinheiten', ko: '트러블', tr: 'Akne ve lekeler' },
+    }
+    return translations[name]?.[locale] ?? name
+  }
   return (
     <AtmosphereSection atmosphere="blush" withAtmosphereOverlay={false} className="relative overflow-hidden py-16 lg:py-24">
       <div className="relative max-w-7xl mx-auto px-4 lg:px-6">
@@ -62,7 +75,7 @@ export function ConcernsSection() {
                       <concern.icon className="w-8 h-8 text-charcoal/80" />
                     </div>
                     <h3 className="font-medium text-charcoal text-center text-sm lg:text-base">
-                      {concern.name}
+                      {localizedConcernName(concern.name)}
                     </h3>
                     <p className="text-xs text-charcoal/60 mt-1">
                       {concern.count} {copy.products}

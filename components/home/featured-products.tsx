@@ -63,6 +63,10 @@ export function FeaturedProducts() {
     kicker: locale === 'ar' ? 'اختيارات العناية' : locale === 'fr' ? 'La sélection soin' : locale === 'de' ? 'Die Pflege-Auswahl' : locale === 'ko' ? '케어 에디트' : locale === 'tr' ? 'Bakım Seçkisi' : 'The Care Edit',
     title: locale === 'ar' ? 'تركيبات عناية بأسلوب معرض' : locale === 'fr' ? 'Formules de soin, style galerie' : locale === 'de' ? 'Pflegeformeln im Galerie-Stil' : locale === 'ko' ? '갤러리처럼 구성한 케어 포뮬러' : locale === 'tr' ? 'Galeri stili bakım formülleri' : 'Care Formulas, Gallery Styled',
     description: locale === 'ar' ? 'تسلسل من الكريمات والزيوت والأقنعة والعناية اليومية بإحساس ملموس.' : locale === 'fr' ? 'Une séquence de crèmes, huiles, masques et soins quotidiens avec une mise en scène tactile.' : locale === 'de' ? 'Eine kuratierte Abfolge von Cremes, Ölen, Masken und täglicher Pflege.' : locale === 'ko' ? '크림, 오일, 마스크, 데일리 케어를 감각적인 무드로 구성했습니다.' : locale === 'tr' ? 'Kremler, yağlar, maskeler ve günlük bakımdan oluşan atmosferik bir seçki.' : 'A curated sequence of creams, oils, masks, and daily care formulas with atmospheric framing.',
+    gallery: locale === 'ar' ? 'المعرض' : locale === 'fr' ? 'Galerie' : locale === 'de' ? 'Galerie' : locale === 'ko' ? '갤러리' : locale === 'tr' ? 'Galeri' : 'Gallery',
+    swipe: locale === 'ar' ? 'اسحبي' : locale === 'fr' ? 'Balayer' : locale === 'de' ? 'Wischen' : locale === 'ko' ? '스와이프' : locale === 'tr' ? 'Kaydır' : 'Swipe',
+    gridHint: locale === 'ar' ? 'صفّان أولًا، ثم افتحي الكتالوج الكامل.' : locale === 'fr' ? 'Deux rangées d’abord, puis développez tout le catalogue.' : locale === 'de' ? 'Zuerst zwei Reihen, dann den ganzen Katalog öffnen.' : locale === 'ko' ? '먼저 두 줄을 보고 전체 카탈로그를 펼치세요.' : locale === 'tr' ? 'Önce iki sıra, sonra tüm kataloğu açın.' : 'Two rows first, expand for the full catalog.',
+    swipeHint: locale === 'ar' ? 'اسحبي جانبيًا لتصفّح المزيد من التركيبات.' : locale === 'fr' ? 'Balayez sur le côté pour voir plus de formules.' : locale === 'de' ? 'Seitlich wischen, um mehr Formeln zu sehen.' : locale === 'ko' ? '옆으로 스와이프해 더 많은 포뮬러를 보세요.' : locale === 'tr' ? 'Daha fazla formül için yana kaydırın.' : 'Swipe sideways to browse more formulas.',
   }
 
   return (
@@ -86,8 +90,8 @@ export function FeaturedProducts() {
         <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
           <div className="inline-flex rounded-full border border-[#cfae83]/28 bg-warm-ivory/70 p-1">
             {[
-              { id: 'grid', label: 'Gallery', icon: Rows3 },
-              { id: 'swipe', label: 'Swipe', icon: StretchHorizontal },
+              { id: 'grid', label: copy.gallery, icon: Rows3 },
+              { id: 'swipe', label: copy.swipe, icon: StretchHorizontal },
             ].map((mode) => {
               const Icon = mode.icon
               const active = viewMode === mode.id
@@ -109,7 +113,7 @@ export function FeaturedProducts() {
           </div>
 
           <p className="text-xs text-charcoal/58">
-            {viewMode === 'grid' ? 'Two rows first, expand for the full catalog.' : 'Swipe sideways to browse more formulas.'}
+            {viewMode === 'grid' ? copy.gridHint : copy.swipeHint}
           </p>
         </div>
 

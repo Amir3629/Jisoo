@@ -411,8 +411,13 @@ function ImageEditorialHero({
     { label: locale === 'ar' ? 'مجموعات' : locale === 'fr' ? 'Sets' : locale === 'de' ? 'Sets' : locale === 'ko' ? '세트' : locale === 'tr' ? 'Setler' : 'Sets', image: '/assets/icons/sets.png', href: '/shop?category=bundles-sets' },
     { label: locale === 'ar' ? 'المنتجات' : locale === 'fr' ? 'Produits' : locale === 'de' ? 'Produkte' : locale === 'ko' ? '제품' : locale === 'tr' ? 'Ürünler' : 'Products', image: '/assets/icons/products.png', href: '/shop' },
   ]
-  const heading = 'Beauty, Carefully Chosen'
-  const body = 'Curated Korean beauty, selected with care for your daily ritual.'
+  const heading = locale === 'ar' ? 'جمال مختار بعناية' : locale === 'fr' ? 'La beauté choisie avec soin' : locale === 'de' ? 'Schönheit, sorgfältig ausgewählt' : locale === 'ko' ? '정성껏 고른 아름다움' : locale === 'tr' ? 'Özenle Seçilmiş Güzellik' : 'Beauty, Carefully Chosen'
+  const mobileHeadingLineOne = locale === 'ar' ? 'جمال مختار' : locale === 'fr' ? 'Beauté choisie' : locale === 'de' ? 'Schönheit' : locale === 'ko' ? '정성껏 고른' : locale === 'tr' ? 'Özenli Güzellik' : 'Beauty, Carefully'
+  const mobileHeadingLineTwo = locale === 'ar' ? 'بعناية' : locale === 'fr' ? 'avec soin' : locale === 'de' ? 'mit Sorgfalt' : locale === 'ko' ? '아름다움' : locale === 'tr' ? 'Seçildi' : 'Chosen'
+  const kicker = locale === 'ar' ? 'افتتاحية JISOO' : locale === 'fr' ? 'ÉDITORIAL JISOO' : locale === 'de' ? 'JISOO EDITORIAL' : locale === 'ko' ? 'JISOO 에디토리얼' : locale === 'tr' ? 'JISOO EDİTÖRYAL' : 'JISOO EDITORIAL'
+  const body = locale === 'ar' ? 'جمال كوري منسّق بعناية لطقسك اليومي.' : locale === 'fr' ? 'La beauté coréenne sélectionnée avec soin pour votre rituel quotidien.' : locale === 'de' ? 'Korean Beauty, sorgfältig für dein tägliches Ritual ausgewählt.' : locale === 'ko' ? '매일의 리추얼을 위해 세심하게 고른 한국 뷰티.' : locale === 'tr' ? 'Günlük ritüeliniz için özenle seçilmiş Kore güzelliği.' : 'Curated Korean beauty, selected with care for your daily ritual.'
+  const heroProductsLabel = locale === 'ar' ? 'تسوّقي منتجات الواجهة' : locale === 'fr' ? 'Acheter les produits du héros' : locale === 'de' ? 'Hero-Produkte shoppen' : locale === 'ko' ? '히어로 제품 쇼핑' : locale === 'tr' ? 'Ana ürünleri satın al' : 'Shop hero products'
+  const shopHotspotLabel = (label: string) => locale === 'ar' ? `تسوّقي ${label}` : locale === 'fr' ? `Acheter ${label}` : locale === 'de' ? `${label} shoppen` : locale === 'ko' ? `${label} 쇼핑` : locale === 'tr' ? `${label} satın al` : `Shop ${label}`
   const lightText = showCategoryNav
   const mobileImage = showCategoryNav ? media.primary : HOME_EDITORIAL_MOBILE_IMAGE
   const headlineFontStyle = {
@@ -434,13 +439,13 @@ function ImageEditorialHero({
         <div className="absolute inset-0 bg-[#d9bb83] mix-blend-multiply" style={{ opacity: heroToneOpacity }} />
         {lightText && <div className="absolute inset-0 bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent" />}
         {!showCategoryNav && (
-          <div className="absolute inset-0 z-[2]" aria-label="Shop hero products">
+          <div className="absolute inset-0 z-[2]" aria-label={heroProductsLabel}>
             {heroProductHotspots.map((hotspot) => (
               <Link
                 key={hotspot.label}
                 href={localizeHref(hotspot.href, locale)}
-                aria-label={`Shop ${hotspot.label}`}
-                title={`Shop ${hotspot.label}`}
+                aria-label={shopHotspotLabel(hotspot.label)}
+                title={shopHotspotLabel(hotspot.label)}
                 className={cn('absolute rounded-[2rem] transition hover:bg-white/5 focus-visible:bg-white/12 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#cfae83]/70', hotspot.className)}
               />
             ))}
@@ -465,7 +470,7 @@ function ImageEditorialHero({
           </motion.div>
         )}
         <div className="absolute left-6 top-[9.35rem] max-w-2xl sm:left-8 md:top-[7.2rem] lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
-          <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>JISOO EDITORIAL</p>
+          <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>{kicker}</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
             key={`desktop-${selectedFont.id}`}
@@ -481,11 +486,11 @@ function ImageEditorialHero({
             data-selected-font={selectedFont.name}
             className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', lightText ? 'text-white' : 'text-charcoal')}
           >
-            <span className="block">Beauty, Carefully</span>
-            <span className="block text-[2.7rem] leading-[0.96]">Chosen</span>
+            <span className="block">{mobileHeadingLineOne}</span>
+            <span className="block text-[2.7rem] leading-[0.96]">{mobileHeadingLineTwo}</span>
           </h1>
           <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', lightText ? 'text-white/84' : 'text-charcoal/72')}>
-            <span className="md:hidden">Curated Korean beauty, selected with<br />care for your daily ritual.</span>
+            <span className="md:hidden">{body}</span>
             <span className="hidden md:inline">{body}</span>
           </p>
           <div className="mt-10 md:mt-7"><PrimaryCta locale={locale} /></div>

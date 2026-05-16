@@ -69,6 +69,55 @@ export function RitualSection() {
     description: locale === 'ar' ? 'سيتم نشر خطوات الروتين بعد مراجعة بيانات الموردين.' : locale === 'fr' ? 'Les étapes seront publiées après vérification des données fournisseurs.' : locale === 'de' ? 'Routineschritte erscheinen nach Prüfung der Lieferantendaten.' : locale === 'ko' ? '공급사 자료 검토 후 루틴 단계가 공개됩니다.' : locale === 'tr' ? 'Rutin adımları tedarikçi verileri doğrulandıktan sonra yayınlanacak.' : 'Routine steps will be published after supplier documentation and internal review.',
     step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',
   }
+
+  const localizedStep = (step: (typeof ritualSteps)[number]) => {
+    const translations: Record<string, Partial<Record<typeof locale, { title: string; description: string }>>> = {
+      Cleanse: {
+        ar: { title: 'التنظيف', description: 'ابدئي بمنظف موثّق بعد اعتماد مستندات المورد.' },
+        fr: { title: 'Nettoyer', description: 'Commencez par un nettoyant vérifié après validation des documents fournisseur.' },
+        de: { title: 'Reinigen', description: 'Starte mit einem verifizierten Reiniger, sobald die Lieferantendokumente freigegeben sind.' },
+        ko: { title: '클렌징', description: '공급사 문서 승인 후 검증된 클렌저로 시작하세요.' },
+        tr: { title: 'Temizle', description: 'Tedarikçi belgeleri onaylandıktan sonra doğrulanmış bir temizleyiciyle başlayın.' },
+      },
+      'Tone & Prep': {
+        ar: { title: 'التونر والتحضير', description: 'استخدمي التونر أو خطوة التحضير فقط بعد مراجعة التركيبة والاستخدام وقائمة المكونات.' },
+        fr: { title: 'Tonifier & préparer', description: 'Utilisez le tonique ou la préparation après validation finale de la formule, de l’usage et de l’INCI.' },
+        de: { title: 'Tonen & vorbereiten', description: 'Toner oder Prep-Schritte folgen erst nach finaler Formel-, Anwendungs- und INCI-Prüfung.' },
+        ko: { title: '토닝 & 준비', description: '최종 포뮬러, 사용법, INCI 검토 후 토너 또는 준비 단계를 사용하세요.' },
+        tr: { title: 'Tonikle & hazırla', description: 'Tonik veya hazırlık adımı yalnızca formül, kullanım ve INCI incelemesinden sonra kullanılır.' },
+      },
+      Treat: {
+        ar: { title: 'المعالجة', description: 'سيتم ترتيب خطوات المعالجة حسب الاحتياجات المؤكدة والادعاءات المعتمدة.' },
+        fr: { title: 'Traiter', description: 'Les étapes de traitement seront organisées par besoins confirmés et promesses approuvées.' },
+        de: { title: 'Behandeln', description: 'Treatment-Schritte werden nach bestätigten Anliegen und freigegebenen Aussagen geordnet.' },
+        ko: { title: '집중 케어', description: '트리트먼트 단계는 확인된 고민과 승인된 표현에 맞춰 정리됩니다.' },
+        tr: { title: 'Bakım uygula', description: 'Bakım adımları doğrulanmış ihtiyaçlara ve onaylı ifadelere göre düzenlenecek.' },
+      },
+      Moisturize: {
+        ar: { title: 'الترطيب', description: 'سيتم وصف الكريمات والزيوت بنص محايد بعد توثيق المورد.' },
+        fr: { title: 'Hydrater', description: 'Les crèmes et huiles seront décrites avec un texte neutre après vérification fournisseur.' },
+        de: { title: 'Befeuchten', description: 'Cremes und Öle werden nach Lieferantenprüfung neutral beschrieben.' },
+        ko: { title: '보습', description: '크림과 오일은 공급사 검증 후 중립적인 문구로 설명됩니다.' },
+        tr: { title: 'Nemlendir', description: 'Kremler ve yağlar tedarikçi doğrulamasından sonra nötr metinle anlatılacak.' },
+      },
+      Protect: {
+        ar: { title: 'الحماية', description: 'ستُنشر إرشادات العناية الشمسية فقط بعد مراجعة الامتثال الإقليمي.' },
+        fr: { title: 'Protéger', description: 'Les conseils solaires seront publiés après vérification réglementaire régionale.' },
+        de: { title: 'Schützen', description: 'Sonnenpflege-Hinweise erscheinen erst nach konformer regionaler Prüfung.' },
+        ko: { title: '보호', description: '선 케어 안내는 지역별 컴플라이언스 검토 후 게시됩니다.' },
+        tr: { title: 'Koru', description: 'Güneş bakımı rehberi bölgesel uygunluk incelemesinden sonra yayımlanacak.' },
+      },
+      Glow: {
+        ar: { title: 'الإشراق', description: 'اختتمي بلحظة طقس متوازنة: ملمس هادئ، ضوء ناعم، وثقة يومية.' },
+        fr: { title: 'Éclat', description: 'Terminez par un moment rituel composé: texture calme, lumière douce et confiance quotidienne.' },
+        de: { title: 'Glow', description: 'Schließe mit einem ruhigen Ritualmoment ab: sanfte Textur, weiches Licht und tägliches Vertrauen.' },
+        ko: { title: '광채', description: '차분한 텍스처, 부드러운 빛, 일상의 자신감으로 리추얼을 마무리하세요.' },
+        tr: { title: 'Işıltı', description: 'Sakin doku, yumuşak ışık ve günlük güvenle ritüeli tamamlayın.' },
+      },
+    }
+    return { ...step, ...(translations[step.title]?.[locale] ?? {}) }
+  }
+
   return (
     <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="py-24 lg:py-32">
       <div className="relative">
@@ -110,11 +159,11 @@ export function RitualSection() {
                     </div>
 
                     <h3 className="mb-4 font-serif text-2xl font-bold text-charcoal lg:text-3xl">
-                      {step.title}
+                      {localizedStep(step).title}
                     </h3>
 
                     <p className="max-w-md text-lg leading-relaxed text-muted-foreground">
-                      {step.description}
+                      {localizedStep(step).description}
                     </p>
                   </div>
 
@@ -128,7 +177,7 @@ export function RitualSection() {
                     >
                       <EditorialMedia
                         src={step.image}
-                        alt={step.title}
+                        alt={localizedStep(step).title}
                         className="absolute inset-0"
                         sizes="(max-width: 1024px) 100vw, 384px"
                         hint={`${copy.step} ${step.number}`}

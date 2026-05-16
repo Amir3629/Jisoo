@@ -171,7 +171,7 @@ export function TestimonialsSection() {
   }, [])
 
   return (
-    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden pb-64 pt-14 lg:pb-96 lg:pt-20">
+    <AtmosphereSection atmosphere="ivory" withAtmosphereOverlay={false} className="relative overflow-hidden pb-80 pt-14 lg:pb-[34rem] lg:pt-20">
       <div className="relative">
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           <ChapterHeading
