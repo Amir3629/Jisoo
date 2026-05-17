@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
@@ -35,10 +36,29 @@ function ScrollReveal({ children, direction = 'up', snapLabel }: { children: Rea
 }
 
 function BackgroundBreathSlide() {
-  return null
+  return (
+    <div
+      aria-hidden="true"
+      className="h-[52vh] min-h-[320px] lg:h-[42vh]"
+    />
+  )
 }
 
 export function HomePageShell() {
+  useEffect(() => {
+    const scrollToFirstHero = () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+
+    if (window.sessionStorage.getItem('jisoo-logo-target') === 'home-hero') {
+      window.sessionStorage.removeItem('jisoo-logo-target')
+      window.requestAnimationFrame(scrollToFirstHero)
+    }
+
+    window.addEventListener('jisoo-logo-home', scrollToFirstHero)
+    return () => window.removeEventListener('jisoo-logo-home', scrollToFirstHero)
+  }, [])
+
   return (
     <LuxuryIntroSplash>
       <main className="home-continuous-surface snap-page-flow min-h-screen relative">

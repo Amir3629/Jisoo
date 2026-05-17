@@ -77,6 +77,7 @@ export function CategoriesSection() {
                   imageClassName="object-[center_38%] lg:scale-[1.14]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
                   overlayClassName="none"
+                  hintClassName="text-charcoal"
                 />
               </div>
               <div className="relative h-[52svh] min-h-[340px] overflow-hidden rounded-[1.6rem] bg-transparent lg:h-full lg:min-h-[560px] lg:rounded-none">
@@ -88,6 +89,7 @@ export function CategoriesSection() {
                   imageClassName="object-[center_38%] lg:scale-[1.14]"
                   sizes="(max-width: 1024px) 100vw, 36vw"
                   overlayClassName="none"
+                  hintClassName="text-charcoal"
                 />
               </div>
             </div>

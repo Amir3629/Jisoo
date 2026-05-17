@@ -14,6 +14,7 @@ interface EditorialMediaProps {
   hint?: string
   imageClassName?: string
   overlayClassName?: string
+  hintClassName?: string
 }
 
 export function EditorialMedia({
@@ -25,6 +26,7 @@ export function EditorialMedia({
   hint,
   imageClassName,
   overlayClassName,
+  hintClassName,
 }: EditorialMediaProps) {
   const [imageError, setImageError] = useState(false)
   const safeSrc = resolveImageSrc(src)
@@ -51,7 +53,7 @@ export function EditorialMedia({
       )}
 
       {hint && (
-        <div className="absolute left-4 bottom-4 rounded-full border border-white/35 bg-white/35 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/90">
+        <div className={cn('absolute left-4 bottom-4 rounded-full border border-white/35 bg-white/35 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-white/90', hintClassName)}>
           {hint}
         </div>
       )}
