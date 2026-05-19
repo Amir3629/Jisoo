@@ -8,30 +8,30 @@
   --plum: #9e7b8a;
   --rose-mauve: #d6a8ba;
   --blush-pink: #f6e2ea;
-  --warm-ivory: #e4d0ad;
+  --warm-ivory: #f5e5cc;
   --nude-beige: #f1e1ca;
   --champagne-gold: #cfae84;
   --charcoal: #2c2528;
   
   /* Semantic tokens mapped to brand */
-  --background: #e4d0ad;
+  --background: #f5e5cc;
   --foreground: #2C2528;
-  --card: #edddc3;
+  --card: #f8ebd3;
   --card-foreground: #2C2528;
-  --popover: #edddc3;
+  --popover: #f8ebd3;
   --popover-foreground: #2C2528;
   --primary: #d6a8ba;
   --primary-foreground: #ead9c3;
-  --secondary: #F8EDE6;
+  --secondary: #f0dec0;
   --secondary-foreground: #8c6677;
-  --muted: #F8EDE6;
+  --muted: #f0dec0;
   --muted-foreground: #7A676F;
   --accent: #efd2de;
   --accent-foreground: #6f4f5d;
   --destructive: #D64545;
   --destructive-foreground: #FFFFFF;
-  --border: #F0D7E0;
-  --input: #F0D7E0;
+  --border: #e9d5b4;
+  --input: #e9d5b4;
   --ring: #d6a8ba;
   --radius: 0.75rem;
   --jisoo-preview-font: 'Baskerville', 'Libre Baskerville', 'Georgia', serif;
@@ -166,6 +166,21 @@ body {
   /* RTL Support */
   [dir="rtl"] {
     direction: rtl;
+  }
+
+  [dir="rtl"] body {
+    text-align: right;
+  }
+
+  [dir="rtl"] .text-left,
+  [dir="rtl"] .text-center,
+  [dir="rtl"] .text-start {
+    text-align: right !important;
+  }
+
+  [dir="rtl"] .text-right,
+  [dir="rtl"] .text-end {
+    text-align: left !important;
   }
 
   html {

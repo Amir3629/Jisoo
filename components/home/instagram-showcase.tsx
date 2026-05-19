@@ -67,37 +67,38 @@ const SOCIAL_COPY: Record<
     stats: { posts: string; followers: string; following: string; likes: string }
     cta: { follow: string; likeFollow: string }
     viewProfile: string
+    profileAlt: string
   }
 > = {
   en: {
     stats: { posts: 'Posts', followers: 'Followers', following: 'Following', likes: 'Likes' },
     cta: { follow: 'Follow', likeFollow: 'Like / Follow' },
-    viewProfile: 'View full profile →',
+    viewProfile: 'View full profile →', profileAlt: 'JISOO Cosmetics profile',
   },
   ar: {
     stats: { posts: 'المنشورات', followers: 'المتابعون', following: 'يتابع', likes: 'الإعجابات' },
     cta: { follow: 'متابعة', likeFollow: 'إعجاب / متابعة' },
-    viewProfile: 'عرض الملف الكامل ←',
+    viewProfile: 'عرض الملف الكامل ←', profileAlt: 'ملف JISOO Cosmetics',
   },
   fr: {
     stats: { posts: 'Publications', followers: 'Abonnés', following: 'Abonnements', likes: 'Mentions J’aime' },
     cta: { follow: 'Suivre', likeFollow: 'Aimer / Suivre' },
-    viewProfile: 'Voir le profil complet →',
+    viewProfile: 'Voir le profil complet →', profileAlt: 'Profil JISOO Cosmetics',
   },
   de: {
     stats: { posts: 'Beiträge', followers: 'Follower', following: 'Folgt', likes: 'Gefällt mir' },
     cta: { follow: 'Folgen', likeFollow: 'Gefällt mir / Folgen' },
-    viewProfile: 'Vollständiges Profil anzeigen →',
+    viewProfile: 'Vollständiges Profil anzeigen →', profileAlt: 'JISOO Cosmetics Profil',
   },
   ko: {
     stats: { posts: '게시물', followers: '팔로워', following: '팔로잉', likes: '좋아요' },
     cta: { follow: '팔로우', likeFollow: '좋아요 / 팔로우' },
-    viewProfile: '전체 프로필 보기 →',
+    viewProfile: '전체 프로필 보기 →', profileAlt: 'JISOO Cosmetics 프로필',
   },
   tr: {
     stats: { posts: 'Gönderi', followers: 'Takipçi', following: 'Takip', likes: 'Beğeni' },
     cta: { follow: 'Takip Et', likeFollow: 'Beğen / Takip Et' },
-    viewProfile: 'Tam profili görüntüle →',
+    viewProfile: 'Tam profili görüntüle →', profileAlt: 'JISOO Cosmetics profili',
   },
 }
 
@@ -105,6 +106,36 @@ export function InstagramShowcase() {
   const [activeTab, setActiveTab] = useState<SocialTab>('instagram')
   const { locale } = useLocale()
   const copy = SOCIAL_COPY[locale]
+  const localizedPostText = (text: string) => {
+    const translations: Record<string, Partial<Record<typeof locale, string>>> = {
+      'Rose-light layering ritual.': { ar: 'طقس طبقات بضوء وردي.', fr: 'Rituel de superposition rose-lumière.', de: 'Rose-Light Layering-Ritual.', ko: '로즈 라이트 레이어링 리추얼.', tr: 'Gül ışığı katmanlama ritüeli.' },
+      'Soft cream texture focus.': { ar: 'تركيز على ملمس الكريم الناعم.', fr: 'Focus texture crème douce.', de: 'Fokus auf sanfte Creme-Textur.', ko: '부드러운 크림 텍스처 포커스.', tr: 'Yumuşak krem dokusu odağı.' },
+      'Studio Seoul signature edit.': { ar: 'تحرير ستوديو سيول المميز.', fr: 'Sélection signature Studio Séoul.', de: 'Studio-Seoul Signature-Edit.', ko: '스튜디오 서울 시그니처 에디트.', tr: 'Studio Seoul imza seçkisi.' },
+      'Hydration with editorial finish.': { ar: 'ترطيب بلمسة تحريرية.', fr: 'Hydratation au fini éditorial.', de: 'Feuchtigkeit mit editorialem Finish.', ko: '에디토리얼 피니시의 수분감.', tr: 'Editoryal bitişli nem.' },
+      'AM SPF with cloud-light skin.': { ar: 'واقي صباحي ببشرة خفيفة كالسحاب.', fr: 'SPF du matin, peau légère comme un nuage.', de: 'AM SPF mit wolkenleichter Haut.', ko: '구름처럼 가벼운 아침 SPF.', tr: 'Bulut hafifliğinde AM SPF.' },
+      'Dropper precision and glow.': { ar: 'دقة القطّارة والتوهّج.', fr: 'Précision pipette et éclat.', de: 'Pipetten-Präzision und Glow.', ko: '드로퍼의 정밀함과 광채.', tr: 'Damlalık hassasiyeti ve ışıltı.' },
+      'Night barrier support routine.': { ar: 'روتين ليلي لدعم الحاجز.', fr: 'Routine nuit soutien barrière.', de: 'Nächtliche Barrier-Support-Routine.', ko: '나이트 장벽 케어 루틴.', tr: 'Gece bariyer destek rutini.' },
+      'JISOO cream ritual moment.': { ar: 'لحظة طقس كريم JISOO.', fr: 'Moment rituel crème JISOO.', de: 'JISOO Creme-Ritualmoment.', ko: 'JISOO 크림 리추얼 모먼트.', tr: 'JISOO krem ritüeli anı.' },
+      'Eye care texture close-up.': { ar: 'لقطة قريبة لملمس عناية العين.', fr: 'Gros plan texture soin yeux.', de: 'Nahaufnahme der Augenpflege-Textur.', ko: '아이 케어 텍스처 클로즈업.', tr: 'Göz bakım dokusu yakın plan.' },
+      'Morning glow routine in 12s.': { ar: 'روتين إشراق صباحي في 12 ثانية.', fr: 'Routine éclat du matin en 12 s.', de: 'Morning-Glow-Routine in 12 s.', ko: '12초 모닝 글로우 루틴.', tr: '12 saniyede sabah ışıltısı rutini.' },
+      'Texture check: cloud cream.': { ar: 'فحص الملمس: كريم سحابي.', fr: 'Test texture : crème nuage.', de: 'Texturcheck: Cloud Cream.', ko: '텍스처 체크: 클라우드 크림.', tr: 'Doku kontrolü: bulut krem.' },
+      'Seoul studio BTS visuals.': { ar: 'لقطات خلف الكواليس من ستوديو سيول.', fr: 'Visuels coulisses studio Séoul.', de: 'Seoul-Studio BTS-Visuals.', ko: '서울 스튜디오 비하인드 비주얼.', tr: 'Seoul stüdyo kamera arkası görselleri.' },
+      'Dropper ritual transition.': { ar: 'انتقال طقس القطّارة.', fr: 'Transition rituel pipette.', de: 'Pipetten-Ritual-Transition.', ko: '드로퍼 리추얼 트랜지션.', tr: 'Damlalık ritüel geçişi.' },
+      'AM SPF finish test.': { ar: 'اختبار لمسة واقي الشمس الصباحية.', fr: 'Test fini SPF matin.', de: 'AM SPF Finish-Test.', ko: '아침 SPF 피니시 테스트.', tr: 'AM SPF bitiş testi.' },
+      'Before/after hydration clip.': { ar: 'مقطع ترطيب قبل/بعد.', fr: 'Clip hydratation avant/après.', de: 'Vorher/Nachher Feuchtigkeitsclip.', ko: '비포/애프터 수분 클립.', tr: 'Önce/sonra nem klibi.' },
+      'Barrier-care bedtime ritual.': { ar: 'طقس نوم للعناية بالحاجز.', fr: 'Rituel coucher soin barrière.', de: 'Barrier-Care Abendritual.', ko: '장벽 케어 취침 리추얼.', tr: 'Bariyer bakımı uyku ritüeli.' },
+      'Signature cream spotlight.': { ar: 'تسليط الضوء على الكريم المميز.', fr: 'Focus crème signature.', de: 'Signature-Creme im Fokus.', ko: '시그니처 크림 스포트라이트.', tr: 'İmza krem odağı.' },
+      'New ritual launch highlights.': { ar: 'أبرز إطلاق الطقس الجديد.', fr: 'Temps forts lancement rituel.', de: 'Highlights zum neuen Ritual-Launch.', ko: '새 리추얼 론칭 하이라이트.', tr: 'Yeni ritüel lansman öne çıkanları.' },
+      'Skincare tips from Seoul team.': { ar: 'نصائح عناية من فريق سيول.', fr: 'Conseils soin de l’équipe Séoul.', de: 'Skincare-Tipps vom Seoul-Team.', ko: '서울 팀의 스킨케어 팁.', tr: 'Seoul ekibinden cilt bakım ipuçları.' },
+      'Community spotlight this week.': { ar: 'تسليط الضوء على المجتمع هذا الأسبوع.', fr: 'Communauté à l’honneur cette semaine.', de: 'Community-Spotlight dieser Woche.', ko: '이번 주 커뮤니티 스포트라이트.', tr: 'Bu haftanın topluluk odağı.' },
+      'Hydration guide article.': { ar: 'مقال دليل الترطيب.', fr: 'Article guide hydratation.', de: 'Artikel zum Feuchtigkeitsguide.', ko: '수분 가이드 아티클.', tr: 'Nem rehberi yazısı.' },
+      'SPF daily reminder campaign.': { ar: 'حملة تذكير يومية بالواقي.', fr: 'Campagne rappel SPF quotidien.', de: 'Tägliche SPF-Erinnerungskampagne.', ko: '데일리 SPF 리마인더 캠페인.', tr: 'Günlük SPF hatırlatma kampanyası.' },
+      'Product texture deep dive.': { ar: 'تحليل معمق لملمس المنتج.', fr: 'Analyse texture produit.', de: 'Deep Dive zur Produkttextur.', ko: '제품 텍스처 딥다이브.', tr: 'Ürün dokusu derin inceleme.' },
+      'Weekend routine checklist.': { ar: 'قائمة روتين نهاية الأسبوع.', fr: 'Checklist routine week-end.', de: 'Wochenend-Routine-Checkliste.', ko: '주말 루틴 체크리스트.', tr: 'Hafta sonu rutini kontrol listesi.' },
+      'Editor picks for spring.': { ar: 'اختيارات المحرر للربيع.', fr: 'Choix éditoriaux printemps.', de: 'Editor Picks für den Frühling.', ko: '봄 에디터 추천.', tr: 'Bahar editör seçkileri.' },
+    }
+    return translations[text]?.[locale] ?? text
+  }
 
   return (
     <section className="mx-auto w-full max-w-[1500px] px-0 pb-16 pt-16 sm:px-4 lg:px-6 lg:pt-24">
@@ -159,12 +190,13 @@ export function InstagramShowcase() {
             ctaLabel={copy.cta.follow}
             link={SOCIAL_LINKS.instagram}
             viewProfileLabel={copy.viewProfile}
+            profileAlt={copy.profileAlt}
           >
             <div className="grid grid-cols-3 gap-[2px] md:grid-cols-4 md:gap-2">
               {INSTAGRAM_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.instagram} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
                   <div className="relative aspect-square">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 33vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={localizedPostText(post[0])} fill sizes="(max-width: 768px) 33vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
                     {post[3] === 'carousel' ? <Copy className="h-3.5 w-3.5" /> : <Clapperboard className="h-3.5 w-3.5" />}
@@ -174,7 +206,7 @@ export function InstagramShowcase() {
                       <span className="inline-flex items-center gap-1"><Heart className="h-3 w-3" />{post[1]}</span>
                       <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" />{post[2]}</span>
                     </div>
-                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{post[0]}</p>
+                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{localizedPostText(post[0])}</p>
                   </div>
                 </a>
               ))}
@@ -195,12 +227,13 @@ export function InstagramShowcase() {
             ctaLabel={copy.cta.follow}
             link={SOCIAL_LINKS.tiktok}
             viewProfileLabel={copy.viewProfile}
+            profileAlt={copy.profileAlt}
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {TIKTOK_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.tiktok} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
                   <div className="relative aspect-square">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={localizedPostText(post[0])} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute right-2 top-2 z-10 rounded-full bg-black/45 p-1.5 text-white">
                     <PlayCircle className="h-3.5 w-3.5" />
@@ -210,7 +243,7 @@ export function InstagramShowcase() {
                       <span className="inline-flex items-center gap-1"><Heart className="h-3 w-3" />{post[1]}</span>
                       <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" />{post[2]}</span>
                     </div>
-                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{post[0]}</p>
+                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{localizedPostText(post[0])}</p>
                   </div>
                 </a>
               ))}
@@ -231,12 +264,13 @@ export function InstagramShowcase() {
             ctaLabel={copy.cta.likeFollow}
             link={SOCIAL_LINKS.facebook}
             viewProfileLabel={copy.viewProfile}
+            profileAlt={copy.profileAlt}
           >
             <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
               {FACEBOOK_POSTS.map((post, index) => (
                 <a key={index} href={SOCIAL_LINKS.facebook} target="_blank" rel="noopener noreferrer" className="group relative block overflow-hidden bg-warm-ivory">
                   <div className="relative aspect-square">
-                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={post[0]} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
+                    <Image src={LOCAL_SOCIAL_MEDIA[index]} alt={localizedPostText(post[0])} fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover transition duration-500 group-hover:scale-105" />
                   </div>
                   <div className="absolute inset-0 z-10 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/10 to-transparent p-2 opacity-0 transition group-hover:opacity-100">
                     <div className="mb-1 flex flex-wrap items-center gap-2 text-[11px] font-medium text-white">
@@ -244,7 +278,7 @@ export function InstagramShowcase() {
                       <span className="inline-flex items-center gap-1"><MessageCircle className="h-3 w-3" />{post[2]}</span>
                       <span className="inline-flex items-center gap-1"><Share2 className="h-3 w-3" />{post[3]}</span>
                     </div>
-                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{post[0]}</p>
+                    <p className="line-clamp-2 text-[11px] leading-4 text-white/95">{localizedPostText(post[0])}</p>
                   </div>
                 </a>
               ))}
@@ -264,6 +298,7 @@ function SocialPanel({
   ctaLabel,
   link,
   viewProfileLabel,
+  profileAlt,
   children,
 }: {
   platform: SocialTab
@@ -273,6 +308,7 @@ function SocialPanel({
   ctaLabel: string
   link: string
   viewProfileLabel: string
+  profileAlt: string
   children: React.ReactNode
 }) {
   const actionButtonClass =
@@ -287,7 +323,7 @@ function SocialPanel({
       <div className="mb-4 flex items-start justify-between gap-4 border-b border-[#cfae83]/18 pb-4">
         <a href={link} target="_blank" rel="noopener noreferrer" className="flex min-w-0 items-center gap-3">
           <div className="relative h-14 w-14 overflow-hidden rounded-full ring-2 ring-rose-mauve/40 ring-offset-2 ring-offset-[#f4e5dc]">
-            <Image src="/assets/editorial/product-table.png" alt={`${title} profile`} fill sizes="56px" className="object-cover" />
+            <Image src="/assets/editorial/product-table.png" alt={profileAlt} fill sizes="56px" className="object-cover" />
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-1.5">

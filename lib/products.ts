@@ -28,14 +28,19 @@ const buyableAvailability: Partial<Record<Region, ProductAvailability>> = {
 }
 
 export const jisooProductImages = [
-  '/Product images/Jisoo 6.png',
-  '/Product images/jisoo 99.png',
-  '/Product images/jisoo4.png',
-  '/Product images/jisoo7.png',
-  '/Product images/jisoo8.png',
-  '/Product images/jisoo9.png',
-  '/Product images/jisoo99.png',
-  '/Product images/jisooo77.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-01.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-03.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-04.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-05.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-06.png',
+  '/assets/products/jisoo-new/jisoo-product-20260518-07.png',
+] as const
+
+const featuredProductImages = [
+  '/assets/products/jisoo-featured/jisoo-featured-product-01.png',
+  '/assets/products/jisoo-featured/jisoo-featured-product-02.png',
+  '/assets/products/jisoo-featured/jisoo-featured-product-03.png',
 ] as const
 
 function createProductDraft(input: ProductDraftInput): Product {
@@ -68,6 +73,7 @@ function createCatalogProduct(input: {
   concerns: string[]
   description: string
   imageIndex: number
+  imageSrc?: string
   name: string
   price: number
   size?: string
@@ -75,6 +81,7 @@ function createCatalogProduct(input: {
   tags?: string[]
 }) {
   const slug = slugifyProductName(input.name)
+  const mainImageSrc = input.imageSrc ?? jisooProductImages[input.imageIndex % jisooProductImages.length]
 
   return createProductDraft({
     id: `prod-${slug}`,
@@ -104,7 +111,7 @@ function createCatalogProduct(input: {
     images: [
       {
         id: `${slug}-1`,
-        src: jisooProductImages[input.imageIndex % jisooProductImages.length],
+        src: mainImageSrc,
         alt: `JISOO ${input.name} product visual`,
         isMain: true,
       },
@@ -121,10 +128,10 @@ function createCatalogProduct(input: {
 }
 
 export const products: Product[] = [
-  createCatalogProduct({ category: 'serum', concerns: ['dullness', 'uneven tone'], description: '[RENEWAL] High content of vitamin C serum renewal launched.', imageIndex: 0, name: 'Radiance Boost True Vitamin C 23 Serum', price: 19.57, size: '20 ml / 0.67 fl. oz.', subcategory: 'serums' }),
-  createCatalogProduct({ category: 'cleanser', concerns: ['pores', 'oiliness'], description: 'The #1-selling bubble cleanser, redesigned. The formulation and feel are the same, only the design has been renewed.', imageIndex: 1, name: 'Pore Deep Clean Bubble Cleanser', price: 13.98, size: '145 g / 5.11 oz.', subcategory: 'cleansers' }),
-  createCatalogProduct({ category: 'toner pad', concerns: ['hydration', 'soothing'], description: 'Hydration, soothing, and cooling all in one. Azulene multi gel pads are now available.', imageIndex: 2, name: 'Dewy Glow Azulene Gel Toner Pad', price: 16.78, size: '140 ml / 4.73 fl. oz.', subcategory: 'toner-pads' }),
-  createCatalogProduct({ category: 'sun care', concerns: ['daily protection', 'hydration'], description: 'Softer, smoother, and more hydrating. Upgraded from mineral to chemical UV protection.', imageIndex: 3, name: 'Daily UV Shield Sunscreen', price: 13.84, size: '50 ml / 1.69 fl. oz.', subcategory: 'sun-care' }),
+  createCatalogProduct({ category: 'serum', concerns: ['dullness', 'uneven tone'], description: '[RENEWAL] High content of vitamin C serum renewal launched.', imageIndex: 0, imageSrc: featuredProductImages[0], name: 'Radiance Boost True Vitamin C 23 Serum', price: 19.57, size: '20 ml / 0.67 fl. oz.', subcategory: 'serums' }),
+  createCatalogProduct({ category: 'cleanser', concerns: ['pores', 'oiliness'], description: 'The #1-selling bubble cleanser, redesigned. The formulation and feel are the same, only the design has been renewed.', imageIndex: 1, imageSrc: featuredProductImages[1], name: 'Pore Deep Clean Bubble Cleanser', price: 13.98, size: '145 g / 5.11 oz.', subcategory: 'cleansers' }),
+  createCatalogProduct({ category: 'toner pad', concerns: ['hydration', 'soothing'], description: 'Hydration, soothing, and cooling all in one. Azulene multi gel pads are now available.', imageIndex: 2, imageSrc: featuredProductImages[2], name: 'Dewy Glow Azulene Gel Toner Pad', price: 16.78, size: '140 ml / 4.73 fl. oz.', subcategory: 'toner-pads' }),
+  createCatalogProduct({ category: 'sun care', concerns: ['daily protection', 'hydration'], description: 'Softer, smoother, and more hydrating. Upgraded from mineral to chemical UV protection.', imageIndex: 3, imageSrc: featuredProductImages[0], name: 'Daily UV Shield Sunscreen', price: 13.84, size: '50 ml / 1.69 fl. oz.', subcategory: 'sun-care' }),
   createCatalogProduct({ category: 'cleanser', concerns: ['oiliness', 'cleansing'], description: 'Introducing a mildly alkaline cleansing foam for those with oily skin.', imageIndex: 4, name: 'Pore Clear Vita-Colla Cleansing Form', price: 10.49, size: '150 ml / 5.07 fl. oz.', subcategory: 'cleansers' }),
   createCatalogProduct({ category: 'cream', concerns: ['firmness', 'hydration'], description: 'Ultra-low molecular collagen doubles the collagen in the skin.', imageIndex: 5, name: 'Hydra Daily Snow Collagen Cream', price: 17.48, size: '50 ml / 1.69 fl. oz.', subcategory: 'moisturizers' }),
   createCatalogProduct({ category: 'cream', concerns: ['wrinkles', 'texture'], description: 'Delivers maximum wrinkle care with minimal irritation.', imageIndex: 6, name: 'Professional Concentrate Spicule Cream', price: 17.48, size: '30 ml / 1.01 fl. oz.', subcategory: 'moisturizers' }),
@@ -204,8 +211,8 @@ export function createProductDraftFromRaw(rawText: string, overrides: Partial<Pr
     tags: overrides.tags ?? ['supplier-review'],
     size: overrides.size ?? 'To be confirmed',
     images: overrides.images ?? [
-      { id: 'supplier-draft-image', src: '/assets/products/glass-skin-essence.jpg', alt: 'Draft product product visual', isMain: true },
-      { id: 'supplier-draft-image-2', src: '/assets/products/luminous-glow-serum.jpg', alt: 'Draft product care detail visual' },
+      { id: 'supplier-draft-image', src: '/assets/products/jisoo-new/jisoo-product-20260518-01.png', alt: 'Draft product product visual', isMain: true },
+      { id: 'supplier-draft-image-2', src: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', alt: 'Draft product care detail visual' },
     ],
     supplierNotes: rawText,
     createdAt: overrides.createdAt ?? now,

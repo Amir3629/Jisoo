@@ -137,7 +137,7 @@ export default function AboutPage() {
         touchStart.current = null
       }}
     >
-      <Header transparentOnTop lightOnTop splitLightOnTop={active > 0} />
+      <Header transparentOnTop forceDark frameless />
 
       <motion.section
         className="absolute inset-0"

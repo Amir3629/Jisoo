@@ -19,6 +19,7 @@ import {
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
+import { getProductJsonLd } from '@/lib/seo'
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
@@ -89,6 +90,10 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   return (
     <main className="min-h-screen bg-warm-ivory">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductJsonLd(product)) }}
+      />
       <Header />
 
       {/* Breadcrumb */}

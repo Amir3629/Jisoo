@@ -77,7 +77,7 @@ export default function NewArrivalsPage() {
             <p className="mt-3 text-charcoal/70">{t.body}</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {items.slice(0, 4).map((product, index) => <ProductCard key={product.id} product={product} index={index} />)}
+            {items.slice(0, 4).map((product, index) => <ProductCard key={product.id} product={product} index={index} hideDescription />)}
           </div>
           {items.length === 0 && (
             <p className="mt-6 text-sm text-charcoal/60">
@@ -88,7 +88,7 @@ export default function NewArrivalsPage() {
       </section>
       <section className="flex min-h-screen items-center bg-background py-24">
         <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">
-          {items.slice(4, 12).map((product, index) => <ProductCard key={product.id} product={product} index={index + 4} />)}
+          {items.slice(4, 12).map((product, index) => <ProductCard key={product.id} product={product} index={index + 4} hideDescription />)}
         </div>
       </section>
       <Footer />
