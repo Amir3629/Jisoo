@@ -125,6 +125,7 @@ export function FeaturedProducts() {
                   <motion.div
                     key={product.id}
                     layout
+                    className="h-full"
                     initial={{ opacity: 0, y: 28, scale: 0.975, filter: 'blur(10px)' }}
                     animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
                     exit={{ opacity: 0, y: 18, scale: 0.985, filter: 'blur(8px)' }}
@@ -158,7 +159,7 @@ export function FeaturedProducts() {
           </>
         ) : (
           <div className="relative overflow-hidden">
-            <div className="pointer-events-none absolute inset-y-0 -right-8 z-10 w-16 bg-gradient-to-l from-[var(--background)] via-[var(--background)]/45 to-transparent backdrop-blur-[0.5px]" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-background via-background/92 via-55% to-transparent sm:w-32 lg:w-44" />
             <div className="space-y-5 lg:space-y-8">
               {swipeRows.map((row, rowIndex) => (
                 <div key={rowIndex} className="overflow-x-auto pb-2 [scrollbar-width:thin]" aria-label={`Product row ${rowIndex + 1}`}>

@@ -161,7 +161,7 @@ export function Footer() {
           {/* Brand Column */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
             <Link href={localizeHref('/', locale)} className="inline-block">
-              <Image src="/assets/brand/jisoo-logo.png" alt="JISOO" width={260} height={92} className="mb-5 h-20 w-auto" />
+              <Image src="/assets/LOGO/image.png" alt="JISOO" width={260} height={92} className="mb-5 h-20 w-auto" />
             </Link>
             <p className="text-charcoal/65 text-sm leading-relaxed mb-6">{brandBody}</p>
             <div className="flex items-center gap-4">

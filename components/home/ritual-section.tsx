@@ -1,6 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useRef } from 'react'
+import { motion, useScroll, useSpring, useTransform } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { EditorialMedia } from '@/components/ui/editorial-media'
@@ -59,6 +61,50 @@ const ritualSteps = [
     image: '/assets/ritual/06.png',
   },
 ]
+
+function RitualImageFrame({
+  alt,
+  color,
+  hint,
+  index,
+  src,
+}: {
+  alt: string
+  color: string
+  hint: string
+  index: number
+  src: string
+}) {
+  const frameRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: frameRef,
+    offset: ['start end', 'end start'],
+  })
+  const rawImageY = useTransform(scrollYProgress, [0, 1], index % 2 === 0 ? ['-1.6%', '1.6%'] : ['1.6%', '-1.6%'])
+  const imageY = useSpring(rawImageY, { stiffness: 32, damping: 28, mass: 0.7 })
+
+  return (
+    <div
+      ref={frameRef}
+      className={cn(
+        'relative mx-auto aspect-square max-w-sm overflow-hidden rounded-3xl bg-gradient-to-br shadow-editorial',
+        color,
+        'to-white'
+      )}
+    >
+      <motion.div style={{ y: imageY }} className="absolute -inset-y-[3%] inset-x-0">
+        <EditorialMedia
+          src={src}
+          alt={alt}
+          className="absolute inset-0"
+          imageClassName="scale-[1.03]"
+          sizes="(max-width: 1024px) 100vw, 384px"
+          hint={hint}
+        />
+      </motion.div>
+    </div>
+  )
+}
 
 export function RitualSection() {
   const { locale, dictionary } = useLocale()
@@ -152,10 +198,10 @@ export function RitualSection() {
                       className={cn(
                         'mb-6 inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br',
                         step.color,
-                        'to-white border border-blush-pink/30'
+                        'via-[#e0c196]/35 to-[#f0dec0]/80 border border-[#cfae83]/45 shadow-[inset_0_1px_0_rgba(255,255,255,0.36),0_14px_30px_rgba(70,49,32,0.10)]'
                       )}
                     >
-                      <span className="font-serif text-xl font-bold text-plum">{step.number}</span>
+                      <span className="font-serif text-xl font-bold text-charcoal/82">{step.number}</span>
                     </div>
 
                     <h3 className="mb-4 font-serif text-2xl font-bold text-charcoal lg:text-3xl">
@@ -168,24 +214,13 @@ export function RitualSection() {
                   </div>
 
                   <div className={cn(index % 2 === 1 && 'lg:order-1')}>
-                    <div
-                      className={cn(
-                        'relative mx-auto aspect-square max-w-sm overflow-hidden rounded-3xl bg-gradient-to-br',
-                        step.color,
-                        'to-white shadow-editorial'
-                      )}
-                    >
-                      <EditorialMedia
-                        src={step.image}
-                        alt={localizedStep(step).title}
-                        className="absolute inset-0"
-                        sizes="(max-width: 1024px) 100vw, 384px"
-                        hint={`${copy.step} ${step.number}`}
-                      />
-
-                      <div className="absolute -bottom-10 -right-10 h-40 w-40 rounded-full bg-white/30" />
-                      <div className="absolute -left-5 -top-5 h-24 w-24 rounded-full bg-white/20" />
-                    </div>
+                    <RitualImageFrame
+                      alt={localizedStep(step).title}
+                      color={step.color}
+                      hint={`${copy.step} ${step.number}`}
+                      index={index}
+                      src={step.image}
+                    />
                   </div>
 
                   <div className="absolute left-1/2 top-1/2 z-10 hidden h-4 w-4 -translate-x-1/2 -translate-y-1/2 rounded-full border-4 border-warm-ivory bg-rose-mauve lg:block" />

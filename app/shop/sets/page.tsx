@@ -21,7 +21,7 @@ export default function SetsPage() {
       </section>
       <section className="pb-20">
         <div className="max-w-7xl mx-auto px-4 lg:px-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {fallback.map((product, index) => <ProductCard key={`${product.id}-${index}`} product={product} index={index} />)}
+          {fallback.map((product, index) => <ProductCard key={`${product.id}-${index}`} product={product} index={index} hideDescription />)}
         </div>
       </section>
       <Footer />

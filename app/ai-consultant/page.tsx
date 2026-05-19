@@ -77,24 +77,59 @@ export default function AIConsultantPage() {
       <Header transparentOnTop lightOnTop />
       <HeroSection forcedConceptId="design-11-video-signature" showConceptPicker={false} />
 
-      <section className="relative isolate min-h-[130vh] overflow-hidden px-4 py-28 lg:py-36">
+      <section className="relative isolate min-h-screen snap-start overflow-hidden bg-[#141015] px-4 py-24 text-white lg:py-32">
         <div className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute left-[-10rem] top-24 h-96 w-96 rounded-full bg-rose-mauve/18 blur-3xl" />
-          <div className="absolute right-[-12rem] top-[34rem] h-[32rem] w-[32rem] rounded-full bg-champagne-gold/16 blur-3xl" />
-          <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-warm-ivory/70 to-transparent" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#141015_0%,#241722_38%,#5e4650_72%,#c7aa82_120%)]" />
+          <div className="absolute inset-0 opacity-[0.18] [background-image:linear-gradient(rgba(255,255,255,.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.16)_1px,transparent_1px)] [background-size:76px_76px]" />
+          <div className="absolute inset-0 bg-[linear-gradient(115deg,transparent_0%,rgba(255,255,255,.08)_34%,transparent_35%,transparent_54%,rgba(214,168,186,.14)_70%,transparent_72%)]" />
+          <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-background to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-56 bg-gradient-to-t from-background/70 to-transparent" />
         </div>
 
         <div className="mx-auto mb-10 max-w-4xl text-center">
-          <p className="text-kicker text-charcoal/56">JISOO AI</p>
-          <h1 className="mt-3 text-4xl leading-tight text-charcoal lg:text-6xl">A private concierge for JISOO care.</h1>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-charcoal/66">
-            Ask about routines, ingredients, product pairing, region availability, shipping, returns, or order support. The concierge stays inside JISOO catalog and policy information.
+          <p className="text-kicker text-white/58">JISOO AI</p>
+          <h1 className="mt-3 text-4xl leading-tight text-white lg:text-6xl">Enter the AI ritual room.</h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-white/68">
+            The scroll leaves the boutique behind and opens a live JISOO consultation space for routines, ingredients, product pairing, shipping, returns, and order support.
           </p>
         </div>
 
-        <div className="mx-auto grid w-full max-w-7xl gap-5 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start">
-          <div className="overflow-hidden rounded-[2rem] border border-[#cfae83]/28 bg-[linear-gradient(155deg,color-mix(in_srgb,var(--card)_92%,white)_0%,color-mix(in_srgb,var(--background)_88%,white)_100%)] shadow-[0_28px_90px_rgba(70,49,32,0.14),inset_0_1px_0_rgba(255,255,255,0.48)] lg:rounded-[2.75rem]">
-            <div className="flex flex-col gap-4 border-b border-[#cfae83]/22 bg-[linear-gradient(135deg,rgba(44,37,40,0.94),rgba(158,123,138,0.86))] p-5 text-white sm:flex-row sm:items-center sm:justify-between lg:p-6">
+        <div className="mx-auto grid w-full max-w-7xl gap-5 lg:grid-cols-[20rem_minmax(0,1fr)] lg:items-start">
+          <aside className="space-y-4 lg:sticky lg:top-28">
+            <div className="overflow-hidden rounded-[2rem] border border-white/14 bg-white/[0.07] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl">
+              <div className="mb-4 inline-flex rounded-full border border-white/14 bg-white/10 px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white/76">Live studio</div>
+              <h2 className="text-2xl leading-tight text-white">JISOO intelligence, bounded by the site.</h2>
+              <p className="mt-3 text-sm leading-7 text-white/62">
+                The concierge can recommend JISOO products, explain JISOO routines, and open JISOO policy cards without sending shoppers to another brand.
+              </p>
+              <div className="mt-6 space-y-3">
+                {['Skin goal scan', 'Catalog match', 'Policy routing'].map((label, index) => (
+                  <div key={label} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-black/16 px-3 py-3">
+                    <span className="grid h-8 w-8 place-items-center rounded-full bg-white/10 text-xs text-white/72">0{index + 1}</span>
+                    <span className="text-sm text-white/74">{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3">
+              {policyCards.map(card => {
+                const Icon = card.icon
+                return (
+                  <Link key={card.href} href={localizeHref(card.href, locale)} className="group rounded-3xl border border-white/12 bg-white/[0.07] p-4 text-white transition hover:-translate-y-1 hover:bg-white/[0.12] hover:shadow-[0_20px_60px_rgba(0,0,0,0.22)]">
+                    <div className="mb-3 grid h-10 w-10 place-items-center rounded-2xl bg-white/10 text-[#e8c8d4] transition group-hover:bg-[#d6a8ba] group-hover:text-white">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                    <p className="font-medium text-white">{card.title}</p>
+                    <p className="mt-1 text-xs leading-5 text-white/56">{card.body}</p>
+                  </Link>
+                )
+              })}
+            </div>
+          </aside>
+
+          <div className="overflow-hidden rounded-[2rem] border border-white/16 bg-white/[0.08] shadow-[0_34px_120px_rgba(0,0,0,0.36),inset_0_1px_0_rgba(255,255,255,0.18)] backdrop-blur-2xl lg:rounded-[2.75rem]">
+            <div className="flex flex-col gap-4 border-b border-white/14 bg-[linear-gradient(135deg,rgba(255,255,255,0.16),rgba(214,168,186,0.14),rgba(0,0,0,0.22))] p-5 text-white sm:flex-row sm:items-center sm:justify-between lg:p-6">
               <div className="flex items-center gap-4">
                 <div className={cn('grid h-12 w-12 place-items-center rounded-2xl bg-white/16 ring-1 ring-white/20', speaking && 'animate-pulse')}>
                   <Sparkles className="h-5 w-5" />
@@ -117,17 +152,17 @@ export default function AIConsultantPage() {
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#cfae83]/18 px-5 py-3 text-xs text-charcoal/60 lg:px-6">
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/12 bg-black/10 px-5 py-3 text-xs text-white/62 lg:px-6">
               <span className="inline-flex items-center gap-2">
                 {listening ? <Radio className="h-3.5 w-3.5 animate-pulse text-rose-mauve" /> : speaking ? <Waves className="h-3.5 w-3.5 text-plum" /> : <Bot className="h-3.5 w-3.5" />}
-                {listening ? 'Listening…' : speaking ? 'Speaking…' : 'Ready with JISOO website guidance'}
+                {listening ? 'Listening…' : speaking ? 'Speaking…' : 'AI room online'}
               </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#cfae83]/24 bg-white/35 px-3 py-1 text-[11px] text-charcoal/64">
-                <ShieldCheck className="h-3.5 w-3.5 text-rose-mauve" /> No outside-brand recommendations
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-white/14 bg-white/10 px-3 py-1 text-[11px] text-white/64">
+                <ShieldCheck className="h-3.5 w-3.5 text-[#e8c8d4]" /> No outside-brand recommendations
               </span>
             </div>
 
-            <div ref={scrollRef} className="h-[68vh] min-h-[620px] space-y-5 overflow-auto p-5 scroll-smooth lg:h-[78vh] lg:min-h-[760px] lg:p-7">
+            <div ref={scrollRef} className="h-[68vh] min-h-[620px] space-y-5 overflow-auto bg-[linear-gradient(180deg,rgba(255,248,236,0.94),rgba(250,239,216,0.88))] p-5 scroll-smooth lg:h-[78vh] lg:min-h-[760px] lg:p-7">
               {partialTranscript && (
                 <div className="rounded-2xl border border-dashed border-rose-mauve/28 bg-rose-mauve/7 px-4 py-3 text-xs text-charcoal/62">
                   Live transcript: {partialTranscript}
@@ -213,31 +248,6 @@ export default function AIConsultantPage() {
               </p>
             </div>
           </div>
-
-          <aside className="space-y-4 lg:sticky lg:top-28">
-            <div className="rounded-[2rem] border border-[#cfae83]/24 bg-white/36 p-5 shadow-[0_18px_54px_rgba(70,49,32,0.08)] backdrop-blur-xl">
-              <div className="mb-4 inline-flex rounded-full bg-charcoal px-3 py-1 text-[11px] uppercase tracking-[0.16em] text-white">Website bounded</div>
-              <h2 className="text-2xl leading-tight text-charcoal">Answers stay inside JISOO.</h2>
-              <p className="mt-3 text-sm leading-7 text-charcoal/62">
-                The concierge can recommend JISOO products, explain JISOO routines, and open JISOO policy cards—without sending shoppers to another brand.
-              </p>
-            </div>
-
-            <div className="grid gap-3">
-              {policyCards.map(card => {
-                const Icon = card.icon
-                return (
-                  <Link key={card.href} href={localizeHref(card.href, locale)} className="group rounded-3xl border border-[#cfae83]/22 bg-card/68 p-4 transition hover:-translate-y-1 hover:bg-white/55 hover:shadow-luxury">
-                    <div className="mb-3 grid h-10 w-10 place-items-center rounded-2xl bg-rose-mauve/12 text-rose-mauve transition group-hover:bg-rose-mauve group-hover:text-white">
-                      <Icon className="h-4 w-4" />
-                    </div>
-                    <p className="font-medium text-charcoal">{card.title}</p>
-                    <p className="mt-1 text-xs leading-5 text-charcoal/58">{card.body}</p>
-                  </Link>
-                )
-              })}
-            </div>
-          </aside>
         </div>
       </section>
     </main>

@@ -39,7 +39,7 @@ const HERO_ASSETS = {
   video: '/assets/video/signature-motion.mp4',
 }
 
-const FALLBACK_IMAGES = ['/assets/products/luminous-glow-serum.jpg', '/assets/products/glass-skin-essence.jpg']
+const FALLBACK_IMAGES = ['/assets/products/jisoo-new/jisoo-product-20260518-02.png', '/assets/products/jisoo-new/jisoo-product-20260518-01.png']
 const HERO_ONE_EDITORIAL_IMAGE = '/assets/hero/tips.png'
 const HOME_EDITORIAL_IMAGE = '/assets/hero/home-desktop.png?v=20260509-1453'
 const HOME_EDITORIAL_MOBILE_IMAGE = '/assets/hero/home-mobile.png?v=20260509-1453'
@@ -460,7 +460,7 @@ function ImageEditorialHero({
             className="pointer-events-none absolute right-[10vw] top-[12vh] hidden w-[min(25vw,330px)] origin-top-right lg:block"
           >
             <Image
-              src="/assets/brand/jisoo-logo.png"
+              src="/assets/LOGO/image.png"
               alt=""
               width={680}
               height={340}

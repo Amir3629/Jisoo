@@ -48,8 +48,8 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
   }
 
   return (
-    <article className={cn('group overflow-hidden rounded-[2rem] border border-[#d8c3b6]/45 bg-warm-ivory/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
-      <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
+    <article className={cn('group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#d8c3b6]/45 bg-warm-ivory/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
+      <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block flex-none">
         <div className="relative aspect-[4/5] overflow-hidden bg-warm-ivory">
           <Image
             src={resolveImageSrc(product.images?.[0]?.src)}
@@ -82,13 +82,13 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
         </div>
       </Link>
 
-      <div className={cn('space-y-4 p-5', compact && 'p-4')}>
-        <div className="space-y-2">
+      <div className={cn('flex flex-1 flex-col gap-4 p-5', compact && 'p-4')}>
+        <div className="flex-1 space-y-2">
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-charcoal/72">
             {localizedCategory}
           </p>
           <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block">
-            <h3 className="text-lg font-medium leading-snug text-charcoal">
+            <h3 className={cn('line-clamp-2 text-lg font-medium leading-snug text-charcoal', compact ? 'min-h-[3rem]' : 'min-h-[3.1rem]')}>
               {cardName}
             </h3>
           </Link>
@@ -100,7 +100,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
         </div>
 
         {/* P0: allow wrapping so long localized CTA labels do not collide with price block. */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="mt-auto flex min-h-[3.25rem] flex-wrap items-center justify-between gap-3">
           <div className="flex items-baseline gap-2">
             <span className="text-lg font-semibold text-charcoal">
               {product.price > 0 ? `€${product.price.toFixed(2)}` : 'Price pending'}

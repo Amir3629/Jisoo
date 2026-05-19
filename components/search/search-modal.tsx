@@ -26,7 +26,7 @@ const trendingSearches = [
 ]
 
 const popularCategories = [
-  { name: 'Serums', href: '/shop/serums', image: resolveImageSrc('/assets/products/luminous-glow-serum.jpg') },
+  { name: 'Serums', href: '/shop/serums', image: resolveImageSrc('/assets/products/jisoo-new/jisoo-product-20260518-02.png') },
   { name: 'Moisturizers', href: '/shop/moisturizers', image: resolveImageSrc('/assets/editorial/care-expert.jpg') },
   { name: 'Cleansers', href: '/shop/cleansers', image: resolveImageSrc('/assets/editorial/skincare-ingredients.jpg') },
 ]
