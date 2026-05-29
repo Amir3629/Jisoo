@@ -18,7 +18,7 @@ import { regionConfigs } from '@/lib/data'
 import type { Region } from '@/lib/types'
 
 const megaGroups = [
-  { title: 'My JISOO', items: [{ label: 'Dashboard', href: '/account' }, { label: 'Orders', href: '/account/orders' }, { label: 'Rewards', href: '/rewards' }, { label: 'Wishlist', href: '/account/wishlist' }] },
+  { title: 'My JISOO', items: [{ label: 'Dashboard', href: '/account' }, { label: 'Orders', href: '/account/orders' }, { label: 'Wishlist', href: '/account/wishlist' }] },
   { title: 'Care Categories', items: [{ label: 'Anti-Aging', href: '/shop?concern=anti-aging' }, { label: 'Oils', href: '/shop?category=oils' }, { label: 'Masks', href: '/shop?category=masks' }, { label: 'Creams', href: '/shop?category=creams' }] },
   { title: 'Edits', items: [{ label: 'Best Sellers', href: '/shop/best-sellers' }, { label: 'New Arrivals', href: '/shop/new-arrivals' }, { label: 'Sets / Bundles', href: '/shop?category=sets' }] },
   { title: 'Help & Experience', items: [{ label: 'Rewards', href: '/rewards' }, { label: 'Tips', href: '/tips' }] },
@@ -181,13 +181,13 @@ export function Header({
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 26, mass: 0.25 })
   const hasHeaderFrame = !frameless && (isScrolled || !transparentOnTop || isMegaOpen)
   const isLightHeader = !forceDark && !hasHeaderFrame && lightOnTop
-  const isHeroOverlay = transparentOnTop && !isScrolled
+  const isHeroOverlay = transparentOnTop && !isScrolled && !isMegaOpen
   const topTextClass = isLightHeader ? 'text-white hover:text-white/75' : 'text-charcoal hover:text-[#8f6f46]'
   const rightTextClass = isLightHeader && splitLightOnTop ? 'text-charcoal hover:text-[#8f6f46]' : topTextClass
   const topIconClass = isLightHeader && !splitLightOnTop ? 'text-white/90 transition hover:text-white hover:opacity-80' : 'text-charcoal/80 transition hover:text-charcoal hover:opacity-80'
   const glassDropdownClass = isHeroOverlay && !isMegaOpen
     ? 'border-white/22 bg-transparent shadow-[0_18px_44px_rgba(44,37,40,0.14)] backdrop-blur-2xl'
-    : 'border-[#cfae83]/30 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
+    : 'border-[#cfae83]/30 bg-warm-ivory/95 shadow-editorial backdrop-blur-xl'
 
   const handleLogoClick = (event: ReactMouseEvent<HTMLAnchorElement>) => {
     setIsMegaOpen(false)
@@ -242,7 +242,7 @@ export function Header({
 
   return (<>
     <motion.div className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left bg-gradient-to-r from-[#9e7b8a] via-[#d6a8ba] to-[#6f4f5d]" style={{ scaleX: progress }} />
-    <motion.header onMouseEnter={keepMega} onMouseLeave={closeMega} initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300', hasHeaderFrame ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-transparent shadow-none backdrop-blur-0')}>
+    <motion.header onMouseEnter={keepMega} onMouseLeave={closeMega} initial={{ y: -96 }} animate={{ y: 0 }} transition={{ duration: 0.34 }} className={cn('fixed top-0 left-0 right-0 z-50 border-b transition-[background-color,backdrop-filter,border-color,box-shadow] duration-300', isMegaOpen ? 'border-[#e9d5df] bg-warm-ivory backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : hasHeaderFrame ? 'border-[#e9d5df] bg-warm-ivory/95 backdrop-blur-2xl shadow-[0_8px_25px_rgba(191,141,151,0.12)]' : 'border-transparent bg-transparent shadow-none backdrop-blur-0')}>
       <div className={cn('hidden border-b transition-[height,background-color,border-color] duration-300 lg:block', hasHeaderFrame ? 'h-8 border-rose-mauve/12 bg-warm-ivory' : 'h-0 overflow-hidden border-transparent bg-transparent')}>
         <div className={cn('mx-auto max-w-7xl px-6 h-8 flex items-center justify-center text-center text-[11px] tracking-[0.08em] transition-colors', !hasHeaderFrame && lightOnTop ? 'text-white/88' : 'text-charcoal/85')}>
           <AnimatePresence mode="wait" initial={false}>
@@ -253,7 +253,7 @@ export function Header({
       <div className="max-w-7xl mx-auto px-4 lg:px-6">
         <div className="relative flex h-16 items-center justify-between lg:h-[4.6rem]">
           <button onClick={() => setIsMobileMenuOpen(true)} className={cn('lg:hidden p-2 -ml-2', topIconClass)} aria-label={dictionary.header.actions.openMenu}><Menu className="w-6 h-6" /></button>
-          <Link href={localizeHref('/', locale)} onClick={handleLogoClick} scroll className="absolute left-1/2 z-10 -translate-x-1/2 flex-shrink-0 lg:relative lg:left-auto lg:translate-x-0"><Image src={logoSrc} alt="JISOO" width={280} height={140} priority className={cn('h-12 w-auto transition-[filter] lg:h-[3.85rem]', isLightHeader && 'brightness-0 invert', logoClassName)} /></Link>
+          <Link href={localizeHref('/', locale)} onClick={handleLogoClick} scroll className="absolute left-1/2 z-10 -translate-x-1/2 flex-shrink-0 lg:relative lg:left-auto lg:translate-x-0"><Image src={logoSrc} alt="JISOO" width={280} height={140} priority unoptimized className={cn('h-12 w-auto transition-[filter] lg:h-[3.85rem]', isLightHeader && 'brightness-0 invert', logoClassName)} /></Link>
           <nav className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-5 xl:gap-7" aria-label="Primary navigation">
             {navLinks.map((link, index) => <Link key={link.href} href={localizeHref(link.href, locale)} className={cn('text-sm tracking-[0.1em] transition-colors', splitLightOnTop && index >= 4 ? rightTextClass : topTextClass)}>{link.label}</Link>)}
             <div className="relative" onMouseEnter={openMega}><button onClick={() => setIsMegaOpen((p) => !p)} aria-expanded={isMegaOpen} className={cn('inline-flex items-center gap-1 text-sm tracking-[0.1em] transition-colors', rightTextClass)}>{discoverLabel} <ChevronDown className="h-4 w-4" /></button></div>

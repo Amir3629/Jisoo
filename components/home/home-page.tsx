@@ -11,7 +11,6 @@ import { RitualSection } from '@/components/home/ritual-section'
 import { ConcernsSection } from '@/components/home/concerns-section'
 import { CareCtaSection } from '@/components/home/care-cta-section'
 import { TestimonialsSection } from '@/components/home/testimonials-section'
-import { SocialSection } from '@/components/home/social-section'
 import { InstagramShowcase } from '@/components/home/instagram-showcase'
 import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
 
@@ -65,7 +64,6 @@ export function HomePageShell() {
           </div>
         </section>
         <ScrollReveal><PartnersSection /></ScrollReveal>
-        <ScrollReveal direction="right"><SocialSection /></ScrollReveal>
         <ScrollReveal><InstagramShowcase /></ScrollReveal>
         <Footer />
       </main>

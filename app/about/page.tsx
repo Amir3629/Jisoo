@@ -10,10 +10,8 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
 
 const images = [
-  '/assets/about/ritual-lab.png',
-  '/assets/about/care-model.png',
-  '/assets/about/formula-detail.png',
-  '/assets/about/korean-heritage.png',
+  '/assets/story/jisoo-story-grandparents-01.png',
+  '/assets/story/jisoo-story-grandparents-02.png',
 ]
 
 const copy: Record<Locale, {
@@ -107,7 +105,7 @@ export default function AboutPage() {
     { kind: 'story', image: images[0], chapter: t.chapters[1] },
     { kind: 'story', image: images[1], chapter: t.chapters[2] },
     { kind: 'story', image: images[1], chapter: t.chapters[3] },
-    { kind: 'closing', image: images[3], title: t.closeTitle, body: t.closeBody, cta: t.cta },
+    { kind: 'closing', image: images[1], title: t.closeTitle, body: t.closeBody, cta: t.cta },
   ], [t])
 
   const [active, setActive] = useState(0)
@@ -137,7 +135,7 @@ export default function AboutPage() {
         touchStart.current = null
       }}
     >
-      <Header transparentOnTop forceDark frameless />
+      <Header transparentOnTop={false} forceDark={false} frameless={false} />
 
       <motion.section
         className="absolute inset-0"
@@ -164,7 +162,7 @@ export default function AboutPage() {
             <Image src={current.image} alt="" fill sizes="(max-width: 768px) 100vw, 52vw" priority={active < 2} className="object-cover object-center" />
           </motion.div>
         </AnimatePresence>
-        <div className="absolute inset-0 bg-gradient-to-r from-black/10 via-transparent to-black/5" />
+        <div className="absolute inset-0 bg-black/5" />
       </motion.div>
 
       <AnimatePresence mode="wait">

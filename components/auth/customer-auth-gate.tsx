@@ -1,110 +1,105 @@
 'use client'
 
-import { FormEvent, ReactNode, useEffect, useState } from 'react'
-import { Mail, LockKeyhole, Sparkles } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-
-const STORAGE_KEY = 'jisoo-customer-session'
+import { ReactNode } from 'react'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
+import { Clock, LockKeyhole, Sparkles } from 'lucide-react'
+import { useLocale } from '@/components/providers/locale-provider'
+import { localizeHref } from '@/lib/i18n'
 
 export function CustomerAuthGate({
-  children,
   reason = 'dashboard',
 }: {
   children: ReactNode
   reason?: 'dashboard' | 'rewards'
 }) {
-  const [isAuthed, setIsAuthed] = useState(false)
-  const [mode, setMode] = useState<'login' | 'create'>('login')
-  const [email, setEmail] = useState('customer@jisoo.com')
-  const [password, setPassword] = useState('')
+  const { locale } = useLocale()
 
-  useEffect(() => {
-    setIsAuthed(window.localStorage.getItem(STORAGE_KEY) === 'yes')
-  }, [])
-
-  const submit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    window.localStorage.setItem(STORAGE_KEY, 'yes')
-    setIsAuthed(true)
+  const copy = {
+    eyebrow:
+      locale === 'ar' ? 'منطقة الأعضاء' :
+      locale === 'fr' ? 'Espace membre' :
+      locale === 'de' ? 'Mitgliederbereich' :
+      locale === 'ko' ? '멤버 영역' :
+      locale === 'tr' ? 'Üye alanı' :
+      'Member Area',
+    title:
+      locale === 'ar' ? 'الخادم قيد التطوير' :
+      locale === 'fr' ? 'Le serveur est en développement' :
+      locale === 'de' ? 'Der Server ist in Entwicklung' :
+      locale === 'ko' ? '서버 개발 중' :
+      locale === 'tr' ? 'Sunucu geliştirme aşamasında' :
+      'Server is in development',
+    body:
+      reason === 'rewards'
+        ? 'Rewards and member benefits are currently locked while we finish the customer account server.'
+        : 'The customer dashboard is currently locked while we finish the account server, login system, orders, rewards, and customer data connection.',
+    cta:
+      locale === 'ar' ? 'العودة إلى المتجر' :
+      locale === 'fr' ? 'Retour à la boutique' :
+      locale === 'de' ? 'Zurück zum Shop' :
+      locale === 'ko' ? '스토어로 돌아가기' :
+      locale === 'tr' ? 'Mağazaya dön' :
+      'Back to Shop',
   }
-
-  if (isAuthed) return <>{children}</>
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="rounded-[2rem] border border-[#cfae83]/24 bg-warm-ivory/82 p-6 shadow-luxury backdrop-blur-xl sm:p-8">
-        <div className="mb-7 text-center">
-          <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-gradient-to-br from-rose-mauve to-[#d3af84] text-white">
-            <Sparkles className="h-6 w-6" />
+      <motion.div
+        initial={{ opacity: 0, y: 24, scale: 0.97, filter: 'blur(10px)' }}
+        animate={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+        transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+        className="relative overflow-hidden rounded-[2rem] border border-[#cfae83]/28 bg-warm-ivory/82 p-8 text-center shadow-luxury backdrop-blur-xl sm:p-10"
+      >
+        <motion.div
+          aria-hidden="true"
+          className="absolute -left-24 -top-24 h-56 w-56 rounded-full bg-rose-mauve/20 blur-3xl"
+          animate={{ x: [0, 18, 0], y: [0, 12, 0], opacity: [0.35, 0.55, 0.35] }}
+          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <motion.div
+          aria-hidden="true"
+          className="absolute -bottom-28 -right-20 h-64 w-64 rounded-full bg-[#d3af84]/24 blur-3xl"
+          animate={{ x: [0, -18, 0], y: [0, -10, 0], opacity: [0.28, 0.5, 0.28] }}
+          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        <div className="relative">
+          <div className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-rose-mauve to-[#d3af84] text-white shadow-[0_18px_44px_rgba(186,130,154,0.28)]">
+            <LockKeyhole className="h-7 w-7" />
           </div>
-          <h2 className="font-serif text-3xl text-charcoal">Sign in to JISOO</h2>
-          <p className="mx-auto mt-3 max-w-md text-sm leading-6 text-charcoal/65">
-            {reason === 'rewards'
-              ? 'Sign in or create an account to view rewards, points, and member benefits.'
-              : 'Sign in or create an account to view your dashboard, orders, wishlist, addresses, and settings.'}
+
+          <p className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#cfae83]/28 bg-white/40 px-4 py-2 text-xs font-medium uppercase tracking-[0.18em] text-charcoal/62">
+            <Sparkles className="h-3.5 w-3.5 text-rose-mauve" />
+            {copy.eyebrow}
           </p>
-        </div>
 
-        <div className="mb-6 grid grid-cols-2 rounded-full border border-[#cfae83]/25 bg-white/35 p-1">
-          <button
-            type="button"
-            onClick={() => setMode('login')}
-            className={mode === 'login' ? 'rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-4 py-2 text-sm font-medium text-white' : 'rounded-full px-4 py-2 text-sm text-charcoal/70'}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            onClick={() => setMode('create')}
-            className={mode === 'create' ? 'rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-4 py-2 text-sm font-medium text-white' : 'rounded-full px-4 py-2 text-sm text-charcoal/70'}
-          >
-            Create Account
-          </button>
-        </div>
+          <h2 className="font-serif text-3xl leading-tight text-charcoal sm:text-4xl">
+            {copy.title}
+          </h2>
 
-        <form onSubmit={submit} className="space-y-4">
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.16em] text-charcoal/58">Email</span>
-            <div className="flex items-center gap-3 rounded-2xl border border-[#cfae83]/24 bg-white/55 px-4 py-3">
-              <Mail className="h-4 w-4 text-rose-mauve" />
-              <input
-                type="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                className="w-full bg-transparent text-sm outline-none placeholder:text-charcoal/35"
-                placeholder="customer@jisoo.com"
-              />
-            </div>
-          </label>
-
-          <label className="block">
-            <span className="mb-1.5 block text-xs font-medium uppercase tracking-[0.16em] text-charcoal/58">Password</span>
-            <div className="flex items-center gap-3 rounded-2xl border border-[#cfae83]/24 bg-white/55 px-4 py-3">
-              <LockKeyhole className="h-4 w-4 text-rose-mauve" />
-              <input
-                type="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-                className="w-full bg-transparent text-sm outline-none placeholder:text-charcoal/35"
-                placeholder="Password"
-              />
-            </div>
-          </label>
-
-          <Button type="submit" className="h-12 w-full rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105">
-            {mode === 'login' ? 'Continue to Dashboard' : 'Create Account'}
-          </Button>
-
-          <p className="text-center text-xs text-charcoal/48">
-            Demo login for now. Real authentication can be connected later.
+          <p className="mx-auto mt-4 max-w-lg text-sm leading-7 text-charcoal/68">
+            {copy.body}
           </p>
-        </form>
-      </div>
+
+          <div className="mx-auto mt-6 flex w-fit items-center gap-2 rounded-full border border-[#cfae83]/24 bg-white/35 px-4 py-2 text-xs text-charcoal/58">
+            <Clock className="h-4 w-4 text-rose-mauve" />
+            Customer access will be enabled after backend setup.
+          </div>
+
+          <Link
+            href={localizeHref('/shop', locale)}
+            className="mt-8 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-7 py-3 text-sm font-medium text-white transition hover:brightness-105"
+          >
+            {copy.cta}
+          </Link>
+        </div>
+      </motion.div>
     </div>
   )
 }
 
 export function signOutCustomer() {
-  window.localStorage.removeItem(STORAGE_KEY)
+  window.localStorage.removeItem('jisoo-customer-session')
   window.location.reload()
 }
