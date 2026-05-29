@@ -18,7 +18,7 @@ import { regionConfigs } from '@/lib/data'
 import type { Region } from '@/lib/types'
 
 const megaGroups = [
-  { title: 'Shop by Person', items: [{ label: 'She', href: '/shop/women' }, { label: 'He', href: '/shop/men' }] },
+  { title: 'My JISOO', items: [{ label: 'Dashboard', href: '/account' }, { label: 'Orders', href: '/account/orders' }, { label: 'Rewards', href: '/rewards' }, { label: 'Wishlist', href: '/account/wishlist' }] },
   { title: 'Care Categories', items: [{ label: 'Anti-Aging', href: '/shop?concern=anti-aging' }, { label: 'Oils', href: '/shop?category=oils' }, { label: 'Masks', href: '/shop?category=masks' }, { label: 'Creams', href: '/shop?category=creams' }] },
   { title: 'Edits', items: [{ label: 'Best Sellers', href: '/shop/best-sellers' }, { label: 'New Arrivals', href: '/shop/new-arrivals' }, { label: 'Sets / Bundles', href: '/shop?category=sets' }] },
   { title: 'Help & Experience', items: [{ label: 'Rewards', href: '/rewards' }, { label: 'Tips', href: '/tips' }] },
@@ -144,9 +144,10 @@ export function Header({
   const settingsLabel = locale === 'ar' ? 'الإعدادات' : locale === 'fr' ? 'Paramètres' : locale === 'de' ? 'Einstellungen' : locale === 'ko' ? '설정' : locale === 'tr' ? 'Ayarlar' : 'Settings'
   const headerText = (label: string) => {
     const translations: Record<string, Partial<Record<typeof locale, string>>> = {
-      'Shop by Person': { ar: 'تسوق حسب الشخص', fr: 'Par personne', de: 'Nach Person', ko: '대상별 쇼핑', tr: 'Kişiye göre' },
-      She: { ar: 'هي', fr: 'Elle', de: 'Sie', ko: '여성', tr: 'Kadın' },
-      He: { ar: 'هو', fr: 'Lui', de: 'Er', ko: '남성', tr: 'Erkek' },
+      'My JISOO': { ar: 'حساب JISOO', fr: 'Mon JISOO', de: 'Mein JISOO', ko: '마이 JISOO', tr: 'JISOO Hesabım' },
+      Dashboard: { ar: 'لوحة التحكم', fr: 'Tableau de bord', de: 'Dashboard', ko: '대시보드', tr: 'Panel' },
+      Orders: { ar: 'الطلبات', fr: 'Commandes', de: 'Bestellungen', ko: '주문', tr: 'Siparişler' },
+      Wishlist: { ar: 'المفضلة', fr: 'Liste d’envies', de: 'Wunschliste', ko: '위시리스트', tr: 'Favoriler' },
       'Care Categories': { ar: 'فئات العناية', fr: 'Catégories soin', de: 'Pflegekategorien', ko: '케어 카테고리', tr: 'Bakım kategorileri' },
       'Anti-Aging': { ar: 'مقاومة علامات التقدم', fr: 'Anti-âge', de: 'Anti-Aging', ko: '안티에이징', tr: 'Yaşlanma karşıtı' },
       Oils: { ar: 'زيوت', fr: 'Huiles', de: 'Öle', ko: '오일', tr: 'Yağlar' },
@@ -158,7 +159,6 @@ export function Header({
       'New Arrivals': { ar: 'وصل حديثًا', fr: 'Nouveautés', de: 'Neuheiten', ko: '신상품', tr: 'Yeni gelenler' },
       'Sets / Bundles': { ar: 'المجموعات', fr: 'Coffrets', de: 'Sets', ko: '세트', tr: 'Setler' },
       'Help & Experience': { ar: 'المساعدة والتجربة', fr: 'Aide & expérience', de: 'Hilfe & Erlebnis', ko: '도움말 및 경험', tr: 'Yardım ve deneyim' },
-      'AI Concierge': { ar: 'المستشارة الذكية', fr: 'Concierge IA', de: 'KI-Beratung', ko: 'AI 컨시어지', tr: 'AI danışmanı' },
       Rewards: { ar: 'المكافآت', fr: 'Récompenses', de: 'Rewards', ko: '리워드', tr: 'Ödüller' },
       Tips: { ar: 'نصائح', fr: 'Conseils', de: 'Tipps', ko: '팁', tr: 'İpuçları' },
     }

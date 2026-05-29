@@ -5,6 +5,7 @@ import { Footer } from '@/components/layout/footer'
 import Link from 'next/link'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
+import { CustomerAuthGate } from '@/components/auth/customer-auth-gate'
 
 const copy: Record<Locale, { title: string; bodyOne: string; bodyTwo: string; cta: string }> = {
   en: { title: 'JISOO Rewards', bodyOne: 'Registered members earn points on every order and can track rewards history.', bodyTwo: 'Guest checkout is supported. Create an account after checkout to start saving future points.', cta: 'Go to account →' },
@@ -18,5 +19,23 @@ const copy: Record<Locale, { title: string; bodyOne: string; bodyTwo: string; ct
 export default function RewardsPage() {
   const { locale } = useLocale()
   const t = copy[locale]
-  return <main className='min-h-screen bg-background'><Header /><section className='pt-36 pb-16 px-4 max-w-4xl mx-auto'><h1 className='font-serif text-4xl leading-tight sm:text-5xl'>{t.title}</h1><div className='mt-8 space-y-4'><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyOne}</div><div className='rounded-xl border border-rose-mauve/20 bg-white/80 p-5'>{t.bodyTwo}</div></div><Link href={localizeHref('/account', locale)} className='mt-6 inline-block text-rose-mauve'>{t.cta}</Link></section><Footer /></main>
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Header />
+      <section className="pt-36 pb-16 px-4 max-w-4xl mx-auto">
+        <CustomerAuthGate reason="rewards">
+          <h1 className="font-serif text-4xl leading-tight sm:text-5xl">{t.title}</h1>
+          <div className="mt-8 space-y-4">
+            <div className="rounded-xl border border-rose-mauve/20 bg-white/80 p-5">{t.bodyOne}</div>
+            <div className="rounded-xl border border-rose-mauve/20 bg-white/80 p-5">{t.bodyTwo}</div>
+          </div>
+          <Link href={localizeHref('/account', locale)} className="mt-6 inline-block text-rose-mauve">
+            {t.cta}
+          </Link>
+        </CustomerAuthGate>
+      </section>
+      <Footer />
+    </main>
+  )
 }
