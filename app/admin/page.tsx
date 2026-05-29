@@ -11,7 +11,6 @@ import {
   Globe2,
   Languages,
   Share2,
-  Sparkles,
   ArrowRight,
   RefreshCw,
   FileText,
@@ -24,7 +23,7 @@ import { StatusBadge } from '@/components/admin/ui/status-badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ScrollArea } from '@/components/ui/scroll-area'
-import { adminDashboardData, aiInsights, topProductsPerformance } from '@/lib/admin/data'
+import { adminDashboardData, topProductsPerformance } from '@/lib/admin/data'
 import { cn } from '@/lib/utils'
 
 const activityIcons: Record<string, React.ElementType> = {
@@ -202,54 +201,6 @@ export default function AdminDashboard() {
                 </motion.div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-
-        {/* AI Insights */}
-        <Card className="border-border/50">
-          <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-lg font-serif flex items-center gap-2">
-              <Sparkles className="h-5 w-5 text-rose-mauve" />
-              AI Insights
-            </CardTitle>
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/admin/ai-copilot">
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-            </Button>
-          </CardHeader>
-          <CardContent>
-            <ScrollArea className="h-[280px] pr-4">
-              <div className="space-y-3">
-                {aiInsights.slice(0, 4).map((insight, index) => (
-                  <motion.div
-                    key={insight.id}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className={cn(
-                      'rounded-lg border p-3 transition-all hover:shadow-sm cursor-pointer',
-                      insight.priority === 'high' ? 'border-rose-200/70 bg-rose-50/80/50' :
-                      insight.priority === 'medium' ? 'border-champagne-gold/35 bg-champagne-gold/12' :
-                      'border-border/50 bg-card'
-                    )}
-                  >
-                    <div className="flex items-start gap-2">
-                      <div className={cn(
-                        'mt-0.5 h-2 w-2 rounded-full shrink-0',
-                        insight.priority === 'high' ? 'bg-rose-500' :
-                        insight.priority === 'medium' ? 'bg-amber-500' :
-                        'bg-rose-mauve'
-                      )} />
-                      <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground">{insight.title}</p>
-                        <p className="text-xs text-muted-foreground mt-0.5 line-clamp-2">{insight.summary}</p>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </ScrollArea>
           </CardContent>
         </Card>
       </div>

@@ -13,7 +13,6 @@ import {
   Languages,
   Image,
   Share2,
-  Sparkles,
   BarChart3,
   ShoppingBag,
   Users,
@@ -43,7 +42,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Sheet, SheetContent } from '@/components/ui/sheet'
 
-type AdminNavKey = 'dashboard' | 'suppliers' | 'products' | 'regions' | 'compliance' | 'translations' | 'media' | 'social' | 'ai' | 'analytics' | 'orders' | 'customers'
+type AdminNavKey = 'dashboard' | 'suppliers' | 'products' | 'regions' | 'compliance' | 'translations' | 'media' | 'social' | 'analytics' | 'orders' | 'customers'
 
 const navigation: Array<{ key: AdminNavKey; href: string; icon: any; badge?: number }> = [
   { key: 'dashboard', href: '/admin', icon: LayoutDashboard },
@@ -54,7 +53,6 @@ const navigation: Array<{ key: AdminNavKey; href: string; icon: any; badge?: num
   { key: 'translations', href: '/admin/translations', icon: Languages, badge: 8 },
   { key: 'media', href: '/admin/media', icon: Image },
   { key: 'social', href: '/admin/social', icon: Share2, badge: 3 },
-  { key: 'ai', href: '/admin/ai-copilot', icon: Sparkles },
   { key: 'analytics', href: '/admin/analytics', icon: BarChart3 },
   { key: 'orders', href: '/admin/orders', icon: ShoppingBag },
   { key: 'customers', href: '/admin/customers', icon: Users },

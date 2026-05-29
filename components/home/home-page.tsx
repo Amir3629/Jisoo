@@ -8,13 +8,11 @@ import { PartnersSection } from '@/components/home/partners-section'
 import { CategoriesSection } from '@/components/home/categories-section'
 import { FeaturedProducts } from '@/components/home/featured-products'
 import { RitualSection } from '@/components/home/ritual-section'
-import { AiAssistantTeaser } from '@/components/home/ai-assistant-teaser'
 import { ConcernsSection } from '@/components/home/concerns-section'
 import { CareCtaSection } from '@/components/home/care-cta-section'
 import { TestimonialsSection } from '@/components/home/testimonials-section'
 import { SocialSection } from '@/components/home/social-section'
 import { InstagramShowcase } from '@/components/home/instagram-showcase'
-import { FloatingAssistant } from '@/components/ai/floating-assistant'
 import { LuxuryIntroSplash } from '@/components/home/luxury-intro-splash'
 
 function ScrollReveal({ children, direction = 'up', snapLabel }: { children: React.ReactNode; direction?: 'up' | 'left' | 'right'; snapLabel?: string }) {
@@ -60,7 +58,6 @@ export function HomePageShell() {
           </div>
           <div className="relative z-10 -mt-[100vh]">
             <ScrollReveal snapLabel="The Ritual of Korean Beauty"><RitualSection /></ScrollReveal>
-            <ScrollReveal direction="left" snapLabel="The Concierge Beauty Advisor"><AiAssistantTeaser /></ScrollReveal>
             <ScrollReveal direction="right"><ConcernsSection /></ScrollReveal>
             <ScrollReveal snapLabel="Start with what your skin actually needs"><CareCtaSection /></ScrollReveal>
             <ScrollReveal direction="left"><TestimonialsSection /></ScrollReveal>
@@ -71,7 +68,6 @@ export function HomePageShell() {
         <ScrollReveal direction="right"><SocialSection /></ScrollReveal>
         <ScrollReveal><InstagramShowcase /></ScrollReveal>
         <Footer />
-        <FloatingAssistant />
       </main>
     </LuxuryIntroSplash>
   )

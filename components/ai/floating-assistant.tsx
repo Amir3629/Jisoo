@@ -1,7 +1,5 @@
-'use client'
-
-import { BeautyConciergePanel } from '@/components/ai/beauty-concierge-panel'
-
 export function FloatingAssistant() {
-  return <BeautyConciergePanel />
+  // Temporarily disabled: AI access is not available yet.
+  // Kept as a placeholder so the floating assistant can be restored later.
+  return null
 }

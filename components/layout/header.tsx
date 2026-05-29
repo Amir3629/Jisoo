@@ -21,7 +21,7 @@ const megaGroups = [
   { title: 'Shop by Person', items: [{ label: 'She', href: '/shop/women' }, { label: 'He', href: '/shop/men' }] },
   { title: 'Care Categories', items: [{ label: 'Anti-Aging', href: '/shop?concern=anti-aging' }, { label: 'Oils', href: '/shop?category=oils' }, { label: 'Masks', href: '/shop?category=masks' }, { label: 'Creams', href: '/shop?category=creams' }] },
   { title: 'Edits', items: [{ label: 'Best Sellers', href: '/shop/best-sellers' }, { label: 'New Arrivals', href: '/shop/new-arrivals' }, { label: 'Sets / Bundles', href: '/shop?category=sets' }] },
-  { title: 'Help & Experience', items: [{ label: 'AI Concierge', href: '/ai-consultant' }, { label: 'Rewards', href: '/rewards' }, { label: 'Tips', href: '/tips' }] },
+  { title: 'Help & Experience', items: [{ label: 'Rewards', href: '/rewards' }, { label: 'Tips', href: '/tips' }] },
 ]
 
 function BrandIcon({ children, className }: { children: ReactNode; className?: string }) {
@@ -137,7 +137,6 @@ export function Header({
   const navLinks = [
     { href: '/shop', label: dictionary.header.nav.shop },
     { href: '/about', label: dictionary.header.nav.story },
-    { href: '/ai-consultant', label: 'AI' },
   ]
   const discoverLabel = locale === 'ar' ? 'اكتشف' : locale === 'fr' ? 'Découvrir' : locale === 'de' ? 'Entdecken' : locale === 'ko' ? '둘러보기' : locale === 'tr' ? 'Keşfet' : 'Discover'
   const accountLoginLabel = locale === 'ar' ? 'الحساب / تسجيل الدخول' : locale === 'fr' ? 'Compte / Connexion' : locale === 'de' ? 'Konto / Login' : locale === 'ko' ? '계정 / 로그인' : locale === 'tr' ? 'Hesap / Giriş' : 'Account / Login'

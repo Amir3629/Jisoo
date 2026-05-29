@@ -1,7 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import { CheckCircle2, Sparkles } from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { PageHeader } from '@/components/admin/ui/page-header'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -10,10 +10,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Textarea } from '@/components/ui/textarea'
 import { products } from '@/lib/data'
 import { useLocale } from '@/components/providers/locale-provider'
-import { generateTranslationDraft, improveMarketingCopy } from '@/lib/ai/admin-ai'
 
 type Lang = 'ar' | 'fr' | 'de'
-type Status = 'draft' | 'ai_generated' | 'approved'
+type Status = 'draft' | 'approved'
 
 interface Row {
   id: string
@@ -103,12 +102,11 @@ export default function TranslationsPage() {
                 </div>
               </div>
 
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" onClick={() => updateSelected({ targetText: generateTranslationDraft(selected.sourceText, selected.targetLang), status: 'ai_generated' })}><Sparkles className="h-4 w-4 mr-2" />{copy.generate}</Button>
-                <Button variant="outline" onClick={() => updateSelected({ targetText: improveMarketingCopy(selected.targetText || selected.sourceText), status: 'ai_generated' })}>{copy.improve}</Button>
+              <div className="space-y-3"><p className="text-xs text-muted-foreground">AI translation tools are temporarily disabled until AI access is available.</p><div className="flex flex-wrap gap-2">
+
                 <Button variant="outline" onClick={() => updateSelected({ status: 'draft' })}>{copy.saveDraft}</Button>
                 <Button onClick={() => updateSelected({ status: 'approved' })}><CheckCircle2 className="h-4 w-4 mr-2" />{copy.approve}</Button>
-              </div>
+              </div></div>
 
               <div>
                 <p className="text-xs text-muted-foreground mb-1">{copy.preview}</p>

@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 
 const snapExcludedSegments = ['/account', '/admin', '/checkout', '/cart', '/about', '/our-story']
-const snapEnabledPaths = ['/', '/tips', '/shop/new-arrivals', '/ai-consultant']
+const snapEnabledPaths = ['/', '/tips', '/shop/new-arrivals']
 const DEBUG_SNAP = false
 const SNAP_ANIMATION_DURATION = 860
 const SNAP_DELTA_THRESHOLD = 14

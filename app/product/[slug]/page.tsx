@@ -14,7 +14,7 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import {
   Heart, Share2, Star, Minus, Plus, Check,
-  Sparkles, Info, MessageCircle
+  Sparkles, Info
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
@@ -352,13 +352,6 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <Share2 className="w-4 h-4" />
                   <span>{copy.share}</span>
                 </button>
-                <Link
-                  href={localizeHref('/ai-consultant', locale)}
-                  className="flex items-center gap-2 text-rose-mauve hover:text-plum transition-colors"
-                >
-                  <MessageCircle className="w-4 h-4" />
-                  <span>{copy.askAi}</span>
-                </Link>
               </div>
 
               {/* Size & Info */}
