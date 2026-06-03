@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingBag, Heart, Trophy, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
+import { ShoppingBag, Heart, Award, TrendingUp, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
@@ -37,13 +37,18 @@ function getSecondModeProductImage(index: number) {
 }
 
 const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
-  'best-seller': Trophy,
-  'most-viewed': Eye,
+  'best-seller': Award,
+  'most-viewed': TrendingUp,
 }
 
 const statusIconToneMap: Record<ProductStatusBadgeKind, string> = {
   'best-seller': 'text-champagne-gold drop-shadow-[0_8px_16px_rgba(207,174,131,0.38)]',
-  'most-viewed': 'text-plum drop-shadow-[0_8px_16px_rgba(79,54,60,0.22)]',
+  'most-viewed': 'text-rose-mauve drop-shadow-[0_8px_16px_rgba(154,98,118,0.24)]',
+}
+
+const statusEdgeToneMap: Record<ProductStatusBadgeKind, string> = {
+  'best-seller': 'from-champagne-gold/95 to-[#d3af84]/95 text-champagne-gold border-champagne-gold/45',
+  'most-viewed': 'from-plum/90 to-rose-mauve/90 text-rose-mauve border-rose-mauve/35',
 }
 
 const careIconMap: Record<ProductCareIconKind, LucideIcon> = {
@@ -127,20 +132,29 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
           </>
 
           {statusBadge && StatusIcon && (
-            <div className="absolute left-3 top-3">
+            <div className={cn('absolute z-10', statusBadge.style === 'edge-tab' ? 'left-1/2 top-0 -translate-x-1/2' : 'left-3 top-3')}>
               <span
                 tabIndex={0}
                 aria-label={statusBadge.label}
                 title={statusBadge.label}
                 className="group/status relative inline-flex focus:outline-none"
               >
-                <StatusIcon
-                  className={cn(
-                    'h-8 w-8 stroke-[2.15] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25',
-                    statusIconToneMap[statusBadge.kind]
-                  )}
-                />
-                <span className="pointer-events-none absolute left-0 top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100">
+                {statusBadge.style === 'edge-tab' ? (
+                  <span className="relative inline-flex h-12 w-20 justify-center overflow-visible">
+                    <span className={cn('absolute inset-x-0 top-0 h-1.5 rounded-b-full bg-gradient-to-r', statusEdgeToneMap[statusBadge.kind])} />
+                    <span className={cn('mt-1.5 flex h-10 w-10 items-center justify-center rounded-full border bg-white/95 shadow-[0_12px_28px_rgba(79,54,60,0.13)] backdrop-blur-xl transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-105 group-focus/status:-translate-y-0.5 group-focus/status:scale-105', statusEdgeToneMap[statusBadge.kind])}>
+                      <StatusIcon className="h-5 w-5 stroke-[2.05]" />
+                    </span>
+                  </span>
+                ) : (
+                  <StatusIcon
+                    className={cn(
+                      'h-8 w-8 stroke-[2.15] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25',
+                      statusIconToneMap[statusBadge.kind]
+                    )}
+                  />
+                )}
+                <span className={cn('pointer-events-none absolute top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100', statusBadge.style === 'edge-tab' ? 'left-1/2 -translate-x-1/2 group-hover/status:-translate-x-1/2 group-focus/status:-translate-x-1/2' : 'left-0')}>
                   {statusBadge.label}
                 </span>
               </span>

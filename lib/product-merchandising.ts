@@ -1,6 +1,7 @@
 import type { Product } from './types'
 
 export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed'
+export type ProductStatusBadgeStyle = 'plain-icon' | 'edge-tab'
 export type ProductCareIconKind = 'hydration' | 'brightening' | 'anti-aging' | 'dry-skin' | 'sensitive-skin' | 'firming' | 'repair' | 'glow' | 'protection' | 'clarity'
 export type RoutineStepKey = 'cleanse' | 'prep' | 'treat' | 'seal' | 'protect'
 
@@ -13,6 +14,7 @@ export interface ProductCareFocus {
 export interface ProductStatusBadge {
   kind: ProductStatusBadgeKind
   label: string
+  style: ProductStatusBadgeStyle
 }
 
 export interface ProductCareChip {
@@ -35,10 +37,13 @@ export interface ProductRoutinePlacement {
   steps: ProductRoutineStep[]
 }
 
-const statusBadgeBySlug: Partial<Record<ProductStatusBadgeKind, string[]>> = {
-  'best-seller': ['pore-deep-clean-bubble-cleanser', 'hydra-daily-snow-collagen-cream'],
-  'most-viewed': ['radiance-boost-true-vitamin-c-23-serum'],
-}
+const statusBadgeEntries: Array<{ kind: ProductStatusBadgeKind; slug: string; style?: ProductStatusBadgeStyle }> = [
+  { kind: 'best-seller', slug: 'pore-deep-clean-bubble-cleanser' },
+  { kind: 'best-seller', slug: 'hydra-daily-snow-collagen-cream' },
+  { kind: 'most-viewed', slug: 'radiance-boost-true-vitamin-c-23-serum' },
+  { kind: 'best-seller', slug: 'dewy-glow-azulene-gel-toner-pad', style: 'edge-tab' },
+  { kind: 'most-viewed', slug: 'daily-uv-shield-sunscreen', style: 'edge-tab' },
+]
 
 const statusBadgeLabels: Record<ProductStatusBadgeKind, string> = {
   'best-seller': 'Best Seller',
@@ -249,11 +254,14 @@ export function getProductCareFocus(product: Product): ProductCareFocus {
 }
 
 export function getProductStatusBadge(product: Product): ProductStatusBadge | null {
-  const entry = (Object.entries(statusBadgeBySlug) as Array<[ProductStatusBadgeKind, string[]]>).find(([, slugs]) => slugs.includes(product.slug))
+  const entry = statusBadgeEntries.find((item) => item.slug === product.slug)
   if (!entry) return null
 
-  const [kind] = entry
-  return { kind, label: statusBadgeLabels[kind] }
+  return {
+    kind: entry.kind,
+    label: statusBadgeLabels[entry.kind],
+    style: entry.style ?? 'plain-icon',
+  }
 }
 
 export function getProductCardBadge(product: Product): ProductStatusBadge | null {

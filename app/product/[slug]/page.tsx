@@ -14,7 +14,7 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import {
   Heart, Share2, Star, Minus, Plus, Check,
-  Sparkles, Info, Trophy, Eye, type LucideIcon
+  Sparkles, Info, Award, TrendingUp, type LucideIcon
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
@@ -27,8 +27,8 @@ interface ProductPageProps {
 }
 
 const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
-  'best-seller': Trophy,
-  'most-viewed': Eye,
+  'best-seller': Award,
+  'most-viewed': TrendingUp,
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -167,7 +167,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
                   {statusBadge && StatusIcon && (
                     <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/86/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
-                      <StatusIcon className="h-3.5 w-3.5 text-rose-mauve" />
+                      <StatusIcon className={cn('h-3.5 w-3.5', statusBadge.kind === 'best-seller' ? 'text-champagne-gold' : 'text-rose-mauve')} />
                       {statusBadge.label}
                     </span>
                   )}
