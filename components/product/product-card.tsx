@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingBag, Heart, Award, TrendingUp, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
+import { ShoppingBag, Heart, Trophy, TrendingUp, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
@@ -37,17 +37,17 @@ function getSecondModeProductImage(index: number) {
 }
 
 const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
-  'best-seller': Award,
+  'best-seller': Trophy,
   'most-viewed': TrendingUp,
 }
 
 const statusIconToneMap: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'text-champagne-gold drop-shadow-[0_8px_16px_rgba(207,174,131,0.38)]',
+  'best-seller': 'text-[#d3af84] drop-shadow-[0_8px_18px_rgba(211,175,132,0.48)]',
   'most-viewed': 'text-rose-mauve drop-shadow-[0_8px_16px_rgba(154,98,118,0.24)]',
 }
 
 const statusEdgeToneMap: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'from-champagne-gold/95 to-[#d3af84]/95 text-champagne-gold border-champagne-gold/45',
+  'best-seller': 'from-[#f4d99b] to-[#d3af84] text-[#d3af84] border-champagne-gold/55',
   'most-viewed': 'from-plum/90 to-rose-mauve/90 text-rose-mauve border-rose-mauve/35',
 }
 
