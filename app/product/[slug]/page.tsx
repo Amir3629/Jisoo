@@ -20,6 +20,7 @@ import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
 import { getProductJsonLd } from '@/lib/seo'
+import { getProductCardBadge, getProductCareFocus, getRoutineStepsForProduct } from '@/lib/product-merchandising'
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
@@ -61,6 +62,10 @@ export default function ProductPage({ params }: ProductPageProps) {
     photoUploadTitle: locale === 'ar' ? 'رفع صورة العميل (واجهة تجريبية)' : locale === 'fr' ? 'Téléversement photo client (UI)' : locale === 'de' ? 'Kundenfoto-Upload (UI)' : locale === 'ko' ? '고객 사진 업로드(UI)' : locale === 'tr' ? 'Müşteri Fotoğraf Yükleme (UI)' : 'Customer Photo Upload (UI Scaffold)',
     photoUploadBody: locale === 'ar' ? 'شارك صورة النتيجة بعد أسبوعين من الاستخدام. ميزة الرفع غير متصلة بعد.' : locale === 'fr' ? 'Partagez votre photo résultat après 2 semaines. Le backend d’upload n’est pas encore connecté.' : locale === 'de' ? 'Teile dein Ergebnisfoto nach 2 Wochen Nutzung. Upload-Backend ist noch nicht verbunden.' : locale === 'ko' ? '2주 사용 후 결과 사진을 공유하세요. 업로드 백엔드는 아직 연결되지 않았습니다.' : locale === 'tr' ? '2 haftalık kullanım sonrası sonuç fotoğrafınızı paylaşın. Yükleme altyapısı henüz bağlı değil.' : 'Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.',
     choosePhoto: locale === 'ar' ? 'اختر صورة' : locale === 'fr' ? 'Choisir une photo' : locale === 'de' ? 'Foto auswählen' : locale === 'ko' ? '사진 선택' : locale === 'tr' ? 'Fotoğraf Seç' : 'Choose Photo',
+    careFocus: locale === 'ar' ? 'تركيز العناية' : locale === 'fr' ? 'Objectif soin' : locale === 'de' ? 'Pflegefokus' : locale === 'ko' ? '케어 포커스' : locale === 'tr' ? 'Bakım odağı' : 'Care focus',
+    routineTitle: locale === 'ar' ? 'كيف يدخل هذا المنتج في الروتين' : locale === 'fr' ? 'Où placer ce produit dans la routine' : locale === 'de' ? 'So passt dieses Produkt in die Routine' : locale === 'ko' ? '이 제품을 루틴에 넣는 순서' : locale === 'tr' ? 'Bu ürün rutinde nereye gelir' : 'Where this fits in your routine',
+    routineBody: locale === 'ar' ? 'مثال سريع للترتيب حتى يعرف العميل ماذا يستخدم أولاً وما يأتي بعده.' : locale === 'fr' ? 'Un guide court pour montrer quoi utiliser d’abord et quoi appliquer ensuite.' : locale === 'de' ? 'Eine kurze Reihenfolge, damit Kund:innen wissen, was zuerst und danach kommt.' : locale === 'ko' ? '무엇을 먼저 쓰고 다음에 무엇을 바르는지 보여주는 간단한 순서입니다.' : locale === 'tr' ? 'Müşterinin önce neyi, sonra neyi kullanacağını görmesi için kısa bir sıra.' : 'A simple order guide so customers know what to use first and what comes next.',
+    highlightedStep: locale === 'ar' ? 'خطوة هذا المنتج' : locale === 'fr' ? 'Étape de ce produit' : locale === 'de' ? 'Schritt dieses Produkts' : locale === 'ko' ? '이 제품 단계' : locale === 'tr' ? 'Bu ürünün adımı' : 'This product step',
   }
 
   if (!product) {
@@ -81,6 +86,9 @@ export default function ProductPage({ params }: ProductPageProps) {
   const access = evaluateRegionAccess(product, region)
   const isBuyable = access.isBuyable
   const isVisibleOnly = access.status === 'visible_but_not_buyable'
+  const cardBadge = getProductCardBadge(product, 0)
+  const careFocus = getProductCareFocus(product)
+  const routineSteps = getRoutineStepsForProduct(product)
 
   const handleAddToCart = () => {
     if (isBuyable) {
@@ -139,12 +147,19 @@ export default function ProductPage({ params }: ProductPageProps) {
                 />
 
                 {/* JISOO Watermark */}
-                <div className="absolute bottom-4 right-4 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full">
+                <div className="absolute bottom-4 right-4 flex items-center gap-3 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
+                  <span aria-hidden="true" className="relative h-7 w-5 rotate-[32deg] rounded-[999px_999px_999px_8px] border border-rose-mauve/35 bg-white/55">
+                    <span className="absolute left-1/2 top-1 h-5 w-px -translate-x-1/2 rotate-[-18deg] bg-rose-mauve/30" />
+                  </span>
                   <span className="text-sm font-serif font-semibold text-plum">JISOO</span>
                 </div>
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
+                  <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium shadow-sm backdrop-blur-xl', cardBadge.tone)}>
+                    <span className="text-sm leading-none">{cardBadge.mark}</span>
+                    {cardBadge.label}
+                  </span>
                   {product.isNew && (
                     <span className="px-3 py-1 text-xs font-medium bg-plum text-warm-ivory rounded-full">
                       {dictionary.common.new}
@@ -257,9 +272,17 @@ export default function ProductPage({ params }: ProductPageProps) {
               )}
 
               {/* Description */}
-              <p className="mt-6 text-muted-foreground leading-relaxed">
-                {product.shortDescription}
-              </p>
+              <div className="relative mt-6 overflow-hidden rounded-3xl border border-rose-mauve/15 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
+                <div aria-hidden="true" className="absolute -right-5 -top-6 h-24 w-12 rotate-[35deg] rounded-[999px_999px_999px_18px] border border-rose-mauve/15 bg-rose-mauve/5" />
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.careFocus}</p>
+                <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">{careFocus.title}</h2>
+                <p className="mt-2 text-muted-foreground leading-relaxed">
+                  {careFocus.description}
+                </p>
+                <p className="mt-3 text-sm leading-6 text-charcoal/58">
+                  {product.shortDescription}
+                </p>
+              </div>
 
               {/* Benefits Quick View */}
               <div className="mt-6 flex flex-wrap gap-3">
@@ -272,6 +295,51 @@ export default function ProductPage({ params }: ProductPageProps) {
                     <span className="text-sm text-charcoal">{benefit}</span>
                   </div>
                 ))}
+              </div>
+
+
+              {/* Routine Guide */}
+              <div className="mt-8 rounded-[2rem] border border-[#e4c8d2]/28 bg-[#fffaf6]/80 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.06)]">
+                <div className="flex items-start gap-3">
+                  <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white text-rose-mauve shadow-sm">
+                    <Sparkles className="h-4 w-4" />
+                    <span aria-hidden="true" className="absolute -right-1 -top-1 h-5 w-3 rotate-[35deg] rounded-[999px_999px_999px_5px] border border-rose-mauve/25 bg-white" />
+                  </div>
+                  <div>
+                    <h2 className="font-serif text-xl font-semibold text-charcoal">{copy.routineTitle}</h2>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{copy.routineBody}</p>
+                  </div>
+                </div>
+                <div className="mt-5 space-y-3">
+                  {routineSteps.map((step) => (
+                    <div
+                      key={step.step}
+                      className={cn(
+                        'rounded-2xl border p-4 transition',
+                        step.match
+                          ? 'border-rose-mauve/35 bg-white shadow-[0_14px_34px_rgba(154,98,118,0.10)]'
+                          : 'border-[#e4c8d2]/18 bg-white/45'
+                      )}
+                    >
+                      <div className="flex gap-3">
+                        <span className={cn('flex h-8 w-8 flex-none items-center justify-center rounded-full text-xs font-semibold', step.match ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'bg-nude-beige/70 text-charcoal/58')}>
+                          {step.step}
+                        </span>
+                        <div>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="font-medium text-charcoal">{step.title}</h3>
+                            {step.match && (
+                              <span className="rounded-full bg-rose-mauve/10 px-2.5 py-1 text-[11px] font-medium text-rose-mauve">
+                                {copy.highlightedStep}
+                              </span>
+                            )}
+                          </div>
+                          <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.match ?? step.description}</p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* Variants */}

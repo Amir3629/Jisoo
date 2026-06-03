@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingBag, Heart } from 'lucide-react'
@@ -13,6 +12,7 @@ import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { localizeHref } from '@/lib/i18n'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
+import { getProductCardBadge, getProductCareFocus } from '@/lib/product-merchandising'
 
 interface ProductCardProps {
   product: Product
@@ -32,62 +32,11 @@ const SECOND_MODE_PRODUCT_IMAGES = [
   '/assets/products/product-second-mode-final/jisoo-second-mode-product-06.png',
 ] as const
 
-function getInitialSiteMode() {
-  if (typeof window === 'undefined') return 'soft'
-
-  const savedMode = window.localStorage.getItem('jisoo-site-mode')
-  if (savedMode === 'elegant' || savedMode === 'soft') return savedMode
-
-  return document.documentElement.dataset.siteMode === 'elegant' ? 'elegant' : 'soft'
-}
-
 function getSecondModeProductImage(index: number) {
   return SECOND_MODE_PRODUCT_IMAGES[index % SECOND_MODE_PRODUCT_IMAGES.length]
 }
 
 export function ProductCard({ product, index = 0, displayName, hideDescription = false, compact = false }: ProductCardProps) {
-  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>(() => getInitialSiteMode())
-
-  useEffect(() => {
-    const readMode = () => {
-      const datasetMode = document.documentElement.dataset.siteMode
-      const savedMode = window.localStorage.getItem('jisoo-site-mode')
-      const nextMode = datasetMode === 'elegant' || savedMode === 'elegant' ? 'elegant' : 'soft'
-      setSiteMode(nextMode)
-    }
-
-    const onModeChange = (event: Event) => {
-      const detail = (event as CustomEvent<'soft' | 'elegant'>).detail
-      if (detail === 'soft' || detail === 'elegant') {
-        setSiteMode(detail)
-        return
-      }
-
-      readMode()
-    }
-
-    readMode()
-
-    const observer = new MutationObserver(readMode)
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-site-mode'],
-    })
-
-    window.addEventListener('jisoo-site-mode', onModeChange)
-    window.addEventListener('storage', readMode)
-
-    return () => {
-      observer.disconnect()
-      window.removeEventListener('jisoo-site-mode', onModeChange)
-      window.removeEventListener('storage', readMode)
-    }
-  }, [])
-
-  const productImageSrc = siteMode === 'elegant'
-    ? getSecondModeProductImage(index)
-    : product.images?.[0]?.src
-  const resolvedProductImageSrc = resolveImageSrc(productImageSrc)
   const { addItem } = useCart()
   const { region } = useRegion()
   const { locale, dictionary } = useLocale()
@@ -111,22 +60,8 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
 
   const defaultProductImageSrc = resolveImageSrc(product.images?.[0]?.src)
   const secondModeProductImageSrc = resolveImageSrc(getSecondModeProductImage(index))
-
-  const cardBadge = (() => {
-    if (index === 0) {
-      return { label: 'Customer Favorite', mark: '♡', tone: 'border-rose-mauve/25 bg-white/92 text-rose-mauve' }
-    }
-
-    if (index === 2) {
-      return { label: 'Best Seller', mark: '★', tone: 'border-white/20 bg-charcoal/88 text-white' }
-    }
-
-    if (index === 5) {
-      return { label: 'Glow Pick', mark: '✦', tone: 'border-white/20 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' }
-    }
-
-    return null
-  })()
+  const cardBadge = getProductCardBadge(product, index)
+  const careFocus = getProductCareFocus(product)
 
   if (!access.isVisible) {
     return null
@@ -154,12 +89,10 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
           </>
 
           <div className="absolute top-3 left-3 flex flex-col gap-2">
-            {cardBadge && (
-              <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-medium tracking-[0.02em] shadow-sm backdrop-blur-xl', cardBadge.tone)}>
-                <span className="text-[12px] leading-none">{cardBadge.mark}</span>
-                {cardBadge.label}
-              </span>
-            )}
+            <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-medium tracking-[0.02em] shadow-sm backdrop-blur-xl', cardBadge.tone)}>
+              <span className="text-[12px] leading-none">{cardBadge.mark}</span>
+              {cardBadge.label}
+            </span>
             {product.isNew && (
               <span className="rounded-full bg-rose-mauve/95 px-3 py-1 text-xs font-medium text-warm-ivory">
                 {dictionary.common.new}
@@ -179,6 +112,11 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
           >
             <Heart className="h-4 w-4" />
           </button>
+
+          <div aria-hidden="true" className="absolute bottom-4 right-4 h-14 w-14 opacity-55 transition group-hover:rotate-6 group-hover:opacity-80">
+            <div className="absolute left-5 top-1 h-12 w-6 rotate-[32deg] rounded-[999px_999px_999px_20px] border border-rose-mauve/30 bg-white/45 shadow-[0_10px_30px_rgba(154,98,118,0.10)] backdrop-blur-sm" />
+            <div className="absolute left-4 top-7 h-px w-9 rotate-[32deg] bg-rose-mauve/30" />
+          </div>
         </div>
       </Link>
 
@@ -192,6 +130,14 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
               {cardName}
             </h3>
           </Link>
+          <div className="rounded-2xl border border-[#e4c8d2]/28 bg-[#fff8f9]/70 px-3 py-2">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">
+              {careFocus.title}
+            </p>
+            <p className="mt-1 line-clamp-2 text-xs leading-5 text-charcoal/62">
+              {careFocus.description}
+            </p>
+          </div>
           {!hideDescription && (
             <p className="line-clamp-2 text-sm leading-6 text-charcoal/65">
               {product.shortDescription}
