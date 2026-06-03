@@ -28,19 +28,21 @@ const buyableAvailability: Partial<Record<Region, ProductAvailability>> = {
 }
 
 export const jisooProductImages = [
-  '/assets/products/jisoo-new/jisoo-product-20260518-01.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-03.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-04.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-05.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-06.png',
-  '/assets/products/jisoo-new/jisoo-product-20260518-07.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-01.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-02.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-03.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-04.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-05.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-06.png',
 ] as const
 
 const featuredProductImages = [
-  '/assets/products/jisoo-featured/jisoo-featured-product-01.png',
-  '/assets/products/jisoo-featured/jisoo-featured-product-02.png',
-  '/assets/products/jisoo-featured/jisoo-featured-product-03.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-01.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-02.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-03.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-04.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-05.png',
+  '/assets/products/productnewnew-final/jisoo-product-final-06.png',
 ] as const
 
 function createProductDraft(input: ProductDraftInput): Product {
@@ -211,8 +213,8 @@ export function createProductDraftFromRaw(rawText: string, overrides: Partial<Pr
     tags: overrides.tags ?? ['supplier-review'],
     size: overrides.size ?? 'To be confirmed',
     images: overrides.images ?? [
-      { id: 'supplier-draft-image', src: '/assets/products/jisoo-new/jisoo-product-20260518-01.png', alt: 'Draft product product visual', isMain: true },
-      { id: 'supplier-draft-image-2', src: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', alt: 'Draft product care detail visual' },
+      { id: 'supplier-draft-image', src: '/assets/products/productnewnew-final/jisoo-product-final-01.png', alt: 'Draft product product visual', isMain: true },
+      { id: 'supplier-draft-image-2', src: '/assets/products/productnewnew-final/jisoo-product-final-02.png', alt: 'Draft product care detail visual' },
     ],
     supplierNotes: rawText,
     createdAt: overrides.createdAt ?? now,

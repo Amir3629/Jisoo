@@ -39,7 +39,7 @@ const HERO_ASSETS = {
   video: '/assets/video/signature-motion.mp4',
 }
 
-const FALLBACK_IMAGES = ['/assets/products/jisoo-new/jisoo-product-20260518-02.png', '/assets/products/jisoo-new/jisoo-product-20260518-01.png']
+const FALLBACK_IMAGES = ['/assets/products/productnewnew-final/jisoo-product-final-02.png', '/assets/products/productnewnew-final/jisoo-product-final-03.png']
 const HERO_ONE_EDITORIAL_IMAGE = '/assets/hero/tips.png'
 const HOME_EDITORIAL_IMAGE = '/assets/hero/home-desktop.png?v=20260509-1453'
 const HOME_EDITORIAL_MOBILE_IMAGE = '/assets/hero/home-mobile.png?v=20260509-1453'
@@ -189,6 +189,7 @@ export function HeroSection({
     root.dataset.surfaceTheme = siteMode === 'elegant' ? 'elegant-sage' : 'champagne-cream'
     root.dataset.surfaceEffect = 'on'
     root.dataset.siteMode = siteMode
+    window.localStorage.setItem('jisoo-site-mode', siteMode)
     root.style.setProperty('--surface-tone-overlay-color', siteMode === 'elegant' ? '210 216 206' : '234 214 184')
     root.style.setProperty('--surface-tone-overlay-opacity', siteMode === 'elegant' ? '0.24' : '0')
     root.style.setProperty('--warm-ivory', toneColor(palette.base, surfaceTone))
@@ -204,6 +205,7 @@ export function HeroSection({
     root.style.setProperty('--blush-pink', siteMode === 'elegant' ? elegantSurface.blush : '#f6e2ea')
     root.style.setProperty('--champagne-gold', siteMode === 'elegant' ? elegantSurface.gold : '#cfae84')
     root.style.setProperty('--charcoal', siteMode === 'elegant' ? elegantSurface.charcoal : '#2c2528')
+    window.dispatchEvent(new CustomEvent('jisoo-site-mode', { detail: siteMode }))
   }, [surfaceTone, siteMode])
 
   useEffect(() => {

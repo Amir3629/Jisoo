@@ -86,7 +86,7 @@ export const supplierProducts: SupplierProduct[] = [
     description: 'Raw supplier item pending JISOO review. Public copy and claims are not approved.',
     price: 0,
     currency: 'EUR',
-    images: ['/assets/products/jisoo-new/jisoo-product-20260518-02.png'],
+    images: ['/assets/products/productnewnew-final/jisoo-product-final-02.png'],
     category: 'to-be-confirmed',
     ingredients: ['INCI pending verification'],
     changeType: 'new',
@@ -102,7 +102,7 @@ export const supplierProducts: SupplierProduct[] = [
     description: 'Raw supplier item pending JISOO review. Public copy and claims are not approved.',
     price: 0,
     currency: 'EUR',
-    images: ['/assets/products/jisoo-new/jisoo-product-20260518-01.png'],
+    images: ['/assets/products/productnewnew-final/jisoo-product-final-03.png'],
     category: 'to-be-confirmed',
     ingredients: ['INCI pending verification'],
     changeType: 'updated',
@@ -203,7 +203,7 @@ export const marketAvailability: MarketAvailability[] = [
   {
     productId: 'prod-1',
     productName: 'Radiance Boost Vitamin C 23 Serum',
-    productImage: '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
+    productImage: '/assets/products/productnewnew-final/jisoo-product-final-04.png',
     markets: { UAE: 'visible_and_buyable', EU: 'visible_and_buyable', CA: 'visible_and_buyable' },
     complianceStatus: { UAE: 'compliant', EU: 'compliant', CA: 'compliant' },
     lastUpdated: '2024-03-10T14:00:00Z',
@@ -397,17 +397,17 @@ export const mediaAssets: MediaAsset[] = [
     id: 'media-1',
     name: 'luminous-glow-serum-hero.jpg',
     type: 'image',
-    originalUrl: '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
-    watermarkedUrl: '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
-    thumbnailUrl: '/assets/products/jisoo-new/jisoo-product-20260518-02.png',
+    originalUrl: '/assets/products/productnewnew-final/jisoo-product-final-05.png',
+    watermarkedUrl: '/assets/products/productnewnew-final/jisoo-product-final-06.png',
+    thumbnailUrl: '/assets/products/productnewnew-final/jisoo-product-final-01.png',
     width: 2400,
     height: 3200,
     fileSize: 2450000,
     mimeType: 'image/jpeg',
     focalPoint: { x: 50, y: 40 },
     crops: [
-      { preset: 'website_hero', url: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', width: 1920, height: 800 },
-      { preset: 'instagram_square', url: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', width: 1080, height: 1080 },
+      { preset: 'website_hero', url: '/assets/products/productnewnew-final/jisoo-product-final-02.png', width: 1920, height: 800 },
+      { preset: 'instagram_square', url: '/assets/products/productnewnew-final/jisoo-product-final-03.png', width: 1080, height: 1080 },
     ],
     tags: ['serum', 'hero', 'vitamin-c'],
     productIds: ['prod-1'],
@@ -500,10 +500,10 @@ export const analyticsDashboard: AnalyticsDashboard = {
     { region: 'CA', revenue: 44000, orders: 540, visitors: 28000, conversionRate: 1.9, topProducts: ['prod-3', 'prod-7'], growth: 5.8 },
   ],
   topProducts: [
-    { productId: 'prod-1', productName: 'Radiance Boost Vitamin C 23 Serum', productImage: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', revenue: 48500, unitsSold: 622, views: 18500, conversionRate: 3.4, returnRate: 1.2, averageRating: 4.8, trend: 'up' },
+    { productId: 'prod-1', productName: 'Radiance Boost Vitamin C 23 Serum', productImage: '/assets/products/productnewnew-final/jisoo-product-final-04.png', revenue: 48500, unitsSold: 622, views: 18500, conversionRate: 3.4, returnRate: 1.2, averageRating: 4.8, trend: 'up' },
     { productId: 'prod-2', productName: 'Pore Deep Clean Bubble Serum', productImage: '/assets/editorial/care-expert.jpg', revenue: 38200, unitsSold: 588, views: 15200, conversionRate: 3.9, returnRate: 0.8, averageRating: 4.9, trend: 'up' },
     { productId: 'prod-6', productName: 'Pore Clear Vita-C Cleansing Foam', productImage: '/assets/backgrounds/cica-ampoule.jpeg', revenue: 32400, unitsSold: 558, views: 12800, conversionRate: 4.4, returnRate: 0.5, averageRating: 4.9, trend: 'stable' },
-    { productId: 'prod-7', productName: 'Product Pending Review', productImage: '/assets/products/jisoo-new/jisoo-product-20260518-01.png', revenue: 28600, unitsSold: 550, views: 14200, conversionRate: 3.9, returnRate: 0.9, averageRating: 4.8, trend: 'up' },
+    { productId: 'prod-7', productName: 'Product Pending Review', productImage: '/assets/products/productnewnew-final/jisoo-product-final-05.png', revenue: 28600, unitsSold: 550, views: 14200, conversionRate: 3.9, returnRate: 0.9, averageRating: 4.8, trend: 'up' },
   ],
   topSuppliers: [
     { supplierId: 'supplier-2', supplierName: 'Glow Research', revenue: 124500, productCount: 52, averageRating: 4.7, topProducts: ['prod-1', 'prod-4', 'prod-8'] },
@@ -704,10 +704,10 @@ export const adminCustomers: AdminCustomer[] = [
 ]
 
 export const topProductsPerformance: ProductPerformance[] = [
-  { productId: 'prod-1', productName: 'Radiance Boost Vitamin C 23 Serum', productImage: '/assets/products/jisoo-new/jisoo-product-20260518-02.png', revenue: 48500, unitsSold: 622, views: 18500, conversionRate: 3.4, returnRate: 1.2, averageRating: 4.8, trend: 'up' },
+  { productId: 'prod-1', productName: 'Radiance Boost Vitamin C 23 Serum', productImage: '/assets/products/productnewnew-final/jisoo-product-final-06.png', revenue: 48500, unitsSold: 622, views: 18500, conversionRate: 3.4, returnRate: 1.2, averageRating: 4.8, trend: 'up' },
   { productId: 'prod-2', productName: 'Pore Deep Clean Bubble Serum', productImage: '/assets/editorial/care-expert.jpg', revenue: 38200, unitsSold: 588, views: 15200, conversionRate: 3.9, returnRate: 0.8, averageRating: 4.9, trend: 'up' },
   { productId: 'prod-6', productName: 'Pore Clear Vita-C Cleansing Foam', productImage: '/assets/backgrounds/cica-ampoule.jpeg', revenue: 32400, unitsSold: 558, views: 12800, conversionRate: 4.4, returnRate: 0.5, averageRating: 4.9, trend: 'stable' },
-  { productId: 'prod-7', productName: 'Product Pending Review', productImage: '/assets/products/jisoo-new/jisoo-product-20260518-01.png', revenue: 28600, unitsSold: 550, views: 14200, conversionRate: 3.9, returnRate: 0.9, averageRating: 4.8, trend: 'up' },
+  { productId: 'prod-7', productName: 'Product Pending Review', productImage: '/assets/products/productnewnew-final/jisoo-product-final-01.png', revenue: 28600, unitsSold: 550, views: 14200, conversionRate: 3.9, returnRate: 0.9, averageRating: 4.8, trend: 'up' },
   { productId: 'prod-3', productName: 'Gentle Cloud Foam Cleanser', productImage: '/assets/editorial/skincare-ingredients.jpg', revenue: 22400, unitsSold: 700, views: 11500, conversionRate: 6.1, returnRate: 0.3, averageRating: 4.7, trend: 'stable' },
 ]
 

@@ -4,6 +4,29 @@ import { defaultLocale, locales } from '@/lib/i18n'
 
 const PUBLIC_FILE = /\.(.*)$/
 
+function getPreferredLocale(request: NextRequest) {
+  const acceptLanguage = request.headers.get('accept-language') ?? ''
+
+  const browserLocales = acceptLanguage
+    .split(',')
+    .map((part) => part.trim().split(';')[0]?.toLowerCase())
+    .filter(Boolean)
+
+  for (const browserLocale of browserLocales) {
+    const baseLocale = browserLocale.split('-')[0]
+
+    if (locales.includes(browserLocale as (typeof locales)[number])) {
+      return browserLocale
+    }
+
+    if (locales.includes(baseLocale as (typeof locales)[number])) {
+      return baseLocale
+    }
+  }
+
+  return defaultLocale
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -19,7 +42,8 @@ export function proxy(request: NextRequest) {
 
   if (!hasLocale) {
     const url = request.nextUrl.clone()
-    url.pathname = `/${defaultLocale}${pathname === '/' ? '' : pathname}`
+    const preferredLocale = getPreferredLocale(request)
+    url.pathname = `/${preferredLocale}${pathname === '/' ? '' : pathname}`
     return NextResponse.redirect(url)
   }
 

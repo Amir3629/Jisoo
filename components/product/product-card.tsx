@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ShoppingBag, Heart } from 'lucide-react'
@@ -21,7 +22,72 @@ interface ProductCardProps {
   compact?: boolean
 }
 
+
+const SECOND_MODE_PRODUCT_IMAGES = [
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-01.png',
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-02.png',
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-03.png',
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-04.png',
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-05.png',
+  '/assets/products/product-second-mode-final/jisoo-second-mode-product-06.png',
+] as const
+
+function getInitialSiteMode() {
+  if (typeof window === 'undefined') return 'soft'
+
+  const savedMode = window.localStorage.getItem('jisoo-site-mode')
+  if (savedMode === 'elegant' || savedMode === 'soft') return savedMode
+
+  return document.documentElement.dataset.siteMode === 'elegant' ? 'elegant' : 'soft'
+}
+
+function getSecondModeProductImage(index: number) {
+  return SECOND_MODE_PRODUCT_IMAGES[index % SECOND_MODE_PRODUCT_IMAGES.length]
+}
+
 export function ProductCard({ product, index = 0, displayName, hideDescription = false, compact = false }: ProductCardProps) {
+  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>(() => getInitialSiteMode())
+
+  useEffect(() => {
+    const readMode = () => {
+      const datasetMode = document.documentElement.dataset.siteMode
+      const savedMode = window.localStorage.getItem('jisoo-site-mode')
+      const nextMode = datasetMode === 'elegant' || savedMode === 'elegant' ? 'elegant' : 'soft'
+      setSiteMode(nextMode)
+    }
+
+    const onModeChange = (event: Event) => {
+      const detail = (event as CustomEvent<'soft' | 'elegant'>).detail
+      if (detail === 'soft' || detail === 'elegant') {
+        setSiteMode(detail)
+        return
+      }
+
+      readMode()
+    }
+
+    readMode()
+
+    const observer = new MutationObserver(readMode)
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-site-mode'],
+    })
+
+    window.addEventListener('jisoo-site-mode', onModeChange)
+    window.addEventListener('storage', readMode)
+
+    return () => {
+      observer.disconnect()
+      window.removeEventListener('jisoo-site-mode', onModeChange)
+      window.removeEventListener('storage', readMode)
+    }
+  }, [])
+
+  const productImageSrc = siteMode === 'elegant'
+    ? getSecondModeProductImage(index)
+    : product.images?.[0]?.src
+  const resolvedProductImageSrc = resolveImageSrc(productImageSrc)
   const { addItem } = useCart()
   const { region } = useRegion()
   const { locale, dictionary } = useLocale()
@@ -43,23 +109,57 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
   })()
   const wishlistAria = locale === 'ar' ? `أضف ${cardName} إلى المفضلة` : locale === 'fr' ? `Ajouter ${cardName} à la liste d’envies` : locale === 'de' ? `${cardName} zur Wunschliste hinzufügen` : locale === 'ko' ? `${cardName} 위시리스트에 추가` : locale === 'tr' ? `${cardName} favorilere ekle` : `Add ${cardName} to wishlist`
 
+  const defaultProductImageSrc = resolveImageSrc(product.images?.[0]?.src)
+  const secondModeProductImageSrc = resolveImageSrc(getSecondModeProductImage(index))
+
+  const cardBadge = (() => {
+    if (index === 0) {
+      return { label: 'Customer Favorite', mark: '♡', tone: 'border-rose-mauve/25 bg-white/92 text-rose-mauve' }
+    }
+
+    if (index === 2) {
+      return { label: 'Best Seller', mark: '★', tone: 'border-white/20 bg-charcoal/88 text-white' }
+    }
+
+    if (index === 5) {
+      return { label: 'Glow Pick', mark: '✦', tone: 'border-white/20 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' }
+    }
+
+    return null
+  })()
+
   if (!access.isVisible) {
     return null
   }
 
   return (
-    <article className={cn('group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#d8c3b6]/45 bg-warm-ivory/95 shadow-luxury transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
+    <article className={cn('jisoo-product-card group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#e4c8d2]/24 bg-white/86/95 shadow-[0_18px_60px_rgba(79,54,60,0.075)] transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block flex-none">
-        <div className="relative aspect-[4/5] overflow-hidden bg-warm-ivory">
-          <Image
-            src={resolveImageSrc(product.images?.[0]?.src)}
-            alt={cardName}
-            fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-          />
+        <div className="relative aspect-[4/5] overflow-hidden bg-white/86">
+          <>
+            <Image
+              src={defaultProductImageSrc}
+              alt={cardName}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="product-card-default-image object-cover transition-[opacity,transform] duration-700 group-hover:scale-105"
+            />
+            <Image
+              src={secondModeProductImageSrc}
+              alt={cardName}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+              className="product-card-second-mode-image object-cover transition-[opacity,transform] duration-700 group-hover:scale-105"
+            />
+          </>
 
           <div className="absolute top-3 left-3 flex flex-col gap-2">
+            {cardBadge && (
+              <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-medium tracking-[0.02em] shadow-sm backdrop-blur-xl', cardBadge.tone)}>
+                <span className="text-[12px] leading-none">{cardBadge.mark}</span>
+                {cardBadge.label}
+              </span>
+            )}
             {product.isNew && (
               <span className="rounded-full bg-rose-mauve/95 px-3 py-1 text-xs font-medium text-warm-ivory">
                 {dictionary.common.new}
@@ -75,7 +175,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
           <button
             type="button"
             aria-label={wishlistAria}
-            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-warm-ivory/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-warm-ivory"
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-white/86/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-white/86"
           >
             <Heart className="h-4 w-4" />
           </button>
@@ -100,8 +200,8 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
         </div>
 
         {/* P0: allow wrapping so long localized CTA labels do not collide with price block. */}
-        <div className="mt-auto flex min-h-[3.25rem] flex-wrap items-center justify-between gap-3">
-          <div className="flex items-baseline gap-2">
+        <div className="mt-auto flex w-full flex-col items-stretch gap-3">
+          <div className="flex w-full items-baseline gap-2">
             <span className="text-lg font-semibold text-charcoal">
               {product.price > 0 ? `€${product.price.toFixed(2)}` : 'Price pending'}
             </span>
@@ -117,10 +217,10 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
             onClick={() => addItem(product)}
             disabled={!access.isBuyable}
             className={cn(
-              'min-h-11 rounded-full px-4 font-medium',
+              'w-full min-h-12 rounded-full px-6 font-semibold tracking-[0.01em]',
               access.isBuyable
-                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_10px_24px_rgba(186,130,154,0.22)] hover:brightness-105'
-                : 'border border-[#cfae83]/35 bg-warm-ivory text-charcoal opacity-100'
+                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_18px_60px_rgba(79,54,60,0.075)] hover:brightness-105 hover:shadow-[0_22px_70px_rgba(154,98,118,0.16)]'
+                : 'border border-[#e4c8d2]/24 bg-white/86 text-charcoal opacity-100'
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />

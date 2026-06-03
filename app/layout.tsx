@@ -1,3 +1,4 @@
+import { ProductImageModeSwitcher } from '@/components/product/product-image-mode-switcher'
 import type { Metadata, Viewport } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -95,7 +96,8 @@ export default function RootLayout({
           <RegionProvider initialLanguage={defaultLocale}>
             <CartProvider>
               <ScrollSnapController />
-              {children}
+              <ProductImageModeSwitcher />
+          {children}
             </CartProvider>
           </RegionProvider>
         </LocaleProvider>

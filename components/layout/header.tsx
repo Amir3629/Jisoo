@@ -21,7 +21,7 @@ const megaGroups = [
   { title: 'My JISOO', items: [{ label: 'Dashboard', href: '/account' }, { label: 'Orders', href: '/account/orders' }, { label: 'Wishlist', href: '/account/wishlist' }] },
   { title: 'Care Categories', items: [{ label: 'Anti-Aging', href: '/shop?concern=anti-aging' }, { label: 'Oils', href: '/shop?category=oils' }, { label: 'Masks', href: '/shop?category=masks' }, { label: 'Creams', href: '/shop?category=creams' }] },
   { title: 'Edits', items: [{ label: 'Best Sellers', href: '/shop/best-sellers' }, { label: 'New Arrivals', href: '/shop/new-arrivals' }, { label: 'Sets / Bundles', href: '/shop?category=sets' }] },
-  { title: 'Help & Experience', items: [{ label: 'Rewards', href: '/rewards' }, { label: 'Tips', href: '/tips' }] },
+  { title: 'Help & Experience', items: [{ label: 'Rewards', href: '/rewards' }] },
 ]
 
 function BrandIcon({ children, className }: { children: ReactNode; className?: string }) {
@@ -122,7 +122,10 @@ export function Header({
   const [isRegionOpen, setIsRegionOpen] = useState(false)
   const [isMegaOpen, setIsMegaOpen] = useState(false)
   const [isProfileOpen, setIsProfileOpen] = useState(false)
-  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>('soft')
+  const [siteMode, setSiteMode] = useState<'soft' | 'elegant'>(() => {
+    if (typeof window === 'undefined') return 'soft'
+    return window.localStorage.getItem('jisoo-site-mode') === 'elegant' ? 'elegant' : 'soft'
+  })
   const [mobilePanel, setMobilePanel] = useState<'region' | 'search' | 'profile' | null>(null)
   const [topBarIndex, setTopBarIndex] = useState(0)
   const profileRef = useRef<HTMLDivElement>(null)
@@ -208,6 +211,7 @@ export function Header({
   useEffect(() => {
     const root = document.documentElement
     root.dataset.siteMode = siteMode
+    window.localStorage.setItem('jisoo-site-mode', siteMode)
     const elegant = siteMode === 'elegant'
     root.style.setProperty('--surface-tone-overlay-color', elegant ? '210 216 206' : '234 214 184')
     root.style.setProperty('--surface-tone-overlay-opacity', elegant ? '0.24' : '0')

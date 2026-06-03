@@ -1,0 +1,12 @@
+node_modules
+.next
+.git
+*.zip
+**/*.zip
+*.tsbuildinfo
+.DS_Store
+**/.DS_Store
+public/assets/LOGO/image-backup-before-*.png
+public/assets/LOGO/image-backup-before-extra-*.png
+public/assets/products/OLD_PRODUCT_IMAGES_BACKUP
+public/assets/products/JisooProductsNew

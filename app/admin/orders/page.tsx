@@ -97,8 +97,8 @@ const mockOrders: Order[] = [
       email: "emma@example.com",
     },
     items: [
-      { id: "1", productName: "Radiance Boost Vitamin C 23 Serum", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/jisoo-new/jisoo-product-20260518-01.png" },
-      { id: "2", productName: "Pore Deep Clean Bubble Serum", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/jisoo-new/jisoo-product-20260518-01.png" },
+      { id: "1", productName: "Radiance Boost Vitamin C 23 Serum", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/productnewnew-final/jisoo-product-final-01.png" },
+      { id: "2", productName: "Pore Deep Clean Bubble Serum", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/productnewnew-final/jisoo-product-final-02.png" },
     ],
     total: 0,
     subtotal: 0,
@@ -126,7 +126,7 @@ const mockOrders: Order[] = [
       email: "sophie@example.com",
     },
     items: [
-      { id: "3", productName: "Azulene Toner Pad", variant: "90ml", quantity: 1, price: 120.00, image: "/assets/products/jisoo-new/jisoo-product-20260518-02.png" },
+      { id: "3", productName: "Azulene Toner Pad", variant: "90ml", quantity: 1, price: 120.00, image: "/assets/products/productnewnew-final/jisoo-product-final-03.png" },
     ],
     total: 138.00,
     subtotal: 120.00,
@@ -154,8 +154,8 @@ const mockOrders: Order[] = [
       email: "yuki@example.com",
     },
     items: [
-      { id: "4", productName: "Daily UV Shield Sun Cream", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/jisoo-new/jisoo-product-20260518-03.png" },
-      { id: "5", productName: "Pore Clear Vita-C Cleansing Foam", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/jisoo-new/jisoo-product-20260518-04.png" },
+      { id: "4", productName: "Daily UV Shield Sun Cream", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/productnewnew-final/jisoo-product-final-04.png" },
+      { id: "5", productName: "Pore Clear Vita-C Cleansing Foam", variant: "Size pending", quantity: 2, price: 0, image: "/assets/products/productnewnew-final/jisoo-product-final-05.png" },
     ],
     total: 0,
     subtotal: 0,
@@ -183,7 +183,7 @@ const mockOrders: Order[] = [
       email: "anna@example.com",
     },
     items: [
-      { id: "6", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/jisoo-new/jisoo-product-20260518-05.png" },
+      { id: "6", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 0, image: "/assets/products/productnewnew-final/jisoo-product-final-06.png" },
     ],
     total: 39.50,
     subtotal: 28.00,
@@ -210,8 +210,8 @@ const mockOrders: Order[] = [
       email: "michael@example.com",
     },
     items: [
-      { id: "7", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 32.00, image: "/assets/products/jisoo-new/jisoo-product-20260518-06.png" },
-      { id: "8", productName: "Product Pending Review", variant: "180ml", quantity: 1, price: 15.00, image: "/assets/products/jisoo-new/jisoo-product-20260518-07.png" },
+      { id: "7", productName: "Product Pending Review", variant: "Size pending", quantity: 1, price: 32.00, image: "/assets/products/productnewnew-final/jisoo-product-final-01.png" },
+      { id: "8", productName: "Product Pending Review", variant: "180ml", quantity: 1, price: 15.00, image: "/assets/products/productnewnew-final/jisoo-product-final-02.png" },
     ],
     total: 52.00,
     subtotal: 47.00,

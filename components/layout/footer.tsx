@@ -25,7 +25,6 @@ const footerLinks = {
     { label: 'Shipping Info', href: '/help/shipping' },
     { label: 'Returns & Exchanges', href: '/help/returns' },
     { label: 'Track Order', href: '/account/orders' },
-    { label: 'Tips & Care', href: '/tips' },
   ],
   company: [
     { label: 'Our Story', href: '/about' },

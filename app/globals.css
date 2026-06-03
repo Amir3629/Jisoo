@@ -762,3 +762,20 @@ body {
   animation: gradient-shift 8s ease infinite;
   background-size: 200% 200%;
 }
+
+/* Product images switch for JISOO second/elegant design mode */
+.product-card-default-image {
+  opacity: 1;
+}
+
+.product-card-second-mode-image {
+  opacity: 0;
+}
+
+:root[data-site-mode='elegant'] .product-card-default-image {
+  opacity: 0;
+}
+
+:root[data-site-mode='elegant'] .product-card-second-mode-image {
+  opacity: 1;
+}
