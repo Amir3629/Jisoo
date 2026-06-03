@@ -14,21 +14,16 @@ import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import {
   Heart, Share2, Star, Minus, Plus, Check,
-  Sparkles, Info, Trophy, TrendingUp, type LucideIcon
+  Sparkles, Info
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
 import { getProductJsonLd } from '@/lib/seo'
-import { getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts, type ProductStatusBadgeKind } from '@/lib/product-merchandising'
+import { getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts } from '@/lib/product-merchandising'
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
-}
-
-const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
-  'best-seller': Trophy,
-  'most-viewed': TrendingUp,
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -100,7 +95,6 @@ export default function ProductPage({ params }: ProductPageProps) {
   const routinePlacement = getRoutinePlacementForProduct(product)
   const routineSuggestions = getRoutineSuggestionProducts(product, catalogProducts, 3)
   const routineFlow = getRoutineFlowForProduct(product)
-  const StatusIcon = statusBadge ? statusIconMap[statusBadge.kind] : null
 
   const handleAddToCart = () => {
     if (isBuyable) {
@@ -165,9 +159,15 @@ export default function ProductPage({ params }: ProductPageProps) {
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  {statusBadge && StatusIcon && (
-                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/86/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
-                      <StatusIcon className={cn('h-3.5 w-3.5', statusBadge.kind === 'best-seller' ? 'text-[#d3af84]' : 'text-rose-mauve')} />
+                  {statusBadge && (
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
+                      <Image
+                        src={statusBadge.iconSrc}
+                        alt={statusBadge.label}
+                        width={22}
+                        height={22}
+                        className="h-5 w-5 object-contain"
+                      />
                       {statusBadge.label}
                     </span>
                   )}

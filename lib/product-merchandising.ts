@@ -1,7 +1,6 @@
 import type { Product } from './types'
 
-export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed'
-export type ProductStatusBadgeStyle = 'plain-icon' | 'edge-tab'
+export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed' | 'customer-favorite'
 export type ProductCareIconKind = 'hydration' | 'brightening' | 'anti-aging' | 'dry-skin' | 'sensitive-skin' | 'firming' | 'repair' | 'glow' | 'protection' | 'clarity'
 export type RoutineStepKey = 'cleanse' | 'prep' | 'treat' | 'seal' | 'protect'
 
@@ -14,12 +13,13 @@ export interface ProductCareFocus {
 export interface ProductStatusBadge {
   kind: ProductStatusBadgeKind
   label: string
-  style: ProductStatusBadgeStyle
+  iconSrc: string
 }
 
 export interface ProductCareChip {
   kind: ProductCareIconKind
   label: string
+  iconSrc?: string
 }
 
 export interface ProductRoutineStep {
@@ -37,17 +37,36 @@ export interface ProductRoutinePlacement {
   steps: ProductRoutineStep[]
 }
 
-const statusBadgeEntries: Array<{ kind: ProductStatusBadgeKind; slug: string; style?: ProductStatusBadgeStyle }> = [
+const statusBadgeEntries: Array<{ kind: ProductStatusBadgeKind; slug: string }> = [
   { kind: 'best-seller', slug: 'pore-deep-clean-bubble-cleanser' },
   { kind: 'best-seller', slug: 'hydra-daily-snow-collagen-cream' },
   { kind: 'most-viewed', slug: 'radiance-boost-true-vitamin-c-23-serum' },
-  { kind: 'best-seller', slug: 'dewy-glow-azulene-gel-toner-pad', style: 'edge-tab' },
-  { kind: 'most-viewed', slug: 'daily-uv-shield-sunscreen', style: 'edge-tab' },
+  { kind: 'customer-favorite', slug: 'dewy-glow-azulene-gel-toner-pad' },
 ]
 
 const statusBadgeLabels: Record<ProductStatusBadgeKind, string> = {
   'best-seller': 'Best Seller',
   'most-viewed': 'Most Viewed',
+  'customer-favorite': 'Customer Favorite',
+}
+
+const statusBadgeIconSrc: Record<ProductStatusBadgeKind, string> = {
+  'best-seller': '/icons/merchandising/best-seller-cup.png',
+  'most-viewed': '/icons/merchandising/most-viewed.png',
+  'customer-favorite': '/icons/merchandising/customer-favorite-heart.png',
+}
+
+const careChipIconSrc: Record<ProductCareIconKind, string> = {
+  hydration: '/icons/merchandising/hydration.png',
+  brightening: '/icons/merchandising/brightening.png',
+  'anti-aging': '/icons/merchandising/anti-aging.png',
+  'dry-skin': '/icons/merchandising/dry-skin.png',
+  'sensitive-skin': '/icons/merchandising/sensitive-skin.png',
+  firming: '/icons/merchandising/firming.png',
+  repair: '/icons/merchandising/repair.png',
+  glow: '/icons/merchandising/glow.png',
+  protection: '/icons/merchandising/protection.png',
+  clarity: '/icons/merchandising/clarity.png',
 }
 
 const concernFocusMap: Array<{ keys: string[]; focus: ProductCareFocus; chips: ProductCareChip[]; highlights: string[] }> = [
@@ -260,7 +279,7 @@ export function getProductStatusBadge(product: Product): ProductStatusBadge | nu
   return {
     kind: entry.kind,
     label: statusBadgeLabels[entry.kind],
-    style: entry.style ?? 'plain-icon',
+    iconSrc: statusBadgeIconSrc[entry.kind],
   }
 }
 
@@ -276,7 +295,10 @@ export function getProductCareChips(product: Product): ProductCareChip[] {
     { kind: 'repair', label: 'Repair' },
   ]
 
-  return chips.slice(0, 3)
+  return chips.slice(0, 3).map((chip) => ({
+    ...chip,
+    iconSrc: careChipIconSrc[chip.kind],
+  }))
 }
 
 export function getProductCardHighlights(product: Product): string[] {

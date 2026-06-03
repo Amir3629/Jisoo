@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingBag, Heart, Trophy, TrendingUp, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
+import { ShoppingBag, Heart, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { localizeHref } from '@/lib/i18n'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
-import { getProductCardHighlights, getProductCareChips, getProductStatusBadge, type ProductCareIconKind, type ProductStatusBadgeKind } from '@/lib/product-merchandising'
+import { getProductCardHighlights, getProductCareChips, getProductStatusBadge, type ProductCareIconKind } from '@/lib/product-merchandising'
 
 interface ProductCardProps {
   product: Product
@@ -34,21 +34,6 @@ const SECOND_MODE_PRODUCT_IMAGES = [
 
 function getSecondModeProductImage(index: number) {
   return SECOND_MODE_PRODUCT_IMAGES[index % SECOND_MODE_PRODUCT_IMAGES.length]
-}
-
-const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
-  'best-seller': Trophy,
-  'most-viewed': TrendingUp,
-}
-
-const statusIconToneMap: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'text-[#d3af84] drop-shadow-[0_8px_18px_rgba(211,175,132,0.48)]',
-  'most-viewed': 'text-rose-mauve drop-shadow-[0_8px_16px_rgba(154,98,118,0.24)]',
-}
-
-const statusEdgeToneMap: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'from-[#f4d99b] to-[#d3af84] text-[#d3af84] border-champagne-gold/55',
-  'most-viewed': 'from-plum/90 to-rose-mauve/90 text-rose-mauve border-rose-mauve/35',
 }
 
 const careIconMap: Record<ProductCareIconKind, LucideIcon> = {
@@ -104,16 +89,15 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
   const statusBadge = getProductStatusBadge(product)
   const careChips = getProductCareChips(product)
   const cardHighlights = getProductCardHighlights(product)
-  const StatusIcon = statusBadge ? statusIconMap[statusBadge.kind] : null
 
   if (!access.isVisible) {
     return null
   }
 
   return (
-    <article className={cn('jisoo-product-card group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#e4c8d2]/24 bg-white/86/95 shadow-[0_18px_60px_rgba(79,54,60,0.075)] transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
+    <article className={cn('jisoo-product-card group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#e4c8d2]/24 bg-white/95 shadow-[0_18px_60px_rgba(79,54,60,0.075)] transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block flex-none">
-        <div className="relative aspect-[4/5] overflow-hidden bg-white/86">
+        <div className="relative aspect-[4/5] overflow-hidden bg-white/85">
           <>
             <Image
               src={defaultProductImageSrc}
@@ -131,30 +115,22 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
             />
           </>
 
-          {statusBadge && StatusIcon && (
-            <div className={cn('absolute z-10', statusBadge.style === 'edge-tab' ? 'left-1/2 top-0 -translate-x-1/2' : 'left-3 top-3')}>
+          {statusBadge && (
+            <div className="absolute left-3 top-3 z-10">
               <span
                 tabIndex={0}
                 aria-label={statusBadge.label}
                 title={statusBadge.label}
                 className="group/status relative inline-flex focus:outline-none"
               >
-                {statusBadge.style === 'edge-tab' ? (
-                  <span className="relative inline-flex h-12 w-20 justify-center overflow-visible">
-                    <span className={cn('absolute inset-x-0 top-0 h-1.5 rounded-b-full bg-gradient-to-r', statusEdgeToneMap[statusBadge.kind])} />
-                    <span className={cn('mt-1.5 flex h-10 w-10 items-center justify-center rounded-full border bg-white/95 shadow-[0_12px_28px_rgba(79,54,60,0.13)] backdrop-blur-xl transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-105 group-focus/status:-translate-y-0.5 group-focus/status:scale-105', statusEdgeToneMap[statusBadge.kind])}>
-                      <StatusIcon className="h-5 w-5 stroke-[2.05]" />
-                    </span>
-                  </span>
-                ) : (
-                  <StatusIcon
-                    className={cn(
-                      'h-8 w-8 stroke-[2.15] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25',
-                      statusIconToneMap[statusBadge.kind]
-                    )}
-                  />
-                )}
-                <span className={cn('pointer-events-none absolute top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100', statusBadge.style === 'edge-tab' ? 'left-1/2 -translate-x-1/2 group-hover/status:-translate-x-1/2 group-focus/status:-translate-x-1/2' : 'left-0')}>
+                <Image
+                  src={statusBadge.iconSrc}
+                  alt={statusBadge.label}
+                  width={52}
+                  height={52}
+                  className="h-12 w-12 object-contain drop-shadow-[0_12px_24px_rgba(79,54,60,0.18)] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25"
+                />
+                <span className="pointer-events-none absolute left-0 top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100">
                   {statusBadge.label}
                 </span>
               </span>
@@ -164,7 +140,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
           <button
             type="button"
             aria-label={wishlistAria}
-            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-white/86/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-white/86"
+            className="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-white/90 text-rose-mauve shadow-sm transition hover:scale-105 hover:bg-white/90"
           >
             <Heart className="h-4 w-4" />
           </button>
@@ -186,7 +162,17 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
                   className="group/care relative inline-flex focus:outline-none"
                 >
                   <span className="flex h-9 w-9 items-center justify-center rounded-full border border-blush-pink/35 bg-warm-ivory/70 text-charcoal shadow-sm transition duration-300 group-hover/care:-translate-y-0.5 group-hover/care:border-champagne-gold/45 group-focus/care:-translate-y-0.5 group-focus/care:border-champagne-gold/45 group-focus-visible/care:ring-2 group-focus-visible/care:ring-rose-mauve/20">
-                    <CareIcon className={cn('h-4 w-4 stroke-[1.9] text-charcoal transition-colors duration-300', careIconToneMap[chip.kind])} />
+                    {chip.iconSrc ? (
+                      <Image
+                        src={chip.iconSrc}
+                        alt={chip.label}
+                        width={26}
+                        height={26}
+                        className="h-6 w-6 object-contain transition duration-300 group-hover/care:scale-110 group-focus/care:scale-110"
+                      />
+                    ) : (
+                      <CareIcon className={cn('h-4 w-4 stroke-[1.9] text-charcoal transition-colors duration-300', careIconToneMap[chip.kind])} />
+                    )}
                   </span>
                   <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/45 bg-white/95 px-2.5 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_10px_24px_rgba(79,54,60,0.10)] backdrop-blur-xl transition-all duration-300 group-hover/care:translate-y-0 group-hover/care:opacity-100 group-focus/care:translate-y-0 group-focus/care:opacity-100">
                     {chip.label}
@@ -240,7 +226,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
               'w-full min-h-12 rounded-full px-6 font-semibold tracking-[0.01em]',
               access.isBuyable
                 ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_18px_60px_rgba(79,54,60,0.075)] hover:brightness-105 hover:shadow-[0_22px_70px_rgba(154,98,118,0.16)]'
-                : 'border border-[#e4c8d2]/24 bg-white/86 text-charcoal opacity-100'
+                : 'border border-[#e4c8d2]/24 bg-white/85 text-charcoal opacity-100'
             )}
           >
             <ShoppingBag className="mr-2 h-4 w-4" />
