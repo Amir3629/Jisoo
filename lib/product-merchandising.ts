@@ -1,6 +1,6 @@
 import type { Product } from './types'
 
-export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed' | 'customer-favorite'
+export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed'
 export type ProductCareIconKind = 'hydration' | 'brightening' | 'anti-aging' | 'dry-skin' | 'sensitive-skin' | 'firming' | 'repair' | 'glow' | 'protection' | 'clarity'
 export type RoutineStepKey = 'cleanse' | 'prep' | 'treat' | 'seal' | 'protect'
 
@@ -37,14 +37,12 @@ export interface ProductRoutinePlacement {
 
 const statusBadgeBySlug: Partial<Record<ProductStatusBadgeKind, string[]>> = {
   'best-seller': ['pore-deep-clean-bubble-cleanser', 'hydra-daily-snow-collagen-cream'],
-  'most-viewed': ['radiance-boost-true-vitamin-c-23-serum', 'daily-uv-shield-sunscreen', 'real-effect-vita-toning-serum'],
-  'customer-favorite': ['dewy-glow-azulene-gel-toner-pad', 'pure-hop-panthenol-barrier-cream-100ml', 'aqua-soothing-gel-cream-50-ml'],
+  'most-viewed': ['radiance-boost-true-vitamin-c-23-serum'],
 }
 
 const statusBadgeLabels: Record<ProductStatusBadgeKind, string> = {
   'best-seller': 'Best Seller',
   'most-viewed': 'Most Viewed',
-  'customer-favorite': 'Customer Favorite',
 }
 
 const concernFocusMap: Array<{ keys: string[]; focus: ProductCareFocus; chips: ProductCareChip[]; highlights: string[] }> = [

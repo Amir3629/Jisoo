@@ -29,7 +29,6 @@ interface ProductPageProps {
 const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
   'best-seller': Trophy,
   'most-viewed': Eye,
-  'customer-favorite': Heart,
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -592,95 +591,75 @@ export default function ProductPage({ params }: ProductPageProps) {
 
 
       {/* Routine Guide */}
-      <section className="py-16 bg-warm-ivory">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6">
-          <div className="overflow-hidden rounded-[2.75rem] border border-blush-pink/30 bg-gradient-to-br from-white/85 via-warm-ivory/80 to-nude-beige/35 p-6 shadow-[0_24px_80px_rgba(79,54,60,0.10)] sm:p-8 lg:p-10">
-            <div className="grid gap-6 lg:grid-cols-[0.82fr_1.18fr] lg:items-end">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">{copy.highlightedStep}</p>
-                <h2 className="mt-3 font-serif text-3xl font-semibold leading-tight text-charcoal lg:text-4xl">{copy.routineTitle}</h2>
-              </div>
-              <p className="max-w-2xl text-sm leading-7 text-muted-foreground lg:justify-self-end">
-                {copy.routineBody}
-              </p>
+      <section className="py-12 bg-warm-ivory">
+        <div className="max-w-6xl mx-auto px-4 lg:px-6">
+          <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">{copy.highlightedStep}</p>
+              <h2 className="mt-3 font-serif text-2xl font-semibold leading-tight text-charcoal lg:text-3xl">{copy.routineTitle}</h2>
+              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{copy.routineBody}</p>
             </div>
 
-            <div className="relative mt-9">
-              <div aria-hidden="true" className="absolute left-8 right-8 top-8 hidden h-px bg-gradient-to-r from-transparent via-blush-pink/70 to-transparent lg:block" />
-              <div className="grid gap-4 lg:grid-cols-3">
-                {routineFlow.map((step) => {
-                  const item = {
-                    label: step.isCurrent ? copy.highlightedStep : step.key === routinePlacement.before?.key ? copy.before : copy.after,
-                    step,
-                    isCurrent: step.isCurrent,
-                  }
+            <div className="space-y-5">
+              <div className="relative pl-7">
+                <div aria-hidden="true" className="absolute left-2.5 top-2 bottom-2 w-px bg-blush-pink/60" />
+                <div className="space-y-5">
+                  {routineFlow.map((step) => {
+                    const label = step.isCurrent ? copy.highlightedStep : step.key === routinePlacement.before?.key ? copy.before : copy.after
 
-                  return (
-                    <div
-                      key={item.step.key}
-                      className={cn(
-                        'relative rounded-[1.8rem] border p-5 transition duration-300',
-                        item.isCurrent
-                          ? 'border-rose-mauve/35 bg-white/90 shadow-[0_18px_54px_rgba(154,98,118,0.12)]'
-                          : 'border-blush-pink/25 bg-white/45 hover:bg-white/65'
-                      )}
-                    >
-                      <div className="flex items-start gap-4">
+                    return (
+                      <div key={step.key} className="relative">
                         <span
                           className={cn(
-                            'relative z-10 inline-flex h-16 w-16 flex-none items-center justify-center rounded-full border text-sm font-semibold shadow-sm',
-                            item.isCurrent
-                              ? 'border-rose-mauve/25 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
-                              : 'border-blush-pink/35 bg-warm-ivory/80 text-charcoal/70'
+                            'absolute -left-[1.95rem] top-1 h-5 w-5 rounded-full border bg-warm-ivory',
+                            step.isCurrent ? 'border-rose-mauve bg-rose-mauve shadow-[0_0_0_5px_rgba(154,98,118,0.10)]' : 'border-blush-pink'
                           )}
-                        >
-                          {item.step.step}
-                        </span>
-                        <div className="min-w-0 pt-1">
-                          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-mauve/85">{item.label}</p>
-                          <h3 className="mt-2 font-serif text-xl font-semibold text-charcoal">{item.step.title}</h3>
-                          <p className="mt-2 text-sm leading-6 text-muted-foreground">{item.step.description}</p>
+                        />
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-mauve/85">{label}</p>
+                        <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                          <h3 className={cn('font-serif text-xl font-semibold', step.isCurrent ? 'text-charcoal' : 'text-charcoal/80')}>{step.step}. {step.title}</h3>
                         </div>
+                        <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.description}</p>
                       </div>
-                    </div>
-                  )
-                })}
+                    )
+                  })}
+                </div>
               </div>
             </div>
-
-            {routineSuggestions.length > 0 && (
-              <div className="mt-10 border-t border-blush-pink/30 pt-8">
-                <div className="mb-6 max-w-2xl">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.pairsWith}</p>
-                  <h3 className="mt-2 font-serif text-2xl font-semibold text-charcoal">{copy.completeRoutine}</h3>
-                </div>
-                <div className="grid gap-4 md:grid-cols-3">
-                  {routineSuggestions.map((suggestion) => (
-                    <Link
-                      key={suggestion.id}
-                      href={localizeHref(`/product/${suggestion.slug}`, locale)}
-                      className="group rounded-[1.75rem] border border-blush-pink/25 bg-white/72 p-4 shadow-[0_14px_42px_rgba(79,54,60,0.07)] transition duration-300 hover:-translate-y-1 hover:border-rose-mauve/35 hover:bg-white"
-                    >
-                      <div className="relative aspect-[4/3] overflow-hidden rounded-[1.25rem] bg-warm-ivory">
-                        <Image
-                          src={resolveImageSrc(suggestion.images[0]?.src)}
-                          alt={suggestion.name}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 33vw"
-                          className="object-cover transition duration-700 group-hover:scale-105"
-                        />
-                      </div>
-                      <div className="pt-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">{suggestion.category}</p>
-                        <h4 className="mt-2 line-clamp-2 text-sm font-medium leading-5 text-charcoal">{suggestion.name}</h4>
-                        <p className="mt-2 text-sm text-muted-foreground">{formatPrice(suggestion.price, suggestion.currency)}</p>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
           </div>
+
+          {routineSuggestions.length > 0 && (
+            <div className="mt-12 border-t border-blush-pink/30 pt-8">
+              <div className="mb-5">
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.pairsWith}</p>
+                <h3 className="mt-2 font-serif text-2xl font-semibold text-charcoal">{copy.completeRoutine}</h3>
+              </div>
+              <div className="grid gap-5 md:grid-cols-3">
+                {routineSuggestions.map((suggestion) => (
+                  <Link
+                    key={suggestion.id}
+                    href={localizeHref(`/product/${suggestion.slug}`, locale)}
+                    className="group grid grid-cols-[84px_1fr] gap-4 border-b border-blush-pink/25 pb-5 transition duration-300 hover:border-rose-mauve/40"
+                  >
+                    <div className="relative h-24 overflow-hidden rounded-2xl bg-white">
+                      <Image
+                        src={resolveImageSrc(suggestion.images[0]?.src)}
+                        alt={suggestion.name}
+                        fill
+                        sizes="96px"
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                      />
+                    </div>
+                    <div className="min-w-0 py-1">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">{suggestion.category}</p>
+                      <h4 className="mt-2 line-clamp-2 text-sm font-medium leading-5 text-charcoal group-hover:text-plum">{suggestion.name}</h4>
+                      <p className="mt-2 text-sm text-muted-foreground">{formatPrice(suggestion.price, suggestion.currency)}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

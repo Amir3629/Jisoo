@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingBag, Heart, Trophy, Eye, Star, Droplets, Sparkles, Shield, Sun, Activity, type LucideIcon } from 'lucide-react'
+import { ShoppingBag, Heart, Trophy, Eye, Droplets, Sparkles, Shield, Sun, Activity, Clock, Wind, RefreshCw, type LucideIcon } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
@@ -39,26 +39,37 @@ function getSecondModeProductImage(index: number) {
 const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
   'best-seller': Trophy,
   'most-viewed': Eye,
-  'customer-favorite': Heart,
 }
 
-const statusBadgeToneMap: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'border-champagne-gold/55 bg-warm-ivory/95 text-champagne-gold',
-  'most-viewed': 'border-plum/20 bg-white/92 text-plum',
-  'customer-favorite': 'border-rose-mauve/35 bg-white/92 text-rose-mauve',
+const statusIconToneMap: Record<ProductStatusBadgeKind, string> = {
+  'best-seller': 'text-champagne-gold drop-shadow-[0_8px_16px_rgba(207,174,131,0.38)]',
+  'most-viewed': 'text-plum drop-shadow-[0_8px_16px_rgba(79,54,60,0.22)]',
 }
 
 const careIconMap: Record<ProductCareIconKind, LucideIcon> = {
   hydration: Droplets,
   brightening: Sparkles,
-  'anti-aging': Star,
-  'dry-skin': Heart,
+  'anti-aging': Clock,
+  'dry-skin': Wind,
   'sensitive-skin': Shield,
   firming: Activity,
-  repair: Shield,
+  repair: RefreshCw,
   glow: Sparkles,
   protection: Sun,
   clarity: Eye,
+}
+
+const careIconToneMap: Record<ProductCareIconKind, string> = {
+  hydration: 'group-hover/care:text-sky-500 group-focus/care:text-sky-500',
+  brightening: 'group-hover/care:text-champagne-gold group-focus/care:text-champagne-gold',
+  'anti-aging': 'group-hover/care:text-plum group-focus/care:text-plum',
+  'dry-skin': 'group-hover/care:text-champagne-gold group-focus/care:text-champagne-gold',
+  'sensitive-skin': 'group-hover/care:text-rose-mauve group-focus/care:text-rose-mauve',
+  firming: 'group-hover/care:text-plum group-focus/care:text-plum',
+  repair: 'group-hover/care:text-rose-mauve group-focus/care:text-rose-mauve',
+  glow: 'group-hover/care:text-champagne-gold group-focus/care:text-champagne-gold',
+  protection: 'group-hover/care:text-champagne-gold group-focus/care:text-champagne-gold',
+  clarity: 'group-hover/care:text-plum group-focus/care:text-plum',
 }
 
 export function ProductCard({ product, index = 0, displayName, hideDescription = false, compact = false }: ProductCardProps) {
@@ -123,14 +134,12 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
                 title={statusBadge.label}
                 className="group/status relative inline-flex focus:outline-none"
               >
-                <span
+                <StatusIcon
                   className={cn(
-                    'flex h-12 w-12 items-center justify-center rounded-full border shadow-[0_12px_30px_rgba(79,54,60,0.12)] backdrop-blur-xl transition duration-300 group-hover/status:scale-105 group-focus/status:scale-105 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25',
-                    statusBadgeToneMap[statusBadge.kind]
+                    'h-8 w-8 stroke-[2.15] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25',
+                    statusIconToneMap[statusBadge.kind]
                   )}
-                >
-                  <StatusIcon className="h-5 w-5 stroke-[1.9]" />
-                </span>
+                />
                 <span className="pointer-events-none absolute left-0 top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100">
                   {statusBadge.label}
                 </span>
@@ -162,8 +171,8 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
                   title={chip.label}
                   className="group/care relative inline-flex focus:outline-none"
                 >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-blush-pink/35 bg-warm-ivory/70 text-charcoal shadow-sm transition duration-300 group-hover/care:-translate-y-0.5 group-hover/care:border-champagne-gold/45 group-hover/care:bg-white group-focus/care:-translate-y-0.5 group-focus/care:border-champagne-gold/45 group-focus/care:bg-white group-focus-visible/care:ring-2 group-focus-visible/care:ring-rose-mauve/20">
-                    <CareIcon className="h-4 w-4 stroke-[1.75]" />
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-blush-pink/35 bg-warm-ivory/70 text-charcoal shadow-sm transition duration-300 group-hover/care:-translate-y-0.5 group-hover/care:border-champagne-gold/45 group-focus/care:-translate-y-0.5 group-focus/care:border-champagne-gold/45 group-focus-visible/care:ring-2 group-focus-visible/care:ring-rose-mauve/20">
+                    <CareIcon className={cn('h-4 w-4 stroke-[1.9] text-charcoal transition-colors duration-300', careIconToneMap[chip.kind])} />
                   </span>
                   <span className="pointer-events-none absolute left-1/2 top-full z-20 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/45 bg-white/95 px-2.5 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_10px_24px_rgba(79,54,60,0.10)] backdrop-blur-xl transition-all duration-300 group-hover/care:translate-y-0 group-hover/care:opacity-100 group-focus/care:translate-y-0 group-focus/care:opacity-100">
                     {chip.label}
@@ -181,7 +190,7 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
               {cardName}
             </h3>
           </Link>
-          <ul className="mx-auto grid w-fit gap-1.5 text-xs leading-5 text-charcoal/62">
+          <ul className="grid gap-1.5 text-xs leading-5 text-charcoal/62">
             {cardHighlights.map((highlight) => (
               <li key={highlight} className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-rose-mauve/55" />
