@@ -1,200 +1,330 @@
 import type { Product } from './types'
 
+export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed' | 'customer-favorite'
+export type ProductCareIconKind = 'hydration' | 'brightening' | 'anti-aging' | 'dry-skin' | 'sensitive-skin' | 'firming' | 'repair' | 'glow' | 'protection' | 'clarity'
+export type RoutineStepKey = 'cleanse' | 'prep' | 'treat' | 'seal' | 'protect'
+
 export interface ProductCareFocus {
   eyebrow: string
   title: string
   description: string
 }
 
-export interface ProductCardBadge {
+export interface ProductStatusBadge {
+  kind: ProductStatusBadgeKind
   label: string
-  mark: string
-  tone: string
+}
+
+export interface ProductCareChip {
+  kind: ProductCareIconKind
+  label: string
 }
 
 export interface ProductRoutineStep {
+  key: RoutineStepKey
   step: string
   title: string
   description: string
-  match?: string
+  isCurrent: boolean
 }
 
-const concernFocusMap: Array<{ keys: string[]; focus: ProductCareFocus }> = [
+export interface ProductRoutinePlacement {
+  current: ProductRoutineStep
+  before?: ProductRoutineStep
+  after?: ProductRoutineStep
+  steps: ProductRoutineStep[]
+}
+
+const statusBadgeBySlug: Partial<Record<ProductStatusBadgeKind, string[]>> = {
+  'best-seller': ['pore-deep-clean-bubble-cleanser', 'hydra-daily-snow-collagen-cream'],
+  'most-viewed': ['radiance-boost-true-vitamin-c-23-serum', 'daily-uv-shield-sunscreen', 'real-effect-vita-toning-serum'],
+  'customer-favorite': ['dewy-glow-azulene-gel-toner-pad', 'pure-hop-panthenol-barrier-cream-100ml', 'aqua-soothing-gel-cream-50-ml'],
+}
+
+const statusBadgeLabels: Record<ProductStatusBadgeKind, string> = {
+  'best-seller': 'Best Seller',
+  'most-viewed': 'Most Viewed',
+  'customer-favorite': 'Customer Favorite',
+}
+
+const concernFocusMap: Array<{ keys: string[]; focus: ProductCareFocus; chips: ProductCareChip[]; highlights: string[] }> = [
   {
-    keys: ['hydration', 'dehydration', 'dryness', 'soothing', 'cooling'],
+    keys: ['hydration', 'moisture', 'dehydration', 'dryness', 'soothing', 'cooling'],
     focus: {
       eyebrow: 'Hydration & comfort',
       title: 'For hydration',
-      description: 'Adds a soft veil of moisture and keeps skin feeling calm and cushioned.',
+      description: 'Soft moisture support for skin that needs comfort and cushion.',
     },
+    chips: [
+      { kind: 'hydration', label: 'Hydration' },
+      { kind: 'dry-skin', label: 'Dry skin' },
+      { kind: 'glow', label: 'Glow' },
+    ],
+    highlights: ['Deep hydration', 'Dry skin support', 'Soft glow'],
   },
   {
-    keys: ['dullness', 'uneven tone', 'radiance', 'brightening', 'glow'],
+    keys: ['dullness', 'uneven tone', 'radiance', 'brightening', 'pigmentation', 'tone-up', 'whitening'],
     focus: {
       eyebrow: 'Glow & tone',
       title: 'For brightening',
-      description: 'Supports a fresher-looking glow and a more even, luminous finish.',
+      description: 'A glow-focused step for a more even, fresh-looking finish.',
     },
+    chips: [
+      { kind: 'brightening', label: 'Brightening' },
+      { kind: 'glow', label: 'Glow' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Brighter look', 'Even tone', 'Fresh glow'],
   },
   {
-    keys: ['firmness', 'anti-aging', 'fine lines', 'wrinkles', 'elasticity'],
+    keys: ['firmness', 'anti-aging', 'fine lines', 'wrinkles', 'elasticity', 'collagen'],
     focus: {
       eyebrow: 'Firmness care',
       title: 'For anti-aging',
-      description: 'Layers into routines focused on bounce, firmness, and smoother-looking skin.',
+      description: 'A firmness ritual for bounce, comfort, and smoother-looking skin.',
     },
+    chips: [
+      { kind: 'anti-aging', label: 'Anti-aging' },
+      { kind: 'firming', label: 'Firming' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Firming care', 'Smooth texture', 'Bounce support'],
   },
   {
-    keys: ['pores', 'oiliness', 'blemishes', 'clarity', 'sebum'],
+    keys: ['pores', 'oiliness', 'blemishes', 'clarity', 'sebum', 'acne', 'balance', 'calming'],
     focus: {
       eyebrow: 'Pore & clarity',
       title: 'For clear skin',
-      description: 'Helps refine the look of pores while keeping the routine clean and balanced.',
+      description: 'A balancing step for clearer-looking, comfortable skin.',
     },
+    chips: [
+      { kind: 'clarity', label: 'Clarity' },
+      { kind: 'sensitive-skin', label: 'Sensitive skin' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Clearer look', 'Pore care', 'Calm finish'],
   },
   {
     keys: ['daily protection', 'uv', 'sun', 'spf'],
     focus: {
       eyebrow: 'Daily shield',
       title: 'For protection',
-      description: 'Finishes the morning routine with comfortable daily protection.',
+      description: 'A comfortable final morning layer for daily UV care.',
     },
+    chips: [
+      { kind: 'protection', label: 'Protection' },
+      { kind: 'hydration', label: 'Hydration' },
+      { kind: 'sensitive-skin', label: 'Sensitive skin' },
+    ],
+    highlights: ['Daily SPF', 'Soft comfort', 'AM protection'],
   },
 ]
 
-const categoryFallbackFocus: Record<string, ProductCareFocus> = {
+const categoryFallbacks: Record<string, { focus: ProductCareFocus; chips: ProductCareChip[]; highlights: string[] }> = {
   cleanser: {
-    eyebrow: 'First cleanse',
-    title: 'For fresh skin',
-    description: 'Starts the routine by lifting away daily buildup without making skin feel stripped.',
+    focus: {
+      eyebrow: 'First cleanse',
+      title: 'For fresh skin',
+      description: 'A fresh first step before toner, serum, and cream.',
+    },
+    chips: [
+      { kind: 'clarity', label: 'Clarity' },
+      { kind: 'sensitive-skin', label: 'Sensitive skin' },
+    ],
+    highlights: ['Fresh cleanse', 'Pore care', 'Soft finish'],
   },
   'cleansing oil': {
-    eyebrow: 'First cleanse',
-    title: 'For makeup & SPF',
-    description: 'Melts away sunscreen and makeup before your water-based cleanse.',
+    focus: {
+      eyebrow: 'First cleanse',
+      title: 'For makeup & SPF',
+      description: 'A first cleanse for sunscreen, makeup, and daily buildup.',
+    },
+    chips: [
+      { kind: 'clarity', label: 'Clarity' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Makeup melt', 'SPF cleanse', 'Soft finish'],
   },
   toner: {
-    eyebrow: 'Prep step',
-    title: 'For skin prep',
-    description: 'Prepares skin so the next serum or cream layers smoothly.',
+    focus: {
+      eyebrow: 'Prep step',
+      title: 'For skin prep',
+      description: 'A light prep layer before targeted care.',
+    },
+    chips: [
+      { kind: 'hydration', label: 'Hydration' },
+      { kind: 'glow', label: 'Glow' },
+    ],
+    highlights: ['Skin prep', 'Light hydration', 'Balanced feel'],
   },
   'toner pad': {
-    eyebrow: 'Prep step',
-    title: 'For hydration',
-    description: 'A quick pad step for fresh, cooled, and lightly hydrated skin.',
-  },
-  essence: {
-    eyebrow: 'First treatment',
-    title: 'For glow prep',
-    description: 'A lightweight layer that helps skin feel receptive to serums.',
+    focus: {
+      eyebrow: 'Prep step',
+      title: 'For hydration',
+      description: 'A quick pad ritual for fresh, comfortable skin.',
+    },
+    chips: [
+      { kind: 'hydration', label: 'Hydration' },
+      { kind: 'sensitive-skin', label: 'Sensitive skin' },
+    ],
+    highlights: ['Cooling prep', 'Hydration boost', 'Calm feel'],
   },
   serum: {
-    eyebrow: 'Treatment step',
-    title: 'For targeted care',
-    description: 'Targets a visible concern before sealing the routine with cream.',
-  },
-  ampoule: {
-    eyebrow: 'Intensive step',
-    title: 'For boosted care',
-    description: 'A concentrated layer for days when your skin needs extra support.',
+    focus: {
+      eyebrow: 'Treatment step',
+      title: 'For targeted care',
+      description: 'A focused treatment layer before moisturizer.',
+    },
+    chips: [
+      { kind: 'glow', label: 'Glow' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Targeted care', 'Smooth glow', 'Treatment step'],
   },
   cream: {
-    eyebrow: 'Seal & comfort',
-    title: 'For skin barrier',
-    description: 'Locks in earlier layers and leaves skin feeling comforted.',
+    focus: {
+      eyebrow: 'Seal & comfort',
+      title: 'For skin barrier',
+      description: 'A comfort layer to seal in previous steps.',
+    },
+    chips: [
+      { kind: 'hydration', label: 'Hydration' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Barrier comfort', 'Moisture seal', 'Soft finish'],
   },
   mask: {
-    eyebrow: 'Weekly ritual',
-    title: 'For treatment nights',
-    description: 'Adds an extra ritual moment when skin needs more care.',
-  },
-  oil: {
-    eyebrow: 'Final glow',
-    title: 'For soft glow',
-    description: 'A finishing touch to soften dry areas and add a healthy-looking sheen.',
+    focus: {
+      eyebrow: 'Weekly ritual',
+      title: 'For treatment nights',
+      description: 'An extra care moment for a softer weekly ritual.',
+    },
+    chips: [
+      { kind: 'glow', label: 'Glow' },
+      { kind: 'repair', label: 'Repair' },
+    ],
+    highlights: ['Weekly care', 'Soft texture', 'Ritual glow'],
   },
   'sun care': {
-    eyebrow: 'Morning final step',
-    title: 'For protection',
-    description: 'The last AM layer to help protect skin through the day.',
+    focus: {
+      eyebrow: 'Morning final step',
+      title: 'For protection',
+      description: 'The final AM step after moisturizer.',
+    },
+    chips: [
+      { kind: 'protection', label: 'Protection' },
+      { kind: 'hydration', label: 'Hydration' },
+    ],
+    highlights: ['Daily SPF', 'Final AM step', 'Soft shield'],
   },
 }
 
-const badgeRotation: ProductCardBadge[] = [
-  { label: 'Best Seller', mark: '★', tone: 'border-white/20 bg-charcoal/88 text-white' },
-  { label: 'Most Viewed', mark: '◐', tone: 'border-rose-mauve/25 bg-white/92 text-rose-mauve' },
-  { label: 'Glow Pick', mark: '✦', tone: 'border-white/20 bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' },
-  { label: 'Routine Hero', mark: '✓', tone: 'border-[#d3af84]/30 bg-[#fff8ee]/95 text-[#8b623e]' },
-  { label: 'Customer Favorite', mark: '♡', tone: 'border-rose-mauve/25 bg-white/92 text-rose-mauve' },
+const routineDefinitions: Omit<ProductRoutineStep, 'isCurrent'>[] = [
+  { key: 'cleanse', step: '01', title: 'Cleanse', description: 'Start with cleanser to refresh skin.' },
+  { key: 'prep', step: '02', title: 'Prep', description: 'Follow with toner, pads, or essence.' },
+  { key: 'treat', step: '03', title: 'Treat', description: 'Apply serum or ampoule for targeted care.' },
+  { key: 'seal', step: '04', title: 'Seal', description: 'Lock in care with cream or lotion.' },
+  { key: 'protect', step: '05', title: 'Protect', description: 'In the morning, finish with sunscreen.' },
 ]
 
-export function getProductCareFocus(product: Product): ProductCareFocus {
-  const searchable = [product.name, product.category, product.subcategory, ...product.concerns, ...product.tags]
+function productSearchText(product: Product) {
+  return [product.name, product.category, product.subcategory, ...product.concerns, ...product.tags]
     .filter(Boolean)
     .join(' ')
     .toLowerCase()
+}
 
-  const concernMatch = concernFocusMap.find(({ keys }) => keys.some((key) => searchable.includes(key)))
+function getMerchandisingMatch(product: Product) {
+  const searchable = productSearchText(product)
+  return concernFocusMap.find(({ keys }) => keys.some((key) => searchable.includes(key)))
+}
+
+export function getProductCareFocus(product: Product): ProductCareFocus {
+  const concernMatch = getMerchandisingMatch(product)
   if (concernMatch) return concernMatch.focus
 
-  return categoryFallbackFocus[product.category.trim().toLowerCase()] ?? {
+  return categoryFallbacks[product.category.trim().toLowerCase()]?.focus ?? {
     eyebrow: 'Skin care',
     title: 'For daily care',
-    description: 'A curated JISOO formula for a simple, polished daily ritual.',
+    description: 'A curated JISOO step for a polished daily ritual.',
   }
 }
 
-export function getProductCardBadge(product: Product, index: number): ProductCardBadge {
-  const searchable = [product.name, product.category, product.subcategory, ...product.concerns, ...product.tags]
-    .filter(Boolean)
-    .join(' ')
-    .toLowerCase()
+export function getProductStatusBadge(product: Product): ProductStatusBadge | null {
+  const entry = (Object.entries(statusBadgeBySlug) as Array<[ProductStatusBadgeKind, string[]]>).find(([, slugs]) => slugs.includes(product.slug))
+  if (!entry) return null
 
-  if (product.isBestSeller || searchable.includes('anti-aging') || searchable.includes('firmness') || searchable.includes('fine lines')) {
-    return badgeRotation[0]
+  const [kind] = entry
+  return { kind, label: statusBadgeLabels[kind] }
+}
+
+export function getProductCardBadge(product: Product): ProductStatusBadge | null {
+  return getProductStatusBadge(product)
+}
+
+export function getProductCareChips(product: Product): ProductCareChip[] {
+  const concernMatch = getMerchandisingMatch(product)
+  const fallback = categoryFallbacks[product.category.trim().toLowerCase()]
+  const chips = concernMatch?.chips ?? fallback?.chips ?? [
+    { kind: 'glow', label: 'Glow' },
+    { kind: 'repair', label: 'Repair' },
+  ]
+
+  return chips.slice(0, 3)
+}
+
+export function getProductCardHighlights(product: Product): string[] {
+  const concernMatch = getMerchandisingMatch(product)
+  const fallback = categoryFallbacks[product.category.trim().toLowerCase()]
+  const highlights = concernMatch?.highlights ?? fallback?.highlights ?? ['Daily care', 'Soft finish', 'JISOO ritual']
+
+  return highlights.slice(0, 3)
+}
+
+export function getRoutineStepKeyForProduct(product: Product): RoutineStepKey {
+  const category = product.category.trim().toLowerCase()
+
+  if (category.includes('cleanser') || category.includes('cleansing') || category.includes('exfoliant')) return 'cleanse'
+  if (category.includes('toner') || category.includes('essence')) return 'prep'
+  if (category.includes('serum') || category.includes('ampoule') || category.includes('tone-up')) return 'treat'
+  if (category.includes('cream') || category.includes('lotion') || category.includes('fluid') || category.includes('emulsion') || category.includes('mask') || category.includes('oil')) return 'seal'
+  if (category.includes('sun')) return 'protect'
+
+  return 'treat'
+}
+
+export function getRoutinePlacementForProduct(product: Product): ProductRoutinePlacement {
+  const currentKey = getRoutineStepKeyForProduct(product)
+  const currentIndex = routineDefinitions.findIndex((step) => step.key === currentKey)
+  const steps = routineDefinitions.map((step) => ({ ...step, isCurrent: step.key === currentKey }))
+
+  return {
+    current: steps[currentIndex],
+    before: currentIndex > 0 ? steps[currentIndex - 1] : undefined,
+    after: currentIndex < steps.length - 1 ? steps[currentIndex + 1] : undefined,
+    steps,
   }
-
-  if (searchable.includes('sun') || searchable.includes('uv')) {
-    return { label: 'Daily Essential', mark: '☼', tone: 'border-[#d3af84]/30 bg-[#fff8ee]/95 text-[#8b623e]' }
-  }
-
-  return badgeRotation[index % badgeRotation.length]
 }
 
 export function getRoutineStepsForProduct(product: Product): ProductRoutineStep[] {
-  const category = product.category.trim().toLowerCase()
-  const focus = getProductCareFocus(product)
+  return getRoutinePlacementForProduct(product).steps
+}
 
-  return [
-    {
-      step: '01',
-      title: 'Cleanse',
-      description: 'Begin with cleanser to remove sunscreen, makeup, and daily buildup.',
-      match: category.includes('cleanser') || category.includes('cleansing') ? 'This product can be your first routine step.' : undefined,
-    },
-    {
-      step: '02',
-      title: 'Prep with toner or pads',
-      description: 'Use toner, essence, or toner pads to refresh skin and prepare it for treatments.',
-      match: category.includes('toner') || category.includes('essence') ? 'Use this here, right after cleansing.' : undefined,
-    },
-    {
-      step: '03',
-      title: 'Apply serum / ampoule',
-      description: 'Layer targeted treatments from thinnest to richest texture; let each layer settle.',
-      match: category.includes('serum') || category.includes('ampoule') ? `Use this here: ${focus.title.toLowerCase()}.` : undefined,
-    },
-    {
-      step: '04',
-      title: 'Seal with cream',
-      description: 'Finish with moisturizer to lock in hydration and keep the barrier comfortable.',
-      match: category.includes('cream') || category.includes('lotion') || category.includes('emulsion') ? 'Use this after treatment layers.' : undefined,
-    },
-    {
-      step: '05',
-      title: 'AM only: SPF',
-      description: 'In the morning, sunscreen is the final step after moisturizer.',
-      match: category.includes('sun') ? 'Use this as the final morning step.' : undefined,
-    },
-  ]
+function routineSuggestionKeysForProduct(product: Product): RoutineStepKey[] {
+  const placement = getRoutinePlacementForProduct(product)
+  return [placement.before?.key, placement.after?.key, placement.current.key].filter(Boolean) as RoutineStepKey[]
+}
+
+export function getRoutineSuggestionProducts(product: Product, candidates: Product[], limit = 3): Product[] {
+  const wantedKeys = routineSuggestionKeysForProduct(product)
+
+  return candidates
+    .filter((candidate) => candidate.id !== product.id)
+    .filter((candidate) => wantedKeys.includes(getRoutineStepKeyForProduct(candidate)))
+    .sort((a, b) => {
+      const aRank = wantedKeys.indexOf(getRoutineStepKeyForProduct(a))
+      const bRank = wantedKeys.indexOf(getRoutineStepKeyForProduct(b))
+      return aRank - bRank
+    })
+    .slice(0, limit)
 }

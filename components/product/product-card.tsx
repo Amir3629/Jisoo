@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { ShoppingBag, Heart } from 'lucide-react'
+import { ShoppingBag, Heart, Trophy, Eye, Star, Droplets, Sparkles, Shield, Sun, Activity, type LucideIcon } from 'lucide-react'
 import { Product } from '@/lib/types'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { localizeHref } from '@/lib/i18n'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
-import { getProductCardBadge, getProductCareFocus } from '@/lib/product-merchandising'
+import { getProductCardHighlights, getProductCareChips, getProductStatusBadge, type ProductCareIconKind, type ProductStatusBadgeKind } from '@/lib/product-merchandising'
 
 interface ProductCardProps {
   product: Product
@@ -34,6 +34,25 @@ const SECOND_MODE_PRODUCT_IMAGES = [
 
 function getSecondModeProductImage(index: number) {
   return SECOND_MODE_PRODUCT_IMAGES[index % SECOND_MODE_PRODUCT_IMAGES.length]
+}
+
+const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
+  'best-seller': Trophy,
+  'most-viewed': Eye,
+  'customer-favorite': Heart,
+}
+
+const careIconMap: Record<ProductCareIconKind, LucideIcon> = {
+  hydration: Droplets,
+  brightening: Sparkles,
+  'anti-aging': Star,
+  'dry-skin': Heart,
+  'sensitive-skin': Shield,
+  firming: Activity,
+  repair: Shield,
+  glow: Sparkles,
+  protection: Sun,
+  clarity: Eye,
 }
 
 export function ProductCard({ product, index = 0, displayName, hideDescription = false, compact = false }: ProductCardProps) {
@@ -60,8 +79,10 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
 
   const defaultProductImageSrc = resolveImageSrc(product.images?.[0]?.src)
   const secondModeProductImageSrc = resolveImageSrc(getSecondModeProductImage(index))
-  const cardBadge = getProductCardBadge(product, index)
-  const careFocus = getProductCareFocus(product)
+  const statusBadge = getProductStatusBadge(product)
+  const careChips = getProductCareChips(product)
+  const cardHighlights = getProductCardHighlights(product)
+  const StatusIcon = statusBadge ? statusIconMap[statusBadge.kind] : null
 
   if (!access.isVisible) {
     return null
@@ -88,22 +109,18 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
             />
           </>
 
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
-            <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-medium tracking-[0.02em] shadow-sm backdrop-blur-xl', cardBadge.tone)}>
-              <span className="text-[12px] leading-none">{cardBadge.mark}</span>
-              {cardBadge.label}
-            </span>
-            {product.isNew && (
-              <span className="rounded-full bg-rose-mauve/95 px-3 py-1 text-xs font-medium text-warm-ivory">
-                {dictionary.common.new}
-              </span>
-            )}
-            {product.isBestSeller && (
-              <span className="rounded-full bg-champagne-gold px-3 py-1 text-xs font-medium text-charcoal">
-                {dictionary.common.bestSeller}
-              </span>
-            )}
-          </div>
+          {statusBadge && StatusIcon && (
+            <div className="absolute left-3 top-3">
+              <div className="group/status relative inline-flex">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full border border-warm-ivory/70 bg-white/86/90 text-rose-mauve shadow-sm backdrop-blur-xl transition duration-300 group-hover/status:scale-105">
+                  <StatusIcon className="h-4 w-4" />
+                </span>
+                <span className="pointer-events-none absolute left-0 top-full mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-sm backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100">
+                  {statusBadge.label}
+                </span>
+              </div>
+            </div>
+          )}
 
           <button
             type="button"
@@ -113,15 +130,27 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
             <Heart className="h-4 w-4" />
           </button>
 
-          <div aria-hidden="true" className="absolute bottom-4 right-4 h-14 w-14 opacity-55 transition group-hover:rotate-6 group-hover:opacity-80">
-            <div className="absolute left-5 top-1 h-12 w-6 rotate-[32deg] rounded-[999px_999px_999px_20px] border border-rose-mauve/30 bg-white/45 shadow-[0_10px_30px_rgba(154,98,118,0.10)] backdrop-blur-sm" />
-            <div className="absolute left-4 top-7 h-px w-9 rotate-[32deg] bg-rose-mauve/30" />
-          </div>
         </div>
       </Link>
 
       <div className={cn('flex flex-1 flex-col gap-4 p-5', compact && 'p-4')}>
-        <div className="flex-1 space-y-2">
+        <div className="flex-1 space-y-3">
+          <div className="flex flex-wrap gap-2" aria-label={`${cardName} care focus`}>
+            {careChips.map((chip) => {
+              const CareIcon = careIconMap[chip.kind]
+              return (
+                <span key={chip.label} className="group/care relative inline-flex">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full border border-blush-pink/45 bg-white/70 text-rose-mauve shadow-sm transition duration-300 group-hover/care:-translate-y-0.5 group-hover/care:border-rose-mauve/45 group-hover/care:bg-white">
+                    <CareIcon className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-2.5 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-sm backdrop-blur-xl transition-all duration-300 group-hover/care:translate-y-0 group-hover/care:opacity-100">
+                    {chip.label}
+                  </span>
+                </span>
+              )
+            })}
+          </div>
+
           <p className="text-xs font-semibold uppercase tracking-[0.22em] text-charcoal/72">
             {localizedCategory}
           </p>
@@ -130,14 +159,14 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
               {cardName}
             </h3>
           </Link>
-          <div className="rounded-2xl border border-[#e4c8d2]/28 bg-[#fff8f9]/70 px-3 py-2">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">
-              {careFocus.title}
-            </p>
-            <p className="mt-1 line-clamp-2 text-xs leading-5 text-charcoal/62">
-              {careFocus.description}
-            </p>
-          </div>
+          <ul className="grid gap-1.5 text-xs leading-5 text-charcoal/62">
+            {cardHighlights.map((highlight) => (
+              <li key={highlight} className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-rose-mauve/55" />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
           {!hideDescription && (
             <p className="line-clamp-2 text-sm leading-6 text-charcoal/65">
               {product.shortDescription}

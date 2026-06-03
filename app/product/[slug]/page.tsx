@@ -7,23 +7,29 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Header } from '@/components/layout/header'
 import { Footer } from '@/components/layout/footer'
 import { ProductCard } from '@/components/product/product-card'
-import { getProductBySlug, getRelatedProducts, getProductReviews, formatPrice } from '@/lib/data'
+import { getProductBySlug, getRelatedProducts, getProductReviews, formatPrice, products as catalogProducts } from '@/lib/data'
 import { useCart } from '@/components/providers/cart-provider'
 import { useRegion } from '@/components/providers/region-provider'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 import {
   Heart, Share2, Star, Minus, Plus, Check,
-  Sparkles, Info
+  Sparkles, Info, Trophy, Eye, type LucideIcon
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
 import { getProductJsonLd } from '@/lib/seo'
-import { getProductCardBadge, getProductCareFocus, getRoutineStepsForProduct } from '@/lib/product-merchandising'
+import { getProductCareFocus, getProductStatusBadge, getRoutinePlacementForProduct, getRoutineSuggestionProducts, type ProductStatusBadgeKind } from '@/lib/product-merchandising'
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
+}
+
+const statusIconMap: Record<ProductStatusBadgeKind, LucideIcon> = {
+  'best-seller': Trophy,
+  'most-viewed': Eye,
+  'customer-favorite': Heart,
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
@@ -66,6 +72,10 @@ export default function ProductPage({ params }: ProductPageProps) {
     routineTitle: locale === 'ar' ? 'كيف يدخل هذا المنتج في الروتين' : locale === 'fr' ? 'Où placer ce produit dans la routine' : locale === 'de' ? 'So passt dieses Produkt in die Routine' : locale === 'ko' ? '이 제품을 루틴에 넣는 순서' : locale === 'tr' ? 'Bu ürün rutinde nereye gelir' : 'Where this fits in your routine',
     routineBody: locale === 'ar' ? 'مثال سريع للترتيب حتى يعرف العميل ماذا يستخدم أولاً وما يأتي بعده.' : locale === 'fr' ? 'Un guide court pour montrer quoi utiliser d’abord et quoi appliquer ensuite.' : locale === 'de' ? 'Eine kurze Reihenfolge, damit Kund:innen wissen, was zuerst und danach kommt.' : locale === 'ko' ? '무엇을 먼저 쓰고 다음에 무엇을 바르는지 보여주는 간단한 순서입니다.' : locale === 'tr' ? 'Müşterinin önce neyi, sonra neyi kullanacağını görmesi için kısa bir sıra.' : 'A simple order guide so customers know what to use first and what comes next.',
     highlightedStep: locale === 'ar' ? 'خطوة هذا المنتج' : locale === 'fr' ? 'Étape de ce produit' : locale === 'de' ? 'Schritt dieses Produkts' : locale === 'ko' ? '이 제품 단계' : locale === 'tr' ? 'Bu ürünün adımı' : 'This product step',
+    before: locale === 'ar' ? 'قبل ذلك' : locale === 'fr' ? 'Avant' : locale === 'de' ? 'Davor' : locale === 'ko' ? '이전 단계' : locale === 'tr' ? 'Önce' : 'Before',
+    after: locale === 'ar' ? 'بعد ذلك' : locale === 'fr' ? 'Après' : locale === 'de' ? 'Danach' : locale === 'ko' ? '다음 단계' : locale === 'tr' ? 'Sonra' : 'After',
+    completeRoutine: locale === 'ar' ? 'أكملي روتين العناية' : locale === 'fr' ? 'Compléter le rituel' : locale === 'de' ? 'Routine vervollständigen' : locale === 'ko' ? '루틴 완성하기' : locale === 'tr' ? 'Rutini tamamla' : 'Complete your care ritual',
+    pairsWith: locale === 'ar' ? 'يتناغم بشكل جميل مع' : locale === 'fr' ? 'S’accorde avec' : locale === 'de' ? 'Passt wunderbar zu' : locale === 'ko' ? '함께 쓰기 좋은 제품' : locale === 'tr' ? 'Şunlarla güzel eşleşir' : 'Pairs beautifully with',
   }
 
   if (!product) {
@@ -86,9 +96,11 @@ export default function ProductPage({ params }: ProductPageProps) {
   const access = evaluateRegionAccess(product, region)
   const isBuyable = access.isBuyable
   const isVisibleOnly = access.status === 'visible_but_not_buyable'
-  const cardBadge = getProductCardBadge(product, 0)
+  const statusBadge = getProductStatusBadge(product)
   const careFocus = getProductCareFocus(product)
-  const routineSteps = getRoutineStepsForProduct(product)
+  const routinePlacement = getRoutinePlacementForProduct(product)
+  const routineSuggestions = getRoutineSuggestionProducts(product, catalogProducts, 3)
+  const StatusIcon = statusBadge ? statusIconMap[statusBadge.kind] : null
 
   const handleAddToCart = () => {
     if (isBuyable) {
@@ -147,19 +159,18 @@ export default function ProductPage({ params }: ProductPageProps) {
                 />
 
                 {/* JISOO Watermark */}
-                <div className="absolute bottom-4 right-4 flex items-center gap-3 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
-                  <span aria-hidden="true" className="relative h-7 w-5 rotate-[32deg] rounded-[999px_999px_999px_8px] border border-rose-mauve/35 bg-white/55">
-                    <span className="absolute left-1/2 top-1 h-5 w-px -translate-x-1/2 rotate-[-18deg] bg-rose-mauve/30" />
-                  </span>
+                <div className="absolute bottom-4 right-4 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
                   <span className="text-sm font-serif font-semibold text-plum">JISOO</span>
                 </div>
 
                 {/* Badges */}
                 <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  <span className={cn('inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-medium shadow-sm backdrop-blur-xl', cardBadge.tone)}>
-                    <span className="text-sm leading-none">{cardBadge.mark}</span>
-                    {cardBadge.label}
-                  </span>
+                  {statusBadge && StatusIcon && (
+                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/86/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
+                      <StatusIcon className="h-3.5 w-3.5 text-rose-mauve" />
+                      {statusBadge.label}
+                    </span>
+                  )}
                   {product.isNew && (
                     <span className="px-3 py-1 text-xs font-medium bg-plum text-warm-ivory rounded-full">
                       {dictionary.common.new}
@@ -272,8 +283,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               )}
 
               {/* Description */}
-              <div className="relative mt-6 overflow-hidden rounded-3xl border border-rose-mauve/15 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
-                <div aria-hidden="true" className="absolute -right-5 -top-6 h-24 w-12 rotate-[35deg] rounded-[999px_999px_999px_18px] border border-rose-mauve/15 bg-rose-mauve/5" />
+              <div className="mt-6 overflow-hidden rounded-3xl border border-blush-pink/30 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.careFocus}</p>
                 <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">{careFocus.title}</h2>
                 <p className="mt-2 text-muted-foreground leading-relaxed">
@@ -298,49 +308,6 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
 
-              {/* Routine Guide */}
-              <div className="mt-8 rounded-[2rem] border border-[#e4c8d2]/28 bg-[#fffaf6]/80 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.06)]">
-                <div className="flex items-start gap-3">
-                  <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white text-rose-mauve shadow-sm">
-                    <Sparkles className="h-4 w-4" />
-                    <span aria-hidden="true" className="absolute -right-1 -top-1 h-5 w-3 rotate-[35deg] rounded-[999px_999px_999px_5px] border border-rose-mauve/25 bg-white" />
-                  </div>
-                  <div>
-                    <h2 className="font-serif text-xl font-semibold text-charcoal">{copy.routineTitle}</h2>
-                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{copy.routineBody}</p>
-                  </div>
-                </div>
-                <div className="mt-5 space-y-3">
-                  {routineSteps.map((step) => (
-                    <div
-                      key={step.step}
-                      className={cn(
-                        'rounded-2xl border p-4 transition',
-                        step.match
-                          ? 'border-rose-mauve/35 bg-white shadow-[0_14px_34px_rgba(154,98,118,0.10)]'
-                          : 'border-[#e4c8d2]/18 bg-white/45'
-                      )}
-                    >
-                      <div className="flex gap-3">
-                        <span className={cn('flex h-8 w-8 flex-none items-center justify-center rounded-full text-xs font-semibold', step.match ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white' : 'bg-nude-beige/70 text-charcoal/58')}>
-                          {step.step}
-                        </span>
-                        <div>
-                          <div className="flex flex-wrap items-center gap-2">
-                            <h3 className="font-medium text-charcoal">{step.title}</h3>
-                            {step.match && (
-                              <span className="rounded-full bg-rose-mauve/10 px-2.5 py-1 text-[11px] font-medium text-rose-mauve">
-                                {copy.highlightedStep}
-                              </span>
-                            )}
-                          </div>
-                          <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.match ?? step.description}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
 
               {/* Variants */}
               {product.variants && product.variants.length > 0 && (
@@ -618,6 +585,83 @@ export default function ProductPage({ params }: ProductPageProps) {
                 </motion.div>
               )}
             </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Routine Guide */}
+      <section className="py-16 bg-warm-ivory">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6">
+          <div className="rounded-[2rem] border border-blush-pink/30 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)] sm:p-6 lg:p-8">
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.highlightedStep}</p>
+                <h2 className="mt-2 font-serif text-2xl font-semibold text-charcoal lg:text-3xl">{copy.routineTitle}</h2>
+                <p className="mt-3 text-sm leading-6 text-muted-foreground">{copy.routineBody}</p>
+              </div>
+
+              <div className="grid gap-3 sm:grid-cols-3">
+                {routinePlacement.before && (
+                  <div className="rounded-2xl border border-blush-pink/25 bg-warm-ivory/55 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{copy.before}</p>
+                    <h3 className="mt-2 font-medium text-charcoal">{routinePlacement.before.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{routinePlacement.before.description}</p>
+                  </div>
+                )}
+
+                <div className="rounded-2xl border border-rose-mauve/35 bg-white p-4 shadow-[0_14px_34px_rgba(154,98,118,0.10)]">
+                  <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-rose-mauve to-champagne-gold text-xs font-semibold text-white">
+                    {routinePlacement.current.step}
+                  </span>
+                  <h3 className="mt-3 font-medium text-charcoal">{routinePlacement.current.title}</h3>
+                  <p className="mt-1 text-sm leading-6 text-muted-foreground">{routinePlacement.current.description}</p>
+                </div>
+
+                {routinePlacement.after && (
+                  <div className="rounded-2xl border border-blush-pink/25 bg-warm-ivory/55 p-4">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">{copy.after}</p>
+                    <h3 className="mt-2 font-medium text-charcoal">{routinePlacement.after.title}</h3>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">{routinePlacement.after.description}</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {routineSuggestions.length > 0 && (
+              <div className="mt-8 border-t border-blush-pink/30 pt-6">
+                <div className="mb-5 flex flex-wrap items-end justify-between gap-3">
+                  <div>
+                    <h3 className="font-serif text-xl font-semibold text-charcoal">{copy.completeRoutine}</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">{copy.pairsWith}</p>
+                  </div>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {routineSuggestions.map((suggestion) => (
+                    <Link
+                      key={suggestion.id}
+                      href={localizeHref(`/product/${suggestion.slug}`, locale)}
+                      className="group flex gap-4 rounded-2xl border border-blush-pink/25 bg-warm-ivory/45 p-3 transition duration-300 hover:-translate-y-0.5 hover:border-rose-mauve/35 hover:bg-white/80"
+                    >
+                      <div className="relative h-20 w-20 flex-none overflow-hidden rounded-xl bg-white">
+                        <Image
+                          src={resolveImageSrc(suggestion.images[0]?.src)}
+                          alt={suggestion.name}
+                          fill
+                          sizes="80px"
+                          className="object-cover transition duration-500 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="min-w-0 py-1">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">{suggestion.category}</p>
+                        <h4 className="mt-1 line-clamp-2 text-sm font-medium leading-5 text-charcoal">{suggestion.name}</h4>
+                        <p className="mt-1 text-sm text-muted-foreground">{formatPrice(suggestion.price, suggestion.currency)}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
