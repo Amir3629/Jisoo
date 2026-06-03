@@ -310,6 +310,12 @@ export function getRoutineStepsForProduct(product: Product): ProductRoutineStep[
   return getRoutinePlacementForProduct(product).steps
 }
 
+
+export function getRoutineFlowForProduct(product: Product): ProductRoutineStep[] {
+  const placement = getRoutinePlacementForProduct(product)
+  return [placement.before, placement.current, placement.after].filter(Boolean) as ProductRoutineStep[]
+}
+
 function routineSuggestionKeysForProduct(product: Product): RoutineStepKey[] {
   const placement = getRoutinePlacementForProduct(product)
   return [placement.before?.key, placement.after?.key, placement.current.key].filter(Boolean) as RoutineStepKey[]
