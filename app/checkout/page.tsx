@@ -22,6 +22,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
 import { resolveImageSrc } from "@/lib/image-fallbacks";
+import { cn } from "@/lib/utils";
 
 type CheckoutStep = "information" | "shipping" | "payment";
 
@@ -50,7 +51,7 @@ export default function CheckoutPage() {
     thankYou: locale === 'ar' ? 'شكرًا لك!' : locale === 'fr' ? 'Merci !' : locale === 'de' ? 'Vielen Dank!' : locale === 'ko' ? '감사합니다!' : locale === 'tr' ? 'Teşekkürler!' : 'Thank You!',
     orderPlaced: locale === 'ar' ? 'تم تقديم طلبك بنجاح.' : locale === 'fr' ? 'Votre commande a été passée avec succès.' : locale === 'de' ? 'Deine Bestellung wurde erfolgreich aufgegeben.' : locale === 'ko' ? '주문이 성공적으로 완료되었습니다.' : locale === 'tr' ? 'Siparişiniz başarıyla oluşturuldu.' : 'Your order has been placed successfully.',
     orderLabel: locale === 'ar' ? 'الطلب' : locale === 'fr' ? 'Commande' : locale === 'de' ? 'Bestellung' : locale === 'ko' ? '주문' : locale === 'tr' ? 'Sipariş' : 'Order',
-    confirmMail: locale === 'ar' ? 'أرسلنا رسالة تأكيد تحتوي على تفاصيل الطلب ومعلومات التتبع.' : locale === 'fr' ? 'Nous avons envoyé un e-mail de confirmation avec les détails et le suivi.' : locale === 'de' ? 'Wir haben eine Bestätigungs-E-Mail mit Bestell- und Trackingdetails gesendet.' : locale === 'ko' ? '주문 상세 및 배송 추적 정보가 포함된 확인 이메일을 보냈습니다.' : locale === 'tr' ? 'Sipariş detayları ve takip bilgileriyle bir onay e-postası gönderdik.' : 'We&apos;ve sent a confirmation email with your order details and tracking information.',
+    confirmMail: locale === 'ar' ? 'أرسلنا رسالة تأكيد تحتوي على تفاصيل الطلب ومعلومات التتبع.' : locale === 'fr' ? 'Nous avons envoyé un e-mail de confirmation avec les détails et le suivi.' : locale === 'de' ? 'Wir haben eine Bestätigungs-E-Mail mit Bestell- und Trackingdetails gesendet.' : locale === 'ko' ? '주문 상세 및 배송 추적 정보가 포함된 확인 이메일을 보냈습니다.' : locale === 'tr' ? 'Sipariş detayları ve takip bilgileriyle bir onay e-postası gönderdik.' : "We've sent a confirmation email with your order details and tracking information.",
     emailMe: locale === 'ar' ? 'أرسلوا لي الأخبار والعروض عبر البريد' : locale === 'fr' ? 'M’envoyer des actualités et offres par e-mail' : locale === 'de' ? 'Per E-Mail über Neuigkeiten und Angebote informieren' : locale === 'ko' ? '이메일로 뉴스/혜택 받기' : locale === 'tr' ? 'Bana e-posta ile haber ve teklifler gönderin' : 'Email me with news and offers',
     firstName: locale === 'ar' ? 'الاسم الأول' : locale === 'fr' ? 'Prénom' : locale === 'de' ? 'Vorname' : locale === 'ko' ? '이름' : locale === 'tr' ? 'Ad' : 'First Name',
     lastName: locale === 'ar' ? 'اسم العائلة' : locale === 'fr' ? 'Nom' : locale === 'de' ? 'Nachname' : locale === 'ko' ? '성' : locale === 'tr' ? 'Soyad' : 'Last Name',
@@ -84,6 +85,13 @@ export default function CheckoutPage() {
   const shipping = subtotal > 50 ? 0 : 5.99;
   const tax = subtotal * 0.08;
   const total = subtotal + shipping + tax;
+
+  const luxurySurface = "rounded-3xl border border-[#cfae83]/24 bg-[linear-gradient(155deg,var(--card)_0%,color-mix(in_srgb,var(--background)_88%,white)_58%,color-mix(in_srgb,var(--background)_92%,#cfae83)_100%)] shadow-luxury";
+  const selectedShippingSurface = "rounded-3xl border border-rose-mauve/45 bg-[linear-gradient(135deg,color-mix(in_srgb,var(--background)_78%,#d8a7bd)_0%,color-mix(in_srgb,var(--background)_86%,#d3af84)_100%)] shadow-luxury";
+  const fieldClass = "mt-1 rounded-full border-[#cfae83]/30 bg-[color-mix(in_srgb,var(--background)_78%,white)] text-foreground placeholder:text-muted-foreground/60 focus-visible:ring-rose-mauve/25";
+  const primaryActionClass = "rounded-full border border-[#cfae83]/35 bg-[linear-gradient(135deg,#d8a7bd_0%,#d3af84_100%)] px-6 py-3 text-white shadow-luxury hover:brightness-105";
+  const secondaryActionClass = "rounded-full border border-[#cfae83]/35 bg-[color-mix(in_srgb,var(--background)_80%,white)] px-6 py-3 text-charcoal shadow-luxury hover:border-rose-mauve/45";
+  const softDividerClass = "border-[#cfae83]/24";
 
   const steps: { key: CheckoutStep; label: string }[] = [
     { key: "information", label: copy.information },
@@ -125,10 +133,10 @@ export default function CheckoutPage() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="py-16"
+            className={cn(luxurySurface, "px-6 py-16 sm:px-10")}
           >
-            <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-primary flex items-center justify-center">
-              <Check className="w-10 h-10 text-primary-foreground" />
+            <div className="w-20 h-20 mx-auto mb-8 rounded-full bg-[linear-gradient(135deg,#d8a7bd_0%,#d3af84_100%)] flex items-center justify-center shadow-luxury">
+              <Check className="w-10 h-10 text-white" />
             </div>
             <h1 className="font-serif text-4xl mb-4">{copy.thankYou}</h1>
             <p className="text-muted-foreground mb-2">
@@ -141,12 +149,18 @@ export default function CheckoutPage() {
               {copy.confirmMail}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild variant="outline" className="rounded-none">
-                <Link href={localizeHref('/account/orders', locale)}>{c.viewOrder}</Link>
-              </Button>
-              <Button asChild className="rounded-none">
-                <Link href={localizeHref('/shop', locale)}>{c.continueShopping}</Link>
-              </Button>
+              <Link
+                href={localizeHref('/account/orders', locale)}
+                className={cn(secondaryActionClass, "inline-flex items-center justify-center text-sm font-medium transition-all")}
+              >
+                {c.viewOrder}
+              </Link>
+              <Link
+                href={localizeHref('/shop', locale)}
+                className={cn(primaryActionClass, "inline-flex items-center justify-center text-sm font-medium transition-all")}
+              >
+                {c.continueShopping}
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -158,13 +172,15 @@ export default function CheckoutPage() {
     return (
       <div className="min-h-screen bg-background pt-32 pb-20">
         <div className="container max-w-2xl mx-auto px-4 text-center">
-          <h1 className="font-serif text-3xl mb-4">{dictionary.cart.emptyTitle}</h1>
-          <p className="text-muted-foreground mb-8">
-            {dictionary.cart.emptyBody}
-          </p>
-          <Button asChild className="rounded-none">
-            <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
-          </Button>
+          <div className={cn(luxurySurface, "px-6 py-14 sm:px-10")}>
+            <h1 className="font-serif text-3xl mb-4">{dictionary.cart.emptyTitle}</h1>
+            <p className="text-muted-foreground mb-8">
+              {dictionary.cart.emptyBody}
+            </p>
+            <Button asChild className={cn(primaryActionClass, "rounded-full")}>
+              <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
+            </Button>
+          </div>
         </div>
       </div>
     );
@@ -201,9 +217,9 @@ export default function CheckoutPage() {
           ))}
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-[1.08fr_0.92fr] gap-10">
           {/* Form Section */}
-          <div>
+          <div className={cn(luxurySurface, "p-6 sm:p-8")}>
             <AnimatePresence mode="wait">
               {step === "information" && (
                 <motion.div
@@ -220,7 +236,7 @@ export default function CheckoutPage() {
                         id="email"
                         type="email"
                         placeholder="your@email.com"
-                        className="rounded-none mt-1"
+                        className={fieldClass}
                       />
                     </div>
                     <div className="flex items-center gap-2">
@@ -236,44 +252,44 @@ export default function CheckoutPage() {
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="firstName">{copy.firstName}</Label>
-                        <Input id="firstName" className="rounded-none mt-1" />
+                        <Input id="firstName" className={fieldClass} />
                       </div>
                       <div>
                         <Label htmlFor="lastName">{copy.lastName}</Label>
-                        <Input id="lastName" className="rounded-none mt-1" />
+                        <Input id="lastName" className={fieldClass} />
                       </div>
                     </div>
                     <div>
                       <Label htmlFor="address">{copy.address}</Label>
-                      <Input id="address" className="rounded-none mt-1" />
+                      <Input id="address" className={fieldClass} />
                     </div>
                     <div>
                       <Label htmlFor="apartment">{copy.apartment}</Label>
-                      <Input id="apartment" className="rounded-none mt-1" />
+                      <Input id="apartment" className={fieldClass} />
                     </div>
                     <div className="grid grid-cols-3 gap-4">
                       <div>
                         <Label htmlFor="city">{copy.city}</Label>
-                        <Input id="city" className="rounded-none mt-1" />
+                        <Input id="city" className={fieldClass} />
                       </div>
                       <div>
                         <Label htmlFor="state">{copy.state}</Label>
-                        <Input id="state" className="rounded-none mt-1" />
+                        <Input id="state" className={fieldClass} />
                       </div>
                       <div>
                         <Label htmlFor="zip">{copy.zip}</Label>
-                        <Input id="zip" className="rounded-none mt-1" />
+                        <Input id="zip" className={fieldClass} />
                       </div>
                     </div>
                     <div>
                       <Label htmlFor="phone">{copy.phone}</Label>
-                      <Input id="phone" type="tel" className="rounded-none mt-1" />
+                      <Input id="phone" type="tel" className={fieldClass} />
                     </div>
                   </div>
 
                   <Button
                     onClick={() => setStep("shipping")}
-                    className="w-full rounded-none mt-8"
+                    className={cn("w-full mt-8", primaryActionClass)}
                     size="lg"
                   >
                     {copy.continueShipping}
@@ -298,10 +314,10 @@ export default function CheckoutPage() {
 
                   <h2 className="font-serif text-2xl mb-6">{copy.shippingMethod}</h2>
                   <div className="space-y-3">
-                    <label className="flex items-center justify-between p-4 border border-primary bg-primary/5 cursor-pointer">
+                    <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all", selectedShippingSurface)}>
                       <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
-                          <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                        <div className="w-5 h-5 rounded-full border-2 border-rose-mauve flex items-center justify-center">
+                          <div className="w-2.5 h-2.5 rounded-full bg-rose-mauve" />
                         </div>
                         <div>
                           <p className="font-medium">{copy.standardShipping}</p>
@@ -310,9 +326,9 @@ export default function CheckoutPage() {
                       </div>
                       <span>{shipping === 0 ? copy.free : formatPrice(shipping)}</span>
                     </label>
-                    <label className="flex items-center justify-between p-4 border border-border hover:border-muted-foreground cursor-pointer transition-colors">
+                    <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all hover:border-rose-mauve/45", luxurySurface)}>
                       <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full border-2 border-muted-foreground" />
+                        <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/60" />
                         <div>
                           <p className="font-medium">{copy.expressShipping}</p>
                           <p className="text-sm text-muted-foreground">{copy.businessDays23}</p>
@@ -320,9 +336,9 @@ export default function CheckoutPage() {
                       </div>
                       <span>{formatPrice(12.99)}</span>
                     </label>
-                    <label className="flex items-center justify-between p-4 border border-border hover:border-muted-foreground cursor-pointer transition-colors">
+                    <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all hover:border-rose-mauve/45", luxurySurface)}>
                       <div className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full border-2 border-muted-foreground" />
+                        <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/60" />
                         <div>
                           <p className="font-medium">{copy.overnightShipping}</p>
                           <p className="text-sm text-muted-foreground">{copy.nextBusinessDay}</p>
@@ -334,7 +350,7 @@ export default function CheckoutPage() {
 
                   <Button
                     onClick={() => setStep("payment")}
-                    className="w-full rounded-none mt-8"
+                    className={cn("w-full mt-8", primaryActionClass)}
                     size="lg"
                   >
                     {copy.continuePayment}
@@ -358,7 +374,7 @@ export default function CheckoutPage() {
                   </button>
 
                   <h2 className="font-serif text-2xl mb-6">{copy.payment}</h2>
-                  <div className="border border-border p-6">
+                  <div className={cn(luxurySurface, "p-6")}>
                     <div className="flex items-center gap-3 mb-6">
                       <CreditCard className="w-5 h-5" />
                       <span className="font-medium">{copy.creditCard}</span>
@@ -369,12 +385,12 @@ export default function CheckoutPage() {
                         <Input
                           id="cardNumber"
                           placeholder="1234 5678 9012 3456"
-                          className="rounded-none mt-1"
+                          className={fieldClass}
                         />
                       </div>
                       <div>
                         <Label htmlFor="cardName">{copy.nameOnCard}</Label>
-                        <Input id="cardName" className="rounded-none mt-1" />
+                        <Input id="cardName" className={fieldClass} />
                       </div>
                       <div className="grid grid-cols-2 gap-4">
                         <div>
@@ -382,7 +398,7 @@ export default function CheckoutPage() {
                           <Input
                             id="expiry"
                             placeholder="MM / YY"
-                            className="rounded-none mt-1"
+                            className={fieldClass}
                           />
                         </div>
                         <div>
@@ -390,7 +406,7 @@ export default function CheckoutPage() {
                           <Input
                             id="cvv"
                             placeholder="CVV"
-                            className="rounded-none mt-1"
+                            className={fieldClass}
                           />
                         </div>
                       </div>
@@ -408,7 +424,7 @@ export default function CheckoutPage() {
                   <Button
                     onClick={handlePlaceOrder}
                     disabled={isProcessing}
-                    className="w-full rounded-none mt-8"
+                    className={cn("w-full mt-8", primaryActionClass)}
                     size="lg"
                   >
                     {isProcessing ? (
@@ -416,7 +432,7 @@ export default function CheckoutPage() {
                         <motion.div
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                          className="w-5 h-5 border-2 border-primary-foreground border-t-transparent rounded-full"
+                          className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                         />
                         {copy.processing}
                       </span>
@@ -430,7 +446,7 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="lg:pl-12 lg:border-l border-border">
+          <div className={cn(luxurySurface, "p-6 sm:p-8 self-start")}>
             <h2 className="font-serif text-xl mb-6">{copy.orderSummary}</h2>
             <div className="space-y-4">
               {items.map((item) => (
@@ -438,14 +454,14 @@ export default function CheckoutPage() {
                   key={`${item.product.id}-${item.variant?.id || "default"}`}
                   className="flex gap-4"
                 >
-                  <div className="relative w-16 h-16 bg-muted rounded-sm overflow-hidden flex-shrink-0">
+                  <div className="relative w-16 h-16 bg-[color-mix(in_srgb,var(--background)_78%,white)] rounded-2xl overflow-hidden flex-shrink-0 border border-[#cfae83]/20">
                     <Image
                       src={resolveImageSrc(item.product.images[0]?.src)}
                       alt={item.product.name}
                       fill
                       className="object-cover"
                     />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-foreground text-background text-xs rounded-full flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-5 h-5 bg-rose-mauve text-white text-xs rounded-full flex items-center justify-center">
                       {item.quantity}
                     </div>
                   </div>
@@ -468,7 +484,7 @@ export default function CheckoutPage() {
               ))}
             </div>
 
-            <div className="mt-6 pt-6 border-t border-border space-y-3">
+            <div className={cn("mt-6 pt-6 border-t space-y-3", softDividerClass)}>
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">{copy.subtotal}</span>
                 <span>{formatPrice(subtotal)}</span>
@@ -483,13 +499,13 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <div className="flex justify-between py-6 border-t border-border mt-6 font-medium text-lg">
+            <div className={cn("flex justify-between py-6 border-t mt-6 font-medium text-lg", softDividerClass)}>
               <span>{dictionary.cart.total}</span>
               <span>{formatPrice(total)}</span>
             </div>
 
             {/* Benefits */}
-            <div className="mt-6 pt-6 border-t border-border space-y-3">
+            <div className={cn("mt-6 pt-6 border-t space-y-3", softDividerClass)}>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Truck className="w-4 h-4 flex-shrink-0" />
                 <span>{copy.freeShippingBenefit}</span>
