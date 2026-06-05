@@ -73,7 +73,7 @@ export function LocaleSwitcher({
             exit={{ opacity: 0, y: -8, scale: 0.975, filter: "blur(8px)" }}
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "jisoo-language-menu-solid fixed right-4 top-[4.8rem] z-[99999] w-[min(18rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border p-2 text-charcoal lg:absolute lg:right-0 lg:top-full lg:mt-2 lg:w-56",
+              "jisoo-language-menu-solid fixed right-4 top-[4.8rem] z-[99999] w-[min(14.5rem,calc(100vw-2rem))] overflow-hidden rounded-2xl border p-2 text-charcoal lg:absolute lg:right-0 lg:top-full lg:mt-2 lg:w-56",
               "border-[#b9986d]/70 bg-[#f6eadf] shadow-[0_26px_80px_rgba(44,37,40,0.38)]",
             )}
           >
