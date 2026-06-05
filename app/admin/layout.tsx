@@ -156,7 +156,7 @@ function SidebarContent({ collapsed, setCollapsed }: { collapsed: boolean; setCo
                 className="flex-1 overflow-hidden"
               >
                 <p className="text-sm font-medium text-foreground truncate">Admin User</p>
-                <p className="text-xs text-muted-foreground truncate">admin@jisoo.com</p>
+                <p className="text-xs text-muted-foreground truncate">admin@jisoocosmetic.com</p>
               </motion.div>
             )}
           </AnimatePresence>

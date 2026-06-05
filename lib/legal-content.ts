@@ -1,6 +1,12 @@
 import type { Locale } from "@/lib/i18n";
 
-export type LegalSlug = "privacy" | "terms" | "cookies" | "accessibility";
+export type LegalSlug =
+  | "privacy"
+  | "terms"
+  | "cookies"
+  | "accessibility"
+  | "shipping"
+  | "returns";
 
 export type LegalSection = {
   title: string;
@@ -210,6 +216,69 @@ const en: Record<LegalSlug, LegalDocument> = {
         title: "Updates",
         body: [
           "We update this policy when we add or change technologies, regions, providers, or consent tools.",
+        ],
+      },
+    ],
+  },
+
+  shipping: {
+    title: "Shipping Policy",
+    eyebrow: "Delivery guidance",
+    updated,
+    summary:
+      "This shipping policy explains how JISOO Cosmetic handles delivery options, regional timelines, duties, tracking, and customer support for international skincare orders.",
+    regionNotice: commonRegions.en,
+    sections: [
+      {
+        title: "Where we ship",
+        body: [
+          "JISOO Cosmetic is preparing region-aware shopping experiences for Canada, Europe, Turkey, and the United Arab Emirates. Available destinations, carriers, and service levels may vary at checkout.",
+          "Some products may not be available in every region because of supplier, ingredient, import, labeling, or compliance requirements.",
+        ],
+      },
+      {
+        title: "Delivery timing and tracking",
+        body: [
+          "Estimated delivery windows are shown during checkout where available. Timelines can change because of carrier capacity, customs review, address validation, weather, holidays, or local restrictions.",
+          "When tracking is available, order updates will be provided through account order history or customer support. TODO: add official carrier names and support contact details before final publication.",
+        ],
+      },
+      {
+        title: "Duties, taxes, and delivery issues",
+        body: [
+          "Taxes, duties, brokerage, and import fees may vary by destination and checkout configuration. The checkout experience should be treated as the source for region-specific totals.",
+          "If a parcel appears delayed, damaged, or missing, contact JISOO Cosmetic support with the order number, shipping address, and any carrier notice so the team can review next steps.",
+        ],
+      },
+    ],
+  },
+  returns: {
+    title: "Return & Refund Policy",
+    eyebrow: "Customer care",
+    updated,
+    summary:
+      "This return and refund policy gives practical guidance for JISOO Cosmetic skincare orders while final region-specific legal terms are confirmed.",
+    regionNotice: commonRegions.en,
+    sections: [
+      {
+        title: "Return eligibility",
+        body: [
+          "Because cosmetics and skincare can be hygiene-sensitive, return eligibility may depend on product condition, seal status, destination, local consumer law, and the reason for the request.",
+          "Items that are opened, used, damaged after delivery, or unsuitable for resale may be excluded unless local law requires a different outcome.",
+        ],
+      },
+      {
+        title: "How to request help",
+        body: [
+          "Contact JISOO Cosmetic support with your order number, product name, photos if relevant, and a short explanation of the issue. The team will advise the available options for your region.",
+          "Damaged, incorrect, or missing items should be reported promptly after delivery so the package condition and fulfillment record can be reviewed.",
+        ],
+      },
+      {
+        title: "Refund timing",
+        body: [
+          "Approved refunds are generally returned to the original payment method where possible. Processing time can depend on payment providers, banks, and local rules.",
+          "TODO: add official return address, return window, and final refund timing once company operations and regional legal review are complete.",
         ],
       },
     ],
@@ -882,30 +951,40 @@ const titleTranslations: Record<Locale, Partial<Record<LegalSlug, string>>> = {
     terms: "Conditions de service",
     cookies: "Politique cookies",
     accessibility: "Déclaration d’accessibilité",
+    shipping: "Politique de livraison",
+    returns: "Politique de retours et remboursements",
   },
   de: {
     privacy: "Datenschutz",
     terms: "Nutzungsbedingungen",
     cookies: "Cookie-Richtlinie",
     accessibility: "Barrierefreiheitserklärung",
+    shipping: "Versandrichtlinie",
+    returns: "Rückgabe- und Erstattungsrichtlinie",
   },
   ko: {
     privacy: "개인정보 처리방침",
     terms: "이용약관",
     cookies: "쿠키 정책",
     accessibility: "접근성 안내",
+    shipping: "배송 정책",
+    returns: "반품 및 환불 정책",
   },
   ar: {
     privacy: "سياسة الخصوصية",
     terms: "شروط الخدمة",
     cookies: "سياسة ملفات الارتباط",
     accessibility: "بيان إمكانية الوصول",
+    shipping: "سياسة الشحن",
+    returns: "سياسة الإرجاع والاسترداد",
   },
   tr: {
     privacy: "Gizlilik Politikası",
     terms: "Hizmet Şartları",
     cookies: "Çerez Politikası",
     accessibility: "Erişilebilirlik Bildirimi",
+    shipping: "Kargo Politikası",
+    returns: "İade ve Geri Ödeme Politikası",
   },
 };
 
@@ -974,7 +1053,9 @@ export function isLegalSlug(value: string): value is LegalSlug {
     value === "privacy" ||
     value === "terms" ||
     value === "cookies" ||
-    value === "accessibility"
+    value === "accessibility" ||
+    value === "shipping" ||
+    value === "returns"
   );
 }
 

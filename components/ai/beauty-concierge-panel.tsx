@@ -48,7 +48,7 @@ export function BeautyConciergePanel() {
     transcript: locale === 'ar' ? 'النص المباشر:' : locale === 'fr' ? 'Transcription en direct :' : locale === 'de' ? 'Live-Transkript:' : locale === 'ko' ? '실시간 전사:' : locale === 'tr' ? 'Canlı döküm:' : 'Live transcript:',
     loading: locale === 'ar' ? 'جاري إعداد التوصية...' : locale === 'fr' ? 'Le concierge prépare votre recommandation…' : locale === 'de' ? 'Concierge bereitet deine Empfehlung vor…' : locale === 'ko' ? '추천을 준비하고 있습니다…' : locale === 'tr' ? 'Öneriniz hazırlanıyor…' : 'Concierge is preparing your recommendation...',
     placeholder: locale === 'ar' ? 'اسألي عن المنتجات أو الروتين أو المكونات أو الشحن أو الإرجاع أو دعم الطلب' : locale === 'fr' ? 'Demandez produits, routine, ingrédients, livraison, retours ou suivi de commande' : locale === 'de' ? 'Frage zu Produkten, Routine, Inhaltsstoffen, Versand, Rückgabe oder Bestellung' : locale === 'ko' ? '제품/루틴/성분/배송/반품/주문 문의를 입력하세요' : locale === 'tr' ? 'Ürünler, rutinler, içerikler, kargo, iade veya sipariş desteği sorun' : 'Ask about products, routines, ingredients, shipping, returns, or order support',
-    openAria: locale === 'ar' ? 'فتح مستشار JISOO' : locale === 'fr' ? 'Ouvrir le Concierge JISOO' : locale === 'de' ? 'JISOO Concierge öffnen' : locale === 'ko' ? 'JISOO 컨시어지 열기' : locale === 'tr' ? 'JISOO Danışmanı aç' : 'Open JISOO Beauty Concierge',
+    openAria: locale === 'ar' ? 'فتح مستشار JISOO' : locale === 'fr' ? 'Ouvrir le Concierge JISOO' : locale === 'de' ? 'JISOO Concierge öffnen' : locale === 'ko' ? 'JISOO 컨시어지 열기' : locale === 'tr' ? 'JISOO Danışmanı aç' : 'Open JISOO Cosmetic Concierge',
     stopListening: locale === 'ar' ? 'إيقاف الاستماع' : locale === 'fr' ? 'Arrêter l’écoute' : locale === 'de' ? 'Zuhören beenden' : locale === 'ko' ? '음성 듣기 중지' : locale === 'tr' ? 'Dinlemeyi durdur' : 'Stop listening',
     startVoice: locale === 'ar' ? 'بدء الإدخال الصوتي' : locale === 'fr' ? 'Démarrer la saisie vocale' : locale === 'de' ? 'Spracheingabe starten' : locale === 'ko' ? '음성 입력 시작' : locale === 'tr' ? 'Sesli girişi başlat' : 'Start voice input',
     sendMessage: locale === 'ar' ? 'إرسال رسالة' : locale === 'fr' ? 'Envoyer le message' : locale === 'de' ? 'Nachricht senden' : locale === 'ko' ? '메시지 보내기' : locale === 'tr' ? 'Mesaj gönder' : 'Send message',
@@ -75,7 +75,7 @@ export function BeautyConciergePanel() {
                   <Sparkles className="h-4 w-4" />
                 </div>
                 <div>
-                  <p className="font-serif text-sm">JISOO Beauty Concierge</p>
+                  <p className="font-serif text-sm">JISOO Cosmetic Concierge</p>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-charcoal/60">{region} · Domain-Locked</p>
                 </div>
               </div>

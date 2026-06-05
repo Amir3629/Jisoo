@@ -19,7 +19,6 @@ import {
 import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
-import { getProductJsonLd } from '@/lib/seo'
 import { JISOO_LEAF_MARK_SRC, getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts } from '@/lib/product-merchandising'
 
 interface ProductPageProps {
@@ -104,10 +103,6 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   return (
     <main className="min-h-screen bg-warm-ivory">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(getProductJsonLd(product)) }}
-      />
       <Header />
 
       {/* Breadcrumb */}

@@ -111,7 +111,7 @@ export function generateConciergeReply({
 
   if (!isDomainQuestion(lower)) {
     return {
-      answer: 'I’m your JISOO Beauty Concierge, so I can only help with JISOO products, skincare routines, ingredients, shipping, returns, and order support. If you’d like, I can recommend a routine for your skin concern.',
+      answer: 'I’m your JISOO Cosmetic Concierge, so I can only help with JISOO products, skincare routines, ingredients, shipping, returns, and order support. If you’d like, I can recommend a routine for your skin concern.',
       productSlugs: [],
       suggestions: fallbackSuggestions,
       restricted: true,

@@ -22,7 +22,7 @@ import type {
 } from './types'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
 
-// ============ Suppliers ============
+// Suppliers
 export const suppliers: Supplier[] = [
   {
     id: 'supplier-1',
@@ -198,7 +198,7 @@ export const supplierNotifications: SupplierNotification[] = [
   },
 ]
 
-// ============ Market Availability ============
+// Market Availability
 export const marketAvailability: MarketAvailability[] = [
   {
     productId: 'prod-1',
@@ -237,7 +237,7 @@ export const marketAvailability: MarketAvailability[] = [
   },
 ]
 
-// ============ Compliance Records ============
+// Compliance Records
 export const complianceDocuments: ComplianceDocument[] = [
   {
     id: 'doc-1',
@@ -309,7 +309,7 @@ export const complaintRecords: ComplaintRecord[] = [
   },
 ]
 
-// ============ Translation Tasks ============
+// Translation Tasks
 export const translationTasks: TranslationTask[] = [
   {
     id: 'trans-1',
@@ -391,7 +391,7 @@ export const translationEntries: TranslationEntry[] = [
   },
 ]
 
-// ============ Media Assets ============
+// Media Assets
 export const mediaAssets: MediaAsset[] = [
   {
     id: 'media-1',
@@ -432,7 +432,7 @@ export const mediaAssets: MediaAsset[] = [
   },
 ]
 
-// ============ Social Posts ============
+// Social Posts
 export const socialPosts: SocialPost[] = [
   {
     id: 'post-1',
@@ -472,7 +472,7 @@ export const socialPosts: SocialPost[] = [
   },
 ]
 
-// ============ Analytics Dashboard ============
+// Analytics Dashboard
 export const analyticsDashboard: AnalyticsDashboard = {
   period: 'month',
   totalRevenue: 284500,
@@ -514,7 +514,7 @@ export const analyticsDashboard: AnalyticsDashboard = {
   returningCustomers: 2175,
 }
 
-// ============ AI Insights ============
+// AI Insights
 export const aiInsights: AIInsight[] = [
   {
     id: 'insight-1',
@@ -571,7 +571,7 @@ export const aiInsights: AIInsight[] = [
   },
 ]
 
-// ============ Admin Dashboard ============
+// Admin Dashboard
 export const adminDashboardData: AdminDashboardData = {
   overview: {
     totalSales: 284500,
@@ -603,7 +603,7 @@ export const adminDashboardData: AdminDashboardData = {
   ],
 }
 
-// ============ Admin Orders ============
+// Admin Orders
 export const adminOrders: AdminOrder[] = [
   {
     id: 'order-1',
@@ -656,7 +656,7 @@ export const adminOrders: AdminOrder[] = [
   },
 ]
 
-// ============ Admin Customers ============
+// Admin Customers
 export const adminCustomers: AdminCustomer[] = [
   {
     id: 'cust-1',

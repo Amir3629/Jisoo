@@ -18,6 +18,6 @@ export function enforceJisooDomain(query: string): DomainLockResult {
   return {
     allowed: false,
     redirectMessage:
-      'I’m your JISOO Beauty Concierge, so I stay focused on JISOO products, skincare guidance, ingredients, shipping/returns, and order support. Share a skin concern and I’ll guide you right away.',
+      'I’m your JISOO Cosmetic Concierge, so I stay focused on JISOO products, skincare guidance, ingredients, shipping/returns, and order support. Share a skin concern and I’ll guide you right away.',
   }
 }

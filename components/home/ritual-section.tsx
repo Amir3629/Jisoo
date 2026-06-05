@@ -110,7 +110,7 @@ export function RitualSection() {
   const { locale, dictionary } = useLocale()
   const t = dictionary.home
   const copy = {
-    kicker: locale === 'ar' ? 'طريق الجمال الكوري' : locale === 'fr' ? 'La voie K-Beauty' : locale === 'de' ? 'Der K-Beauty Weg' : locale === 'ko' ? 'K-뷰티 방식' : locale === 'tr' ? 'K-Beauty Yolu' : 'The K-Beauty Way',
+    kicker: locale === 'ar' ? 'طريق الجمال الكوري' : locale === 'fr' ? 'La voie Korean Beauty' : locale === 'de' ? 'Der Korean Beauty Weg' : locale === 'ko' ? '한국 뷰티 방식' : locale === 'tr' ? 'Korean Beauty Yolu' : 'The Korean Beauty Way',
     title: locale === 'ar' ? 'طقس الجمال الكوري' : locale === 'fr' ? 'Le rituel de la beauté coréenne' : locale === 'de' ? 'Das Ritual koreanischer Schönheit' : locale === 'ko' ? '코리안 뷰티 리추얼' : locale === 'tr' ? 'Kore Güzellik Ritüeli' : 'The Ritual of Korean Beauty',
     description: locale === 'ar' ? 'سيتم نشر خطوات الروتين بعد مراجعة بيانات الموردين.' : locale === 'fr' ? 'Les étapes seront publiées après vérification des données fournisseurs.' : locale === 'de' ? 'Routineschritte erscheinen nach Prüfung der Lieferantendaten.' : locale === 'ko' ? '공급사 자료 검토 후 루틴 단계가 공개됩니다.' : locale === 'tr' ? 'Rutin adımları tedarikçi verileri doğrulandıktan sonra yayınlanacak.' : 'Routine steps will be published after supplier documentation and internal review.',
     step: locale === 'ar' ? 'الخطوة' : locale === 'fr' ? 'Étape' : locale === 'de' ? 'Schritt' : locale === 'ko' ? '단계' : locale === 'tr' ? 'Adım' : 'Step',

@@ -1,3 +1,1 @@
-import RouteModule from '@/app/help/[[...slug]]/page'
-
-export default RouteModule
+export { default, generateMetadata } from "@/app/help/[[...slug]]/page";

@@ -37,6 +37,8 @@ const footerLinks = {
     { label: "Privacy Policy", href: "/legal/privacy" },
     { label: "Terms of Service", href: "/legal/terms" },
     { label: "Cookie Policy", href: "/legal/cookies" },
+    { label: "Shipping Policy", href: "/legal/shipping" },
+    { label: "Return & Refund Policy", href: "/legal/returns" },
     { label: "Accessibility", href: "/legal/accessibility" },
   ],
 };
@@ -69,7 +71,7 @@ export function Footer() {
         : locale === "de"
           ? "Wir kuratieren die beste koreanische Beauty für die Welt."
           : locale === "ko"
-            ? "프리미엄 K-뷰티를 전 세계에 전합니다."
+            ? "프리미엄 한국 뷰티를 전 세계에 전합니다."
             : locale === "tr"
               ? "Dünyaya en iyi Kore güzellik ürünlerini özenle sunuyoruz."
               : "Curated Korean skincare and makeup from trusted Seoul partners, localized for each region we serve.";
@@ -120,6 +122,8 @@ export function Footer() {
           "Privacy Policy": "سياسة الخصوصية",
           "Terms of Service": "شروط الخدمة",
           "Cookie Policy": "سياسة ملفات الارتباط",
+          "Shipping Policy": "سياسة الشحن",
+          "Return & Refund Policy": "سياسة الإرجاع والاسترداد",
           Accessibility: "إمكانية الوصول",
         }[label] ?? label)
       : locale === "fr"
@@ -143,6 +147,8 @@ export function Footer() {
             "Privacy Policy": "Politique de confidentialité",
             "Terms of Service": "Conditions de service",
             "Cookie Policy": "Politique cookies",
+            "Shipping Policy": "Politique de livraison",
+            "Return & Refund Policy": "Retours et remboursements",
             Accessibility: "Accessibilité",
           }[label] ?? label)
         : locale === "de"
@@ -167,6 +173,8 @@ export function Footer() {
               "Privacy Policy": "Datenschutz",
               "Terms of Service": "Nutzungsbedingungen",
               "Cookie Policy": "Cookie-Richtlinie",
+              "Shipping Policy": "Versandrichtlinie",
+              "Return & Refund Policy": "Rückgabe und Erstattung",
               Accessibility: "Barrierefreiheit",
             }[label] ?? label)
           : locale === "ko"
@@ -191,6 +199,8 @@ export function Footer() {
                 "Privacy Policy": "개인정보 처리방침",
                 "Terms of Service": "이용약관",
                 "Cookie Policy": "쿠키 정책",
+                "Shipping Policy": "배송 정책",
+                "Return & Refund Policy": "반품 및 환불 정책",
                 Accessibility: "접근성",
               }[label] ?? label)
             : locale === "tr"
@@ -215,6 +225,8 @@ export function Footer() {
                   "Privacy Policy": "Gizlilik Politikası",
                   "Terms of Service": "Hizmet Şartları",
                   "Cookie Policy": "Çerez Politikası",
+                  "Shipping Policy": "Kargo Politikası",
+                  "Return & Refund Policy": "İade ve geri ödeme",
                   Accessibility: "Erişilebilirlik",
                 }[label] ?? label)
               : label;
@@ -230,6 +242,8 @@ export function Footer() {
     "Privacy Policy": "privacy",
     "Terms of Service": "terms",
     "Cookie Policy": "cookies",
+    "Shipping Policy": "shipping",
+    "Return & Refund Policy": "returns",
     Accessibility: "accessibility",
   };
   const openLegalDocument = openLegal
@@ -400,13 +414,12 @@ export function Footer() {
             <ul className="space-y-3">
               {footerLinks.legal.map((link) => (
                 <li key={link.href}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenLegal(link.label)}
-                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors text-left"
+                  <Link
+                    href={localizeHref(link.href, locale)}
+                    className="text-sm text-charcoal/70 hover:text-charcoal transition-colors"
                   >
                     {localizedLink(link.label)}
-                  </button>
+                  </Link>
                 </li>
               ))}
             </ul>

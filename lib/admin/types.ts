@@ -1,7 +1,7 @@
 // Admin Types for JISOO Operations Platform
 import type { Product, Region, Language, Currency, Order, Customer } from '../types'
 
-// ============ Supplier Types ============
+// Supplier Types
 export type SupplierSyncStatus = 'synced' | 'syncing' | 'error' | 'pending'
 export type ProductChangeType = 'new' | 'updated' | 'removed' | 'unchanged'
 export type ProductIngestionStatus = 'pending' | 'approved' | 'rejected' | 'staged' | 'published'
@@ -64,7 +64,7 @@ export interface SupplierNotification {
   createdAt: string
 }
 
-// ============ Region & Compliance Types ============
+// Region & Compliance Types
 export type MarketStatus = 'visible_and_buyable' | 'visible_but_not_buyable' | 'hidden' | 'pending_compliance'
 export type ComplianceDocType = 'COA' | 'MSDS' | 'STABILITY_REPORT' | 'LABEL' | 'INCI' | 'ALLERGEN' | 'OTHER'
 export type ComplianceStatus = 'compliant' | 'non_compliant' | 'pending_review' | 'expired' | 'missing'
@@ -144,7 +144,7 @@ export interface LabelVersion {
   createdAt: string
 }
 
-// ============ Translation Types ============
+// Translation Types
 export type TranslationStatus = 'pending' | 'machine_translated' | 'human_reviewed' | 'approved' | 'published'
 
 export interface TranslationEntry {
@@ -181,7 +181,7 @@ export interface TranslationTask {
   createdAt: string
 }
 
-// ============ Media Types ============
+// Media Types
 export type MediaType = 'image' | 'video' | 'document'
 export type CropPreset = 'website_hero' | 'website_product' | 'website_thumbnail' | 'instagram_square' | 'instagram_story' | 'tiktok_vertical'
 
@@ -211,7 +211,7 @@ export interface MediaCrop {
   height: number
 }
 
-// ============ Social Publishing Types ============
+// Social Publishing Types
 export type SocialChannel = 'instagram' | 'tiktok' | 'website'
 export type PublishStatus = 'draft' | 'scheduled' | 'published' | 'failed'
 
@@ -244,7 +244,7 @@ export interface ContentCalendarItem {
   notes?: string
 }
 
-// ============ Analytics Types ============
+// Analytics Types
 export interface SalesMetric {
   date: string
   revenue: number
@@ -305,7 +305,7 @@ export interface AnalyticsDashboard {
   returningCustomers: number
 }
 
-// ============ AI Copilot Types ============
+// AI Copilot Types
 export type AIInsightType = 'sales' | 'inventory' | 'compliance' | 'translation' | 'marketing' | 'customer'
 
 export interface AIInsight {
@@ -344,7 +344,7 @@ export interface AICopilotSession {
   createdAt: string
 }
 
-// ============ Admin Dashboard Types ============
+// Admin Dashboard Types
 export interface AdminDashboardData {
   overview: {
     totalSales: number
@@ -385,7 +385,7 @@ export interface PendingAction {
   link: string
 }
 
-// ============ Admin User Types ============
+// Admin User Types
 export type AdminRole = 'super_admin' | 'admin' | 'manager' | 'editor' | 'viewer'
 
 export interface AdminUser {
@@ -399,7 +399,7 @@ export interface AdminUser {
   createdAt: string
 }
 
-// ============ Order Management Types ============
+// Order Management Types
 export interface AdminOrder extends Order {
   customerEmail: string
   customerName: string
@@ -426,7 +426,7 @@ export interface OrderTimelineEvent {
   actor?: string
 }
 
-// ============ Customer Management Types ============
+// Customer Management Types
 export interface AdminCustomer extends Customer {
   totalSpent: number
   orderCount: number

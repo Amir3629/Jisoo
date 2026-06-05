@@ -20,7 +20,7 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
       id: 'intro',
       role: 'assistant',
       content:
-        'Welcome to JISOO Beauty Concierge. I can help with products, routines, ingredients, region availability, policies, and order support.',
+        'Welcome to JISOO Cosmetic Concierge. I can help with products, routines, ingredients, region availability, policies, and order support.',
       suggestions: ['Recommend a glow routine', 'Shipping & return policy', 'Help with an order issue'],
     },
   ])
@@ -148,7 +148,7 @@ export function useConciergeController({ locale, region, defaultVoiceMode = 'bro
         id: 'intro',
         role: 'assistant',
         content:
-          'Welcome to JISOO Beauty Concierge. I can help with products, routines, ingredients, region availability, policies, and order support.',
+          'Welcome to JISOO Cosmetic Concierge. I can help with products, routines, ingredients, region availability, policies, and order support.',
         suggestions: ['Recommend a glow routine', 'Shipping & return policy', 'Help with an order issue'],
       },
     ])

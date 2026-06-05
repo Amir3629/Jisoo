@@ -21,7 +21,7 @@ class MockAuthProvider implements AuthProvider {
     if (token.startsWith('admin_')) {
       return {
         userId: 'admin-1',
-        email: 'admin@jisoo.com',
+        email: 'admin@jisoocosmetic.com',
         role: 'admin',
         issuedAt: new Date().toISOString(),
       }
