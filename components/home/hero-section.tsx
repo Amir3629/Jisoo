@@ -474,14 +474,27 @@ function ImageEditorialHero({
             />
           </motion.div>
         )}
-        <div className={cn('absolute top-[6.9rem] z-20 max-w-2xl sm:top-[7.4rem] md:top-[7.2rem] lg:top-[8.2rem]', isRtl ? 'right-6 text-right sm:right-8 lg:right-14' : 'left-6 text-left sm:left-8 lg:left-14')} style={headlineFontStyle}>
-          <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>{kicker}</p>
+        <div
+          dir={isRtl ? 'rtl' : 'ltr'}
+          className={cn(
+            'absolute top-[6.9rem] z-20 max-w-2xl sm:top-[7.4rem] md:top-[7.2rem] lg:top-[8.2rem]',
+            isRtl
+              ? 'right-4 text-right sm:right-6 lg:right-10 xl:right-12'
+              : 'left-6 text-left sm:left-8 lg:left-14'
+          )}
+          style={{
+            ...headlineFontStyle,
+            textAlign: isRtl ? 'right' : 'left',
+            direction: isRtl ? 'rtl' : 'ltr',
+          }}
+        >
+          <p className={cn('text-kicker', isRtl && 'w-full text-right', lightText ? 'text-white/85' : 'text-charcoal/74')}>{kicker}</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
             key={`desktop-${selectedFont.id}`}
             data-hero-headline="homepage-image-editorial"
             data-selected-font={selectedFont.name}
-            className={cn('mt-3 hidden text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08] md:block', lightText ? 'text-white' : 'text-charcoal')}
+            className={cn('mt-3 hidden text-[clamp(1.8rem,4.6vw,3.6rem)] leading-[1.08] md:block', isRtl && 'w-full text-right', lightText ? 'text-white' : 'text-charcoal')}
           >
             {heading}
           </h1>
@@ -489,16 +502,16 @@ function ImageEditorialHero({
             key={`mobile-${selectedFont.id}`}
             data-hero-headline="homepage-image-editorial-mobile"
             data-selected-font={selectedFont.name}
-            className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', isRtl && 'mr-0 ml-auto', lightText ? 'text-white' : 'text-charcoal')}
+            className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', isRtl && 'ml-auto mr-0 text-right', lightText ? 'text-white' : 'text-charcoal')}
           >
             <span className="block">{mobileHeadingLineOne}</span>
             <span className="block text-[2.7rem] leading-[0.96]">{mobileHeadingLineTwo}</span>
           </h1>
-          <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', isRtl && 'mr-0 ml-auto', lightText ? 'text-white/84' : 'text-charcoal/72')}>
+          <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', isRtl && 'ml-auto mr-0 text-right', lightText ? 'text-white/84' : 'text-charcoal/72')}>
             <span className="md:hidden">{body}</span>
             <span className="hidden md:inline">{body}</span>
           </p>
-          <div className="mt-10 md:mt-7"><PrimaryCta locale={locale} /></div>
+          <div className={cn('mt-10 md:mt-7', isRtl && 'flex justify-end')}><PrimaryCta locale={locale} /></div>
         </div>
 
         {showCategoryNav && <div className="absolute inset-x-0 bottom-7 z-10 px-4 lg:px-14">
