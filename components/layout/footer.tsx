@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { Instagram, Facebook, Send } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '@/lib/utils'
@@ -266,28 +266,54 @@ export function Footer() {
           </div>
         </div>
       </div>
-      {openLegal && openLegalDocument && (
-        <div className="fixed inset-0 z-[120] flex items-center justify-center bg-charcoal/40 p-4 backdrop-blur-md" role="dialog" aria-modal="true" aria-label={openLegalDocument.title}>
-          <div className="max-h-[86vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-rose-mauve/25 bg-white p-6 shadow-2xl lg:p-8">
-            <div className="flex items-start justify-between gap-4">
-              <h5 className="font-serif text-3xl text-charcoal">{openLegalDocument.title}</h5>
-              <button type="button" onClick={() => setOpenLegal(null)} className="rounded-full border border-rose-mauve/25 px-3 py-1 text-sm text-charcoal/70 transition-colors hover:text-charcoal">Close</button>
-            </div>
-            <p className="mt-4 leading-relaxed text-charcoal/75">{openLegalDocument.summary}</p>
-            <div className="mt-5 space-y-4">
-              {openLegalDocument.sections.slice(0, 4).map((section) => (
-                <section key={section.title}>
-                  <h6 className="font-semibold text-charcoal">{section.title}</h6>
-                  <p className="mt-1 text-sm leading-6 text-charcoal/70">{section.body[0]}</p>
-                </section>
-              ))}
-            </div>
-            <Link href={localizeHref(footerLinks.legal.find((link) => link.label === openLegal)?.href ?? '/legal/privacy', locale)} className="mt-6 inline-flex rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-5 py-2.5 text-sm font-medium text-white">
-              Read full policy
-            </Link>
-          </div>
-        </div>
-      )}
+
+      <AnimatePresence>
+        {openLegal && openLegalDocument && (
+          <motion.div
+            className="fixed inset-0 z-[120] flex items-center justify-center bg-charcoal/38 p-4 backdrop-blur-md"
+            role="dialog"
+            aria-modal="true"
+            aria-label={openLegalDocument.title}
+            onClick={() => setOpenLegal(null)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.58, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <motion.div
+              className="max-h-[86vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-[#d3af84]/35 bg-warm-ivory/96 p-6 shadow-[0_34px_90px_rgba(44,37,40,0.24),inset_0_1px_0_rgba(255,255,255,0.52)] backdrop-blur-xl lg:p-8"
+              onClick={(event) => event.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.965, y: 18, filter: 'blur(12px)' }}
+              animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }}
+              exit={{ opacity: 0, scale: 0.972, y: 12, filter: 'blur(10px)' }}
+              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="flex items-start justify-between gap-4">
+                <h5 className="font-serif text-3xl text-charcoal">{openLegalDocument.title}</h5>
+                <button
+                type="button"
+                onClick={() => setOpenLegal(null)}
+                className="inline-flex items-center rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-5 py-2.5 text-sm font-medium text-white shadow-[0_12px_26px_rgba(186,130,154,0.22)] transition-all duration-500 hover:-translate-y-0.5 hover:brightness-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-rose-mauve/35"
+              >
+                Close
+              </button>
+              </div>
+              <p className="mt-4 leading-relaxed text-charcoal/75">{openLegalDocument.summary}</p>
+              <div className="mt-5 space-y-4">
+                {openLegalDocument.sections.slice(0, 4).map((section) => (
+                  <section key={section.title}>
+                    <h6 className="font-semibold text-charcoal">{section.title}</h6>
+                    <p className="mt-1 text-sm leading-6 text-charcoal/70">{section.body[0]}</p>
+                  </section>
+                ))}
+              </div>
+              <Link href={localizeHref(footerLinks.legal.find((link) => link.label === openLegal)?.href ?? '/legal/privacy', locale)} className="mt-6 inline-flex rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:brightness-105">
+                Read full policy
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   )
 }

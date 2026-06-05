@@ -23,6 +23,10 @@ import { useLocale } from "@/components/providers/locale-provider";
 import { localizeHref } from "@/lib/i18n";
 import { resolveImageSrc } from "@/lib/image-fallbacks";
 import { cn } from "@/lib/utils";
+<<<<<<< HEAD
+=======
+import { Header } from "@/components/layout/header";
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
 
 type CheckoutStep = "information" | "shipping" | "payment";
 
@@ -51,7 +55,11 @@ export default function CheckoutPage() {
     thankYou: locale === 'ar' ? 'شكرًا لك!' : locale === 'fr' ? 'Merci !' : locale === 'de' ? 'Vielen Dank!' : locale === 'ko' ? '감사합니다!' : locale === 'tr' ? 'Teşekkürler!' : 'Thank You!',
     orderPlaced: locale === 'ar' ? 'تم تقديم طلبك بنجاح.' : locale === 'fr' ? 'Votre commande a été passée avec succès.' : locale === 'de' ? 'Deine Bestellung wurde erfolgreich aufgegeben.' : locale === 'ko' ? '주문이 성공적으로 완료되었습니다.' : locale === 'tr' ? 'Siparişiniz başarıyla oluşturuldu.' : 'Your order has been placed successfully.',
     orderLabel: locale === 'ar' ? 'الطلب' : locale === 'fr' ? 'Commande' : locale === 'de' ? 'Bestellung' : locale === 'ko' ? '주문' : locale === 'tr' ? 'Sipariş' : 'Order',
+<<<<<<< HEAD
     confirmMail: locale === 'ar' ? 'أرسلنا رسالة تأكيد تحتوي على تفاصيل الطلب ومعلومات التتبع.' : locale === 'fr' ? 'Nous avons envoyé un e-mail de confirmation avec les détails et le suivi.' : locale === 'de' ? 'Wir haben eine Bestätigungs-E-Mail mit Bestell- und Trackingdetails gesendet.' : locale === 'ko' ? '주문 상세 및 배송 추적 정보가 포함된 확인 이메일을 보냈습니다.' : locale === 'tr' ? 'Sipariş detayları ve takip bilgileriyle bir onay e-postası gönderdik.' : "We've sent a confirmation email with your order details and tracking information.",
+=======
+    confirmMail: locale === 'ar' ? 'أرسلنا رسالة تأكيد تحتوي على تفاصيل الطلب ومعلومات التتبع.' : locale === 'fr' ? 'Nous avons envoyé un e-mail de confirmation avec les détails et le suivi.' : locale === 'de' ? 'Wir haben eine Bestätigungs-E-Mail mit Bestell- und Trackingdetails gesendet.' : locale === 'ko' ? '주문 상세 및 배송 추적 정보가 포함된 확인 이메일을 보냈습니다.' : locale === 'tr' ? 'Sipariş detayları ve takip bilgileriyle bir onay e-postası gönderdik.' : "We’ve sent a confirmation email with your order details and tracking information.",
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
     emailMe: locale === 'ar' ? 'أرسلوا لي الأخبار والعروض عبر البريد' : locale === 'fr' ? 'M’envoyer des actualités et offres par e-mail' : locale === 'de' ? 'Per E-Mail über Neuigkeiten und Angebote informieren' : locale === 'ko' ? '이메일로 뉴스/혜택 받기' : locale === 'tr' ? 'Bana e-posta ile haber ve teklifler gönderin' : 'Email me with news and offers',
     firstName: locale === 'ar' ? 'الاسم الأول' : locale === 'fr' ? 'Prénom' : locale === 'de' ? 'Vorname' : locale === 'ko' ? '이름' : locale === 'tr' ? 'Ad' : 'First Name',
     lastName: locale === 'ar' ? 'اسم العائلة' : locale === 'fr' ? 'Nom' : locale === 'de' ? 'Nachname' : locale === 'ko' ? '성' : locale === 'tr' ? 'Soyad' : 'Last Name',
@@ -99,6 +107,13 @@ export default function CheckoutPage() {
     { key: "payment", label: copy.payment },
   ];
 
+  const checkoutInputClass = "mt-1 h-12 rounded-full border-[#d8bf9b]/65 bg-white/65 px-4 text-charcoal shadow-[inset_0_1px_0_rgba(255,255,255,0.55)] transition placeholder:text-charcoal/38 focus-visible:border-rose-mauve/55 focus-visible:ring-2 focus-visible:ring-rose-mauve/20";
+  const checkoutButtonClass = "mt-8 w-full rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_14px_28px_rgba(186,130,154,0.18)] transition hover:brightness-105 disabled:opacity-60";
+  const checkoutOutlineButtonClass = "rounded-full border-[#d8bf9b]/70 bg-white/55 text-charcoal hover:bg-white/75";
+  const checkoutLabelClass = "text-sm font-medium text-charcoal/82";
+  const checkoutOptionClass = "flex cursor-pointer items-center justify-between rounded-2xl border border-[#d8bf9b]/60 bg-white/45 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)] transition hover:border-rose-mauve/45 hover:bg-white/60";
+  const checkoutOptionActiveClass = "flex cursor-pointer items-center justify-between rounded-2xl border border-rose-mauve/50 bg-white/60 p-4 shadow-[0_12px_26px_rgba(186,130,154,0.10),inset_0_1px_0_rgba(255,255,255,0.55)]";
+
   const handlePlaceOrder = async () => {
     setIsProcessing(true);
     try {
@@ -128,7 +143,8 @@ export default function CheckoutPage() {
 
   if (orderComplete) {
     return (
-      <div className="min-h-screen bg-background pt-32 pb-20">
+      <div className="min-h-screen bg-background pt-28 pb-20 lg:pt-32">
+        <Header />
         <div className="container max-w-2xl mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -149,6 +165,7 @@ export default function CheckoutPage() {
               {copy.confirmMail}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+<<<<<<< HEAD
               <Link
                 href={localizeHref('/account/orders', locale)}
                 className={cn(secondaryActionClass, "inline-flex items-center justify-center text-sm font-medium transition-all")}
@@ -161,6 +178,14 @@ export default function CheckoutPage() {
               >
                 {c.continueShopping}
               </Link>
+=======
+              <Button asChild variant="outline" className={checkoutOutlineButtonClass}>
+                <Link href={localizeHref('/account/orders', locale)}>{c.viewOrder}</Link>
+              </Button>
+              <Button asChild className={checkoutOutlineButtonClass}>
+                <Link href={localizeHref('/shop', locale)}>{c.continueShopping}</Link>
+              </Button>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
             </div>
           </motion.div>
         </div>
@@ -170,8 +195,10 @@ export default function CheckoutPage() {
 
   if (items.length === 0) {
     return (
-      <div className="min-h-screen bg-background pt-32 pb-20">
+      <div className="min-h-screen bg-background pt-28 pb-20 lg:pt-32">
+        <Header />
         <div className="container max-w-2xl mx-auto px-4 text-center">
+<<<<<<< HEAD
           <div className={cn(luxurySurface, "px-6 py-14 sm:px-10")}>
             <h1 className="font-serif text-3xl mb-4">{dictionary.cart.emptyTitle}</h1>
             <p className="text-muted-foreground mb-8">
@@ -181,13 +208,23 @@ export default function CheckoutPage() {
               <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
             </Button>
           </div>
+=======
+          <h1 className="font-serif text-3xl mb-4">{dictionary.cart.emptyTitle}</h1>
+          <p className="text-muted-foreground mb-8">
+            {dictionary.cart.emptyBody}
+          </p>
+          <Button asChild className={checkoutOutlineButtonClass}>
+            <Link href={localizeHref('/shop', locale)}>{c.shopNow}</Link>
+          </Button>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-20">
+    <div className="min-h-screen bg-background pt-28 pb-20 lg:pt-32">
+        <Header />
       <div className="container max-w-6xl mx-auto px-4">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-sm mb-8">
@@ -217,9 +254,15 @@ export default function CheckoutPage() {
           ))}
         </div>
 
+<<<<<<< HEAD
         <div className="grid lg:grid-cols-[1.08fr_0.92fr] gap-10">
           {/* Form Section */}
           <div className={cn(luxurySurface, "p-6 sm:p-8")}>
+=======
+        <div className="grid gap-8 lg:grid-cols-[1.08fr_0.92fr] lg:gap-10">
+          {/* Form Section */}
+          <div className="rounded-[2rem] border border-[#d8bf9b]/50 bg-white/25 p-5 shadow-[0_18px_44px_rgba(79,54,60,0.07),inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm sm:p-7">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
             <AnimatePresence mode="wait">
               {step === "information" && (
                 <motion.div
@@ -228,19 +271,23 @@ export default function CheckoutPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
                 >
-                  <h2 className="font-serif text-2xl mb-6">{copy.contactInfo}</h2>
+                  <h2 className="font-serif text-2xl text-charcoal mb-6">{copy.contactInfo}</h2>
                   <div className="space-y-4">
                     <div>
-                      <Label htmlFor="email">{dictionary.footer.emailPlaceholder}</Label>
+                      <Label htmlFor="email" className={checkoutLabelClass}>{dictionary.footer.emailPlaceholder}</Label>
                       <Input
                         id="email"
                         type="email"
                         placeholder="your@email.com"
+<<<<<<< HEAD
                         className={fieldClass}
+=======
+                        className={checkoutInputClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <Checkbox id="newsletter" />
+                      <Checkbox id="newsletter" className="rounded border-[#d8bf9b]/70 bg-white/50 data-[state=checked]:border-rose-mauve data-[state=checked]:bg-rose-mauve" />
                       <label htmlFor="newsletter" className="text-sm text-muted-foreground">
                         {copy.emailMe}
                       </label>
@@ -249,8 +296,9 @@ export default function CheckoutPage() {
 
                   <h2 className="font-serif text-2xl mt-10 mb-6">{copy.shippingAddress}</h2>
                   <div className="grid gap-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid gap-4 sm:grid-cols-2">
                       <div>
+<<<<<<< HEAD
                         <Label htmlFor="firstName">{copy.firstName}</Label>
                         <Input id="firstName" className={fieldClass} />
                       </div>
@@ -266,9 +314,27 @@ export default function CheckoutPage() {
                     <div>
                       <Label htmlFor="apartment">{copy.apartment}</Label>
                       <Input id="apartment" className={fieldClass} />
-                    </div>
-                    <div className="grid grid-cols-3 gap-4">
+=======
+                        <Label htmlFor="firstName" className={checkoutLabelClass}>{copy.firstName}</Label>
+                        <Input id="firstName" className={checkoutInputClass} />
+                      </div>
                       <div>
+                        <Label htmlFor="lastName" className={checkoutLabelClass}>{copy.lastName}</Label>
+                        <Input id="lastName" className={checkoutInputClass} />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="address" className={checkoutLabelClass}>{copy.address}</Label>
+                      <Input id="address" className={checkoutInputClass} />
+                    </div>
+                    <div>
+                      <Label htmlFor="apartment" className={checkoutLabelClass}>{copy.apartment}</Label>
+                      <Input id="apartment" className={checkoutInputClass} />
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
+                    </div>
+                    <div className="grid gap-4 sm:grid-cols-3">
+                      <div>
+<<<<<<< HEAD
                         <Label htmlFor="city">{copy.city}</Label>
                         <Input id="city" className={fieldClass} />
                       </div>
@@ -284,12 +350,33 @@ export default function CheckoutPage() {
                     <div>
                       <Label htmlFor="phone">{copy.phone}</Label>
                       <Input id="phone" type="tel" className={fieldClass} />
+=======
+                        <Label htmlFor="city" className={checkoutLabelClass}>{copy.city}</Label>
+                        <Input id="city" className={checkoutInputClass} />
+                      </div>
+                      <div>
+                        <Label htmlFor="state" className={checkoutLabelClass}>{copy.state}</Label>
+                        <Input id="state" className={checkoutInputClass} />
+                      </div>
+                      <div>
+                        <Label htmlFor="zip" className={checkoutLabelClass}>{copy.zip}</Label>
+                        <Input id="zip" className={checkoutInputClass} />
+                      </div>
+                    </div>
+                    <div>
+                      <Label htmlFor="phone" className={checkoutLabelClass}>{copy.phone}</Label>
+                      <Input id="phone" type="tel" className={checkoutInputClass} />
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     </div>
                   </div>
 
                   <Button
                     onClick={() => setStep("shipping")}
+<<<<<<< HEAD
                     className={cn("w-full mt-8", primaryActionClass)}
+=======
+                    className={checkoutButtonClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     size="lg"
                   >
                     {copy.continueShipping}
@@ -312,9 +399,13 @@ export default function CheckoutPage() {
                     {copy.backInfo}
                   </button>
 
-                  <h2 className="font-serif text-2xl mb-6">{copy.shippingMethod}</h2>
+                  <h2 className="font-serif text-2xl text-charcoal mb-6">{copy.shippingMethod}</h2>
                   <div className="space-y-3">
+<<<<<<< HEAD
                     <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all", selectedShippingSurface)}>
+=======
+                    <label className={checkoutOptionActiveClass}>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       <div className="flex items-center gap-3">
                         <div className="w-5 h-5 rounded-full border-2 border-rose-mauve flex items-center justify-center">
                           <div className="w-2.5 h-2.5 rounded-full bg-rose-mauve" />
@@ -326,7 +417,11 @@ export default function CheckoutPage() {
                       </div>
                       <span>{shipping === 0 ? copy.free : formatPrice(shipping)}</span>
                     </label>
+<<<<<<< HEAD
                     <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all hover:border-rose-mauve/45", luxurySurface)}>
+=======
+                    <label className={checkoutOptionClass}>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       <div className="flex items-center gap-3">
                         <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/60" />
                         <div>
@@ -336,7 +431,11 @@ export default function CheckoutPage() {
                       </div>
                       <span>{formatPrice(12.99)}</span>
                     </label>
+<<<<<<< HEAD
                     <label className={cn("flex items-center justify-between p-5 cursor-pointer transition-all hover:border-rose-mauve/45", luxurySurface)}>
+=======
+                    <label className={checkoutOptionClass}>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       <div className="flex items-center gap-3">
                         <div className="w-5 h-5 rounded-full border-2 border-muted-foreground/60" />
                         <div>
@@ -350,7 +449,11 @@ export default function CheckoutPage() {
 
                   <Button
                     onClick={() => setStep("payment")}
+<<<<<<< HEAD
                     className={cn("w-full mt-8", primaryActionClass)}
+=======
+                    className={checkoutButtonClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     size="lg"
                   >
                     {copy.continuePayment}
@@ -373,40 +476,62 @@ export default function CheckoutPage() {
                     {copy.backShipping}
                   </button>
 
+<<<<<<< HEAD
                   <h2 className="font-serif text-2xl mb-6">{copy.payment}</h2>
                   <div className={cn(luxurySurface, "p-6")}>
+=======
+                  <h2 className="font-serif text-2xl text-charcoal mb-6">{copy.payment}</h2>
+                  <div className="rounded-[1.5rem] border border-[#d8bf9b]/55 bg-white/45 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.5)]">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     <div className="flex items-center gap-3 mb-6">
                       <CreditCard className="w-5 h-5" />
                       <span className="font-medium">{copy.creditCard}</span>
                     </div>
                     <div className="space-y-4">
                       <div>
-                        <Label htmlFor="cardNumber">{copy.cardNumber}</Label>
+                        <Label htmlFor="cardNumber" className={checkoutLabelClass}>{copy.cardNumber}</Label>
                         <Input
                           id="cardNumber"
                           placeholder="1234 5678 9012 3456"
+<<<<<<< HEAD
                           className={fieldClass}
                         />
                       </div>
                       <div>
                         <Label htmlFor="cardName">{copy.nameOnCard}</Label>
                         <Input id="cardName" className={fieldClass} />
+=======
+                          className={checkoutInputClass}
+                        />
                       </div>
-                      <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="cardName" className={checkoutLabelClass}>{copy.nameOnCard}</Label>
+                        <Input id="cardName" className={checkoutInputClass} />
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
+                      </div>
+                      <div className="grid gap-4 sm:grid-cols-2">
                         <div>
-                          <Label htmlFor="expiry">{copy.expiryDate}</Label>
+                          <Label htmlFor="expiry" className={checkoutLabelClass}>{copy.expiryDate}</Label>
                           <Input
                             id="expiry"
                             placeholder="MM / YY"
+<<<<<<< HEAD
                             className={fieldClass}
+=======
+                            className={checkoutInputClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                           />
                         </div>
                         <div>
-                          <Label htmlFor="cvv">{copy.securityCode}</Label>
+                          <Label htmlFor="cvv" className={checkoutLabelClass}>{copy.securityCode}</Label>
                           <Input
                             id="cvv"
                             placeholder="CVV"
+<<<<<<< HEAD
                             className={fieldClass}
+=======
+                            className={checkoutInputClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                           />
                         </div>
                       </div>
@@ -424,7 +549,11 @@ export default function CheckoutPage() {
                   <Button
                     onClick={handlePlaceOrder}
                     disabled={isProcessing}
+<<<<<<< HEAD
                     className={cn("w-full mt-8", primaryActionClass)}
+=======
+                    className={checkoutButtonClass}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     size="lg"
                   >
                     {isProcessing ? (
@@ -446,22 +575,35 @@ export default function CheckoutPage() {
           </div>
 
           {/* Order Summary */}
+<<<<<<< HEAD
           <div className={cn(luxurySurface, "p-6 sm:p-8 self-start")}>
             <h2 className="font-serif text-xl mb-6">{copy.orderSummary}</h2>
+=======
+          <div className="rounded-[2rem] border border-[#d8bf9b]/50 bg-white/25 p-5 shadow-[0_18px_44px_rgba(79,54,60,0.07),inset_0_1px_0_rgba(255,255,255,0.55)] backdrop-blur-sm sm:p-7 lg:sticky lg:top-28 lg:self-start">
+            <h2 className="font-serif text-2xl text-charcoal mb-6">{copy.orderSummary}</h2>
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
             <div className="space-y-4">
               {items.map((item) => (
                 <div
                   key={`${item.product.id}-${item.variant?.id || "default"}`}
                   className="flex gap-4"
                 >
+<<<<<<< HEAD
                   <div className="relative w-16 h-16 bg-[color-mix(in_srgb,var(--background)_78%,white)] rounded-2xl overflow-hidden flex-shrink-0 border border-[#cfae83]/20">
+=======
+                  <div className="relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl border border-[#d8bf9b]/45 bg-white/45">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                     <Image
                       src={resolveImageSrc(item.product.images[0]?.src)}
                       alt={item.product.name}
                       fill
                       className="object-cover"
                     />
+<<<<<<< HEAD
                     <div className="absolute -top-1 -right-1 w-5 h-5 bg-rose-mauve text-white text-xs rounded-full flex items-center justify-center">
+=======
+                    <div className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] text-xs text-white shadow-sm">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       {item.quantity}
                     </div>
                   </div>
@@ -484,7 +626,11 @@ export default function CheckoutPage() {
               ))}
             </div>
 
+<<<<<<< HEAD
             <div className={cn("mt-6 pt-6 border-t space-y-3", softDividerClass)}>
+=======
+            <div className="mt-6 pt-6 border-t border-[#cfae83]/24 space-y-3">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
               <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">{copy.subtotal}</span>
                 <span>{formatPrice(subtotal)}</span>
@@ -499,13 +645,21 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+<<<<<<< HEAD
             <div className={cn("flex justify-between py-6 border-t mt-6 font-medium text-lg", softDividerClass)}>
+=======
+            <div className="flex justify-between py-6 border-t border-[#cfae83]/24 mt-6 font-medium text-lg">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
               <span>{dictionary.cart.total}</span>
               <span>{formatPrice(total)}</span>
             </div>
 
             {/* Benefits */}
+<<<<<<< HEAD
             <div className={cn("mt-6 pt-6 border-t space-y-3", softDividerClass)}>
+=======
+            <div className="mt-6 pt-6 border-t border-[#cfae83]/24 space-y-3">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Truck className="w-4 h-4 flex-shrink-0" />
                 <span>{copy.freeShippingBenefit}</span>

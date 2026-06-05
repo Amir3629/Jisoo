@@ -48,7 +48,7 @@ export function AboutExperimentPage({ variant }: AboutExperimentPageProps) {
   if (variant === 'atelier') {
     return (
       <main className="min-h-screen bg-[#f7ece3] text-charcoal">
-        <Header transparentOnTop />
+        <Header transparentOnTop hideDesignModeToggle />
         <section className="relative min-h-screen overflow-hidden px-4 pt-28 lg:px-8 lg:pt-36">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_18%,rgba(214,168,186,0.28),transparent_30%),linear-gradient(145deg,#f4e5dc_0%,#f2dfd4_100%)]" />
           <div className="relative mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.9fr_1.1fr]">
@@ -84,7 +84,7 @@ export function AboutExperimentPage({ variant }: AboutExperimentPageProps) {
   if (variant === 'cinema') {
     return (
       <main className="min-h-screen bg-charcoal text-warm-ivory">
-        <Header transparentOnTop lightOnTop />
+        <Header transparentOnTop lightOnTop hideDesignModeToggle />
         <section className="relative h-screen overflow-hidden">
           <Image src={storyImages[0]} alt="" fill priority sizes="100vw" className="object-cover opacity-70" />
           <div className="absolute inset-0 bg-gradient-to-r from-charcoal via-charcoal/52 to-transparent" />
@@ -118,7 +118,7 @@ export function AboutExperimentPage({ variant }: AboutExperimentPageProps) {
 
   return (
     <main className="min-h-screen bg-[#f4e5dc] text-charcoal">
-      <Header />
+      <Header hideDesignModeToggle />
       <section className="relative overflow-hidden px-4 pt-32 lg:px-8 lg:pt-40">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-12 lg:grid-cols-[0.82fr_1.18fr]">

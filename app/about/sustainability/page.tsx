@@ -1,5 +1,4 @@
 import { ContentPlaceholder } from '@/components/shared/content-placeholder'
-
 export default function SustainabilityPage() {
   return (
     <ContentPlaceholder

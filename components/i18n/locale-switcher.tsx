@@ -64,10 +64,10 @@ export function LocaleSwitcher({ buttonClassName }: { buttonClassName?: string }
             'absolute right-0 z-[90] mt-2 w-52 origin-top-right rounded-2xl border p-2 text-charcoal',
             isHeroHome
               ? 'border-white/24 bg-transparent shadow-[0_18px_44px_rgba(44,37,40,0.14)] backdrop-blur-2xl'
-              : 'border-[#cfae83]/28 bg-warm-ivory/72 shadow-editorial backdrop-blur-xl'
+              : 'border-[#cfae83]/28 bg-warm-ivory shadow-editorial'
           )}
         >
-          {orderedLocales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-[#d5bc9b]/45 hover:text-charcoal', locale === l && 'bg-[#d5bc9b]/32 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
+          {orderedLocales.map((l) => <Link key={l} role="menuitem" href={localizeHref(normalizedPath, l)} className={cn('flex items-center rounded-xl px-3 py-2 text-sm transition-colors hover:bg-[#d5bc9b]/55 hover:text-charcoal', locale === l && 'bg-[#d5bc9b]/45 font-medium')}><span>{languageMeta[l].name}</span></Link>)}
         </motion.div>
       )}
       </AnimatePresence>

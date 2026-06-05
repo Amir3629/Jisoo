@@ -1,6 +1,6 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useEffect, useCallback, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -8,7 +8,6 @@ import { ArrowRight } from 'lucide-react'
 import { Header } from '@/components/layout/header'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref, type Locale } from '@/lib/i18n'
-
 const images = [
   '/assets/story/jisoo-story-grandparents-01.png',
   '/assets/story/jisoo-story-grandparents-02.png',
@@ -109,7 +108,17 @@ export default function AboutPage() {
   ], [t])
 
   const [active, setActive] = useState(0)
-  const current = slides[active]
+  // JISOO FIX: expose about slide state for header CSS
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    document.documentElement.dataset.jisooAboutStory = active === 0 ? 'image' : 'story'
+    return () => {
+      delete document.documentElement.dataset.jisooAboutStory
+    }
+  }, [active])
+
+const current = slides[active]
+  const showIntroImage = current.kind === 'image'
 
   const go = useCallback((direction: number) => {
     const now = Date.now()
@@ -118,9 +127,19 @@ export default function AboutPage() {
     setActive((value) => Math.max(0, Math.min(slides.length - 1, value + direction)))
   }, [slides.length])
 
+  // JISOO FORCE FIX: mark about page on html element
+  useEffect(() => {
+    if (typeof document === 'undefined') return
+    document.documentElement.dataset.jisooAboutRoute = 'true'
+    return () => { delete document.documentElement.dataset.jisooAboutRoute }
+  }, [])
+
   return (
     <main
-      className="relative h-screen overflow-hidden bg-background text-charcoal"
+      data-about-story-root="true"
+      className="about-story-page relative h-screen overflow-hidden bg-background text-charcoal"
+      data-about-readability-style="2"
+      data-about-slide-state={active === 0 ? 'image' : 'story'}
       onWheel={(event) => {
         if (Math.abs(event.deltaY) < 18) return
         go(event.deltaY > 0 ? 1 : -1)
@@ -135,41 +154,150 @@ export default function AboutPage() {
         touchStart.current = null
       }}
     >
-      <Header transparentOnTop={false} forceDark={false} frameless={false} />
+      <Header transparentOnTop lightOnTop frameless hideDesignModeToggle />
+
+      <div className="about-header-smooth-veil about-header-smooth-veil-image pointer-events-none fixed inset-x-0 top-0 z-40 hidden h-36 bg-gradient-to-b from-black/30 via-black/12 to-transparent opacity-0 lg:block" />
+      <div className="about-header-smooth-veil about-header-smooth-veil-story pointer-events-none fixed inset-x-0 top-0 z-40 hidden h-36 bg-gradient-to-b from-[#f5e5cc]/76 via-[#f5e5cc]/34 to-transparent opacity-0 lg:block" />
+
+
+      <div className="about-header-veil pointer-events-none fixed inset-x-0 top-0 z-40 hidden h-32 bg-gradient-to-b from-black/28 via-black/10 to-transparent opacity-0 transition-opacity duration-500 lg:block" />
+
+      <style jsx global>{`
+        .about-story-page header {
+          background: transparent !important;
+          border-color: transparent !important;
+          box-shadow: none !important;
+          backdrop-filter: none !important;
+        }
+
+        .about-story-page header > div:first-child {
+          background: transparent !important;
+          border-color: transparent !important;
+        }
+
+        .about-story-page[data-about-slide-state='image'] header a,
+        .about-story-page[data-about-slide-state='image'] header button,
+        .about-story-page[data-about-slide-state='image'] header svg,
+        .about-story-page[data-about-slide-state='image'] header span {
+          color: rgba(255, 255, 255, 0.94) !important;
+        }
+
+        .about-story-page[data-about-slide-state='image'] header img[alt='JISOO'] {
+          filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(0, 0, 0, 0.48)) !important;
+        }
+
+        .about-story-page[data-about-slide-state='story'] header a,
+        .about-story-page[data-about-slide-state='story'] header button,
+        .about-story-page[data-about-slide-state='story'] header svg,
+        .about-story-page[data-about-slide-state='story'] header span {
+          color: rgba(44, 37, 40, 0.92) !important;
+        }
+
+        .about-story-page[data-about-slide-state='story'] header img[alt='JISOO'] {
+          filter: brightness(0) saturate(0.35) opacity(0.82) drop-shadow(0 2px 14px rgba(245, 229, 204, 0.42)) !important;
+        }
+
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='image'] header a,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='image'] header button,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='image'] header svg,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='image'] header span {
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.58) !important;
+        }
+
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='story'] header a,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='story'] header button,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='story'] header svg,
+        .about-story-page[data-about-readability-style='1'][data-about-slide-state='story'] header span {
+          text-shadow: 0 2px 14px rgba(245, 229, 204, 0.62) !important;
+        }
+
+        .about-story-page[data-about-readability-style='2'] .about-header-veil {
+          opacity: 1;
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] .about-header-veil {
+          background: linear-gradient(to bottom, rgba(245, 229, 204, 0.68), rgba(245, 229, 204, 0.28), transparent);
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header a,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header button,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header svg,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header span {
+          text-shadow: 0 2px 16px rgba(0, 0, 0, 0.46) !important;
+        }
+
+        .about-story-page[data-about-readability-style='3'] header nav a,
+        .about-story-page[data-about-readability-style='3'] header nav button {
+          border-radius: 999px !important;
+          background: rgba(245, 229, 204, 0.34) !important;
+          box-shadow: 0 12px 26px rgba(44, 37, 40, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+          backdrop-filter: blur(14px) !important;
+          padding: 0.35rem 0.7rem !important;
+        }
+
+        .about-story-page[data-about-readability-style='3'] header .relative.z-10 button,
+        .about-story-page[data-about-readability-style='3'] header .relative.z-10 a {
+          border-radius: 999px !important;
+          background: rgba(245, 229, 204, 0.34) !important;
+          box-shadow: 0 12px 26px rgba(44, 37, 40, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.34) !important;
+          backdrop-filter: blur(14px) !important;
+        }
+
+        .about-story-page[data-about-readability-style='3'][data-about-slide-state='story'] header nav a,
+        .about-story-page[data-about-readability-style='3'][data-about-slide-state='story'] header nav button,
+        .about-story-page[data-about-readability-style='3'][data-about-slide-state='story'] header .relative.z-10 button,
+        .about-story-page[data-about-readability-style='3'][data-about-slide-state='story'] header .relative.z-10 a {
+          background: rgba(245, 229, 204, 0.52) !important;
+        }
+      `}</style>
+
 
       <motion.section
         className="absolute inset-0"
-        animate={{ backgroundColor: active === 0 ? '#050405' : '#d7c4a6' }}
+        animate={{ backgroundColor: showIntroImage ? '#050405' : '#d7c4a6' }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       />
 
+      {/* Desktop: editorial split view after the opening image */}
       <motion.div
-        className="absolute left-0 top-0 z-10 h-screen w-screen overflow-hidden bg-charcoal shadow-[18px_0_70px_rgba(37,32,43,0.15)]"
-        animate={active === 0
+        className="absolute left-0 top-0 z-10 hidden h-screen w-screen overflow-hidden bg-charcoal shadow-[18px_0_70px_rgba(37,32,43,0.15)] md:block"
+        animate={showIntroImage
           ? { width: '100vw', height: '100vh', borderRadius: '0px' }
           : { width: '52vw', height: '100vh', borderRadius: '0px 48px 48px 0px' }}
         transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
       >
         <AnimatePresence mode="sync">
           <motion.div
-            key={current.image}
+            key={`desktop-${current.image}`}
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 1.02 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1.015 }}
             transition={{ duration: 0.62, ease: [0.22, 1, 0.36, 1] }}
           >
-            <Image src={current.image} alt="" fill sizes="(max-width: 768px) 100vw, 52vw" priority={active < 2} className="object-cover object-center" />
+            <Image src={current.image} alt="" fill sizes="52vw" priority={active < 2} className="object-cover object-center" />
           </motion.div>
         </AnimatePresence>
         <div className="absolute inset-0 bg-black/5" />
       </motion.div>
 
+      {/* Mobile: first image is full screen, then it leaves completely and the copy gets the whole screen. */}
+      <motion.div
+        className="absolute inset-0 z-10 block h-screen w-screen overflow-hidden bg-charcoal md:hidden"
+        animate={showIntroImage
+          ? { y: '0vh', opacity: 1, scale: 1 }
+          : { y: '-110vh', opacity: 0, scale: 1.01 }}
+        transition={{ duration: 0.82, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Image src={current.image} alt="" fill sizes="100vw" priority={active < 2} className="object-cover object-center" />
+        <div className="absolute inset-0 bg-black/10" />
+      </motion.div>
+
       <AnimatePresence mode="wait">
         {current.kind !== 'image' && (
           <motion.section
-            key={`${current.kind}-${active}`}
-            className="absolute right-0 top-0 z-0 flex h-screen w-[48vw] items-center px-8 lg:px-16"
+            key={`desktop-copy-${current.kind}-${active}`}
+            className="absolute right-0 top-0 z-0 hidden h-screen w-[48vw] items-center px-8 md:flex lg:px-16"
             initial={{ opacity: 0, x: 64, filter: 'blur(10px)' }}
             animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
             exit={{ opacity: 0, x: -24, filter: 'blur(8px)' }}
@@ -195,6 +323,93 @@ export default function AboutPage() {
           </motion.section>
         )}
       </AnimatePresence>
-    </main>
+
+      <AnimatePresence mode="wait">
+        {current.kind !== 'image' && (
+          <motion.section
+            key={`mobile-copy-${current.kind}-${active}`}
+            className="absolute inset-0 z-20 flex h-screen w-screen items-center bg-[#d7c4a6] px-7 pb-10 pt-28 md:hidden"
+            initial={{ opacity: 0, y: 42, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -28, filter: 'blur(8px)' }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            {current.kind === 'story' ? (
+              <article>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-charcoal/42">{current.chapter.kicker}</p>
+                <h1 className="mt-5 max-w-[11ch] font-serif text-[clamp(3.1rem,15vw,5.4rem)] leading-[0.9] text-charcoal">{current.chapter.title}</h1>
+                <p className="mt-7 max-w-sm text-[1.08rem] leading-8 text-charcoal/64">{current.chapter.body}</p>
+              </article>
+            ) : (
+              <article>
+                <p className="text-[11px] uppercase tracking-[0.32em] text-charcoal/42">JISOO Standard</p>
+                <h1 className="mt-5 max-w-[11ch] font-serif text-[clamp(3rem,14vw,5.2rem)] leading-[0.9] text-charcoal">{current.title}</h1>
+                <p className="mt-7 max-w-sm text-[1.08rem] leading-8 text-charcoal/64">{current.body}</p>
+                <Link href={localizeHref('/shop', locale)} className="mt-9 inline-flex items-center gap-2 rounded-full bg-charcoal px-6 py-3 text-sm text-white transition hover:bg-rose-mauve">
+                  {current.cta}
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </article>
+            )}
+          </motion.section>
+        )}
+      </AnimatePresence>
+    
+
+      <style jsx global>{`
+        .about-header-style-2-smooth-fix {}
+
+        .about-story-page[data-about-readability-style='2'] .about-header-veil:not(.about-header-smooth-veil) {
+          opacity: 0 !important;
+        }
+
+        .about-header-smooth-veil {
+          transition: opacity 980ms cubic-bezier(0.22, 1, 0.36, 1), filter 980ms cubic-bezier(0.22, 1, 0.36, 1);
+          will-change: opacity;
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] .about-header-smooth-veil-image {
+          opacity: 1;
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] .about-header-smooth-veil-story {
+          opacity: 1;
+        }
+
+        .about-story-page header,
+        .about-story-page header a,
+        .about-story-page header button,
+        .about-story-page header svg,
+        .about-story-page header span,
+        .about-story-page header img[alt='JISOO'] {
+          transition-property: color, opacity, filter, text-shadow, background-color, border-color, box-shadow, backdrop-filter;
+          transition-duration: 880ms;
+          transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header a,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header button,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header svg,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='image'] header span {
+          text-shadow: 0 2px 18px rgba(0, 0, 0, 0.50) !important;
+        }
+
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] header a,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] header button,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] header svg,
+        .about-story-page[data-about-readability-style='2'][data-about-slide-state='story'] header span {
+          text-shadow: 0 2px 16px rgba(245, 229, 204, 0.55) !important;
+        }
+      `}</style>
+
+
+      <style jsx global>{`
+        .about-header-style-2-final-no-switcher {}
+
+        .about-story-page[data-about-readability-style='2'] .about-header-veil:not(.about-header-smooth-veil) {
+          opacity: 0 !important;
+        }
+      `}</style>
+</main>
   )
 }

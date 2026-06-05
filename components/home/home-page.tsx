@@ -31,9 +31,6 @@ function ScrollReveal({ children, direction = 'up', snapLabel }: { children: Rea
   )
 }
 
-function BackgroundBreathSlide() {
-  return <div aria-hidden="true" className="h-48 lg:h-72" />
-}
 
 export function HomePageShell() {
   return (
@@ -60,7 +57,6 @@ export function HomePageShell() {
             <ScrollReveal direction="right"><ConcernsSection /></ScrollReveal>
             <ScrollReveal snapLabel="Start with what your skin actually needs"><CareCtaSection /></ScrollReveal>
             <ScrollReveal direction="left"><TestimonialsSection /></ScrollReveal>
-            <BackgroundBreathSlide />
           </div>
         </section>
         <ScrollReveal><PartnersSection /></ScrollReveal>

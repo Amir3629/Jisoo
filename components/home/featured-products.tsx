@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ArrowRight, ChevronDown, Rows3, StretchHorizontal } from 'lucide-react'
+import { ArrowRight, ChevronDown, Rows3 } from 'lucide-react'
 import { products } from '@/lib/data'
 import { ProductCard } from '@/components/product/product-card'
 import { ChapterHeading } from '@/components/ui/chapter-heading'
@@ -53,7 +53,7 @@ export function FeaturedProducts() {
   const t = dictionary.home
   const featuredProducts = products
   const [isExpanded, setIsExpanded] = useState(false)
-  const [viewMode, setViewMode] = useState<ProductViewMode>('grid')
+  const viewMode: ProductViewMode = 'grid'
   const visibleProducts = useMemo(() => (isExpanded ? featuredProducts : featuredProducts.slice(0, 8)), [featuredProducts, isExpanded])
   const swipeRows = useMemo(() => [
     featuredProducts.filter((_, index) => index % 2 === 0),
@@ -85,36 +85,6 @@ export function FeaturedProducts() {
             {t.viewEntireEdit}
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </div>
-
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-          <div className="inline-flex rounded-full border border-[#cfae83]/28 bg-warm-ivory/70 p-1">
-            {[
-              { id: 'grid', label: copy.gallery, icon: Rows3 },
-              { id: 'swipe', label: copy.swipe, icon: StretchHorizontal },
-            ].map((mode) => {
-              const Icon = mode.icon
-              const active = viewMode === mode.id
-              return (
-                <button
-                  key={mode.id}
-                  type="button"
-                  onClick={() => setViewMode(mode.id as ProductViewMode)}
-                  className={cn(
-                    'inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-medium transition',
-                    active ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-[0_10px_22px_rgba(186,130,154,0.18)]' : 'text-charcoal/70 hover:bg-white/30 hover:text-charcoal'
-                  )}
-                >
-                  <Icon className="h-4 w-4" />
-                  {mode.label}
-                </button>
-              )
-            })}
-          </div>
-
-          <p className="text-xs text-charcoal/58">
-            {viewMode === 'grid' ? copy.gridHint : copy.swipeHint}
-          </p>
         </div>
 
         {viewMode === 'grid' ? (

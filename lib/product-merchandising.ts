@@ -4,6 +4,8 @@ export type ProductStatusBadgeKind = 'best-seller' | 'most-viewed' | 'customer-f
 export type ProductCareIconKind = 'hydration' | 'brightening' | 'anti-aging' | 'dry-skin' | 'sensitive-skin' | 'firming' | 'repair' | 'glow' | 'protection' | 'clarity'
 export type RoutineStepKey = 'cleanse' | 'prep' | 'treat' | 'seal' | 'protect'
 
+export const JISOO_LEAF_MARK_SRC = '/brand/jisoo-leaf-mark.png'
+
 export interface ProductCareFocus {
   eyebrow: string
   title: string
@@ -45,7 +47,7 @@ const statusBadgeEntries: Array<{ kind: ProductStatusBadgeKind; slug: string }> 
 ]
 
 const statusBadgeLabels: Record<ProductStatusBadgeKind, string> = {
-  'best-seller': 'Best Seller',
+  'best-seller': 'Best Sellers',
   'most-viewed': 'Most Viewed',
   'customer-favorite': 'Customer Favorite',
 }
@@ -295,7 +297,7 @@ export function getProductCareChips(product: Product): ProductCareChip[] {
     { kind: 'repair', label: 'Repair' },
   ]
 
-  return chips.slice(0, 3).map((chip) => ({
+  return chips.slice(0, 1).map((chip) => ({
     ...chip,
     iconSrc: careChipIconSrc[chip.kind],
   }))

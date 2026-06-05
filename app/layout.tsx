@@ -6,8 +6,10 @@ import { LocaleProvider } from '@/components/providers/locale-provider'
 import { RegionProvider } from '@/components/providers/region-provider'
 import { CartProvider } from '@/components/providers/cart-provider'
 import { ScrollSnapController } from '@/components/layout/scroll-snap-controller'
+import { RouteTransitionShell } from '@/components/layout/route-transition-shell'
 import { defaultLocale, dictionaries, getDirection } from '@/lib/i18n'
 import { absoluteUrl, getOrganizationJsonLd, getWebsiteJsonLd, seoKeywords, siteDescription, siteName, siteUrl } from '@/lib/seo'
+import { JisooIntroSplashSafety } from '@/components/layout/jisoo-intro-splash-safety'
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -84,6 +86,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-warm-ivory">
       <body className="site-continuous-surface bg-background font-sans text-foreground antialiased">
+        <JisooIntroSplashSafety />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(getOrganizationJsonLd()) }}
@@ -97,7 +100,7 @@ export default function RootLayout({
             <CartProvider>
               <ScrollSnapController />
               <ProductImageModeSwitcher />
-          {children}
+          <RouteTransitionShell>{children}</RouteTransitionShell>
             </CartProvider>
           </RegionProvider>
         </LocaleProvider>

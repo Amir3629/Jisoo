@@ -6,6 +6,8 @@ import { AtmosphereSection } from '@/components/ui/atmosphere-section'
 import { useLocale } from '@/components/providers/locale-provider'
 import { localizeHref } from '@/lib/i18n'
 
+const JISOO_LEAF_MARK_SRC = '/brand/jisoo-leaf-mark.png'
+
 export function PartnersSection() {
   const { locale } = useLocale()
   const copy = {
@@ -29,13 +31,34 @@ export function PartnersSection() {
       <div className="relative mx-auto max-w-none px-0">
         <div className="grid min-h-screen items-stretch bg-transparent lg:grid-cols-[0.92fr_1.08fr]">
           <div className="flex items-center justify-center px-6 pb-8 pt-24 text-center sm:pt-28 lg:px-16 lg:py-16">
-            <div className="mx-auto max-w-xl">
-              <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
-                {lead}
-              </p>
-              <h2 className="font-serif text-[clamp(2rem,3.6vw,3.8rem)] font-medium uppercase leading-none text-charcoal">
-                {confidence}
-              </h2>
+            <div className="relative mx-auto max-w-xl">
+              <div aria-hidden="true" className="pointer-events-none absolute -left-8 top-1/2 hidden h-56 w-56 -translate-y-1/2 rounded-full bg-rose-mauve/5 blur-3xl lg:block" />
+              <div className="relative">
+                <p className="text-[clamp(1.9rem,3.2vw,3.4rem)] italic leading-tight text-charcoal/92">
+                  {lead}
+                </p>
+                <div className="relative mx-auto mt-1 inline-flex items-center justify-center">
+                  <Image
+                    src={JISOO_LEAF_MARK_SRC}
+                    alt=""
+                    aria-hidden="true"
+                    width={128}
+                    height={128}
+                    className="pointer-events-none absolute -right-10 -top-8 h-12 w-12 rotate-[22deg] object-contain opacity-[0.34] drop-shadow-[0_18px_38px_rgba(79,54,60,0.12)] sm:-right-14 sm:-top-6 sm:h-20 sm:w-20 lg:-right-28 lg:-top-6 lg:h-28 lg:w-28"
+                  />
+                  <Image
+                    src={JISOO_LEAF_MARK_SRC}
+                    alt=""
+                    aria-hidden="true"
+                    width={96}
+                    height={96}
+                    className="pointer-events-none absolute -bottom-8 -left-5 h-12 w-12 -rotate-[18deg] object-contain opacity-[0.22] blur-[0.2px] sm:-bottom-12 sm:-left-24 sm:h-20 sm:w-20"
+                  />
+                  <h2 className="relative z-10 font-serif text-[clamp(2rem,3.6vw,3.8rem)] font-medium uppercase leading-none text-charcoal">
+                    {confidence}
+                  </h2>
+                </div>
+              </div>
               <p className="mx-auto mt-8 max-w-lg text-base leading-8 text-charcoal/72">
                 {confidenceBody}
               </p>

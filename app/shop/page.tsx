@@ -1,6 +1,10 @@
 'use client'
 
+<<<<<<< HEAD
 import { useEffect, useMemo, useState } from 'react'
+=======
+import { Suspense, useEffect, useMemo, useState } from 'react'
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
 import { useSearchParams } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Header } from '@/components/layout/header'
@@ -19,10 +23,9 @@ const sortOptions = [
   { value: 'rating', label: 'Best Rated' },
 ]
 
-const skinTypes = ['All Skin Types', 'Dry Skin', 'Oily Skin', 'Combination Skin', 'Sensitive Skin']
-const concerns = ['Hydration', 'Brightening', 'Anti-Aging', 'Soothing', 'Pores', 'Acne']
-const priceRanges = ['Under €30', '€30 - €50', '€50 - €80', 'Over €80']
+const skinTypes = ['Dry Skin', 'Oily Skin', 'Combination Skin', 'Sensitive Skin']
 
+<<<<<<< HEAD
 const queryFilterLabels: Record<string, string> = {
   'anti-aging': 'Anti-Aging',
   antiaging: 'Anti-Aging',
@@ -124,10 +127,156 @@ export default function ShopPage() {
   const queryCategory = searchParams.get('category')
   const queryConcern = searchParams.get('concern')
 
+=======
+const concerns = [
+  { label: 'Hydration', value: 'hydration', aliases: ['hydration', 'moisture', 'dehydration', 'dryness'] },
+  { label: 'Brightening', value: 'brightening', aliases: ['brightening', 'radiance', 'glow', 'pigmentation', 'tone-up', 'uneven tone'] },
+  { label: 'Anti-Aging', value: 'anti-aging', aliases: ['anti-aging', 'anti aging', 'wrinkles', 'fine lines', 'firmness', 'elasticity', 'collagen'] },
+  { label: 'Soothing', value: 'soothing', aliases: ['soothing', 'calming', 'sensitive', 'comfort'] },
+  { label: 'Pores', value: 'pores', aliases: ['pores', 'pore', 'sebum', 'oiliness', 'clarity'] },
+  { label: 'Acne', value: 'acne', aliases: ['acne', 'blemishes', 'breakout'] },
+]
+
+const priceRanges = [
+  { label: 'Under €30', value: 'under-30' },
+  { label: '€30 - €50', value: '30-50' },
+  { label: '€50 - €80', value: '50-80' },
+  { label: 'Over €80', value: 'over-80' },
+]
+
+
+const surfaceClass =
+  'rounded-3xl border border-[#cfae83]/24 bg-[linear-gradient(155deg,var(--card)_0%,color-mix(in_srgb,var(--background)_88%,white)_58%,color-mix(in_srgb,var(--background)_92%,#cfae83)_100%)] shadow-luxury'
+const softControlClass =
+  'rounded-full border border-[#cfae83]/24 bg-[color-mix(in_srgb,var(--background)_82%,white)] text-charcoal shadow-sm'
+const selectedControlClass =
+  'rounded-full border border-rose-mauve/35 bg-[linear-gradient(135deg,#d8a7bd_0%,#d3af84_100%)] text-white shadow-luxury'
+const categoryAliases: Record<string, string[]> = {
+  skincare: ['cream', 'oil', 'mask', 'cleanser', 'toner', 'sun care', 'serum', 'ampoule', 'essence', 'lotion', 'fluid', 'emulsion', 'eye care', 'mist', 'toner pad', 'cleansing oil', 'exfoliant', 'tone-up care', 'trial care'],
+  'body-care': ['body care', 'body-wash', 'body-lotion', 'body-oil', 'body-mist', 'bath-care', 'hand-care', 'foot-care'],
+  'hair-care': ['hair care', 'shampoo', 'rinse', 'hair-treatment', 'hair-essence', 'hair-tonic', 'hair-styling'],
+  sets: ['sets', 'set', 'bundle', 'bundles'],
+  fragrance: ['fragrance'],
+  oil: ['oil', 'cleansing oil', 'body oil'],
+  oils: ['oil', 'cleansing oil', 'body oil'],
+  mask: ['mask', 'sheet mask', 'wash-off pack'],
+  masks: ['mask', 'sheet mask', 'wash-off pack'],
+  cream: ['cream'],
+  creams: ['cream'],
+  moisturizers: ['cream', 'lotion', 'fluid', 'emulsion'],
+  'sun-care': ['sun care'],
+  suncare: ['sun care'],
+  cleansers: ['cleanser', 'cleansing oil', 'exfoliant'],
+  toners: ['toner', 'toner pad', 'essence'],
+  serums: ['serum', 'ampoule'],
+}
+
+function normalize(value: string) {
+  return value.trim().toLowerCase()
+}
+
+function slugify(value: string) {
+  return normalize(value).replace(/\s+/g, '-')
+}
+
+function productSearchText(product: Product) {
+  return [
+    product.name,
+    product.category,
+    product.subcategory,
+    ...product.tags,
+    ...product.skinType,
+    ...product.concerns,
+    ...product.keyBenefits,
+    product.shortDescription,
+  ]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase()
+}
+
+function categoryMatches(product: Product, selectedCategory: string | null) {
+  if (!selectedCategory) return true
+
+  const selected = normalize(selectedCategory)
+  const candidates = new Set([
+    selected,
+    selected.replace(/-/g, ' '),
+    selected.endsWith('s') ? selected.slice(0, -1) : selected,
+    ...(categoryAliases[selected] ?? []),
+  ])
+
+  const productValues = [product.category, product.subcategory ?? '']
+    .filter(Boolean)
+    .flatMap((value) => [normalize(value), slugify(value)])
+
+  return productValues.some((value) => candidates.has(value))
+}
+
+function skinTypeMatches(product: Product, selectedSkinTypes: string[]) {
+  if (selectedSkinTypes.length === 0) return true
+
+  const productSkinTypes = [...product.skinType, ...(product.skinTypes ?? [])].map(normalize)
+  return selectedSkinTypes.some((skinType) => productSkinTypes.includes(normalize(skinType)))
+}
+
+function concernMatches(product: Product, selectedConcerns: string[]) {
+  if (selectedConcerns.length === 0) return true
+
+  const searchable = productSearchText(product)
+  return selectedConcerns.some((label) => {
+    const option = concerns.find((concern) => concern.label === label)
+    const aliases = option?.aliases ?? [label]
+    return aliases.some((alias) => searchable.includes(normalize(alias)))
+  })
+}
+
+function priceMatches(product: Product, selectedPrices: string[]) {
+  if (selectedPrices.length === 0) return true
+
+  return selectedPrices.some((label) => {
+    const price = product.price
+    if (label === 'Under €30') return price < 30
+    if (label === '€30 - €50') return price >= 30 && price <= 50
+    if (label === '€50 - €80') return price > 50 && price <= 80
+    if (label === 'Over €80') return price > 80
+    return true
+  })
+}
+
+function sortProducts(productList: Product[], sortBy: string) {
+  return [...productList].sort((a, b) => {
+    if (sortBy === 'price-asc') return a.price - b.price
+    if (sortBy === 'price-desc') return b.price - a.price
+    if (sortBy === 'rating') return (b.rating ?? 0) - (a.rating ?? 0)
+    if (sortBy === 'newest') return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+
+    const aFeatured = Number(Boolean(a.isBestSeller)) + Number(Boolean(a.isNew))
+    const bFeatured = Number(Boolean(b.isBestSeller)) + Number(Boolean(b.isNew))
+    return bFeatured - aFeatured
+  })
+}
+
+function findConcernLabelFromParam(value: string | null) {
+  if (!value) return null
+  const normalized = normalize(value).replace(/_/g, '-').replace(/\s+/g, '-')
+  return concerns.find((concern) => concern.value === normalized || concern.aliases.some((alias) => slugify(alias) === normalized))?.label ?? null
+}
+
+function findPriceLabelFromParam(value: string | null) {
+  if (!value) return null
+  const normalized = normalize(value).replace(/\s+/g, '')
+  return priceRanges.find((range) => range.value === normalized || normalize(range.label).replace(/\s+/g, '') === normalized)?.label ?? null
+}
+
+function ShopPageContent() {
+  const searchParams = useSearchParams()
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const [gridView, setGridView] = useState<'grid' | 'large'>('grid')
+  const [gridView, setGridView] = useState<'grid' | 'large'>('large')
   const [sortBy, setSortBy] = useState('featured')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+<<<<<<< HEAD
   const [selectedFilters, setSelectedFilters] = useState<string[]>(() => filtersFromQuery(queryCategory, queryConcern))
 
   const surfaceClass =
@@ -160,8 +309,49 @@ export default function ShopPage() {
       return 0
     })
   }, [selectedCategory, selectedFilters, sortBy])
+=======
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([])
+  const [visibleCount, setVisibleCount] = useState(12)
+
+  useEffect(() => {
+    const categoryParam = searchParams.get('category')
+    const concernParam = searchParams.get('concern')
+    const priceParam = searchParams.get('price')
+    const sortParam = searchParams.get('sort')
+
+    setSelectedCategory(categoryParam ? normalize(categoryParam) : null)
+
+    const nextFilters = [findConcernLabelFromParam(concernParam), findPriceLabelFromParam(priceParam)].filter(Boolean) as string[]
+    setSelectedFilters(nextFilters)
+
+    if (sortParam && sortOptions.some((option) => option.value === sortParam)) {
+      setSortBy(sortParam)
+    }
+
+    setVisibleCount(12)
+    setIsFilterOpen(Boolean(categoryParam || concernParam || priceParam))
+  }, [searchParams])
+
+  const selectedSkinTypes = selectedFilters.filter((filter) => skinTypes.includes(filter))
+  const selectedConcerns = selectedFilters.filter((filter) => concerns.some((concern) => concern.label === filter))
+  const selectedPrices = selectedFilters.filter((filter) => priceRanges.some((range) => range.label === filter))
+
+  const filteredProducts = useMemo(() => {
+    const filtered = products.filter((product) => {
+      return categoryMatches(product, selectedCategory)
+        && skinTypeMatches(product, selectedSkinTypes)
+        && concernMatches(product, selectedConcerns)
+        && priceMatches(product, selectedPrices)
+    })
+
+    return sortProducts(filtered, sortBy)
+  }, [selectedCategory, selectedConcerns, selectedPrices, selectedSkinTypes, sortBy])
+
+  const visibleProducts = filteredProducts.slice(0, visibleCount)
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
 
   const toggleFilter = (filter: string) => {
+    setVisibleCount(12)
     setSelectedFilters(prev =>
       prev.includes(filter)
         ? prev.filter(f => f !== filter)
@@ -169,12 +359,25 @@ export default function ShopPage() {
     )
   }
 
+<<<<<<< HEAD
   const clearAllFilters = () => {
     setSelectedCategory(null)
     setSelectedFilters([])
   }
 
   const activeFilterCount = selectedFilters.length + (selectedCategory ? 1 : 0)
+=======
+  const clearSkinTypeFilters = () => {
+    setVisibleCount(12)
+    setSelectedFilters(prev => prev.filter(filter => !skinTypes.includes(filter)))
+  }
+
+  const clearAll = () => {
+    setSelectedCategory(null)
+    setSelectedFilters([])
+    setVisibleCount(12)
+  }
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
 
   return (
     <main className="min-h-screen bg-warm-ivory">
@@ -217,31 +420,46 @@ export default function ShopPage() {
             >
               <SlidersHorizontal className="w-4 h-4" />
               <span>Filters</span>
+<<<<<<< HEAD
               {activeFilterCount > 0 && (
                 <span className={cn(
                   'ml-1 px-2 py-0.5 rounded-full text-xs',
                   isFilterOpen ? 'bg-white/20 text-white' : 'bg-rose-mauve/18 text-plum'
                 )}>
                   {activeFilterCount}
+=======
+              {selectedFilters.length > 0 && (
+                <span className="ml-2 inline-flex h-7 min-w-7 items-center justify-center rounded-full border border-[#d3af84]/55 bg-white/92 px-2 text-xs font-semibold leading-none text-[#4f363c] shadow-[0_6px_14px_rgba(79,54,60,0.10),inset_0_1px_0_rgba(255,255,255,0.85)] backdrop-blur-sm">
+                  {selectedFilters.length}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                 </span>
               )}
             </button>
 
             <div className="flex items-center gap-4">
               {/* Product Count */}
-              <span className="text-sm text-muted-foreground hidden sm:block">
+              <span className="text-sm text-muted-foreground">
                 {filteredProducts.length} products
               </span>
 
+<<<<<<< HEAD
               {/* Grid Toggle */}
               <div className={cn('flex items-center gap-1 p-1 rounded-full', softControlClass)}>
+=======
+              {/* Grid Toggle - desktop/tablet only */}
+              <div className="hidden sm:flex items-center gap-1 p-1 bg-white rounded-full border border-blush-pink">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                 <button
                   onClick={() => setGridView('grid')}
                   className={cn(
                     'p-2 rounded-full transition-colors',
                     gridView === 'grid' ? 'bg-[linear-gradient(135deg,#d8a7bd_0%,#d3af84_100%)] text-white' : 'text-charcoal hover:bg-blush-pink/20'
                   )}
+<<<<<<< HEAD
                   aria-label="Grid view"
+=======
+                  aria-label="Compact product grid"
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                 >
                   <Grid3X3 className="w-4 h-4" />
                 </button>
@@ -251,7 +469,11 @@ export default function ShopPage() {
                     'p-2 rounded-full transition-colors',
                     gridView === 'large' ? 'bg-[linear-gradient(135deg,#d8a7bd_0%,#d3af84_100%)] text-white' : 'text-charcoal hover:bg-blush-pink/20'
                   )}
+<<<<<<< HEAD
                   aria-label="Large grid view"
+=======
+                  aria-label="Large product grid"
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                 >
                   <LayoutGrid className="w-4 h-4" />
                 </button>
@@ -296,7 +518,7 @@ export default function ShopPage() {
                       <h3 className="font-medium text-charcoal mb-4">Category</h3>
                       <div className="space-y-2">
                         <button
-                          onClick={() => setSelectedCategory(null)}
+                          onClick={() => { setSelectedCategory(null); setVisibleCount(12) }}
                           className={cn(
                             'block text-sm transition-colors',
                             !selectedCategory ? 'text-plum font-medium' : 'text-muted-foreground hover:text-charcoal'
@@ -307,7 +529,7 @@ export default function ShopPage() {
                         {categories.slice(0, 5).map(cat => (
                           <button
                             key={cat.id}
-                            onClick={() => setSelectedCategory(cat.slug)}
+                            onClick={() => { setSelectedCategory(cat.slug); setVisibleCount(12) }}
                             className={cn(
                               'block text-sm transition-colors',
                               selectedCategory === cat.slug
@@ -325,6 +547,17 @@ export default function ShopPage() {
                     <div>
                       <h3 className="font-medium text-charcoal mb-4">Skin Type</h3>
                       <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={clearSkinTypeFilters}
+                          className={cn(
+                            'px-3 py-1.5 rounded-full text-sm transition-all',
+                            selectedSkinTypes.length === 0
+                              ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
+                              : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
+                          )}
+                        >
+                          All Skin Types
+                        </button>
                         {skinTypes.map(type => (
                           <button
                             key={type}
@@ -348,16 +581,22 @@ export default function ShopPage() {
                       <div className="flex flex-wrap gap-2">
                         {concerns.map(concern => (
                           <button
-                            key={concern}
-                            onClick={() => toggleFilter(concern)}
+                            key={concern.value}
+                            onClick={() => toggleFilter(concern.label)}
                             className={cn(
                               'px-3 py-1.5 rounded-full text-sm transition-all',
+<<<<<<< HEAD
                               selectedFilters.includes(concern)
                                 ? selectedControlClass
                                 : cn(softControlClass, 'hover:border-rose-mauve/45')
+=======
+                              selectedFilters.includes(concern.label)
+                                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
+                                : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                             )}
                           >
-                            {concern}
+                            {concern.label}
                           </button>
                         ))}
                       </div>
@@ -369,16 +608,22 @@ export default function ShopPage() {
                       <div className="flex flex-wrap gap-2">
                         {priceRanges.map(range => (
                           <button
-                            key={range}
-                            onClick={() => toggleFilter(range)}
+                            key={range.value}
+                            onClick={() => toggleFilter(range.label)}
                             className={cn(
                               'px-3 py-1.5 rounded-full text-sm transition-all',
+<<<<<<< HEAD
                               selectedFilters.includes(range)
                                 ? selectedControlClass
                                 : cn(softControlClass, 'hover:border-rose-mauve/45')
+=======
+                              selectedFilters.includes(range.label)
+                                ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
+                                : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve'
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                             )}
                           >
-                            {range}
+                            {range.label}
                           </button>
                         ))}
                       </div>
@@ -386,16 +631,27 @@ export default function ShopPage() {
                   </div>
 
                   {/* Active Filters */}
+<<<<<<< HEAD
                   {activeFilterCount > 0 && (
                     <div className="mt-6 pt-6 border-t border-[#cfae83]/24">
+=======
+                  {(selectedFilters.length > 0 || selectedCategory) && (
+                    <div className="mt-6 pt-6 border-t border-blush-pink/30">
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="text-sm text-muted-foreground">Active:</span>
                         {selectedCategory && (
                           <button
                             onClick={() => setSelectedCategory(null)}
+<<<<<<< HEAD
                             className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#d3af84]/18 text-charcoal text-sm border border-[#cfae83]/20"
                           >
                             {categories.find((category) => category.slug === selectedCategory)?.name ?? selectedCategory}
+=======
+                            className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#d3af84]/18 text-charcoal text-sm"
+                          >
+                            {selectedCategory.replace(/-/g, ' ')}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                             <X className="w-3 h-3" />
                           </button>
                         )}
@@ -410,7 +666,11 @@ export default function ShopPage() {
                           </button>
                         ))}
                         <button
+<<<<<<< HEAD
                           onClick={clearAllFilters}
+=======
+                          onClick={clearAll}
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
                           className="text-sm text-rose-mauve hover:text-plum transition-colors ml-2"
                         >
                           Clear all
@@ -424,35 +684,65 @@ export default function ShopPage() {
           </AnimatePresence>
 
           {/* Products Grid */}
-          <div
-            className={cn(
-              'grid gap-6 lg:gap-8 mt-8',
-              gridView === 'grid'
-                ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
-                : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
-            )}
-          >
-            {filteredProducts.map((product, index) => (
-              <ProductCard key={product.id} product={product} index={index} hideDescription />
-            ))}
-          </div>
-
-          {/* Load More */}
-          <div className="mt-16 text-center">
-            <button
+          {visibleProducts.length > 0 ? (
+            <div
               className={cn(
+<<<<<<< HEAD
                 'px-8 py-4 rounded-full font-medium',
                 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white shadow-luxury',
                 'hover:brightness-105 transition-all duration-300'
+=======
+                'grid gap-6 lg:gap-8 mt-8',
+                gridView === 'grid'
+                  ? 'grid-cols-1 md:grid-cols-3 lg:grid-cols-4'
+                  : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+>>>>>>> 309acd4 (Update Jisoo frontend fixes)
               )}
             >
-              Load More Products
-            </button>
-          </div>
+              {visibleProducts.map((product, index) => (
+                <ProductCard key={product.id} product={product} index={index} hideDescription />
+              ))}
+            </div>
+          ) : (
+            <div className="mt-12 rounded-3xl border border-blush-pink/30 bg-white/60 p-10 text-center">
+              <h2 className="font-serif text-2xl text-charcoal">No matching products</h2>
+              <p className="mt-3 text-muted-foreground">Try clearing filters or choosing another care category.</p>
+              <button
+                onClick={clearAll}
+                className="mt-6 rounded-full bg-gradient-to-r from-rose-mauve to-[#d3af84] px-6 py-3 text-sm font-medium text-white"
+              >
+                Clear Filters
+              </button>
+            </div>
+          )}
+
+          {/* Load More */}
+          {visibleCount < filteredProducts.length && (
+            <div className="mt-16 text-center">
+              <button
+                onClick={() => setVisibleCount((count) => count + 12)}
+                className={cn(
+                  'px-8 py-4 rounded-full font-medium',
+                  'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white',
+                  'hover:brightness-105 transition-all duration-300'
+                )}
+              >
+                Load More Products
+              </button>
+            </div>
+          )}
         </div>
       </section>
 
       <Footer />
     </main>
+  )
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={<main className="min-h-screen bg-warm-ivory" />}>
+      <ShopPageContent />
+    </Suspense>
   )
 }

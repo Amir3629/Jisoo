@@ -33,7 +33,7 @@ export default function ShopCategoryPage() {
         </p>
       </section>
       <section className="pb-24">
-        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid gap-6 lg:gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="max-w-7xl mx-auto px-4 lg:px-6 grid gap-6 lg:gap-8 grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
           {filtered.length > 0 ? filtered.map((product, index) => <ProductCard key={product.id} product={product} index={index} hideDescription />) : <div className="col-span-full text-center text-muted-foreground">No products are currently available in this category.</div>}
         </div>
       </section>

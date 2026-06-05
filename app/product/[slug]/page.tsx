@@ -20,7 +20,7 @@ import { cn } from '@/lib/utils'
 import { evaluateRegionAccess } from '@/lib/services/region-access'
 import { resolveImageSrc } from '@/lib/image-fallbacks'
 import { getProductJsonLd } from '@/lib/seo'
-import { getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts } from '@/lib/product-merchandising'
+import { JISOO_LEAF_MARK_SRC, getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts } from '@/lib/product-merchandising'
 
 interface ProductPageProps {
   params: Promise<{ slug: string }>
@@ -157,15 +157,29 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <span className="text-sm font-serif font-semibold text-plum">JISOO</span>
                 </div>
 
+                {/* Best Seller ribbon - direct child of gallery image so it sits on the real corner, same as product cards */}
+                {statusBadge?.kind === 'best-seller' && (
+                  <div className="pointer-events-none absolute -left-10 top-5 z-20 w-40 -rotate-45 transition duration-300">
+                    <span
+                      aria-label="Best Sellers"
+                      className="relative flex h-8 items-center justify-center overflow-hidden border-y border-white/60 bg-gradient-to-r from-[#a86f1f] via-[#f7d67d] to-[#c8922f] text-[10px] font-bold uppercase tracking-[0.18em] text-[#4f363c] shadow-[0_12px_26px_rgba(171,120,45,0.30)]"
+                    >
+                      <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/85" />
+                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-[#8a5a1b]/30" />
+                      <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.55)]">Best Sellers</span>
+                    </span>
+                  </div>
+                )}
+
                 {/* Badges */}
-                <div className="absolute top-4 left-4 flex flex-col gap-2">
-                  {statusBadge && (
+                <div className="absolute left-4 top-4 z-20 flex flex-col gap-2">
+                  {statusBadge && statusBadge.kind !== 'best-seller' && (
                     <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
                       <Image
                         src={statusBadge.iconSrc}
                         alt={statusBadge.label}
-                        width={22}
-                        height={22}
+                        width={20}
+                        height={20}
                         className="h-5 w-5 object-contain"
                       />
                       {statusBadge.label}
@@ -176,7 +190,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       {dictionary.common.new}
                     </span>
                   )}
-                  {product.isBestSeller && (
+                  {product.isBestSeller && statusBadge?.kind !== 'best-seller' && (
                     <span className="px-3 py-1 text-xs font-medium bg-champagne-gold text-charcoal rounded-full">
                       {dictionary.common.bestSeller}
                     </span>
@@ -283,15 +297,26 @@ export default function ProductPage({ params }: ProductPageProps) {
               )}
 
               {/* Description */}
-              <div className="mt-6 overflow-hidden rounded-3xl border border-blush-pink/30 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.careFocus}</p>
-                <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">{careFocus.title}</h2>
-                <p className="mt-2 text-muted-foreground leading-relaxed">
-                  {careFocus.description}
-                </p>
-                <p className="mt-3 text-sm leading-6 text-charcoal/58">
-                  {product.shortDescription}
-                </p>
+              <div className="relative mt-6 overflow-hidden rounded-3xl border border-blush-pink/30 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
+                <div className="pointer-events-none absolute -right-5 -top-5 h-28 w-28 rotate-12 opacity-[0.18]" aria-hidden="true">
+                  <Image
+                    src={JISOO_LEAF_MARK_SRC}
+                    alt=""
+                    fill
+                    sizes="112px"
+                    className="object-contain"
+                  />
+                </div>
+                <div className="relative">
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.careFocus}</p>
+                  <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">{careFocus.title}</h2>
+                  <p className="mt-2 text-muted-foreground leading-relaxed">
+                    {careFocus.description}
+                  </p>
+                  <p className="mt-3 text-sm leading-6 text-charcoal/58">
+                    {product.shortDescription}
+                  </p>
+                </div>
               </div>
 
               {/* Benefits Quick View */}
@@ -594,15 +619,26 @@ export default function ProductPage({ params }: ProductPageProps) {
       <section className="py-12 bg-warm-ivory">
         <div className="max-w-6xl mx-auto px-4 lg:px-6">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">{copy.highlightedStep}</p>
-              <h2 className="mt-3 font-serif text-2xl font-semibold leading-tight text-charcoal lg:text-3xl">{copy.routineTitle}</h2>
-              <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{copy.routineBody}</p>
+            <div className="relative overflow-hidden rounded-[2rem] py-2 pr-6">
+              <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rotate-[18deg] opacity-[0.18]" aria-hidden="true">
+                <Image
+                  src={JISOO_LEAF_MARK_SRC}
+                  alt=""
+                  fill
+                  sizes="96px"
+                  className="object-contain"
+                />
+              </div>
+              <div className="relative">
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">{copy.highlightedStep}</p>
+                <h2 className="mt-3 font-serif text-2xl font-semibold leading-tight text-charcoal lg:text-3xl">{copy.routineTitle}</h2>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{copy.routineBody}</p>
+              </div>
             </div>
 
             <div className="space-y-5">
               <div className="relative pl-7">
-                <div aria-hidden="true" className="absolute left-2.5 top-2 bottom-2 w-px bg-blush-pink/60" />
+                <div aria-hidden="true" className="absolute left-2.5 top-2 bottom-2 w-px bg-blush-pink/35" />
                 <div className="space-y-5">
                   {routineFlow.map((step) => {
                     const label = step.isCurrent ? copy.highlightedStep : step.key === routinePlacement.before?.key ? copy.before : copy.after
@@ -610,9 +646,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                     return (
                       <div key={step.key} className="relative">
                         <span
+                          aria-hidden="true"
                           className={cn(
-                            'absolute -left-[1.95rem] top-1 h-5 w-5 rounded-full border bg-warm-ivory',
-                            step.isCurrent ? 'border-rose-mauve bg-rose-mauve shadow-[0_0_0_5px_rgba(154,98,118,0.10)]' : 'border-blush-pink'
+                            'absolute -left-[1.22rem] top-1.5 h-8 w-[3px] rounded-full transition-colors duration-300',
+                            step.isCurrent ? 'bg-rose-mauve/85 shadow-[0_0_0_4px_rgba(154,98,118,0.07)]' : 'bg-blush-pink/55'
                           )}
                         />
                         <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-mauve/85">{label}</p>

@@ -248,7 +248,7 @@ export function HeroSection({
           </motion.div>
         </AnimatePresence>
 
-        <div className="fixed right-3 top-1/2 z-40 hidden -translate-y-1/2 sm:block lg:right-5">
+        <div className="hidden">
           <button
             type="button"
             onClick={() => setIsToolOpen((open) => !open)}

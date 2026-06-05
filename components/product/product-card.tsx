@@ -95,7 +95,13 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
   }
 
   return (
-    <article className={cn('jisoo-product-card group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#e4c8d2]/24 bg-white/95 shadow-[0_18px_60px_rgba(79,54,60,0.075)] transition-transform duration-300 hover:-translate-y-1', compact && 'rounded-[1.5rem]')}>
+    <article
+      className={cn(
+        'jisoo-product-card group flex h-full flex-col overflow-hidden rounded-[2rem] border border-[#e4c8d2]/24 bg-white/95 shadow-[0_18px_60px_rgba(79,54,60,0.075)] transition-transform duration-300 hover:-translate-y-1',
+        statusBadge?.kind === 'best-seller' && 'order-first',
+        compact && 'rounded-[1.5rem]'
+      )}
+    >
       <Link href={localizeHref(`/product/${product.slug}`, locale)} className="block flex-none">
         <div className="relative aspect-[4/5] overflow-hidden bg-white/85">
           <>
@@ -115,7 +121,18 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
             />
           </>
 
-          {statusBadge && (
+          {statusBadge && statusBadge.kind === 'best-seller' ? (
+            <div className="pointer-events-none absolute -left-10 top-5 z-20 w-40 -rotate-45 transition duration-300 group-hover:brightness-105">
+              <span
+                aria-label={statusBadge.label}
+                className="relative flex h-8 items-center justify-center overflow-hidden border-y border-white/60 bg-gradient-to-r from-[#a86f1f] via-[#f7d67d] to-[#c8922f] text-[10px] font-bold uppercase tracking-[0.18em] text-[#4f363c] shadow-[0_12px_26px_rgba(171,120,45,0.30)]"
+              >
+                <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/85" />
+                <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-[#8a5a1b]/30" />
+                <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.55)]">{statusBadge.label}</span>
+              </span>
+            </div>
+          ) : statusBadge ? (
             <div className="absolute left-3 top-3 z-10">
               <span
                 tabIndex={0}
@@ -126,16 +143,16 @@ export function ProductCard({ product, index = 0, displayName, hideDescription =
                 <Image
                   src={statusBadge.iconSrc}
                   alt={statusBadge.label}
-                  width={52}
-                  height={52}
-                  className="h-12 w-12 object-contain drop-shadow-[0_12px_24px_rgba(79,54,60,0.18)] transition duration-300 group-hover/status:-translate-y-0.5 group-hover/status:scale-110 group-focus/status:-translate-y-0.5 group-focus/status:scale-110 group-focus-visible/status:ring-2 group-focus-visible/status:ring-rose-mauve/25"
+                  width={40}
+                  height={40}
+                  className={cn(
+                    'object-contain drop-shadow-[0_12px_24px_rgba(79,54,60,0.18)] transition-transform duration-300 group-hover/status:scale-105 group-focus/status:scale-105',
+                    statusBadge.kind === 'customer-favorite' ? 'h-8 w-8' : 'h-10 w-10'
+                  )}
                 />
-                <span className="pointer-events-none absolute left-0 top-full z-20 mt-2 translate-y-1 whitespace-nowrap rounded-full border border-blush-pink/50 bg-white/95 px-3 py-1 text-[11px] font-medium text-charcoal opacity-0 shadow-[0_12px_28px_rgba(79,54,60,0.12)] backdrop-blur-xl transition-all duration-300 group-hover/status:translate-y-0 group-hover/status:opacity-100 group-focus/status:translate-y-0 group-focus/status:opacity-100">
-                  {statusBadge.label}
-                </span>
               </span>
             </div>
-          )}
+          ) : null}
 
           <button
             type="button"

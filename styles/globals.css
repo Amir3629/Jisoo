@@ -123,3 +123,442 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* === JISOO FORCE FIX: Discover open must match homepage header === */
+/*
+  Hard override for the Discover mega menu open state.
+
+  It uses two hooks:
+  1. data-jisoo-mega-open=true, added by the patch to Header.
+  2. header:has(nav button[aria-expanded="true"]), browser fallback-free state hook.
+
+  Result:
+  - /en homepage hover Discover
+  - /en/about hover Discover
+  - every other page hover Discover
+  all show the same normal cream framed header + cream dropdown + dark text.
+*/
+
+html body header[data-jisoo-mega-open="true"],
+html body header:has(nav button[aria-expanded="true"]) {
+  background: var(--warm-ivory, #f5e5cc) !important;
+  border-bottom-color: rgba(233, 213, 223, 0.88) !important;
+  box-shadow: 0 8px 25px rgba(191, 141, 151, 0.12) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+html body header[data-jisoo-mega-open="true"] > div:first-child,
+html body header:has(nav button[aria-expanded="true"]) > div:first-child {
+  height: 2rem !important;
+  overflow: visible !important;
+  background: var(--warm-ivory, #f5e5cc) !important;
+  border-bottom: 1px solid rgba(214, 168, 186, 0.12) !important;
+}
+
+html body header[data-jisoo-mega-open="true"] > div:first-child *,
+html body header:has(nav button[aria-expanded="true"]) > div:first-child * {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-mega-open="true"] img[alt="JISOO"],
+html body header:has(nav button[aria-expanded="true"]) img[alt="JISOO"] {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+html body header[data-jisoo-mega-open="true"] nav a,
+html body header[data-jisoo-mega-open="true"] nav button,
+html body header:has(nav button[aria-expanded="true"]) nav a,
+html body header:has(nav button[aria-expanded="true"]) nav button {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-mega-open="true"] .jisoo-force-header-icon,
+html body header[data-jisoo-mega-open="true"] button,
+html body header:has(nav button[aria-expanded="true"]) .jisoo-force-header-icon,
+html body header:has(nav button[aria-expanded="true"]) button {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-mega-open="true"] svg.lucide,
+html body header[data-jisoo-mega-open="true"] svg[class*="lucide"],
+html body header:has(nav button[aria-expanded="true"]) svg.lucide,
+html body header:has(nav button[aria-expanded="true"]) svg[class*="lucide"] {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+html body [data-jisoo-mega-panel="true"],
+html body header[data-jisoo-mega-open="true"] [class*="origin-top"],
+html body header:has(nav button[aria-expanded="true"]) [class*="origin-top"] {
+  background: var(--warm-ivory, #f5e5cc) !important;
+  border-top-color: transparent !important;
+  border-bottom: 1px solid rgba(207, 174, 131, 0.30) !important;
+  color: var(--charcoal, #2c2528) !important;
+  box-shadow: 0 18px 48px rgba(44, 37, 40, 0.10) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+html body [data-jisoo-mega-panel="true"] *,
+html body header[data-jisoo-mega-open="true"] [class*="grid-cols-4"] *,
+html body header:has(nav button[aria-expanded="true"]) [class*="grid-cols-4"] * {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body [data-jisoo-mega-panel="true"] a,
+html body header[data-jisoo-mega-open="true"] [class*="grid-cols-4"] a,
+html body header:has(nav button[aria-expanded="true"]) [class*="grid-cols-4"] a {
+  color: rgba(44, 37, 40, 0.86) !important;
+  text-shadow: none !important;
+}
+
+html body [data-jisoo-mega-panel="true"] a:hover,
+html body header[data-jisoo-mega-open="true"] [class*="grid-cols-4"] a:hover,
+html body header:has(nav button[aria-expanded="true"]) [class*="grid-cols-4"] a:hover {
+  background: rgba(213, 188, 155, 0.42) !important;
+  color: var(--charcoal, #2c2528) !important;
+}
+/* === END JISOO FORCE FIX: Discover open must match homepage header === */
+
+/* === JISOO FIX: dark header logo and items while Discover menu is open === */
+/*
+  When the Discover mega dropdown/frame is open, the header is sitting on a
+  light cream frame. Therefore the logo, nav text, topbar text, and header
+  icons must be dark, not white hero-overlay colors.
+*/
+
+:root[data-jisoo-mega-open="true"] body header,
+html body header[data-jisoo-mega-open="true"],
+html body header:has(nav button[aria-expanded="true"]) {
+  background: var(--warm-ivory, #f5e5cc) !important;
+  border-bottom-color: rgba(233, 213, 223, 0.88) !important;
+  box-shadow: 0 8px 25px rgba(191, 141, 151, 0.12) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+:root[data-jisoo-mega-open="true"] body header > div:first-child,
+html body header[data-jisoo-mega-open="true"] > div:first-child,
+html body header:has(nav button[aria-expanded="true"]) > div:first-child {
+  height: 2rem !important;
+  overflow: visible !important;
+  background: var(--warm-ivory, #f5e5cc) !important;
+  border-bottom-color: rgba(214, 168, 186, 0.12) !important;
+}
+
+:root[data-jisoo-mega-open="true"] body header a,
+:root[data-jisoo-mega-open="true"] body header button,
+:root[data-jisoo-mega-open="true"] body header nav,
+:root[data-jisoo-mega-open="true"] body header span,
+:root[data-jisoo-mega-open="true"] body header p,
+html body header[data-jisoo-mega-open="true"] a,
+html body header[data-jisoo-mega-open="true"] button,
+html body header[data-jisoo-mega-open="true"] nav,
+html body header[data-jisoo-mega-open="true"] span,
+html body header[data-jisoo-mega-open="true"] p,
+html body header:has(nav button[aria-expanded="true"]) a,
+html body header:has(nav button[aria-expanded="true"]) button,
+html body header:has(nav button[aria-expanded="true"]) nav,
+html body header:has(nav button[aria-expanded="true"]) span,
+html body header:has(nav button[aria-expanded="true"]) p {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+:root[data-jisoo-mega-open="true"] body header img[alt*="JISOO"],
+:root[data-jisoo-mega-open="true"] body header img[alt*="Jisoo"],
+html body header[data-jisoo-mega-open="true"] img[alt*="JISOO"],
+html body header[data-jisoo-mega-open="true"] img[alt*="Jisoo"],
+html body header:has(nav button[aria-expanded="true"]) img[alt*="JISOO"],
+html body header:has(nav button[aria-expanded="true"]) img[alt*="Jisoo"] {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+:root[data-jisoo-mega-open="true"] body header svg.lucide,
+:root[data-jisoo-mega-open="true"] body header svg[class*="lucide"],
+html body header[data-jisoo-mega-open="true"] svg.lucide,
+html body header[data-jisoo-mega-open="true"] svg[class*="lucide"],
+html body header:has(nav button[aria-expanded="true"]) svg.lucide,
+html body header:has(nav button[aria-expanded="true"]) svg[class*="lucide"] {
+  color: var(--charcoal, #2c2528) !important;
+  stroke: currentColor !important;
+  fill: none !important;
+  opacity: 1 !important;
+}
+
+:root[data-jisoo-mega-open="true"] body header svg.lucide *,
+:root[data-jisoo-mega-open="true"] body header svg[class*="lucide"] *,
+html body header[data-jisoo-mega-open="true"] svg.lucide *,
+html body header[data-jisoo-mega-open="true"] svg[class*="lucide"] *,
+html body header:has(nav button[aria-expanded="true"]) svg.lucide *,
+html body header:has(nav button[aria-expanded="true"]) svg[class*="lucide"] * {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+:root[data-jisoo-mega-open="true"] body [data-jisoo-mega-panel="true"],
+html body [data-jisoo-mega-panel="true"] {
+  background: var(--warm-ivory, #f5e5cc) !important;
+  color: var(--charcoal, #2c2528) !important;
+  border-bottom-color: rgba(207, 174, 131, 0.30) !important;
+  box-shadow: 0 18px 48px rgba(44, 37, 40, 0.10) !important;
+}
+
+:root[data-jisoo-mega-open="true"] body [data-jisoo-mega-panel="true"] *,
+html body [data-jisoo-mega-panel="true"] * {
+  color: var(--charcoal, #2c2528) !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+/* === END JISOO FIX: dark header logo and items while Discover menu is open === */
+
+/* === JISOO FIX: about/elegant header only frames on Discover hover === */
+/*
+  /about must behave like the normal homepage header:
+  - before Discover hover: transparent header over the hero, no cream frame
+  - when Discover dropdown is open: cream header/dropdown frame with dark logo/text/icons
+  This also overrides the Elegant design mode, which was adding the cream frame too early.
+*/
+
+:root[data-jisoo-about-story]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+:root[data-jisoo-about-story]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) > div:first-child {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+}
+
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) a,
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) button,
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) nav,
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) span,
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) p,
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) svg {
+  color: rgba(255, 255, 255, 0.94) !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.48) !important;
+  opacity: 1 !important;
+}
+
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) img[alt*="JISOO"],
+:root[data-jisoo-about-story="image"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) img[alt*="Jisoo"] {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(0, 0, 0, 0.42)) !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) a,
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) button,
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) nav,
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) span,
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) p,
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) svg {
+  color: rgba(44, 37, 40, 0.92) !important;
+  text-shadow: 0 2px 14px rgba(245, 229, 204, 0.62) !important;
+  opacity: 1 !important;
+}
+
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) img[alt*="JISOO"],
+:root[data-jisoo-about-story="story"]:not([data-jisoo-mega-open="true"]) body header:not([data-jisoo-mega-open="true"]) img[alt*="Jisoo"] {
+  filter: brightness(0) saturate(0.4) opacity(0.86) drop-shadow(0 2px 14px rgba(245, 229, 204, 0.42)) !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+html body header[data-jisoo-mega-open="true"],
+:root[data-jisoo-mega-open="true"] body header,
+html body header:has(nav button[aria-expanded="true"]) {
+  background: #f5e5cc !important;
+  border-bottom-color: rgba(233, 213, 223, 0.88) !important;
+  box-shadow: 0 8px 25px rgba(191, 141, 151, 0.12) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+html body header[data-jisoo-mega-open="true"] > div:first-child,
+:root[data-jisoo-mega-open="true"] body header > div:first-child,
+html body header:has(nav button[aria-expanded="true"]) > div:first-child {
+  background: #f5e5cc !important;
+  border-bottom-color: rgba(214, 168, 186, 0.12) !important;
+  box-shadow: none !important;
+}
+
+html body header[data-jisoo-mega-open="true"] a,
+html body header[data-jisoo-mega-open="true"] button,
+html body header[data-jisoo-mega-open="true"] nav,
+html body header[data-jisoo-mega-open="true"] span,
+html body header[data-jisoo-mega-open="true"] p,
+html body header[data-jisoo-mega-open="true"] svg,
+:root[data-jisoo-mega-open="true"] body header a,
+:root[data-jisoo-mega-open="true"] body header button,
+:root[data-jisoo-mega-open="true"] body header nav,
+:root[data-jisoo-mega-open="true"] body header span,
+:root[data-jisoo-mega-open="true"] body header p,
+:root[data-jisoo-mega-open="true"] body header svg,
+html body header:has(nav button[aria-expanded="true"]) a,
+html body header:has(nav button[aria-expanded="true"]) button,
+html body header:has(nav button[aria-expanded="true"]) nav,
+html body header:has(nav button[aria-expanded="true"]) span,
+html body header:has(nav button[aria-expanded="true"]) p,
+html body header:has(nav button[aria-expanded="true"]) svg {
+  color: #2c2528 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-mega-open="true"] img[alt*="JISOO"],
+html body header[data-jisoo-mega-open="true"] img[alt*="Jisoo"],
+:root[data-jisoo-mega-open="true"] body header img[alt*="JISOO"],
+:root[data-jisoo-mega-open="true"] body header img[alt*="Jisoo"],
+html body header:has(nav button[aria-expanded="true"]) img[alt*="JISOO"],
+html body header:has(nav button[aria-expanded="true"]) img[alt*="Jisoo"] {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+html body header[data-jisoo-mega-open="true"] svg *,
+:root[data-jisoo-mega-open="true"] body header svg *,
+html body header:has(nav button[aria-expanded="true"]) svg * {
+  stroke: currentColor !important;
+  fill: none !important;
+}
+
+html body [data-jisoo-mega-panel="true"],
+:root[data-jisoo-mega-open="true"] body [data-jisoo-mega-panel="true"] {
+  background: #f5e5cc !important;
+  color: #2c2528 !important;
+  border-color: rgba(207, 174, 131, 0.30) !important;
+  box-shadow: 0 18px 48px rgba(44, 37, 40, 0.10) !important;
+}
+
+html body [data-jisoo-mega-panel="true"] *,
+:root[data-jisoo-mega-open="true"] body [data-jisoo-mega-panel="true"] * {
+  color: #2c2528 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+/* === END JISOO FIX: about/elegant header only frames on Discover hover === */
+
+/* === JISOO FORCE FIX: about header no pre-frame in elegant mode === */
+/*
+  Strong route-level guard for /about and /en/about:
+  before Discover hover the header must be invisible/transparent, even in Elegant mode.
+  when Discover is open the normal cream header + dropdown frame appears.
+*/
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] {
+  background: transparent !important;
+  border-bottom-color: transparent !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] > div:first-child {
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  border-width: 0 !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] > div:nth-child(2) {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] a,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] button,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] span,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] nav,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] svg {
+  color: rgba(255,255,255,.94) !important;
+  text-shadow: 0 2px 18px rgba(0,0,0,.45) !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] img[alt*="JISOO"],
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="false"] img[alt*="Jisoo"] {
+  filter: brightness(0) invert(1) drop-shadow(0 2px 18px rgba(0,0,0,.42)) !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"],
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) {
+  background: #f5e5cc !important;
+  border-bottom-color: rgba(233,213,223,.88) !important;
+  box-shadow: 0 8px 25px rgba(191,141,151,.12) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  backdrop-filter: blur(24px) !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] > div:first-child,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) > div:first-child {
+  height: 2rem !important;
+  min-height: 2rem !important;
+  overflow: visible !important;
+  background: #f5e5cc !important;
+  border-bottom: 1px solid rgba(214,168,186,.12) !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] a,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] button,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] span,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] nav,
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] svg,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) a,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) button,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) span,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) nav,
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) svg {
+  color: #2c2528 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] img[alt*="JISOO"],
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] img[alt*="Jisoo"],
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) img[alt*="JISOO"],
+html body header[data-jisoo-about-route="true"]:has(nav button[aria-expanded="true"]) img[alt*="Jisoo"] {
+  filter: none !important;
+  opacity: 1 !important;
+  mix-blend-mode: normal !important;
+}
+
+html body header[data-jisoo-about-route="true"] [data-jisoo-mega-panel="true"],
+html body header[data-jisoo-about-route="true"][data-jisoo-mega-open="true"] [data-jisoo-mega-panel="true"],
+html body [data-jisoo-mega-panel="true"] {
+  background: #f5e5cc !important;
+  color: #2c2528 !important;
+  border-color: rgba(207,174,131,.30) !important;
+  box-shadow: 0 18px 48px rgba(44,37,40,.10) !important;
+}
+
+html body header[data-jisoo-about-route="true"] [data-jisoo-mega-panel="true"] *,
+html body [data-jisoo-mega-panel="true"] * {
+  color: #2c2528 !important;
+  text-shadow: none !important;
+}
+/* === END JISOO FORCE FIX: about header no pre-frame in elegant mode === */
+
