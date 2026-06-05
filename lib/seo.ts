@@ -1,5 +1,6 @@
 import { products, categories } from "./data";
-import { locales } from "./i18n";
+import { locales, type Locale } from "./i18n";
+import { localizeProduct } from "./product-localization";
 
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL || "https://www.jisoocosmetic.com"
@@ -82,19 +83,24 @@ export function getWebsiteJsonLd() {
   };
 }
 
-export function getProductJsonLd(product: (typeof products)[number]) {
+export function getProductJsonLd(
+  product: (typeof products)[number],
+  locale: Locale = "en",
+) {
+  const localizedProduct = localizeProduct(product, locale);
+
   return {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
-    description: product.shortDescription,
+    name: localizedProduct.name,
+    description: localizedProduct.shortDescription,
     image: product.images.map((image) => absoluteUrl(image.src)),
     brand: {
       "@type": "Brand",
       name: product.brand,
     },
     sku: product.id,
-    category: product.category,
+    category: localizedProduct.category,
     offers: {
       "@type": "Offer",
       url: absoluteUrl(`/product/${product.slug}`),

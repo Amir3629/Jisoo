@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import { getProductBySlug } from "@/lib/data";
+import { isLocale, type Locale } from "@/lib/i18n";
+import {
+  localizeProduct,
+  localizedProductSeoTitle,
+} from "@/lib/product-localization";
 import {
   absoluteUrl,
   getBreadcrumbJsonLd,
@@ -16,6 +21,7 @@ export async function generateMetadata({
   params,
 }: ProductLayoutProps): Promise<Metadata> {
   const { slug, lang } = await params;
+  const locale: Locale = lang && isLocale(lang) ? lang : "en";
   const localePrefix = lang ? `/${lang}` : "";
   const product = getProductBySlug(slug);
 
@@ -26,14 +32,15 @@ export async function generateMetadata({
     };
   }
 
+  const localizedProduct = localizeProduct(product, locale);
   const productUrl = absoluteUrl(`${localePrefix}/product/${product.slug}`);
   const image = product.images[0]?.src
     ? absoluteUrl(product.images[0].src)
     : absoluteUrl("/assets/hero/home-desktop.png");
 
   return {
-    title: `${product.name} Korean Skincare`,
-    description: product.shortDescription,
+    title: localizedProductSeoTitle(product, locale),
+    description: localizedProduct.shortDescription,
     alternates: {
       canonical: productUrl,
       languages: {
@@ -46,17 +53,19 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${product.name} | ${siteName}`,
-      description: product.shortDescription,
+      title: `${localizedProduct.name} | ${siteName}`,
+      description: localizedProduct.shortDescription,
       url: productUrl,
       type: "website",
       siteName,
-      images: [{ url: image, width: 1200, height: 1200, alt: product.name }],
+      images: [
+        { url: image, width: 1200, height: 1200, alt: localizedProduct.name },
+      ],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | ${siteName}`,
-      description: product.shortDescription,
+      title: `${localizedProduct.name} | ${siteName}`,
+      description: localizedProduct.shortDescription,
       images: [image],
     },
   };
@@ -67,20 +76,22 @@ export default async function ProductLayout({
   params,
 }: ProductLayoutProps) {
   const { slug, lang } = await params;
+  const locale: Locale = lang && isLocale(lang) ? lang : "en";
   const localePrefix = lang ? `/${lang}` : "";
   const product = getProductBySlug(slug);
+  const localizedProduct = product ? localizeProduct(product, locale) : null;
   const jsonLd = product
     ? [
-        getProductJsonLd(product),
+        getProductJsonLd(product, locale),
         getBreadcrumbJsonLd([
           { name: "Home", url: localePrefix || "/" },
           { name: "Shop", url: `${localePrefix}/shop` },
           {
-            name: product.category,
+            name: localizedProduct?.category ?? product.category,
             url: `${localePrefix}/shop/${product.category}`,
           },
           {
-            name: product.name,
+            name: localizedProduct?.name ?? product.name,
             url: `${localePrefix}/product/${product.slug}`,
           },
         ]),

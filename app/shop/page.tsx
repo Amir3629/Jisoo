@@ -16,6 +16,7 @@ import { ProductCard } from "@/components/product/product-card";
 import { useLocale } from "@/components/providers/locale-provider";
 import { categories, products } from "@/lib/data";
 import { cn } from "@/lib/utils";
+import { localizeProductLabel } from "@/lib/product-localization";
 import type { Locale } from "@/lib/i18n";
 import type { Product } from "@/lib/types";
 
@@ -752,7 +753,7 @@ function ShopPageContent() {
                                 : "text-muted-foreground hover:text-charcoal",
                             )}
                           >
-                            {cat.name}
+                            {localizeProductLabel(cat.name, locale)}
                           </button>
                         ))}
                       </div>

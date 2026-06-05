@@ -1,105 +1,447 @@
-'use client'
+"use client";
 
-import { useState, use } from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
-import { ProductCard } from '@/components/product/product-card'
-import { getProductBySlug, getRelatedProducts, getProductReviews, formatPrice, products as catalogProducts } from '@/lib/data'
-import { useCart } from '@/components/providers/cart-provider'
-import { useRegion } from '@/components/providers/region-provider'
-import { useLocale } from '@/components/providers/locale-provider'
-import { localizeHref } from '@/lib/i18n'
+import { useState, use } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import { Header } from "@/components/layout/header";
+import { Footer } from "@/components/layout/footer";
+import { ProductCard } from "@/components/product/product-card";
 import {
-  Heart, Share2, Star, Minus, Plus, Check,
-  Sparkles, Info
-} from 'lucide-react'
-import { cn } from '@/lib/utils'
-import { evaluateRegionAccess } from '@/lib/services/region-access'
-import { resolveImageSrc } from '@/lib/image-fallbacks'
-import { JISOO_LEAF_MARK_SRC, getProductCareFocus, getProductStatusBadge, getRoutineFlowForProduct, getRoutinePlacementForProduct, getRoutineSuggestionProducts } from '@/lib/product-merchandising'
+  getProductBySlug,
+  getRelatedProducts,
+  getProductReviews,
+  formatPrice,
+  products as catalogProducts,
+} from "@/lib/data";
+import { useCart } from "@/components/providers/cart-provider";
+import { useRegion } from "@/components/providers/region-provider";
+import { useLocale } from "@/components/providers/locale-provider";
+import { localizeHref } from "@/lib/i18n";
+import {
+  localizeProduct,
+  localizeProductLabel,
+} from "@/lib/product-localization";
+import {
+  Heart,
+  Share2,
+  Star,
+  Minus,
+  Plus,
+  Check,
+  Sparkles,
+  Info,
+} from "lucide-react";
+import { cn } from "@/lib/utils";
+import { evaluateRegionAccess } from "@/lib/services/region-access";
+import { resolveImageSrc } from "@/lib/image-fallbacks";
+import {
+  JISOO_LEAF_MARK_SRC,
+  getProductCareFocus,
+  getProductStatusBadge,
+  getRoutineFlowForProduct,
+  getRoutinePlacementForProduct,
+  getRoutineSuggestionProducts,
+} from "@/lib/product-merchandising";
 
 interface ProductPageProps {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const { slug } = use(params)
-  const product = getProductBySlug(slug)
-  const relatedProducts = product ? getRelatedProducts(product.id) : []
-  const reviews = product ? getProductReviews(product.id) : []
+  const { slug } = use(params);
+  const product = getProductBySlug(slug);
+  const relatedProducts = product ? getRelatedProducts(product.id) : [];
+  const reviews = product ? getProductReviews(product.id) : [];
 
-  const [selectedImage, setSelectedImage] = useState(0)
-  const [quantity, setQuantity] = useState(1)
-  const [activeTab, setActiveTab] = useState<'details' | 'ingredients' | 'reviews'>('details')
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  const [selectedVariant, setSelectedVariant] = useState(product?.variants?.[0] || null)
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
+  const [activeTab, setActiveTab] = useState<
+    "details" | "ingredients" | "reviews"
+  >("details");
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [selectedVariant, setSelectedVariant] = useState(
+    product?.variants?.[0] || null,
+  );
 
-  const { addToCart } = useCart()
-  const { region } = useRegion()
-  const { locale, dictionary } = useLocale()
-  const t = dictionary.home
+  const { addToCart } = useCart();
+  const { region } = useRegion();
+  const { locale, dictionary } = useLocale();
+  const t = dictionary.home;
   const copy = {
-    share: locale === 'ar' ? 'مشاركة' : locale === 'fr' ? 'Partager' : locale === 'de' ? 'Teilen' : locale === 'ko' ? '공유' : locale === 'tr' ? 'Paylaş' : 'Share',
-    askAi: locale === 'ar' ? 'اسأل مساعد الذكاء الاصطناعي' : locale === 'fr' ? 'Demander à l’assistant IA' : locale === 'de' ? 'KI-Assistent fragen' : locale === 'ko' ? 'AI 어시스턴트에게 묻기' : locale === 'tr' ? 'AI Asistanına Sor' : 'Ask AI Assistant',
-    size: locale === 'ar' ? 'الحجم' : locale === 'fr' ? 'Taille' : locale === 'de' ? 'Größe' : locale === 'ko' ? '용량' : locale === 'tr' ? 'Boyut' : 'Size',
-    texture: locale === 'ar' ? 'الملمس' : locale === 'fr' ? 'Texture' : locale === 'de' ? 'Textur' : locale === 'ko' ? '텍스처' : locale === 'tr' ? 'Doku' : 'Texture',
-    finish: locale === 'ar' ? 'اللمسة النهائية' : locale === 'fr' ? 'Fini' : locale === 'de' ? 'Finish' : locale === 'ko' ? '피니시' : locale === 'tr' ? 'Bitiş' : 'Finish',
-    skinTypes: locale === 'ar' ? 'أنواع البشرة' : locale === 'fr' ? 'Types de peau' : locale === 'de' ? 'Hauttypen' : locale === 'ko' ? '피부 타입' : locale === 'tr' ? 'Cilt Tipleri' : 'Skin Types',
-    detailsTab: locale === 'ar' ? 'التفاصيل وطريقة الاستخدام' : locale === 'fr' ? 'Détails & Utilisation' : locale === 'de' ? 'Details & Anwendung' : locale === 'ko' ? '상세 정보 & 사용법' : locale === 'tr' ? 'Detaylar ve Kullanım' : 'Details & How to Use',
-    about: locale === 'ar' ? 'عن هذا المنتج' : locale === 'fr' ? 'À propos de ce produit' : locale === 'de' ? 'Über dieses Produkt' : locale === 'ko' ? '제품 소개' : locale === 'tr' ? 'Bu Ürün Hakkında' : 'About This Product',
-    howToUse: locale === 'ar' ? 'طريقة الاستخدام' : locale === 'fr' ? 'Mode d’utilisation' : locale === 'de' ? 'Anwendung' : locale === 'ko' ? '사용 방법' : locale === 'tr' ? 'Kullanım Şekli' : 'How to Use',
-    keyBenefits: locale === 'ar' ? 'الفوائد الرئيسية' : locale === 'fr' ? 'Bénéfices clés' : locale === 'de' ? 'Hauptvorteile' : locale === 'ko' ? '핵심 효능' : locale === 'tr' ? 'Temel Faydalar' : 'Key Benefits',
-    keyIngredients: locale === 'ar' ? 'المكونات الرئيسية' : locale === 'fr' ? 'Ingrédients clés' : locale === 'de' ? 'Hauptinhaltsstoffe' : locale === 'ko' ? '주요 성분' : locale === 'tr' ? 'Temel İçerikler' : 'Key Ingredients',
-    verified: locale === 'ar' ? 'موثق' : locale === 'fr' ? 'Vérifié' : locale === 'de' ? 'Verifiziert' : locale === 'ko' ? '인증됨' : locale === 'tr' ? 'Doğrulandı' : 'Verified',
-    noReviews: locale === 'ar' ? 'ستظهر المراجعات بعد التحقق.' : locale === 'fr' ? 'Les avis apparaîtront après validation.' : locale === 'de' ? 'Bewertungen erscheinen nach Prüfung.' : locale === 'ko' ? '검증 후 리뷰가 표시됩니다.' : locale === 'tr' ? 'Yorumlar doğrulamadan sonra gösterilecek.' : 'Verified reviews will appear after approval.',
-    youMayAlsoLike: locale === 'ar' ? 'قد يعجبك أيضًا' : locale === 'fr' ? 'Vous aimerez aussi' : locale === 'de' ? 'Das könnte dir auch gefallen' : locale === 'ko' ? '함께 보면 좋은 제품' : locale === 'tr' ? 'Bunlar da İlginizi Çekebilir' : 'You May Also Like',
-    ingredientsTab: locale === 'ar' ? 'المكونات' : locale === 'fr' ? 'Ingrédients' : locale === 'de' ? 'Inhaltsstoffe' : locale === 'ko' ? '성분' : locale === 'tr' ? 'İçerikler' : 'Ingredients',
-    reviewsTab: locale === 'ar' ? 'المراجعات' : locale === 'fr' ? 'Avis' : locale === 'de' ? 'Bewertungen' : locale === 'ko' ? '리뷰' : locale === 'tr' ? 'Yorumlar' : 'Reviews',
-    photoUploadTitle: locale === 'ar' ? 'رفع صورة العميل (واجهة تجريبية)' : locale === 'fr' ? 'Téléversement photo client (UI)' : locale === 'de' ? 'Kundenfoto-Upload (UI)' : locale === 'ko' ? '고객 사진 업로드(UI)' : locale === 'tr' ? 'Müşteri Fotoğraf Yükleme (UI)' : 'Customer Photo Upload (UI Scaffold)',
-    photoUploadBody: locale === 'ar' ? 'شارك صورة النتيجة بعد أسبوعين من الاستخدام. ميزة الرفع غير متصلة بعد.' : locale === 'fr' ? 'Partagez votre photo résultat après 2 semaines. Le backend d’upload n’est pas encore connecté.' : locale === 'de' ? 'Teile dein Ergebnisfoto nach 2 Wochen Nutzung. Upload-Backend ist noch nicht verbunden.' : locale === 'ko' ? '2주 사용 후 결과 사진을 공유하세요. 업로드 백엔드는 아직 연결되지 않았습니다.' : locale === 'tr' ? '2 haftalık kullanım sonrası sonuç fotoğrafınızı paylaşın. Yükleme altyapısı henüz bağlı değil.' : 'Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.',
-    choosePhoto: locale === 'ar' ? 'اختر صورة' : locale === 'fr' ? 'Choisir une photo' : locale === 'de' ? 'Foto auswählen' : locale === 'ko' ? '사진 선택' : locale === 'tr' ? 'Fotoğraf Seç' : 'Choose Photo',
-    careFocus: locale === 'ar' ? 'تركيز العناية' : locale === 'fr' ? 'Objectif soin' : locale === 'de' ? 'Pflegefokus' : locale === 'ko' ? '케어 포커스' : locale === 'tr' ? 'Bakım odağı' : 'Care focus',
-    routineTitle: locale === 'ar' ? 'كيف يدخل هذا المنتج في الروتين' : locale === 'fr' ? 'Où placer ce produit dans la routine' : locale === 'de' ? 'So passt dieses Produkt in die Routine' : locale === 'ko' ? '이 제품을 루틴에 넣는 순서' : locale === 'tr' ? 'Bu ürün rutinde nereye gelir' : 'Where this fits in your routine',
-    routineBody: locale === 'ar' ? 'مثال سريع للترتيب حتى يعرف العميل ماذا يستخدم أولاً وما يأتي بعده.' : locale === 'fr' ? 'Un guide court pour montrer quoi utiliser d’abord et quoi appliquer ensuite.' : locale === 'de' ? 'Eine kurze Reihenfolge, damit Kund:innen wissen, was zuerst und danach kommt.' : locale === 'ko' ? '무엇을 먼저 쓰고 다음에 무엇을 바르는지 보여주는 간단한 순서입니다.' : locale === 'tr' ? 'Müşterinin önce neyi, sonra neyi kullanacağını görmesi için kısa bir sıra.' : 'A simple order guide so customers know what to use first and what comes next.',
-    highlightedStep: locale === 'ar' ? 'خطوة هذا المنتج' : locale === 'fr' ? 'Étape de ce produit' : locale === 'de' ? 'Schritt dieses Produkts' : locale === 'ko' ? '이 제품 단계' : locale === 'tr' ? 'Bu ürünün adımı' : 'This product step',
-    before: locale === 'ar' ? 'قبل ذلك' : locale === 'fr' ? 'Avant' : locale === 'de' ? 'Davor' : locale === 'ko' ? '이전 단계' : locale === 'tr' ? 'Önce' : 'Before',
-    after: locale === 'ar' ? 'بعد ذلك' : locale === 'fr' ? 'Après' : locale === 'de' ? 'Danach' : locale === 'ko' ? '다음 단계' : locale === 'tr' ? 'Sonra' : 'After',
-    completeRoutine: locale === 'ar' ? 'أكملي روتين العناية' : locale === 'fr' ? 'Compléter le rituel' : locale === 'de' ? 'Routine vervollständigen' : locale === 'ko' ? '루틴 완성하기' : locale === 'tr' ? 'Rutini tamamla' : 'Complete your care ritual',
-    pairsWith: locale === 'ar' ? 'يتناغم بشكل جميل مع' : locale === 'fr' ? 'S’accorde avec' : locale === 'de' ? 'Passt wunderbar zu' : locale === 'ko' ? '함께 쓰기 좋은 제품' : locale === 'tr' ? 'Şunlarla güzel eşleşir' : 'Pairs beautifully with',
-  }
+    share:
+      locale === "ar"
+        ? "مشاركة"
+        : locale === "fr"
+          ? "Partager"
+          : locale === "de"
+            ? "Teilen"
+            : locale === "ko"
+              ? "공유"
+              : locale === "tr"
+                ? "Paylaş"
+                : "Share",
+    askAi:
+      locale === "ar"
+        ? "اسأل مساعد الذكاء الاصطناعي"
+        : locale === "fr"
+          ? "Demander à l’assistant IA"
+          : locale === "de"
+            ? "KI-Assistent fragen"
+            : locale === "ko"
+              ? "AI 어시스턴트에게 묻기"
+              : locale === "tr"
+                ? "AI Asistanına Sor"
+                : "Ask AI Assistant",
+    size:
+      locale === "ar"
+        ? "الحجم"
+        : locale === "fr"
+          ? "Taille"
+          : locale === "de"
+            ? "Größe"
+            : locale === "ko"
+              ? "용량"
+              : locale === "tr"
+                ? "Boyut"
+                : "Size",
+    texture:
+      locale === "ar"
+        ? "الملمس"
+        : locale === "fr"
+          ? "Texture"
+          : locale === "de"
+            ? "Textur"
+            : locale === "ko"
+              ? "텍스처"
+              : locale === "tr"
+                ? "Doku"
+                : "Texture",
+    finish:
+      locale === "ar"
+        ? "اللمسة النهائية"
+        : locale === "fr"
+          ? "Fini"
+          : locale === "de"
+            ? "Finish"
+            : locale === "ko"
+              ? "피니시"
+              : locale === "tr"
+                ? "Bitiş"
+                : "Finish",
+    skinTypes:
+      locale === "ar"
+        ? "أنواع البشرة"
+        : locale === "fr"
+          ? "Types de peau"
+          : locale === "de"
+            ? "Hauttypen"
+            : locale === "ko"
+              ? "피부 타입"
+              : locale === "tr"
+                ? "Cilt Tipleri"
+                : "Skin Types",
+    detailsTab:
+      locale === "ar"
+        ? "التفاصيل وطريقة الاستخدام"
+        : locale === "fr"
+          ? "Détails & Utilisation"
+          : locale === "de"
+            ? "Details & Anwendung"
+            : locale === "ko"
+              ? "상세 정보 & 사용법"
+              : locale === "tr"
+                ? "Detaylar ve Kullanım"
+                : "Details & How to Use",
+    about:
+      locale === "ar"
+        ? "عن هذا المنتج"
+        : locale === "fr"
+          ? "À propos de ce produit"
+          : locale === "de"
+            ? "Über dieses Produkt"
+            : locale === "ko"
+              ? "제품 소개"
+              : locale === "tr"
+                ? "Bu Ürün Hakkında"
+                : "About This Product",
+    howToUse:
+      locale === "ar"
+        ? "طريقة الاستخدام"
+        : locale === "fr"
+          ? "Mode d’utilisation"
+          : locale === "de"
+            ? "Anwendung"
+            : locale === "ko"
+              ? "사용 방법"
+              : locale === "tr"
+                ? "Kullanım Şekli"
+                : "How to Use",
+    keyBenefits:
+      locale === "ar"
+        ? "الفوائد الرئيسية"
+        : locale === "fr"
+          ? "Bénéfices clés"
+          : locale === "de"
+            ? "Hauptvorteile"
+            : locale === "ko"
+              ? "핵심 효능"
+              : locale === "tr"
+                ? "Temel Faydalar"
+                : "Key Benefits",
+    keyIngredients:
+      locale === "ar"
+        ? "المكونات الرئيسية"
+        : locale === "fr"
+          ? "Ingrédients clés"
+          : locale === "de"
+            ? "Hauptinhaltsstoffe"
+            : locale === "ko"
+              ? "주요 성분"
+              : locale === "tr"
+                ? "Temel İçerikler"
+                : "Key Ingredients",
+    verified:
+      locale === "ar"
+        ? "موثق"
+        : locale === "fr"
+          ? "Vérifié"
+          : locale === "de"
+            ? "Verifiziert"
+            : locale === "ko"
+              ? "인증됨"
+              : locale === "tr"
+                ? "Doğrulandı"
+                : "Verified",
+    noReviews:
+      locale === "ar"
+        ? "ستظهر المراجعات بعد التحقق."
+        : locale === "fr"
+          ? "Les avis apparaîtront après validation."
+          : locale === "de"
+            ? "Bewertungen erscheinen nach Prüfung."
+            : locale === "ko"
+              ? "검증 후 리뷰가 표시됩니다."
+              : locale === "tr"
+                ? "Yorumlar doğrulamadan sonra gösterilecek."
+                : "Verified reviews will appear after approval.",
+    youMayAlsoLike:
+      locale === "ar"
+        ? "قد يعجبك أيضًا"
+        : locale === "fr"
+          ? "Vous aimerez aussi"
+          : locale === "de"
+            ? "Das könnte dir auch gefallen"
+            : locale === "ko"
+              ? "함께 보면 좋은 제품"
+              : locale === "tr"
+                ? "Bunlar da İlginizi Çekebilir"
+                : "You May Also Like",
+    ingredientsTab:
+      locale === "ar"
+        ? "المكونات"
+        : locale === "fr"
+          ? "Ingrédients"
+          : locale === "de"
+            ? "Inhaltsstoffe"
+            : locale === "ko"
+              ? "성분"
+              : locale === "tr"
+                ? "İçerikler"
+                : "Ingredients",
+    reviewsTab:
+      locale === "ar"
+        ? "المراجعات"
+        : locale === "fr"
+          ? "Avis"
+          : locale === "de"
+            ? "Bewertungen"
+            : locale === "ko"
+              ? "리뷰"
+              : locale === "tr"
+                ? "Yorumlar"
+                : "Reviews",
+    photoUploadTitle:
+      locale === "ar"
+        ? "رفع صورة العميل (واجهة تجريبية)"
+        : locale === "fr"
+          ? "Téléversement photo client (UI)"
+          : locale === "de"
+            ? "Kundenfoto-Upload (UI)"
+            : locale === "ko"
+              ? "고객 사진 업로드(UI)"
+              : locale === "tr"
+                ? "Müşteri Fotoğraf Yükleme (UI)"
+                : "Customer Photo Upload (UI Scaffold)",
+    photoUploadBody:
+      locale === "ar"
+        ? "شارك صورة النتيجة بعد أسبوعين من الاستخدام. ميزة الرفع غير متصلة بعد."
+        : locale === "fr"
+          ? "Partagez votre photo résultat après 2 semaines. Le backend d’upload n’est pas encore connecté."
+          : locale === "de"
+            ? "Teile dein Ergebnisfoto nach 2 Wochen Nutzung. Upload-Backend ist noch nicht verbunden."
+            : locale === "ko"
+              ? "2주 사용 후 결과 사진을 공유하세요. 업로드 백엔드는 아직 연결되지 않았습니다."
+              : locale === "tr"
+                ? "2 haftalık kullanım sonrası sonuç fotoğrafınızı paylaşın. Yükleme altyapısı henüz bağlı değil."
+                : "Share your texture/result photo after 2 weeks of use. Upload backend is not connected yet.",
+    choosePhoto:
+      locale === "ar"
+        ? "اختر صورة"
+        : locale === "fr"
+          ? "Choisir une photo"
+          : locale === "de"
+            ? "Foto auswählen"
+            : locale === "ko"
+              ? "사진 선택"
+              : locale === "tr"
+                ? "Fotoğraf Seç"
+                : "Choose Photo",
+    careFocus:
+      locale === "ar"
+        ? "تركيز العناية"
+        : locale === "fr"
+          ? "Objectif soin"
+          : locale === "de"
+            ? "Pflegefokus"
+            : locale === "ko"
+              ? "케어 포커스"
+              : locale === "tr"
+                ? "Bakım odağı"
+                : "Care focus",
+    routineTitle:
+      locale === "ar"
+        ? "كيف يدخل هذا المنتج في الروتين"
+        : locale === "fr"
+          ? "Où placer ce produit dans la routine"
+          : locale === "de"
+            ? "So passt dieses Produkt in die Routine"
+            : locale === "ko"
+              ? "이 제품을 루틴에 넣는 순서"
+              : locale === "tr"
+                ? "Bu ürün rutinde nereye gelir"
+                : "Where this fits in your routine",
+    routineBody:
+      locale === "ar"
+        ? "مثال سريع للترتيب حتى يعرف العميل ماذا يستخدم أولاً وما يأتي بعده."
+        : locale === "fr"
+          ? "Un guide court pour montrer quoi utiliser d’abord et quoi appliquer ensuite."
+          : locale === "de"
+            ? "Eine kurze Reihenfolge, damit Kund:innen wissen, was zuerst und danach kommt."
+            : locale === "ko"
+              ? "무엇을 먼저 쓰고 다음에 무엇을 바르는지 보여주는 간단한 순서입니다."
+              : locale === "tr"
+                ? "Müşterinin önce neyi, sonra neyi kullanacağını görmesi için kısa bir sıra."
+                : "A simple order guide so customers know what to use first and what comes next.",
+    highlightedStep:
+      locale === "ar"
+        ? "خطوة هذا المنتج"
+        : locale === "fr"
+          ? "Étape de ce produit"
+          : locale === "de"
+            ? "Schritt dieses Produkts"
+            : locale === "ko"
+              ? "이 제품 단계"
+              : locale === "tr"
+                ? "Bu ürünün adımı"
+                : "This product step",
+    before:
+      locale === "ar"
+        ? "قبل ذلك"
+        : locale === "fr"
+          ? "Avant"
+          : locale === "de"
+            ? "Davor"
+            : locale === "ko"
+              ? "이전 단계"
+              : locale === "tr"
+                ? "Önce"
+                : "Before",
+    after:
+      locale === "ar"
+        ? "بعد ذلك"
+        : locale === "fr"
+          ? "Après"
+          : locale === "de"
+            ? "Danach"
+            : locale === "ko"
+              ? "다음 단계"
+              : locale === "tr"
+                ? "Sonra"
+                : "After",
+    completeRoutine:
+      locale === "ar"
+        ? "أكملي روتين العناية"
+        : locale === "fr"
+          ? "Compléter le rituel"
+          : locale === "de"
+            ? "Routine vervollständigen"
+            : locale === "ko"
+              ? "루틴 완성하기"
+              : locale === "tr"
+                ? "Rutini tamamla"
+                : "Complete your care ritual",
+    pairsWith:
+      locale === "ar"
+        ? "يتناغم بشكل جميل مع"
+        : locale === "fr"
+          ? "S’accorde avec"
+          : locale === "de"
+            ? "Passt wunderbar zu"
+            : locale === "ko"
+              ? "함께 쓰기 좋은 제품"
+              : locale === "tr"
+                ? "Şunlarla güzel eşleşir"
+                : "Pairs beautifully with",
+  };
 
   if (!product) {
     return (
       <main className="min-h-screen bg-warm-ivory">
         <Header />
         <div className="pt-32 pb-24 text-center">
-          <h1 className="text-2xl font-serif text-charcoal">{dictionary.common.productNotFound}</h1>
-          <Link href={localizeHref('/shop', locale)} className="mt-4 inline-block text-plum hover:text-rose-mauve">
+          <h1 className="text-2xl font-serif text-charcoal">
+            {dictionary.common.productNotFound}
+          </h1>
+          <Link
+            href={localizeHref("/shop", locale)}
+            className="mt-4 inline-block text-plum hover:text-rose-mauve"
+          >
             {dictionary.common.backToShop}
           </Link>
         </div>
         <Footer />
       </main>
-    )
+    );
   }
 
-  const access = evaluateRegionAccess(product, region)
-  const isBuyable = access.isBuyable
-  const isVisibleOnly = access.status === 'visible_but_not_buyable'
-  const statusBadge = getProductStatusBadge(product)
-  const careFocus = getProductCareFocus(product)
-  const routinePlacement = getRoutinePlacementForProduct(product)
-  const routineSuggestions = getRoutineSuggestionProducts(product, catalogProducts, 3)
-  const routineFlow = getRoutineFlowForProduct(product)
+  const access = evaluateRegionAccess(product, region);
+  const isBuyable = access.isBuyable;
+  const isVisibleOnly = access.status === "visible_but_not_buyable";
+  const localizedProduct = localizeProduct(product, locale);
+  const statusBadge = getProductStatusBadge(product);
+  const localizedStatusBadge = statusBadge
+    ? { ...statusBadge, label: localizeProductLabel(statusBadge.label, locale) }
+    : null;
+  const careFocus = getProductCareFocus(product);
+  const localizedCareFocus = {
+    eyebrow: localizeProductLabel(careFocus.eyebrow, locale),
+    title: localizeProductLabel(careFocus.title, locale),
+    description: localizeProductLabel(careFocus.description, locale),
+  };
+  const routinePlacement = getRoutinePlacementForProduct(product);
+  const routineSuggestions = getRoutineSuggestionProducts(
+    product,
+    catalogProducts,
+    3,
+  );
+  const routineFlow = getRoutineFlowForProduct(product);
 
   const handleAddToCart = () => {
     if (isBuyable) {
-      addToCart(product, quantity, selectedVariant || undefined)
+      addToCart(product, quantity, selectedVariant || undefined);
     }
-  }
+  };
 
   return (
     <main className="min-h-screen bg-warm-ivory">
@@ -109,19 +451,28 @@ export default function ProductPage({ params }: ProductPageProps) {
       <div className="pt-28 lg:pt-32 pb-4 bg-nude-beige/30">
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           <nav className="flex items-center gap-2 text-sm">
-            <Link href={localizeHref('/', locale)} className="text-muted-foreground hover:text-plum transition-colors">
+            <Link
+              href={localizeHref("/", locale)}
+              className="text-muted-foreground hover:text-plum transition-colors"
+            >
               {dictionary.product.breadcrumbHome}
             </Link>
             <span className="text-muted-foreground">/</span>
-            <Link href={localizeHref('/shop', locale)} className="text-muted-foreground hover:text-plum transition-colors">
+            <Link
+              href={localizeHref("/shop", locale)}
+              className="text-muted-foreground hover:text-plum transition-colors"
+            >
               {dictionary.product.breadcrumbShop}
             </Link>
             <span className="text-muted-foreground">/</span>
-            <Link href={localizeHref(`/shop/${product.category}`, locale)} className="text-muted-foreground hover:text-plum transition-colors capitalize">
-              {product.category}
+            <Link
+              href={localizeHref(`/shop/${product.category}`, locale)}
+              className="text-muted-foreground hover:text-plum transition-colors capitalize"
+            >
+              {localizedProduct.category}
             </Link>
             <span className="text-muted-foreground">/</span>
-            <span className="text-charcoal">{product.name}</span>
+            <span className="text-charcoal">{localizedProduct.name}</span>
           </nav>
         </div>
       </div>
@@ -141,7 +492,7 @@ export default function ProductPage({ params }: ProductPageProps) {
               >
                 <Image
                   src={resolveImageSrc(product.images[selectedImage]?.src)}
-                  alt={product.images[selectedImage]?.alt || product.name}
+                  alt={localizedProduct.name}
                   fill
                   className="object-cover"
                   priority
@@ -149,47 +500,59 @@ export default function ProductPage({ params }: ProductPageProps) {
 
                 {/* JISOO Watermark */}
                 <div className="absolute bottom-4 right-4 rounded-full bg-white/80 px-4 py-2 backdrop-blur-sm">
-                  <span className="text-sm font-serif font-semibold text-plum">JISOO</span>
+                  <span className="text-sm font-serif font-semibold text-plum">
+                    JISOO
+                  </span>
                 </div>
 
                 {/* Best Seller ribbon - direct child of gallery image so it sits on the real corner, same as product cards */}
-                {statusBadge?.kind === 'best-seller' && (
+                {localizedStatusBadge?.kind === "best-seller" && (
                   <div className="pointer-events-none absolute -left-10 top-5 z-20 w-40 -rotate-45 transition duration-300">
                     <span
-                      aria-label="Best Sellers"
+                      aria-label={localizedStatusBadge.label}
                       className="relative flex h-8 items-center justify-center overflow-hidden border-y border-white/60 bg-gradient-to-r from-[#a86f1f] via-[#f7d67d] to-[#c8922f] text-[10px] font-bold uppercase tracking-[0.18em] text-[#4f363c] shadow-[0_12px_26px_rgba(171,120,45,0.30)]"
                     >
-                      <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-white/85" />
-                      <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-[#8a5a1b]/30" />
-                      <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.55)]">Best Sellers</span>
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-0 top-0 h-px bg-white/85"
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="absolute inset-x-0 bottom-0 h-px bg-[#8a5a1b]/30"
+                      />
+                      <span className="relative drop-shadow-[0_1px_0_rgba(255,255,255,0.55)]">
+                        {localizedStatusBadge.label}
+                      </span>
                     </span>
                   </div>
                 )}
 
                 {/* Badges */}
                 <div className="absolute left-4 top-4 z-20 flex flex-col gap-2">
-                  {statusBadge && statusBadge.kind !== 'best-seller' && (
-                    <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
-                      <Image
-                        src={statusBadge.iconSrc}
-                        alt={statusBadge.label}
-                        width={20}
-                        height={20}
-                        className="h-5 w-5 object-contain"
-                      />
-                      {statusBadge.label}
-                    </span>
-                  )}
+                  {localizedStatusBadge &&
+                    localizedStatusBadge.kind !== "best-seller" && (
+                      <span className="inline-flex w-fit items-center gap-2 rounded-full border border-warm-ivory/70 bg-white/90 px-3 py-1 text-xs font-medium text-charcoal shadow-sm backdrop-blur-xl">
+                        <Image
+                          src={localizedStatusBadge.iconSrc}
+                          alt={localizedStatusBadge.label}
+                          width={20}
+                          height={20}
+                          className="h-5 w-5 object-contain"
+                        />
+                        {localizedStatusBadge.label}
+                      </span>
+                    )}
                   {product.isNew && (
                     <span className="px-3 py-1 text-xs font-medium bg-plum text-warm-ivory rounded-full">
                       {dictionary.common.new}
                     </span>
                   )}
-                  {product.isBestSeller && statusBadge?.kind !== 'best-seller' && (
-                    <span className="px-3 py-1 text-xs font-medium bg-champagne-gold text-charcoal rounded-full">
-                      {dictionary.common.bestSeller}
-                    </span>
-                  )}
+                  {product.isBestSeller &&
+                    localizedStatusBadge?.kind !== "best-seller" && (
+                      <span className="px-3 py-1 text-xs font-medium bg-champagne-gold text-charcoal rounded-full">
+                        {dictionary.common.bestSeller}
+                      </span>
+                    )}
                 </div>
               </motion.div>
 
@@ -201,16 +564,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                       key={image.id}
                       onClick={() => setSelectedImage(index)}
                       className={cn(
-                        'relative w-20 h-20 rounded-xl overflow-hidden',
-                        'border-2 transition-all',
+                        "relative w-20 h-20 rounded-xl overflow-hidden",
+                        "border-2 transition-all",
                         selectedImage === index
-                          ? 'border-plum'
-                          : 'border-transparent hover:border-blush-pink'
+                          ? "border-plum"
+                          : "border-transparent hover:border-blush-pink",
                       )}
                     >
                       <Image
                         src={resolveImageSrc(image.src)}
-                        alt={image.alt}
+                        alt={`${localizedProduct.name} ${index + 1}`}
                         fill
                         className="object-cover"
                       />
@@ -225,18 +588,22 @@ export default function ProductPage({ params }: ProductPageProps) {
               {/* Category & Brand */}
               <div className="flex items-center gap-3 mb-4">
                 <span className="text-sm font-medium text-rose-mauve uppercase tracking-wider">
-                  {product.category}
+                  {localizedProduct.category}
                 </span>
                 <span className="w-1 h-1 rounded-full bg-blush-pink" />
-                <span className="text-sm text-muted-foreground">{product.brand}</span>
+                <span className="text-sm text-muted-foreground">
+                  {product.brand}
+                </span>
               </div>
 
               {/* Title */}
               <h1 className="text-3xl lg:text-4xl font-serif font-bold text-charcoal">
-                {product.name}
+                {localizedProduct.name}
               </h1>
-              {product.subtitle && (
-                <p className="mt-2 text-lg text-muted-foreground">{product.subtitle}</p>
+              {localizedProduct.subtitle && (
+                <p className="mt-2 text-lg text-muted-foreground">
+                  {localizedProduct.subtitle}
+                </p>
               )}
 
               {product.reviewCount ? (
@@ -246,28 +613,35 @@ export default function ProductPage({ params }: ProductPageProps) {
                       <Star
                         key={i}
                         className={cn(
-                          'w-5 h-5',
+                          "w-5 h-5",
                           i < Math.floor(product.rating ?? 0)
-                            ? 'text-champagne-gold fill-current'
-                            : 'text-blush-pink'
+                            ? "text-champagne-gold fill-current"
+                            : "text-blush-pink",
                         )}
                       />
                     ))}
                   </div>
                   <span className="text-sm text-muted-foreground">
-                    {product.rating} ({product.reviewCount} reviews)
+                    {product.rating} ({product.reviewCount}{" "}
+                    {localizeProductLabel("reviews", locale)})
                   </span>
                 </div>
               ) : (
                 <p className="mt-4 text-sm text-muted-foreground">
-                  Product copy pending supplier verification.
+                  {localizeProductLabel(
+                    "product copy pending supplier verification.",
+                    locale,
+                  )}
                 </p>
               )}
 
               {/* Price */}
               <div className="flex items-center gap-3 mt-6">
                 <span className="text-3xl font-bold text-plum">
-                  {formatPrice(selectedVariant?.price ?? product.price, product.currency)}
+                  {formatPrice(
+                    selectedVariant?.price ?? product.price,
+                    product.currency,
+                  )}
                 </span>
                 {product.compareAtPrice && (
                   <span className="text-xl text-muted-foreground line-through">
@@ -277,14 +651,17 @@ export default function ProductPage({ params }: ProductPageProps) {
               </div>
 
               {/* Region Availability */}
-              {(isVisibleOnly || access.status === 'pending_review') && (
+              {(isVisibleOnly || access.status === "pending_review") && (
                 <div className="mt-4 p-4 rounded-xl bg-rose-mauve/10 border border-rose-mauve/20">
                   <div className="flex items-start gap-3">
                     <Info className="w-5 h-5 text-rose-mauve flex-shrink-0 mt-0.5" />
                     <div>
-                      <p className="font-medium text-charcoal">{dictionary.product.notAvailableInRegionTitle}</p>
+                      <p className="font-medium text-charcoal">
+                        {dictionary.product.notAvailableInRegionTitle}
+                      </p>
                       <p className="text-sm text-muted-foreground mt-1">
-                        {access.complianceWarning ?? dictionary.product.notAvailableInRegionBody}
+                        {access.complianceWarning ??
+                          dictionary.product.notAvailableInRegionBody}
                       </p>
                     </div>
                   </div>
@@ -293,7 +670,10 @@ export default function ProductPage({ params }: ProductPageProps) {
 
               {/* Description */}
               <div className="relative mt-6 overflow-hidden rounded-3xl border border-blush-pink/30 bg-white/70 p-5 shadow-[0_18px_60px_rgba(79,54,60,0.075)]">
-                <div className="pointer-events-none absolute -right-5 -top-5 h-28 w-28 rotate-12 opacity-[0.18]" aria-hidden="true">
+                <div
+                  className="pointer-events-none absolute -right-5 -top-5 h-28 w-28 rotate-12 opacity-[0.18]"
+                  aria-hidden="true"
+                >
                   <Image
                     src={JISOO_LEAF_MARK_SRC}
                     alt=""
@@ -303,53 +683,65 @@ export default function ProductPage({ params }: ProductPageProps) {
                   />
                 </div>
                 <div className="relative">
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.careFocus}</p>
-                  <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">{careFocus.title}</h2>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">
+                    {copy.careFocus}
+                  </p>
+                  <h2 className="mt-2 text-xl font-serif font-semibold text-charcoal">
+                    {localizedCareFocus.title}
+                  </h2>
                   <p className="mt-2 text-muted-foreground leading-relaxed">
-                    {careFocus.description}
+                    {localizedCareFocus.description}
                   </p>
                   <p className="mt-3 text-sm leading-6 text-charcoal/58">
-                    {product.shortDescription}
+                    {localizedProduct.shortDescription}
                   </p>
                 </div>
               </div>
 
               {/* Benefits Quick View */}
               <div className="mt-6 flex flex-wrap gap-3">
-                {product.keyBenefits.slice(0, 3).map((benefit, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-blush-pink/50"
-                  >
-                    <Sparkles className="w-4 h-4 text-rose-mauve" />
-                    <span className="text-sm text-charcoal">{benefit}</span>
-                  </div>
-                ))}
+                {localizedProduct.keyBenefits
+                  .slice(0, 3)
+                  .map((benefit, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-2 px-3 py-2 rounded-full bg-white border border-blush-pink/50"
+                    >
+                      <Sparkles className="w-4 h-4 text-rose-mauve" />
+                      <span className="text-sm text-charcoal">{benefit}</span>
+                    </div>
+                  ))}
               </div>
-
-
 
               {/* Variants */}
               {product.variants && product.variants.length > 0 && (
                 <div className="mt-8">
-                  <h3 className="text-sm font-medium text-charcoal mb-3">{dictionary.product.selectShade}</h3>
+                  <h3 className="text-sm font-medium text-charcoal mb-3">
+                    {dictionary.product.selectShade}
+                  </h3>
                   <div className="flex flex-wrap gap-2">
-                    {product.variants.map(variant => (
-                      <button
-                        key={variant.id}
-                        onClick={() => setSelectedVariant(variant)}
-                        disabled={!variant.inStock}
-                        className={cn(
-                          'px-4 py-2 rounded-full text-sm font-medium transition-all',
-                          selectedVariant?.id === variant.id
-                            ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white'
-                            : 'bg-white border border-blush-pink text-charcoal hover:border-rose-mauve',
-                          !variant.inStock && 'opacity-50 cursor-not-allowed line-through'
-                        )}
-                      >
-                        {variant.name}
-                      </button>
-                    ))}
+                    {product.variants.map((variant) => {
+                      const localizedVariant = localizedProduct.variants?.find(
+                        (item) => item.id === variant.id,
+                      );
+                      return (
+                        <button
+                          key={variant.id}
+                          onClick={() => setSelectedVariant(variant)}
+                          disabled={!variant.inStock}
+                          className={cn(
+                            "px-4 py-2 rounded-full text-sm font-medium transition-all",
+                            selectedVariant?.id === variant.id
+                              ? "bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white"
+                              : "bg-white border border-blush-pink text-charcoal hover:border-rose-mauve",
+                            !variant.inStock &&
+                              "opacity-50 cursor-not-allowed line-through",
+                          )}
+                        >
+                          {localizedVariant?.name ?? variant.name}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -364,7 +756,9 @@ export default function ProductPage({ params }: ProductPageProps) {
                   >
                     <Minus className="w-4 h-4" />
                   </button>
-                  <span className="w-12 text-center font-medium text-lg">{quantity}</span>
+                  <span className="w-12 text-center font-medium text-lg">
+                    {quantity}
+                  </span>
                   <button
                     onClick={() => setQuantity(quantity + 1)}
                     className="w-12 h-12 rounded-full border border-blush-pink flex items-center justify-center hover:bg-blush-pink/20 transition-colors"
@@ -378,10 +772,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                   onClick={handleAddToCart}
                   disabled={!isBuyable}
                   className={cn(
-                    'flex-1 py-4 px-8 rounded-full font-medium text-lg transition-all',
+                    "flex-1 py-4 px-8 rounded-full font-medium text-lg transition-all",
                     isBuyable
-                      ? 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105'
-                      : 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white cursor-not-allowed opacity-70'
+                      ? "bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105"
+                      : "bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white cursor-not-allowed opacity-70",
                   )}
                 >
                   {isBuyable ? t.addToCart : dictionary.product.notAvailable}
@@ -391,13 +785,15 @@ export default function ProductPage({ params }: ProductPageProps) {
                 <button
                   onClick={() => setIsWishlisted(!isWishlisted)}
                   className={cn(
-                    'w-14 h-14 rounded-full border flex items-center justify-center transition-all',
+                    "w-14 h-14 rounded-full border flex items-center justify-center transition-all",
                     isWishlisted
-                      ? 'bg-rose-mauve text-white border-rose-mauve'
-                      : 'border-blush-pink text-charcoal hover:border-rose-mauve'
+                      ? "bg-rose-mauve text-white border-rose-mauve"
+                      : "border-blush-pink text-charcoal hover:border-rose-mauve",
                   )}
                 >
-                  <Heart className={cn('w-5 h-5', isWishlisted && 'fill-current')} />
+                  <Heart
+                    className={cn("w-5 h-5", isWishlisted && "fill-current")}
+                  />
                 </button>
               </div>
 
@@ -415,21 +811,31 @@ export default function ProductPage({ params }: ProductPageProps) {
                   <span className="text-muted-foreground">{copy.size}</span>
                   <p className="font-medium text-charcoal">{product.size}</p>
                 </div>
-                {product.texture && (
+                {localizedProduct.texture && (
                   <div>
-                    <span className="text-muted-foreground">{copy.texture}</span>
-                    <p className="font-medium text-charcoal">{product.texture}</p>
+                    <span className="text-muted-foreground">
+                      {copy.texture}
+                    </span>
+                    <p className="font-medium text-charcoal">
+                      {localizedProduct.texture}
+                    </p>
                   </div>
                 )}
-                {product.finish && (
+                {localizedProduct.finish && (
                   <div>
                     <span className="text-muted-foreground">{copy.finish}</span>
-                    <p className="font-medium text-charcoal">{product.finish}</p>
+                    <p className="font-medium text-charcoal">
+                      {localizedProduct.finish}
+                    </p>
                   </div>
                 )}
                 <div>
-                  <span className="text-muted-foreground">{copy.skinTypes}</span>
-                  <p className="font-medium text-charcoal">{product.skinType.slice(0, 2).join(', ')}</p>
+                  <span className="text-muted-foreground">
+                    {copy.skinTypes}
+                  </span>
+                  <p className="font-medium text-charcoal">
+                    {localizedProduct.skinType.slice(0, 2).join(", ")}
+                  </p>
                 </div>
               </div>
             </div>
@@ -442,20 +848,21 @@ export default function ProductPage({ params }: ProductPageProps) {
         <div className="max-w-7xl mx-auto px-4 lg:px-6">
           {/* Tab Headers */}
           <div className="flex items-center gap-8 border-b border-blush-pink/30">
-            {(['details', 'ingredients', 'reviews'] as const).map(tab => (
+            {(["details", "ingredients", "reviews"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={cn(
-                  'pb-4 text-lg font-medium transition-colors relative',
+                  "pb-4 text-lg font-medium transition-colors relative",
                   activeTab === tab
-                    ? 'text-plum'
-                    : 'text-muted-foreground hover:text-charcoal'
+                    ? "text-plum"
+                    : "text-muted-foreground hover:text-charcoal",
                 )}
               >
-                {tab === 'details' && copy.detailsTab}
-                {tab === 'ingredients' && copy.ingredientsTab}
-                {tab === 'reviews' && `${copy.reviewsTab} (${product.reviewCount ?? 0})`}
+                {tab === "details" && copy.detailsTab}
+                {tab === "ingredients" && copy.ingredientsTab}
+                {tab === "reviews" &&
+                  `${copy.reviewsTab} (${product.reviewCount ?? 0})`}
                 {activeTab === tab && (
                   <motion.div
                     layoutId="activeTab"
@@ -469,7 +876,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           {/* Tab Content */}
           <div className="py-8">
             <AnimatePresence mode="wait">
-              {activeTab === 'details' && (
+              {activeTab === "details" && (
                 <motion.div
                   key="details"
                   initial={{ opacity: 0, y: 10 }}
@@ -482,14 +889,14 @@ export default function ProductPage({ params }: ProductPageProps) {
                       {copy.about}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {product.longDescription}
+                      {localizedProduct.longDescription}
                     </p>
 
                     <h3 className="text-xl font-serif font-semibold text-charcoal mt-8 mb-4">
                       {copy.howToUse}
                     </h3>
                     <p className="text-muted-foreground leading-relaxed">
-                      {product.usageInstructions}
+                      {localizedProduct.usageInstructions}
                     </p>
                   </div>
 
@@ -498,15 +905,23 @@ export default function ProductPage({ params }: ProductPageProps) {
                       {copy.keyBenefits}
                     </h3>
                     <div className="space-y-4">
-                      {product.keyBenefits.map((benefit, index) => (
-                        <div key={index} className="flex items-start gap-4 p-4 rounded-xl bg-nude-beige/50">
+                      {localizedProduct.keyBenefits.map((benefit, index) => (
+                        <div
+                          key={index}
+                          className="flex items-start gap-4 p-4 rounded-xl bg-nude-beige/50"
+                        >
                           <div className="p-2 rounded-lg bg-white">
                             <Sparkles className="w-5 h-5 text-rose-mauve" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-charcoal">{benefit}</h4>
+                            <h4 className="font-medium text-charcoal">
+                              {benefit}
+                            </h4>
                             <p className="text-sm text-muted-foreground mt-1">
-                              Pending verified supplier documentation.
+                              {localizeProductLabel(
+                                "pending verified supplier documentation.",
+                                locale,
+                              )}
                             </p>
                           </div>
                         </div>
@@ -516,7 +931,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 </motion.div>
               )}
 
-              {activeTab === 'ingredients' && (
+              {activeTab === "ingredients" && (
                 <motion.div
                   key="ingredients"
                   initial={{ opacity: 0, y: 10 }}
@@ -527,14 +942,19 @@ export default function ProductPage({ params }: ProductPageProps) {
                     {copy.keyIngredients}
                   </h3>
                   <div className="grid md:grid-cols-2 gap-6">
-                    {product.ingredients.map((ingredient, index) => (
+                    {localizedProduct.ingredients.map((ingredient, index) => (
                       <div
                         key={index}
                         className="p-6 rounded-2xl bg-gradient-to-br from-blush-pink/10 to-nude-beige/30"
                       >
-                        <h4 className="font-semibold text-charcoal">{ingredient}</h4>
+                        <h4 className="font-semibold text-charcoal">
+                          {ingredient}
+                        </h4>
                         <p className="text-sm text-muted-foreground mt-1">
-                          Details pending verified INCI documentation.
+                          {localizeProductLabel(
+                            "details pending verified inci documentation.",
+                            locale,
+                          )}
                         </p>
                       </div>
                     ))}
@@ -542,7 +962,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                 </motion.div>
               )}
 
-              {activeTab === 'reviews' && (
+              {activeTab === "reviews" && (
                 <motion.div
                   key="reviews"
                   initial={{ opacity: 0, y: 10 }}
@@ -551,8 +971,11 @@ export default function ProductPage({ params }: ProductPageProps) {
                 >
                   {reviews.length > 0 ? (
                     <div className="space-y-6">
-                      {reviews.map(review => (
-                        <div key={review.id} className="p-6 rounded-2xl bg-nude-beige/30">
+                      {reviews.map((review) => (
+                        <div
+                          key={review.id}
+                          className="p-6 rounded-2xl bg-nude-beige/30"
+                        >
                           <div className="flex items-center gap-4 mb-4">
                             <div className="w-12 h-12 rounded-full bg-plum/20 flex items-center justify-center">
                               <span className="font-semibold text-plum">
@@ -560,35 +983,44 @@ export default function ProductPage({ params }: ProductPageProps) {
                               </span>
                             </div>
                             <div>
-                              <p className="font-medium text-charcoal">{review.customerName}</p>
+                              <p className="font-medium text-charcoal">
+                                {review.customerName}
+                              </p>
                               <div className="flex items-center gap-2">
                                 <div className="flex">
                                   {[...Array(5)].map((_, i) => (
                                     <Star
                                       key={i}
                                       className={cn(
-                                        'w-4 h-4',
+                                        "w-4 h-4",
                                         i < review.rating
-                                          ? 'text-champagne-gold fill-current'
-                                          : 'text-blush-pink'
+                                          ? "text-champagne-gold fill-current"
+                                          : "text-blush-pink",
                                       )}
                                     />
                                   ))}
                                 </div>
                                 {review.isVerified && (
                                   <span className="text-xs text-green-600 flex items-center gap-1">
-                                    <Check className="w-3 h-3" /> {copy.verified}
+                                    <Check className="w-3 h-3" />{" "}
+                                    {copy.verified}
                                   </span>
                                 )}
                               </div>
                             </div>
                           </div>
-                          <h4 className="font-medium text-charcoal mb-2">{review.title}</h4>
-                          <p className="text-muted-foreground">{review.content}</p>
+                          <h4 className="font-medium text-charcoal mb-2">
+                            {review.title}
+                          </h4>
+                          <p className="text-muted-foreground">
+                            {review.content}
+                          </p>
                         </div>
                       ))}
                       <div className="p-6 rounded-2xl border border-dashed border-rose-mauve/30 bg-white/70">
-                        <h4 className="font-medium text-charcoal">{copy.photoUploadTitle}</h4>
+                        <h4 className="font-medium text-charcoal">
+                          {copy.photoUploadTitle}
+                        </h4>
                         <p className="mt-2 text-sm text-muted-foreground">
                           {copy.photoUploadBody}
                         </p>
@@ -609,13 +1041,15 @@ export default function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
-
       {/* Routine Guide */}
       <section className="py-12 bg-warm-ivory">
         <div className="max-w-6xl mx-auto px-4 lg:px-6">
           <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
             <div className="relative overflow-hidden rounded-[2rem] py-2 pr-6">
-              <div className="pointer-events-none absolute right-0 top-0 h-24 w-24 rotate-[18deg] opacity-[0.18]" aria-hidden="true">
+              <div
+                className="pointer-events-none absolute right-0 top-0 h-24 w-24 rotate-[18deg] opacity-[0.18]"
+                aria-hidden="true"
+              >
                 <Image
                   src={JISOO_LEAF_MARK_SRC}
                   alt=""
@@ -625,35 +1059,64 @@ export default function ProductPage({ params }: ProductPageProps) {
                 />
               </div>
               <div className="relative">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">{copy.highlightedStep}</p>
-                <h2 className="mt-3 font-serif text-2xl font-semibold leading-tight text-charcoal lg:text-3xl">{copy.routineTitle}</h2>
-                <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">{copy.routineBody}</p>
+                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-rose-mauve">
+                  {copy.highlightedStep}
+                </p>
+                <h2 className="mt-3 font-serif text-2xl font-semibold leading-tight text-charcoal lg:text-3xl">
+                  {copy.routineTitle}
+                </h2>
+                <p className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
+                  {copy.routineBody}
+                </p>
               </div>
             </div>
 
             <div className="space-y-5">
               <div className="relative pl-7">
-                <div aria-hidden="true" className="absolute left-2.5 top-2 bottom-2 w-px bg-blush-pink/35" />
+                <div
+                  aria-hidden="true"
+                  className="absolute left-2.5 top-2 bottom-2 w-px bg-blush-pink/35"
+                />
                 <div className="space-y-5">
                   {routineFlow.map((step) => {
-                    const label = step.isCurrent ? copy.highlightedStep : step.key === routinePlacement.before?.key ? copy.before : copy.after
+                    const label = step.isCurrent
+                      ? copy.highlightedStep
+                      : step.key === routinePlacement.before?.key
+                        ? copy.before
+                        : copy.after;
 
                     return (
                       <div key={step.key} className="relative">
                         <span
                           aria-hidden="true"
                           className={cn(
-                            'absolute -left-[1.22rem] top-1.5 h-8 w-[3px] rounded-full transition-colors duration-300',
-                            step.isCurrent ? 'bg-rose-mauve/85 shadow-[0_0_0_4px_rgba(154,98,118,0.07)]' : 'bg-blush-pink/55'
+                            "absolute -left-[1.22rem] top-1.5 h-8 w-[3px] rounded-full transition-colors duration-300",
+                            step.isCurrent
+                              ? "bg-rose-mauve/85 shadow-[0_0_0_4px_rgba(154,98,118,0.07)]"
+                              : "bg-blush-pink/55",
                           )}
                         />
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-mauve/85">{label}</p>
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-mauve/85">
+                          {label}
+                        </p>
                         <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
-                          <h3 className={cn('font-serif text-xl font-semibold', step.isCurrent ? 'text-charcoal' : 'text-charcoal/80')}>{step.step}. {step.title}</h3>
+                          <h3
+                            className={cn(
+                              "font-serif text-xl font-semibold",
+                              step.isCurrent
+                                ? "text-charcoal"
+                                : "text-charcoal/80",
+                            )}
+                          >
+                            {step.step}.{" "}
+                            {localizeProductLabel(step.title, locale)}
+                          </h3>
                         </div>
-                        <p className="mt-1 text-sm leading-6 text-muted-foreground">{step.description}</p>
+                        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                          {localizeProductLabel(step.description, locale)}
+                        </p>
                       </div>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -663,32 +1126,48 @@ export default function ProductPage({ params }: ProductPageProps) {
           {routineSuggestions.length > 0 && (
             <div className="mt-12 border-t border-blush-pink/30 pt-8">
               <div className="mb-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">{copy.pairsWith}</p>
-                <h3 className="mt-2 font-serif text-2xl font-semibold text-charcoal">{copy.completeRoutine}</h3>
+                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-rose-mauve">
+                  {copy.pairsWith}
+                </p>
+                <h3 className="mt-2 font-serif text-2xl font-semibold text-charcoal">
+                  {copy.completeRoutine}
+                </h3>
               </div>
               <div className="grid gap-5 md:grid-cols-3">
-                {routineSuggestions.map((suggestion) => (
-                  <Link
-                    key={suggestion.id}
-                    href={localizeHref(`/product/${suggestion.slug}`, locale)}
-                    className="group grid grid-cols-[84px_1fr] gap-4 border-b border-blush-pink/25 pb-5 transition duration-300 hover:border-rose-mauve/40"
-                  >
-                    <div className="relative h-24 overflow-hidden rounded-2xl bg-white">
-                      <Image
-                        src={resolveImageSrc(suggestion.images[0]?.src)}
-                        alt={suggestion.name}
-                        fill
-                        sizes="96px"
-                        className="object-cover transition duration-700 group-hover:scale-105"
-                      />
-                    </div>
-                    <div className="min-w-0 py-1">
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">{suggestion.category}</p>
-                      <h4 className="mt-2 line-clamp-2 text-sm font-medium leading-5 text-charcoal group-hover:text-plum">{suggestion.name}</h4>
-                      <p className="mt-2 text-sm text-muted-foreground">{formatPrice(suggestion.price, suggestion.currency)}</p>
-                    </div>
-                  </Link>
-                ))}
+                {routineSuggestions.map((suggestion) => {
+                  const localizedSuggestion = localizeProduct(
+                    suggestion,
+                    locale,
+                  );
+                  return (
+                    <Link
+                      key={suggestion.id}
+                      href={localizeHref(`/product/${suggestion.slug}`, locale)}
+                      className="group grid grid-cols-[84px_1fr] gap-4 border-b border-blush-pink/25 pb-5 transition duration-300 hover:border-rose-mauve/40"
+                    >
+                      <div className="relative h-24 overflow-hidden rounded-2xl bg-white">
+                        <Image
+                          src={resolveImageSrc(suggestion.images[0]?.src)}
+                          alt={localizedSuggestion.name}
+                          fill
+                          sizes="96px"
+                          className="object-cover transition duration-700 group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="min-w-0 py-1">
+                        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-mauve">
+                          {localizedSuggestion.category}
+                        </p>
+                        <h4 className="mt-2 line-clamp-2 text-sm font-medium leading-5 text-charcoal group-hover:text-plum">
+                          {localizedSuggestion.name}
+                        </h4>
+                        <p className="mt-2 text-sm text-muted-foreground">
+                          {formatPrice(suggestion.price, suggestion.currency)}
+                        </p>
+                      </div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -713,5 +1192,5 @@ export default function ProductPage({ params }: ProductPageProps) {
 
       <Footer />
     </main>
-  )
+  );
 }
