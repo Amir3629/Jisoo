@@ -180,7 +180,7 @@ body {
 
   [dir="rtl"] .text-right,
   [dir="rtl"] .text-end {
-    text-align: left !important;
+    text-align: right !important;
   }
 
 
@@ -1405,4 +1405,34 @@ html:has([data-about-story-root]) [data-about-story-root] {
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
   isolation: isolate !important;
+}
+
+
+/* JISOO Arabic homepage hero hard alignment fix */
+[dir="rtl"] [data-jisoo-hero-copy="rtl"],
+[dir="rtl"] [data-jisoo-hero-copy="rtl"] :where(p, h1, span) {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
+[dir="rtl"] [data-jisoo-hero-copy="rtl"] {
+  right: 2.5rem !important;
+  left: auto !important;
+}
+
+@media (min-width: 1024px) {
+  [dir="rtl"] [data-jisoo-hero-copy="rtl"] {
+    right: 3.5rem !important;
+    left: auto !important;
+  }
+}
+
+[dir="rtl"] [data-jisoo-hero-copy="rtl"] :where(h1, p) {
+  margin-left: auto !important;
+  margin-right: 0 !important;
+}
+
+[dir="rtl"] [data-jisoo-hero-copy="rtl"] [data-jisoo-hero-cta] {
+  display: flex !important;
+  justify-content: flex-start !important;
 }

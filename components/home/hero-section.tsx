@@ -475,6 +475,7 @@ function ImageEditorialHero({
           </motion.div>
         )}
         <div
+          data-jisoo-hero-copy={isRtl ? 'rtl' : 'ltr'}
           dir={isRtl ? 'rtl' : 'ltr'}
           className={cn(
             'absolute top-[6.9rem] z-20 max-w-2xl sm:top-[7.4rem] md:top-[7.2rem] lg:top-[8.2rem]',
@@ -511,7 +512,7 @@ function ImageEditorialHero({
             <span className="md:hidden">{body}</span>
             <span className="hidden md:inline">{body}</span>
           </p>
-          <div className={cn('mt-10 md:mt-7', isRtl && 'flex justify-end')}><PrimaryCta locale={locale} /></div>
+          <div data-jisoo-hero-cta className={cn('mt-10 md:mt-7', isRtl && 'flex justify-end')}><PrimaryCta locale={locale} /></div>
         </div>
 
         {showCategoryNav && <div className="absolute inset-x-0 bottom-7 z-10 px-4 lg:px-14">
