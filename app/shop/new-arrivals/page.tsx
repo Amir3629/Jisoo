@@ -43,13 +43,14 @@ const copy = {
 export default function NewArrivalsPage() {
   const { locale } = useLocale()
   const t = copy[locale]
-  const items = products.filter((p) => p.isNew).slice(0, 12)
+  const freshItems = products.filter((p) => p.isNew)
+  const items = (freshItems.length > 0 ? freshItems : products).slice(0, 12)
 
   return (
     <main className="snap-page-flow min-h-screen bg-warm-ivory">
-      <Header transparentOnTop />
+      <Header />
 
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="hidden">
         <div className="absolute inset-0 bg-background" aria-hidden="true">
           <Image
             src="/assets/hero/home-desktop.png"
@@ -70,14 +71,14 @@ export default function NewArrivalsPage() {
         </div>
       </section>
 
-      <section className="flex min-h-screen flex-col justify-center bg-background py-24">
+      <section className="bg-background pb-20 pt-32 lg:pt-36">
         <div className="mx-auto w-full max-w-7xl px-4 lg:px-6">
           <div className="mb-8">
             <h1 className="font-serif text-4xl text-plum lg:text-5xl">{t.title}</h1>
             <p className="mt-3 text-charcoal/70">{t.body}</p>
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {items.slice(0, 4).map((product, index) => <ProductCard key={product.id} product={product} index={index} hideDescription />)}
+            {items.slice(0, 8).map((product, index) => <ProductCard key={product.id} product={product} index={index} hideDescription />)}
           </div>
           {items.length === 0 && (
             <p className="mt-6 text-sm text-charcoal/60">
@@ -86,9 +87,9 @@ export default function NewArrivalsPage() {
           )}
         </div>
       </section>
-      <section className="flex min-h-screen items-center bg-background py-24">
+      <section className="bg-background pb-24">
         <div className="mx-auto grid w-full max-w-7xl gap-6 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">
-          {items.slice(4, 12).map((product, index) => <ProductCard key={product.id} product={product} index={index + 4} hideDescription />)}
+          {items.slice(8, 12).map((product, index) => <ProductCard key={product.id} product={product} index={index + 4} hideDescription />)}
         </div>
       </section>
       <Footer />

@@ -1395,3 +1395,14 @@ html:has([data-about-story-root]) [data-about-story-root] {
   color: var(--charcoal) !important;
 }
 
+
+
+.jisoo-language-menu-solid {
+  background: #f6eadf !important;
+  background-color: #f6eadf !important;
+  background-image: none !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  isolation: isolate !important;
+}
