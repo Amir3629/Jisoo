@@ -102,10 +102,22 @@ export default async function LocaleLayout({
 
   return (
     <LocaleProvider value={{ locale, dictionary, dir }}>
-      <LocaleHtmlSync />
-      <RegionProvider initialLanguage={locale}>
-        <CartProvider>{children}</CartProvider>
-      </RegionProvider>
+      <div
+        lang={locale}
+        dir={dir}
+        data-locale={locale}
+        data-direction={dir}
+        className={
+          dir === "rtl"
+            ? "jisoo-locale-shell jisoo-rtl"
+            : "jisoo-locale-shell jisoo-ltr"
+        }
+      >
+        <LocaleHtmlSync />
+        <RegionProvider initialLanguage={locale}>
+          <CartProvider>{children}</CartProvider>
+        </RegionProvider>
+      </div>
     </LocaleProvider>
   );
 }

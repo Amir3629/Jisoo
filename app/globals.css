@@ -183,6 +183,27 @@ body {
     text-align: left !important;
   }
 
+
+  [dir="rtl"] :where(.md\:text-left, .lg\:text-left, .xl\:text-left) {
+    text-align: right !important;
+  }
+
+  [dir="rtl"] :where(.md\:text-right, .lg\:text-right, .xl\:text-right) {
+    text-align: left !important;
+  }
+
+  .jisoo-rtl :where(.home-continuous-surface, .home-continuous-surface section) {
+    text-align: right;
+  }
+
+  .jisoo-rtl :where(.home-continuous-surface .text-center) {
+    text-align: right !important;
+  }
+
+  .jisoo-rtl :where(.home-continuous-surface .justify-between) {
+    text-align: right;
+  }
+
   html {
     scrollbar-color: color-mix(in srgb, var(--charcoal) 28%, var(--champagne-gold)) color-mix(in srgb, var(--background) 92%, white);
     scrollbar-width: thin;

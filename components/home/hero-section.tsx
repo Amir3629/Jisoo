@@ -374,19 +374,21 @@ function HeroVideo({ media, className }: { media: HeroMedia; className?: string 
 }
 
 function PrimaryCta({ locale, subtle }: { locale: Locale; subtle?: boolean }) {
+  const isRtl = locale === 'ar'
   const label = locale === 'ar' ? 'اكتشف التشكيلة' : locale === 'fr' ? 'Découvrir la collection' : locale === 'de' ? 'Kollektion entdecken' : locale === 'ko' ? '컬렉션 보기' : locale === 'tr' ? 'Koleksiyonu Keşfet' : 'Explore Collection'
   return (
     <Link
       href={localizeHref('/shop', locale)}
       className={cn(
         'inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition-all',
+        isRtl && 'flex-row-reverse',
         subtle
           ? 'border border-rose-mauve/30 bg-[linear-gradient(160deg,#f4e5dc_0%,#f4e5dc_100%)]/80 text-charcoal hover:bg-[linear-gradient(160deg,#f4e5dc_0%,#f4e5dc_100%)]'
           : 'bg-gradient-to-r from-rose-mauve to-[#d3af84] text-white hover:brightness-105'
       )}
     >
       {label}
-      <ArrowRight className="h-4 w-4" />
+      <ArrowRight className={cn('h-4 w-4', isRtl && 'rotate-180')} />
     </Link>
   )
 }
@@ -406,6 +408,7 @@ function ImageEditorialHero({
   selectedFont: HomepageFontChoice
   heroStyle: 1 | 2
 }) {
+  const isRtl = locale === 'ar'
   const categoryNav = [
     { label: locale === 'ar' ? 'الوجه' : locale === 'fr' ? 'VISAGE' : locale === 'de' ? 'GESICHT' : locale === 'ko' ? '페이스' : locale === 'tr' ? 'YÜZ' : 'FACE', image: '/assets/icons/face.png', href: '/shop?category=face' },
     { label: locale === 'ar' ? 'شفاه' : locale === 'fr' ? 'Lèvres' : locale === 'de' ? 'Lippen' : locale === 'ko' ? '립' : locale === 'tr' ? 'Dudak' : 'Lips', image: '/assets/icons/lips.png', href: '/shop?category=lips-cheeks' },
@@ -439,7 +442,7 @@ function ImageEditorialHero({
         <HeroImage src={media.primary} alt="Editorial background" className="absolute inset-0 hidden md:block" imageClassName={cn('object-cover transform-gpu', showCategoryNav ? 'object-top scale-[1.08]' : 'object-center scale-[1.015]')} priority />
         <HeroImage src={mobileImage} alt="Editorial background mobile" className="absolute inset-0 block md:hidden" imageClassName={cn('transform-gpu', showCategoryNav ? 'object-cover object-top scale-[1.08]' : 'object-cover object-bottom')} priority />
         <div className="absolute inset-0 bg-[#d9bb83] mix-blend-multiply" style={{ opacity: heroToneOpacity }} />
-        {lightText && <div className="absolute inset-0 bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent" />}
+        {lightText && <div className={cn('absolute inset-0', isRtl ? 'bg-gradient-to-l from-charcoal/36 via-charcoal/14 to-transparent' : 'bg-gradient-to-r from-charcoal/36 via-charcoal/14 to-transparent')} />}
         {!showCategoryNav && (
           <div className="absolute inset-0 z-[2]" aria-label={heroProductsLabel}>
             {heroProductHotspots.map((hotspot) => (
@@ -471,7 +474,7 @@ function ImageEditorialHero({
             />
           </motion.div>
         )}
-        <div className="absolute left-6 top-[6.9rem] z-20 max-w-2xl sm:left-8 sm:top-[7.4rem] md:top-[7.2rem] lg:left-14 lg:top-[8.2rem]" style={headlineFontStyle}>
+        <div className={cn('absolute top-[6.9rem] z-20 max-w-2xl sm:top-[7.4rem] md:top-[7.2rem] lg:top-[8.2rem]', isRtl ? 'right-6 text-right sm:right-8 lg:right-14' : 'left-6 text-left sm:left-8 lg:left-14')} style={headlineFontStyle}>
           <p className={cn('text-kicker', lightText ? 'text-white/85' : 'text-charcoal/74')}>{kicker}</p>
           {/* This is the visible /en homepage headline; keep font-family inline so no font utility can override the selected choice. */}
           <h1
@@ -486,12 +489,12 @@ function ImageEditorialHero({
             key={`mobile-${selectedFont.id}`}
             data-hero-headline="homepage-image-editorial-mobile"
             data-selected-font={selectedFont.name}
-            className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', lightText ? 'text-white' : 'text-charcoal')}
+            className={cn('mt-3 block max-w-[12ch] text-[2.05rem] leading-[1.02] md:hidden', isRtl && 'mr-0 ml-auto', lightText ? 'text-white' : 'text-charcoal')}
           >
             <span className="block">{mobileHeadingLineOne}</span>
             <span className="block text-[2.7rem] leading-[0.96]">{mobileHeadingLineTwo}</span>
           </h1>
-          <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', lightText ? 'text-white/84' : 'text-charcoal/72')}>
+          <p className={cn('mt-4 max-w-[19rem] text-base leading-6 sm:text-lg md:max-w-xl', isRtl && 'mr-0 ml-auto', lightText ? 'text-white/84' : 'text-charcoal/72')}>
             <span className="md:hidden">{body}</span>
             <span className="hidden md:inline">{body}</span>
           </p>

@@ -73,8 +73,8 @@ export function LocaleSwitcher({
             exit={{ opacity: 0, y: -8, scale: 0.975, filter: "blur(8px)" }}
             transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              "absolute right-0 z-[90] mt-2 w-52 origin-top-right rounded-2xl border p-2 text-charcoal",
-              "border-[#cfae83]/32 bg-warm-ivory/98 shadow-editorial backdrop-blur-2xl",
+              "absolute right-0 top-full z-[1000] mt-2 w-56 origin-top-right rounded-2xl border p-2 text-charcoal",
+              "border-[#d7b98e]/40 bg-[#f6eadf] shadow-[0_20px_50px_rgba(44,37,40,0.18)]",
             )}
           >
             {orderedLocales.map((l) => (
