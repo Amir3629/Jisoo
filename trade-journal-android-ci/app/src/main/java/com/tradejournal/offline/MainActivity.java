@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
         }
         @JavascriptInterface public void printHtml(String title,String html) { runOnUiThread(() -> print(title,html)); }
         @JavascriptInterface public void showToast(String text) { runOnUiThread(() -> Toast.makeText(MainActivity.this,text,Toast.LENGTH_SHORT).show()); }
-        @JavascriptInterface public String getVersion() { return BuildConfig.VERSION_NAME; }
+        @JavascriptInterface public String getVersion() { return "1.0.0"; }
     }
 
     @Override protected void onActivityResult(int requestCode,int resultCode,Intent data) {
