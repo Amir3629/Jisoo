@@ -1,0 +1,2 @@
+1.0.1
+Modern APK Signature Scheme v1 + v2 + v3
