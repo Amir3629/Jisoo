@@ -1,8 +1,8 @@
 name: Build Trade Journal Android APK
 
 on:
-  pull_request:
-    branches: [main]
+  push:
+    branches: [trade-journal-android-build]
   workflow_dispatch:
 
 permissions:
@@ -42,19 +42,75 @@ jobs:
           set -o pipefail
           gradle :app:assembleRelease --stacktrace 2>&1 | tee build.log
 
+      - name: Align and sign APK with modern signature schemes
+        shell: bash
+        run: |
+          set -euo pipefail
+          BUILD_TOOLS="$ANDROID_HOME/build-tools/35.0.0"
+          UNSIGNED="trade-journal-android-ci/app/build/outputs/apk/release/app-release-unsigned.apk"
+          ALIGNED="$RUNNER_TEMP/trade-journal-aligned.apk"
+          SIGNED="trade-journal-offline-v1.0.1.apk"
+          KEYSTORE="$RUNNER_TEMP/trade-journal-release.jks"
+          STORE_PASS="TradeJournal_2026_Update_Key"
+          KEY_ALIAS="tradejournal"
+
+          keytool -genkeypair -v \
+            -keystore "$KEYSTORE" \
+            -storepass "$STORE_PASS" \
+            -keypass "$STORE_PASS" \
+            -alias "$KEY_ALIAS" \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=Trade Journal Offline, OU=Personal, O=Trade Journal, L=Berlin, C=DE"
+
+          "$BUILD_TOOLS/zipalign" -p -f 4 "$UNSIGNED" "$ALIGNED"
+          "$BUILD_TOOLS/apksigner" sign \
+            --ks "$KEYSTORE" \
+            --ks-key-alias "$KEY_ALIAS" \
+            --ks-pass "pass:$STORE_PASS" \
+            --key-pass "pass:$STORE_PASS" \
+            --v1-signing-enabled true \
+            --v2-signing-enabled true \
+            --v3-signing-enabled true \
+            --out "$SIGNED" \
+            "$ALIGNED"
+
+          "$BUILD_TOOLS/apksigner" verify --verbose --print-certs "$SIGNED" | tee signing-report.txt
+          "$BUILD_TOOLS/zipalign" -c -v 4 "$SIGNED" | tee alignment-report.txt
+          cp "$KEYSTORE" trade-journal-release-v1.0.1.jks
+          cat > SIGNING-INFO.txt <<'INFO'
+          APK: trade-journal-offline-v1.0.1.apk
+          Alias: tradejournal
+          Keystore password: TradeJournal_2026_Update_Key
+          Key password: TradeJournal_2026_Update_Key
+          Keep the JKS private; it is required for future updates.
+          INFO
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-signed-v1.0.1
+          path: |
+            trade-journal-offline-v1.0.1.apk
+            signing-report.txt
+            alignment-report.txt
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload update signing key
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-update-key-v1.0.1
+          path: |
+            trade-journal-release-v1.0.1.jks
+            SIGNING-INFO.txt
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Upload build log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: trade-journal-android-build-log
+          name: trade-journal-android-build-log-v1.0.1
           path: trade-journal-android-ci/build.log
           if-no-files-found: warn
-          retention-days: 7
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: trade-journal-android-unsigned
-          path: trade-journal-android-ci/app/build/outputs/apk/release/app-release-unsigned.apk
-          if-no-files-found: error
           retention-days: 7
