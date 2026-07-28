@@ -3,6 +3,8 @@ name: Build Trade Journal Android APK
 on:
   push:
     branches: [trade-journal-android-build]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
