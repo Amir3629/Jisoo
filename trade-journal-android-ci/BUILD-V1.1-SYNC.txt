@@ -1,0 +1,1 @@
+Trade Journal Android v1.1 Sync build source prepared. The branch will be updated with the complete offline-first sync app, A4 landscape three-card PDF layout, and the existing signing certificate for in-place updates.
