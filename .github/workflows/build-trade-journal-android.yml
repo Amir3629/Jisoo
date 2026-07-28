@@ -37,7 +37,19 @@ jobs:
 
       - name: Build unsigned release APK
         working-directory: trade-journal-android-ci
-        run: gradle :app:assembleRelease --stacktrace
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle :app:assembleRelease --stacktrace 2>&1 | tee build.log
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-build-log
+          path: trade-journal-android-ci/build.log
+          if-no-files-found: warn
+          retention-days: 7
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
