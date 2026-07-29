@@ -50,7 +50,7 @@ jobs:
           @media(max-width:720px){.stats{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}}
           EOF
 
-          sed -i 's/return "1.1.0";/return "1.2.0";/' trade-journal-android-v1.2-build/app/src/main/java/com/tradejournal/offline/MainActivity.java
+          sed -i 's/return BuildConfig.VERSION_NAME;/return "1.2.0";/' trade-journal-android-v1.2-build/app/src/main/java/com/tradejournal/offline/MainActivity.java
           sed -i "s/versionCode 3/versionCode 4/; s/versionName '1.1.0'/versionName '1.2.0'/" trade-journal-android-v1.2-build/app/build.gradle
 
           echo 'a5a23d998b17f927f8234f79ade62ac3bcdcba318c3bb6be144dc02663e948fd  trade-journal-android-v1.2-build/app/src/main/assets/www/app.js' | sha256sum --check
