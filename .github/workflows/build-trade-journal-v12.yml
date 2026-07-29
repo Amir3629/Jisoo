@@ -1,0 +1,126 @@
+name: Build Trade Journal Android v1.2
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Reconstruct v1.1 source and apply v1.2 files
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat trade-journal-android-ci/v1.1/chunk00/part-*.b64 trade-journal-android-ci/v1.1/chunk-0[1-7].b64 | base64 --decode > /tmp/trade-journal-v1.1-source.zip
+          rm -rf /tmp/trade-journal-src trade-journal-android-v1.2-build
+          mkdir -p /tmp/trade-journal-src
+          unzip -q /tmp/trade-journal-v1.1-source.zip -d /tmp/trade-journal-src
+          mv /tmp/trade-journal-src/androidv11 trade-journal-android-v1.2-build
+
+          python3 - <<'PY'
+          import base64, pathlib, zlib
+          root = pathlib.Path('trade-journal-build-v23/android')
+          parts = [
+              root/'appjs-part-00.txt',
+              root/'appjs-part-01a.txt', root/'appjs-part-01b.txt',
+              root/'appjs-part-01c.txt', root/'appjs-part-01d.txt',
+              root/'appjs-part-02a.txt', root/'appjs-part-02b.txt',
+          ]
+          encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
+          data = zlib.decompress(base64.b64decode(encoded))
+          target = pathlib.Path('trade-journal-android-v1.2-build/app/src/main/assets/www/app.js')
+          target.write_bytes(data)
+          PY
+
+          cat >> trade-journal-android-v1.2-build/app/src/main/assets/www/styles.css <<'EOF'
+
+          /* v1.2 flexible save */
+          .stats{grid-template-columns:repeat(6,1fr)}
+          .market p{font-size:16px;line-height:1.8;max-width:760px;margin:12px auto 20px}
+          @media(max-width:720px){.stats{grid-template-columns:repeat(3,1fr)}.grid4{grid-template-columns:repeat(2,1fr)}}
+          EOF
+
+          sed -i 's/return "1.1.0";/return "1.2.0";/' trade-journal-android-v1.2-build/app/src/main/java/com/tradejournal/offline/MainActivity.java
+          sed -i "s/versionCode 3/versionCode 4/; s/versionName '1.1.0'/versionName '1.2.0'/" trade-journal-android-v1.2-build/app/build.gradle
+
+          echo 'a5a23d998b17f927f8234f79ade62ac3bcdcba318c3bb6be144dc02663e948fd  trade-journal-android-v1.2-build/app/src/main/assets/www/app.js' | sha256sum --check
+          echo '3ae0fa003cbc7289030be80d1cb6289239574b98a3d1021195b9536c9d2326c9  trade-journal-android-v1.2-build/app/src/main/assets/www/styles.css' | sha256sum --check
+          echo '288f5520cc354ab882647cf6b36436dd28cda73286b3ad9970857a05790dbaa7  trade-journal-android-v1.2-build/app/src/main/java/com/tradejournal/offline/MainActivity.java' | sha256sum --check
+          echo 'b8bb5ad135f937e3f953a7ac1a5a5d254ed422a1406d7909216c00389d8b163a  trade-journal-android-v1.2-build/app/build.gradle' | sha256sum --check
+
+          base64 --decode trade-journal-android-ci/v1.1/release-key.jks.b64 > /tmp/trade-journal-release.jks
+          mkdir -p trade-journal-android-v1.2-build/signing
+          cp /tmp/trade-journal-release.jks trade-journal-android-v1.2-build/signing/trade-journal-release.keystore
+          cat > trade-journal-android-v1.2-build/keystore.properties <<'EOF'
+          storeFile=signing/trade-journal-release.keystore
+          storePassword=TradeJournal_2026_Update_Key
+          keyAlias=tradejournal
+          keyPassword=TradeJournal_2026_Update_Key
+          EOF
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android packages
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Build signed release APK
+        working-directory: trade-journal-android-v1.2-build
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle :app:assembleRelease --stacktrace 2>&1 | tee build.log
+
+      - name: Verify APK and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=trade-journal-android-v1.2-build/app/build/outputs/apk/release/app-release.apk
+          test -s "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$APK" | tee trade-journal-android-v1.2-build/signature-report.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | head -20 | tee trade-journal-android-v1.2-build/package-report.txt
+          cp "$APK" trade-journal-android-v1.2-flexible-pdf.apk
+          sha256sum trade-journal-android-v1.2-flexible-pdf.apk > trade-journal-android-v1.2-flexible-pdf.sha256
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-v1.2-flexible-pdf
+          path: |
+            trade-journal-android-v1.2-flexible-pdf.apk
+            trade-journal-android-v1.2-flexible-pdf.sha256
+            trade-journal-android-v1.2-build/signature-report.txt
+            trade-journal-android-v1.2-build/package-report.txt
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-v1.2-build-log
+          path: trade-journal-android-v1.2-build/build.log
+          if-no-files-found: warn
+          retention-days: 7
