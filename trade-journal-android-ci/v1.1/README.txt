@@ -1,0 +1,1 @@
+Temporary CI payload for the signed Trade Journal Android v1.1 sync APK. Do not merge into main.
