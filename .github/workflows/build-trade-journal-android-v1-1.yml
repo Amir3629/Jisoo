@@ -1,0 +1,96 @@
+name: Build Trade Journal Android v1.1 Sync
+
+on:
+  push:
+    branches: [trade-journal-android-v1-1-sync]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Reconstruct verified v1.1 source
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat trade-journal-android-ci/v1.1/chunk-*.b64 | base64 --decode > /tmp/trade-journal-v1.1-source.zip
+          echo "9047b62fe5b670312f4b7e3daa20ca6861ef7f9ad262a315d4a753efa88eeb4e  /tmp/trade-journal-v1.1-source.zip" | sha256sum --check
+          rm -rf /tmp/trade-journal-src trade-journal-android-v1.1-build
+          mkdir -p /tmp/trade-journal-src
+          unzip -q /tmp/trade-journal-v1.1-source.zip -d /tmp/trade-journal-src
+          mv /tmp/trade-journal-src/androidv11 trade-journal-android-v1.1-build
+          base64 --decode trade-journal-android-ci/v1.1/release-key.jks.b64 > /tmp/trade-journal-release.jks
+          echo "d40261c80e830b2928f777c1e69bb247b97fb719f71c4e17d8cd062b2c475e35  /tmp/trade-journal-release.jks" | sha256sum --check
+          mkdir -p trade-journal-android-v1.1-build/signing
+          cp /tmp/trade-journal-release.jks trade-journal-android-v1.1-build/signing/trade-journal-release.keystore
+          cat > trade-journal-android-v1.1-build/keystore.properties <<'EOF'
+          storeFile=signing/trade-journal-release.keystore
+          storePassword=TradeJournal_2026_Update_Key
+          keyAlias=tradejournal
+          keyPassword=TradeJournal_2026_Update_Key
+          EOF
+
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android packages
+        run: |
+          yes | sdkmanager --licenses >/dev/null || true
+          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.11.1'
+
+      - name: Build signed release APK
+        working-directory: trade-journal-android-v1.1-build
+        shell: bash
+        run: |
+          set -o pipefail
+          gradle :app:assembleRelease --stacktrace 2>&1 | tee build.log
+
+      - name: Verify APK signature and package
+        shell: bash
+        run: |
+          set -euo pipefail
+          APK=trade-journal-android-v1.1-build/app/build/outputs/apk/release/app-release.apk
+          test -s "$APK"
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose --print-certs "$APK" | tee trade-journal-android-v1.1-build/signature-report.txt
+          "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK" | head -20 | tee trade-journal-android-v1.1-build/package-report.txt
+          cp "$APK" trade-journal-android-v1.1-sync.apk
+          sha256sum trade-journal-android-v1.1-sync.apk > trade-journal-android-v1.1-sync.sha256
+
+      - name: Upload signed APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-v1.1-sync
+          path: |
+            trade-journal-android-v1.1-sync.apk
+            trade-journal-android-v1.1-sync.sha256
+            trade-journal-android-v1.1-build/signature-report.txt
+            trade-journal-android-v1.1-build/package-report.txt
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trade-journal-android-v1.1-sync-build-log
+          path: trade-journal-android-v1.1-build/build.log
+          if-no-files-found: warn
+          retention-days: 7
