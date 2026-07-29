@@ -22,7 +22,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat trade-journal-android-ci/v1.1/chunk-*.b64 | base64 --decode > /tmp/trade-journal-v1.1-source.zip
+          cat trade-journal-android-ci/v1.1/chunk00/part-*.b64 trade-journal-android-ci/v1.1/chunk-0[1-7].b64 | base64 --decode > /tmp/trade-journal-v1.1-source.zip
           echo "9047b62fe5b670312f4b7e3daa20ca6861ef7f9ad262a315d4a753efa88eeb4e  /tmp/trade-journal-v1.1-source.zip" | sha256sum --check
           rm -rf /tmp/trade-journal-src trade-journal-android-v1.1-build
           mkdir -p /tmp/trade-journal-src
