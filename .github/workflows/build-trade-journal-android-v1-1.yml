@@ -28,6 +28,7 @@ jobs:
           mkdir -p /tmp/trade-journal-src
           unzip -q /tmp/trade-journal-v1.1-source.zip -d /tmp/trade-journal-src
           mv /tmp/trade-journal-src/androidv11 trade-journal-android-v1.1-build
+          sed -i 's/return BuildConfig.VERSION_NAME;/return "1.1.0";/' trade-journal-android-v1.1-build/app/src/main/java/com/tradejournal/offline/MainActivity.java
           base64 --decode trade-journal-android-ci/v1.1/release-key.jks.b64 > /tmp/trade-journal-release.jks
           echo "d40261c80e830b2928f777c1e69bb247b97fb719f71c4e17d8cd062b2c475e35  /tmp/trade-journal-release.jks" | sha256sum --check
           mkdir -p trade-journal-android-v1.1-build/signing
