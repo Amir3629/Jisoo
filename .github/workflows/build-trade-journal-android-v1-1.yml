@@ -3,6 +3,8 @@ name: Build Trade Journal Android v1.1 Sync
 on:
   push:
     branches: [trade-journal-android-v1-1-sync]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
