@@ -29,6 +29,16 @@ jobs:
           unzip -q /tmp/trade-journal-v1.1-source.zip -d /tmp/trade-journal-src
           mv /tmp/trade-journal-src/androidv11 trade-journal-android-v1.1-build
           sed -i 's/return BuildConfig.VERSION_NAME;/return "1.1.0";/' trade-journal-android-v1.1-build/app/src/main/java/com/tradejournal/offline/MainActivity.java
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('trade-journal-android-v1.1-build/app/src/main/assets/www/app.js')
+          s = p.read_text()
+          old = "else if(type==='delete'){showConfirm('حذف معامله',`معامله #${key} برای همیشه حذف شود؟`,async()=>{await dbDelete(key);trades=await dbGetAll();closeConfirm();render();toast('معامله حذف شد');autoSync()});return}"
+          new = "else if(type==='delete'){showConfirm('حذف معامله',`معامله #${key} برای همیشه حذف شود؟`,async()=>{const old=trades.find(t=>Number(t.id)===Number(key));if(old?.serverId){await dbPut({...old,dirty:true,pendingDelete:true,updatedAt:new Date().toISOString()})}else{await dbDelete(key)}trades=await dbGetAll();closeConfirm();render();toast(old?.serverId?'حذف در انتظار همگام‌سازی است':'معامله حذف شد');autoSync()});return}"
+          if old not in s:
+              raise SystemExit('Android delete sync patch target not found')
+          p.write_text(s.replace(old, new))
+          PY
           base64 --decode trade-journal-android-ci/v1.1/release-key.jks.b64 > /tmp/trade-journal-release.jks
           echo "d40261c80e830b2928f777c1e69bb247b97fb719f71c4e17d8cd062b2c475e35  /tmp/trade-journal-release.jks" | sha256sum --check
           mkdir -p trade-journal-android-v1.1-build/signing
